@@ -1,5 +1,11 @@
+.nav-bar {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+}
 .about-section {
    display: flex;
+   flex-direction: row;
 }
 .contact-us {
    display: flex;
