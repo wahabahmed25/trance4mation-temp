@@ -67,8 +67,8 @@
 .hero-right h3 {
   text-align: center;
   font-size: 1.6rem;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  color: var(--text-white);
+  text-shadow: 0 2px 4px var(--black-alpha-50);
   font-weight: 300;
   letter-spacing: 1px;
   position: relative;
@@ -77,8 +77,8 @@
 }
 
 .cta-button {
-  background: linear-gradient(135deg, var(--healing-coral) 0%, #FF7F7F 100%);
-  color: white;
+  background: var(--gradient-coral);
+  color: var(--text-white);
   padding: 1rem 2rem;
   border: none;
   border-radius: 50px;
@@ -87,7 +87,7 @@
   transition: all 0.3s ease;
   font-weight: 600;
   width: 220px;
-  box-shadow: 0 8px 25px rgba(229, 90, 74, 0.3);
+  box-shadow: 0 8px 25px var(--coral-alpha-30);
   position: relative;
   z-index: 2;
   text-transform: uppercase;
@@ -96,23 +96,23 @@
 
 .cta-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(229, 90, 74, 0.4);
-  background: linear-gradient(135deg, #FF7F7F 0%, var(--healing-coral) 100%);
+  box-shadow: 0 12px 35px var(--coral-alpha-40);
+  background: var(--gradient-coral-reverse);
 }
 
 /* ==========================================
    GAME SECTION
    ========================================== */
 .game-section {
-  padding: 4rem 2rem;
+  padding: 2rem;
   margin: 3rem 0;
-  background: linear-gradient(135deg, rgba(255, 127, 127, 0.15) 0%, rgba(0, 74, 82, 0.1) 100%);
+  background: var(--gradient-section);
   backdrop-filter: blur(25px);
   border-radius: 24px;
   display: flex;
   flex-direction: column;
-  border: 2px solid rgba(255, 127, 127, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--coral-alpha-30);
+  box-shadow: 0 20px 60px var(--black-alpha-20), inset 0 1px 0 var(--white-alpha-90);
   position: relative;
   overflow: hidden;
 }
@@ -124,29 +124,29 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 80%, rgba(255, 127, 127, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(0, 74, 82, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 80%, var(--coral-alpha-10) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, var(--coral-alpha-10) 0%, transparent 50%);
   pointer-events: none;
 }
 
 .game-section h2 {
-  color: white;
+  color: var(--text-white);
   margin-bottom: 2rem;
   font-size: 2.5rem;
   text-align: center;
   font-weight: 300;
-  text-shadow: 0 0 20px rgba(255, 127, 127, 0.3), 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 20px var(--coral-alpha-30), 0 4px 8px var(--black-alpha-50);
   letter-spacing: 2px;
   position: relative;
   z-index: 2;
 }
 
 .game-section p {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--white-alpha-90);
   line-height: 1.8;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 4px var(--black-alpha-50);
   position: relative;
   z-index: 2;
   text-align: center;
@@ -176,7 +176,7 @@
 }
 
 .filler-section h2 {
-  color: #E8D5C4;
+  color: var(--warm-beige);
   margin-bottom: 1rem;
   font-size: 1.5rem;
   text-align: center;

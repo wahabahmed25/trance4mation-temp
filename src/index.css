@@ -2,17 +2,43 @@
    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
    line-height: 1.5;
    font-weight: 400;
+   margin: 0px;
 
    /* Colors */
    --healing-coral: #E55A4A;
    --deep-teal: #004A52;
    --golden-glow: #FF7F7F;
    --sky-blue: #2A8BB5;
+   --warm-beige: #E8D5C4;
+   --white: #FFFFFF;
+   --black: #000000;
+   
+   /* Background Colors */
    --background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #E55A4A 75%, #FF7F7F 100%);
-   --text-primary: #E0E0E0;
-   --text-secondary: #B0B0B0;
    --section-bg: #2D2D2D;
    --section-bg-alt: #1A1A1A;
+   --nav-bg: rgba(45, 45, 45, 0.95);
+   
+   /* Text Colors */
+   --text-primary: #E0E0E0;
+   --text-secondary: #B0B0B0;
+   --text-white: #FFFFFF;
+   
+   /* Opacity Variants */
+   --coral-alpha-10: rgba(229, 90, 74, 0.1);
+   --coral-alpha-15: rgba(229, 90, 74, 0.15);
+   --coral-alpha-30: rgba(229, 90, 74, 0.3);
+   --coral-alpha-40: rgba(229, 90, 74, 0.4);
+   --white-alpha-90: rgba(255, 255, 255, 0.9);
+   --white-alpha-95: rgba(255, 255, 255, 0.95);
+   --black-alpha-20: rgba(0, 0, 0, 0.2);
+   --black-alpha-30: rgba(0, 0, 0, 0.3);
+   --black-alpha-50: rgba(0, 0, 0, 0.5);
+   
+   /* Gradients */
+   --gradient-coral: linear-gradient(135deg, var(--healing-coral) 0%, #FF7F7F 100%);
+   --gradient-coral-reverse: linear-gradient(135deg, #FF7F7F 0%, var(--healing-coral) 100%);
+   --gradient-section: linear-gradient(135deg, var(--coral-alpha-15) 0%, rgba(0, 74, 82, 0.1) 100%);
 
    color-scheme: dark;
    color: var(--text-primary);
