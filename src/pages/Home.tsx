@@ -18,7 +18,7 @@ function Home() {
                 </div>
             </section>
 
-            <section className="filler-section">
+            <section className="game-section">
                 <h2>You're Not Alone</h2>
                 <p>This is sample text for the first section. Here we can add content about how users are not alone in their healing journey.</p>
                 <p>More text can go here to fill out the section and demonstrate the layout. This helps show how the page will look with real content.</p>

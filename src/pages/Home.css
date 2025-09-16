@@ -39,14 +39,21 @@
 }
 
 .hero-right h1 {
-  font-size: 3rem;
+  font-size: 4rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: #333;
+  color: var(--golden-glow);
+  text-align: center;
+}
+
+.hero-right h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
 }
 
 .cta-button {
-  background-color: #ff6b6b;
+  background-color: var(--healing-coral);
   color: white;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -59,25 +66,51 @@
 }
 
 .cta-button:hover {
-  background-color: #ff5252;
+  background-color: var(--deep-teal);
+}
+
+/* Game Sections */
+.game-section {
+  padding: 4rem 2rem;
+  margin: 2rem 0;
+  background-color: var(--section-bg);
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.game-section h2 {
+  color: #E8D5C4;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.game-section p {
+  color: var(--text-primary);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
 }
 
 /* Filler Sections */
 .filler-section {
   padding: 4rem 2rem;
   margin: 2rem 0;
-  background-color: #f8f9fa;
+  background-color: var(--section-bg-alt);
   border-radius: 8px;
+  border-left: 4px solid var(--sky-blue);
+  transition: background-color 0.3s ease;
 }
 
 .filler-section h2 {
-  color: #333;
+  color: #E8D5C4;
   margin-bottom: 1.5rem;
   font-size: 2rem;
+  text-align: center;
 }
 
 .filler-section p {
-  color: #666;
+  color: var(--text-primary);
   line-height: 1.6;
   margin-bottom: 1rem;
   font-size: 1.1rem;
