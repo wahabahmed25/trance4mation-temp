@@ -52,7 +52,6 @@
   text-shadow: 0 0 30px rgba(255, 127, 127, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
   letter-spacing: 3px;
   position: relative;
-  z-index: 2;
 }
 
 .hero-right h1::after {

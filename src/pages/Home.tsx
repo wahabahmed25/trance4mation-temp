@@ -1,7 +1,9 @@
 import './Home.css';
+import { useNavigate } from 'react-router-dom';
 import GameCard from '../components/GameCard';
 
 function Home() {
+    const navigate = useNavigate();
     return (
         <div className="home-page">
             <section className="hero-section">
@@ -15,7 +17,7 @@ function Home() {
                         <h3>Build Connection</h3>
                         <h3>Heal Together</h3>
                     </div>
-                    <button className="cta-button">Get Started</button>
+                    <button className="cta-button" onClick={() => navigate('/game')}>Start Your Journey</button>
                 </div>
             </section>
 
