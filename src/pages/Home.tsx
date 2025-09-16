@@ -1,4 +1,5 @@
 import './Home.css';
+import GameCard from '../components/GameCard';
 
 function Home() {
     return (
@@ -20,8 +21,11 @@ function Home() {
 
             <section className="game-section">
                 <h2>You're Not Alone</h2>
-                <p>This is sample text for the first section. Here we can add content about how users are not alone in their healing journey.</p>
-                <p>More text can go here to fill out the section and demonstrate the layout. This helps show how the page will look with real content.</p>
+                <div className="game-cards-container">
+                    <GameCard title="Cyberbullying" image="https://via.placeholder.com/150" description="A game about cyberbullying" />
+                    <GameCard title="Depression" image="https://via.placeholder.com/150" description="A game about depression" />
+                    <GameCard title="Anxiety" image="https://via.placeholder.com/150" description="A game about anxiety" />
+                </div>
             </section>
 
             <section className="filler-section">

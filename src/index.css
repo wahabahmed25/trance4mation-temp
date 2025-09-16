@@ -6,9 +6,9 @@
    /* Colors */
    --healing-coral: #E55A4A;
    --deep-teal: #004A52;
-   --golden-glow: #E6B800;
+   --golden-glow: #FF7F7F;
    --sky-blue: #2A8BB5;
-   --background: #1F1F1F;
+   --background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #E55A4A 75%, #FF7F7F 100%);
    --text-primary: #E0E0E0;
    --text-secondary: #B0B0B0;
    --section-bg: #2D2D2D;
