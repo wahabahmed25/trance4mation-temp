@@ -5,10 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0;
-  min-height: 70vh;
+  min-height: calc(100vh - 150px);
   gap: 3rem;
-  position: relative;
 }
 
 /* Removed animated overlay to make space for planned hero images */
