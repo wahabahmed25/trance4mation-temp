@@ -1,6 +1,7 @@
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import GameCard from '../components/GameCard';
+import sampleImg from '../assets/sample_img.jpg';
 
 function Home() {
     const navigate = useNavigate();
@@ -24,9 +25,9 @@ function Home() {
             <section className="game-section">
                 <h2>You're Not Alone</h2>
                 <div className="game-cards-container">
-                    <GameCard title="Cyberbullying" image="https://via.placeholder.com/150" description="A game about cyberbullying" />
-                    <GameCard title="Depression" image="https://via.placeholder.com/150" description="A game about depression" />
-                    <GameCard title="Anxiety" image="https://via.placeholder.com/150" description="A game about anxiety" />
+                    <GameCard title="Cyberbullying" image={sampleImg} description="A game about cyberbullying" />
+                    <GameCard title="Depression" image={sampleImg} description="A game about depression" />
+                    <GameCard title="Anxiety" image={sampleImg} description="A game about anxiety" />
                 </div>
             </section>
 
