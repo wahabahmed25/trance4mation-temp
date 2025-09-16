@@ -4,6 +4,11 @@
    font-weight: 400;
    margin: 0px;
 
+   * {
+      margin: 0px;
+      padding: 0px;
+   }
+
    /* Colors */
    --healing-coral: #E55A4A;
    --deep-teal: #004A52;

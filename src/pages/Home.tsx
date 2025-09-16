@@ -31,7 +31,7 @@ function Home() {
                 </div>
             </section>
 
-            <section className="filler-section">
+            <section className="testimonials-section">
                 <h2>Hear Their Stories</h2>
                 <p>This section is for sharing stories from users who have benefited from our platform. Testimonials and success stories go here.</p>
                 <p>Additional text content to make the section look complete and show the proper spacing and layout.</p>

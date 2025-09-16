@@ -9,8 +9,6 @@
   gap: 3rem;
 }
 
-/* Removed animated overlay to make space for planned hero images */
-
 .hero-left {
   display: flex;
   justify-content: center;
@@ -162,6 +160,16 @@
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 2rem;
+}
+
+/* ==========================================
+   HEAR THEIR STORIES SECTION
+   ========================================== */
+.testimonials-section {
+  padding: 1rem;
+  padding-bottom: 5rem;
+  margin: 3rem 0;
+  background: var(--gradient-section);
 }
 
 /* ==========================================
