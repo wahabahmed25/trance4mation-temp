@@ -33,11 +33,17 @@ function Home() {
 
             <section className="testimonials-section">
                 <h2>Hear Their Stories</h2>
-                <p>This section is for sharing stories from users who have benefited from our platform. Testimonials and success stories go here.</p>
-                <p>Additional text content to make the section look complete and show the proper spacing and layout.</p>
+                <div className='testimonials-container'>
+                    <img className='testimonal-img' src="/src/assets/ex_testimonal.png" alt="" />
+
+                    <div className='testimonal-quote'>
+                        <p>"A game that resonated with my experience"</p>
+
+                    </div>
+                </div>
             </section>
 
-            <section className="filler-section">
+            <section className="cta-section">
                 <h2>Get Involved</h2>
                 <p>This section encourages users to get involved with the community. Information about joining and participating goes here.</p>
                 <p>More details about how users can contribute and be part of the healing community.</p>

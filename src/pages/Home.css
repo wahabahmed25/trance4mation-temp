@@ -1,5 +1,5 @@
 /* ==========================================
-   HERO SECTION
+                HERO SECTION
    ========================================== */
 .hero-section {
   display: flex;
@@ -99,12 +99,12 @@
 }
 
 /* ==========================================
-   GAME SECTION
+                GAME SECTION
    ========================================== */
 .game-section {
-  padding: 1rem;
+  padding-top: 3rem;
   padding-bottom: 5rem;
-  margin: 3rem 0;
+  margin: 3rem 2rem;
   background: var(--gradient-section);
   backdrop-filter: blur(25px);
   border-radius: 24px;
@@ -128,7 +128,7 @@
   pointer-events: none;
 }
 
-.game-section h2 {
+h2 {
   color: var(--text-white);
   margin-bottom: 2rem;
   font-size: 2.5rem;
@@ -163,14 +163,37 @@
 }
 
 /* ==========================================
-   HEAR THEIR STORIES SECTION
+          HEAR THEIR STORIES SECTION
    ========================================== */
 .testimonials-section {
-  padding: 1rem;
+  padding: 1rem 2rem;
   padding-bottom: 5rem;
   margin: 3rem 0;
-  background: var(--gradient-section);
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
+
+.testimonials-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-evenly;
+  border: 2px solid white;
+  padding: 2rem;
+
+}
+
+.testimonal-img {
+  width: 520px;
+  height: auto;
+
+}
+
+/* ==========================================
+            Call-To-Action Section
+   ========================================== */
+
 
 /* ==========================================
    GENERIC SECTIONS (PLACEHOLDER)
