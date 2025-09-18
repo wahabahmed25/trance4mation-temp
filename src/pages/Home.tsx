@@ -7,6 +7,7 @@ function Home() {
     const navigate = useNavigate();
     return (
         <div className="home-page">
+
             <section className="hero-section">
                 <div className="hero-left">
                     <img src="/src/assets/logo.png" alt="Play to Heal Logo" />
@@ -62,8 +63,8 @@ function Home() {
                 <h2>About Us</h2>
                 <div className='about-container'>
                     <p>Information about the organization and team behind Play to Heal. Mission, vision, and values can be shared here.</p>
-                    <p>Additional details about the founders, team members, and the story behind the platform.</p>
                 </div>
+                <a href="/about" className="about-button">Learn More</a>
             </section>
 
         </div>
