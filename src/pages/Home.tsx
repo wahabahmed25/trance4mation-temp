@@ -23,7 +23,7 @@ function Home() {
             </section>
 
             <section className="game-section">
-                <h2>You're Not Alone</h2>
+                <h2>You Are Not Alone</h2>
                 <div className="game-cards-container">
                     <GameCard title="Cyberbullying" image={sampleImg} description="A game about cyberbullying" />
                     <GameCard title="Depression" image={sampleImg} description="A game about depression" />
@@ -45,27 +45,26 @@ function Home() {
 
             <section className="cta-section">
                 <h2>Get Involved</h2>
-                <p>This section encourages users to get involved with the community. Information about joining and participating goes here.</p>
-                <p>More details about how users can contribute and be part of the healing community.</p>
+                <div className='cta-container'>
+                    <div className='cta-left'>
+                        <h3>Join the Community</h3>
+                        <p>Join the community to get involved with the community. Information about joining and participating goes here.</p>
+                    </div>
+                    <div className='cta-right'>
+                        <input type="email" placeholder='Enter your email' />
+                        <button>Sign Up</button>
+                    </div>
+                </div>
             </section>
 
-            <section className="filler-section">
+            <section className="about-section">
                 <h2>About Us</h2>
-                <p>Information about the organization and team behind Play to Heal. Mission, vision, and values can be shared here.</p>
-                <p>Additional details about the founders, team members, and the story behind the platform.</p>
+                <div className='about-container'>
+                    <p>Information about the organization and team behind Play to Heal. Mission, vision, and values can be shared here.</p>
+                    <p>Additional details about the founders, team members, and the story behind the platform.</p>
+                </div>
             </section>
 
-            <section className="filler-section">
-                <h2>Contact Us</h2>
-                <p>Contact information and ways to reach out to the team. Email, phone, and social media links can be included here.</p>
-                <p>Additional contact details and information about how users can get in touch with support.</p>
-            </section>
-
-            <section className="filler-section">
-                <h2>Final Section</h2>
-                <p>This is the last section to demonstrate the page layout and scrolling behavior. The navigation bar will scroll with the content.</p>
-                <p>This helps show how the page will look with real content and demonstrates the static navigation behavior.</p>
-            </section>
         </div>
     )
 }

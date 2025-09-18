@@ -193,32 +193,34 @@ h2 {
 /* ==========================================
             Call-To-Action Section
    ========================================== */
+.cta-section {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
 
+.cta-container {
+  display: flex;
+  align-items:center;
+  justify-content: space-evenly;
+}
+
+.cta-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cta-left p {
+  width: 500px;
+}
 
 /* ==========================================
-   GENERIC SECTIONS (PLACEHOLDER)
+   About Us Section
    ========================================== */
-.filler-section {
-  padding: 3rem 2rem;
-  margin: 1.5rem 0;
-  background-color: var(--section-bg-alt);
-  border-radius: 8px;
-  border-left: 4px solid var(--sky-blue);
-  opacity: 0.7;
+.about-section {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
 }
 
-.filler-section h2 {
-  color: var(--warm-beige);
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  text-align: center;
-  opacity: 0.8;
-}
-
-.filler-section p {
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 0.8rem;
-  font-size: 1rem;
-  opacity: 0.6;
-}
