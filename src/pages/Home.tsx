@@ -52,6 +52,7 @@ function Home() {
                     </div>
                     <div className='cta-right'>
                         <input type="email" placeholder='Enter your email' />
+                        <br />
                         <button>Sign Up</button>
                     </div>
                 </div>
