@@ -1,9 +1,15 @@
 /* About Page Styles */
+/* ==========================================
+                ABOUT SECTION
+   ========================================== */
 .about-section {
    display: flex;
    align-items: center;
 }
 
+/* ==========================================
+                FOUNDER SECTION
+   ========================================== */
 .founder-container {
    display: flex;
    align-items: center;
@@ -12,6 +18,9 @@
    padding: 2%;
 }
 
+/* ==========================================
+                INTERNS SECTION
+   ========================================== */
 .interns-container {
    margin: 2%;
    display: grid;
