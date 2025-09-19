@@ -6,15 +6,18 @@ import sampleImg from '../assets/sample_img.jpg';
 
 function Home() {
     const navigate = useNavigate();
+    // Pointer to the carousel div
     const carouselRef = useRef<HTMLDivElement>(null);
 
     const scrollLeft = () => {
+        // If the carousel div exists, scroll it to the left
         if (carouselRef.current) {
             carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' }); // card width + gap
         }
     };
 
     const scrollRight = () => {
+        // If the carousel div exists, scroll it to the right
         if (carouselRef.current) {
             carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' }); // card width + gap
         }
