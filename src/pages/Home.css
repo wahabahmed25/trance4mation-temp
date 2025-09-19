@@ -158,10 +158,30 @@ h2 {
 .game-cards-container {
   display: flex;
   gap: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
   margin-top: 2rem;
   margin-bottom: 2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 1rem 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+}
+
+/* Hide scrollbar for webkit browsers */
+.game-cards-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.game-cards-container {
+  scrollbar-width: none;
+}
+
+/* Add scroll padding for better snap alignment */
+.game-cards-container {
+  scroll-padding: 2rem;
 }
 
 /* ==========================================
