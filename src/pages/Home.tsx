@@ -29,6 +29,11 @@ function Home() {
                     <GameCard title="Cyberbullying" image={sampleImg} description="A game about cyberbullying" />
                     <GameCard title="Depression" image={sampleImg} description="A game about depression" />
                     <GameCard title="Anxiety" image={sampleImg} description="A game about anxiety" />
+                    <GameCard title="PTSD" image={sampleImg} description="A game about trauma recovery" />
+                    <GameCard title="Eating Disorders" image={sampleImg} description="A game about body image and recovery" />
+                    <GameCard title="Social Isolation" image={sampleImg} description="A game about loneliness and connection" />
+                    <GameCard title="Grief & Loss" image={sampleImg} description="A game about processing loss" />
+                    <GameCard title="Self-Harm" image={sampleImg} description="A game about healthy coping strategies" />
                 </div>
             </section>
 
