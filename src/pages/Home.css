@@ -102,18 +102,20 @@
                 GAME SECTION
    ========================================== */
 .game-section {
-  padding-top: 3rem;
+  padding-top: 2rem;
   padding-bottom: 5rem;
-  margin: 3rem 2rem;
+  margin: 3rem 0;
   background: var(--gradient-section);
   backdrop-filter: blur(25px);
-  border-radius: 24px;
   display: flex;
   flex-direction: column;
-  border: 2px solid var(--coral-alpha-30);
+  border-top: 2px solid var(--coral-alpha-30);
   box-shadow: 0 20px 60px var(--black-alpha-20), inset 0 1px 0 var(--white-alpha-90);
   position: relative;
   overflow: hidden;
+}
+.game-section h2 {
+  margin-top: 2rem;
 }
 
 .game-section::before {
@@ -138,6 +140,7 @@ h2 {
   letter-spacing: 2px;
   position: relative;
   z-index: 2;
+  padding-top: 2rem;
 }
 
 .game-section p {
@@ -247,7 +250,9 @@ button {
   border-radius: 5px;
   cursor: pointer;
 }
-
+h2 {
+  display: block;
+}
 /* ==========================================
    About Us Section
    ========================================== */
