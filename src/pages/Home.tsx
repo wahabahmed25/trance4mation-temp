@@ -1,10 +1,25 @@
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 import GameCard from '../components/GameCard';
 import sampleImg from '../assets/sample_img.jpg';
 
 function Home() {
     const navigate = useNavigate();
+    const carouselRef = useRef<HTMLDivElement>(null);
+
+    const scrollLeft = () => {
+        if (carouselRef.current) {
+            carouselRef.current.scrollBy({ left: -320, behavior: 'smooth' }); // card width + gap
+        }
+    };
+
+    const scrollRight = () => {
+        if (carouselRef.current) {
+            carouselRef.current.scrollBy({ left: 320, behavior: 'smooth' }); // card width + gap
+        }
+    };
+
     return (
         <div className="home-page">
 
@@ -25,15 +40,23 @@ function Home() {
 
             <section className="game-section">
                 <h2>You Are Not Alone</h2>
-                <div className="game-cards-container">
-                    <GameCard title="Cyberbullying" image={sampleImg} description="A game about cyberbullying" />
-                    <GameCard title="Depression" image={sampleImg} description="A game about depression" />
-                    <GameCard title="Anxiety" image={sampleImg} description="A game about anxiety" />
-                    <GameCard title="PTSD" image={sampleImg} description="A game about trauma recovery" />
-                    <GameCard title="Eating Disorders" image={sampleImg} description="A game about body image and recovery" />
-                    <GameCard title="Social Isolation" image={sampleImg} description="A game about loneliness and connection" />
-                    <GameCard title="Grief & Loss" image={sampleImg} description="A game about processing loss" />
-                    <GameCard title="Self-Harm" image={sampleImg} description="A game about healthy coping strategies" />
+                <div className="carousel-wrapper">
+                    <button className="carousel-arrow carousel-arrow-left" onClick={scrollLeft}>
+                        &#8249;
+                    </button>
+                    <div className="game-cards-container" ref={carouselRef}>
+                        <GameCard title="Cyberbullying" image={sampleImg} description="A game about cyberbullying" />
+                        <GameCard title="Depression" image={sampleImg} description="A game about depression" />
+                        <GameCard title="Anxiety" image={sampleImg} description="A game about anxiety" />
+                        <GameCard title="PTSD" image={sampleImg} description="A game about trauma recovery" />
+                        <GameCard title="Eating Disorders" image={sampleImg} description="A game about body image and recovery" />
+                        <GameCard title="Social Isolation" image={sampleImg} description="A game about loneliness and connection" />
+                        <GameCard title="Grief & Loss" image={sampleImg} description="A game about processing loss" />
+                        <GameCard title="Self-Harm" image={sampleImg} description="A game about healthy coping strategies" />
+                    </div>
+                    <button className="carousel-arrow carousel-arrow-right" onClick={scrollRight}>
+                        &#8250;
+                    </button>
                 </div>
             </section>
 

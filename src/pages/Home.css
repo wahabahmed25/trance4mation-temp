@@ -155,11 +155,17 @@ h2 {
   margin-right: auto;
 }
 
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
 .game-cards-container {
   display: flex;
   gap: 2rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -167,6 +173,38 @@ h2 {
   padding: 1rem 2rem;
   margin-left: -2rem;
   margin-right: -2rem;
+  flex: 1;
+}
+
+.carousel-arrow {
+  background: var(--gradient-coral);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: var(--text-white);
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 4px 15px var(--coral-alpha-30);
+  transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+  background: var(--gradient-coral-reverse);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px var(--coral-alpha-40);
+}
+
+.carousel-arrow-left {
+  margin-right: 1rem;
+}
+
+.carousel-arrow-right {
+  margin-left: 1rem;
 }
 
 /* Hide scrollbar for webkit browsers */
