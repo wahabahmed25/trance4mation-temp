@@ -102,8 +102,6 @@
                 GAME SECTION
    ========================================== */
 .game-section {
-  padding-top: 2rem;
-  padding-bottom: 5rem;
   margin: 3rem 0;
   background: var(--gradient-section);
   backdrop-filter: blur(25px);
@@ -163,6 +161,7 @@ h2 {
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 /* ==========================================
