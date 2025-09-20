@@ -1,18 +1,7 @@
-import React from 'react'
-import Link from 'next/link'
+import MoodCalendarView from "@/features/mood-calendar/MoodCalendarView";
 
-const Page = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-        <h1 className='p-3 bold mr-4 border-red-700 border-2 rounded-xl'>Mood Calender</h1>
-      <Link
-        href="/home"
-        className="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition w-1/3 text-center"
-      >
-        Home
-      </Link>
-    </div>
-  )
+export const metadata = { title: "Mood Calendar | Play to Heal" };
+
+export default function MoodCalendarPage() {
+  return <MoodCalendarView />;
 }
-
-export default Page
