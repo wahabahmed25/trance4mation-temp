@@ -3,7 +3,7 @@ import Person from "./Person"
 import { CarouselElement } from "./CarouselElement"
 import React from "react"
 
-export function Carousel({users, radius = 100}: {users: User[], radius?: number}) {        
+export default function Carousel({users, radius = 100}: {users: User[], radius?: number}) {        
     return (
         <div style={{
             perspective: "1000px",

@@ -49,7 +49,7 @@ export const defaultRooms: Room[] = [
         colorTheme: "idk",
         timeLimit: 5,
         rounds: 3,
-        code: "EFGH",
+        code: "IJKL",
         name: "room 1",
         icon: "/window.svg",
         description: ""

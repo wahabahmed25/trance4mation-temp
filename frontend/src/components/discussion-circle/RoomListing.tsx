@@ -46,7 +46,7 @@ export default function RoomListing({room}: {room: Room}) {
                 <div className="flex items-center w-12">
                     <Image 
                     src={"/alarm-clock-regular-full.svg"}
-                    alt="participants"
+                    alt="time limit"
                     width={20}
                     height={20}
                     priority
@@ -58,7 +58,7 @@ export default function RoomListing({room}: {room: Room}) {
                 <div className="flex items-center w-12">
                     <Image 
                     src={"/rotate-left-regular-full.svg"}
-                    alt="participants"
+                    alt="number of rounds"
                     width={20}
                     height={20}
                     priority

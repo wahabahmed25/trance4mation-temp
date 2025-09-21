@@ -1,12 +1,13 @@
 'use client'
 import { useEffect, useState } from "react"
 import { User } from "@/types/User"
-import { Carousel } from '@/components/discussion-circle/Carousel'
+import Carousel from '@/components/discussion-circle/Carousel'
 import ChatLog from '@/components/discussion-circle/ChatLog'
 import Navbar from '@/components/discussion-circle/Navbar'
 import RoomListing from '@/components/discussion-circle/RoomListing'
 import Search from '@/components/discussion-circle/Search'
 import { defaultRooms, defaultMessages, defaultPeople } from './defaults'
+import Rooms from "@/components/discussion-circle/Rooms"
 
 
 export default function DiscussionCircle() {
@@ -35,17 +36,8 @@ export default function DiscussionCircle() {
 
     return (
         <div className="flex flex-row h-screen">
-            {(!collapsed) 
-            ? 
-            <div className="bg-red-200 w-1/4 flex flex-col">
-                <Search/>
-                <div className="flex flex-col grow bg-blue-400 p-1 gap-1">
-                    {roomListings.map((room) => <RoomListing room={room} key={room.code}/>)}
-                </div>
-            </div> 
-            : 
-            <></>
-            }
+            {(!collapsed) ? <Rooms rooms={defaultRooms}/> : <></>}
+            
             <div className="flex flex-col bg-blue-200 w-3/4 grow">
                 <Navbar/>
                 <ChatLog messages={defaultMessages}/>
