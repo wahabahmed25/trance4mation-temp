@@ -4,8 +4,6 @@ import { User } from "@/types/User"
 import Carousel from '@/components/discussion-circle/Carousel'
 import ChatLog from '@/components/discussion-circle/ChatLog'
 import Navbar from '@/components/discussion-circle/Navbar'
-import RoomListing from '@/components/discussion-circle/RoomListing'
-import Search from '@/components/discussion-circle/Search'
 import { defaultRooms, defaultMessages, defaultPeople } from './defaults'
 import Rooms from "@/components/discussion-circle/Rooms"
 
