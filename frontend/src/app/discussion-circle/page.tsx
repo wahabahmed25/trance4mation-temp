@@ -1,11 +1,11 @@
 'use client'
 import { useEffect, useState } from "react"
 import { User } from "@/features/discussion-circle/types/User"
-import Carousel from '@/features/discussion-circle/components/discussion-circle/Carousel'
-import ChatLog from '@/features/discussion-circle/components/discussion-circle/ChatLog'
-import Navbar from '@/features/discussion-circle/components/discussion-circle/Navbar'
+import Carousel from '@/features/discussion-circle/components/Carousel'
+import ChatLog from '@/features/discussion-circle/components/ChatLog'
+import Navbar from '@/features/discussion-circle/components/Navbar'
 import { defaultRooms, defaultMessages, defaultPeople } from './defaults'
-import Rooms from "@/features/discussion-circle/components/discussion-circle/Rooms"
+import Rooms from "@/features/discussion-circle/components/Rooms"
 
 
 export default function DiscussionCircle() {
