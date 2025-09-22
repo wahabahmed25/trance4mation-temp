@@ -23,6 +23,46 @@ function Home() {
         }
     };
 
+    const testimonials = [
+        {
+            quote: "A game that resonated with my experience",
+            author: "Sarah M.",
+            image: "/src/assets/ex_testimonal.png"
+        },
+        {
+            quote: "This platform helped me understand I wasn't alone in my struggles",
+            author: "Alex Rodriguez", 
+            image: "/src/assets/ex_testimonal.png"
+        },
+        {
+            quote: "The interactive experiences gave me tools I never knew I needed",
+            author: "Jordan Kim",
+            image: "/src/assets/ex_testimonal.png"
+        },
+        {
+            quote: "Finally, a safe space where I could explore my mental health journey",
+            author: "Morgan Taylor",
+            image: "/src/assets/ex_testimonal.png"
+        }
+    ];
+
+    // Pointer to the testimonials carousel div
+    const testimonialsRef = useRef<HTMLDivElement>(null);
+
+    const scrollTestimonialsLeft = () => {
+        // If the testimonials div exists, scroll it to the left
+        if (testimonialsRef.current) {
+            testimonialsRef.current.scrollBy({ left: -920, behavior: 'smooth' }); // testimonial card width + gap
+        }
+    };
+
+    const scrollTestimonialsRight = () => {
+        // If the testimonials div exists, scroll it to the right
+        if (testimonialsRef.current) {
+            testimonialsRef.current.scrollBy({ left: 920, behavior: 'smooth' }); // testimonial card width + gap
+        }
+    };
+
     return (
         <div className="home-page">
 
@@ -65,13 +105,24 @@ function Home() {
 
             <section className="testimonials-section">
                 <h2>Hear Their Stories</h2>
-                <div className='testimonials-container'>
-                    <img className='testimonal-img' src="/src/assets/ex_testimonal.png" alt="" />
-
-                    <div className='testimonal-quote'>
-                        <p>"A game that resonated with my experience"</p>
-
+                <div className="testimonials-carousel-wrapper">
+                    <button className="carousel-arrow carousel-arrow-left" onClick={scrollTestimonialsLeft}>
+                        &#8249;
+                    </button>
+                    <div className="testimonials-container" ref={testimonialsRef}>
+                        {testimonials.map((testimonial, index) => (
+                            <div key={index} className="testimonial-card">
+                                <img className="testimonial-img" src={testimonial.image} alt={testimonial.author} />
+                                <div className="testimonial-quote">
+                                    <p>"{testimonial.quote}"</p>
+                                    <span className="testimonial-author">- {testimonial.author}</span>
+                                </div>
+                            </div>
+                        ))}
                     </div>
+                    <button className="carousel-arrow carousel-arrow-right" onClick={scrollTestimonialsRight}>
+                        &#8250;
+                    </button>
                 </div>
             </section>
 
