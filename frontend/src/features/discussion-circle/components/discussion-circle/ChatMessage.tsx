@@ -1,4 +1,4 @@
-import { Message } from "@/types/Message";
+import { Message } from "@/features/discussion-circle/types/Message";
 
 export default function ChatMessage({message}: {message: Message}) {
     return (

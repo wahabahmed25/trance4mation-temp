@@ -1,4 +1,4 @@
-import { Message } from "@/types/Message"
+import { Message } from "@/features/discussion-circle/types/Message"
 import ChatMessage from "./ChatMessage"
 import ChatInput from "./ChatInput"
 

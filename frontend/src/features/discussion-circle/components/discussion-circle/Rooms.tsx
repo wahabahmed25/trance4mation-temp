@@ -1,4 +1,4 @@
-import { Room } from "@/types/Room";
+import { Room } from "@/features/discussion-circle/types/Room";
 import RoomListing from "./RoomListing";
 import Search from "./Search";
 

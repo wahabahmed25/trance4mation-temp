@@ -1,4 +1,4 @@
-import { User } from "@/types/User"
+import { User } from "@/features/discussion-circle/types/User"
 
 export type Message = {
     text: string,

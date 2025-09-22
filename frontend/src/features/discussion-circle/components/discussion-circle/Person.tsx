@@ -1,4 +1,4 @@
-import { User } from "@/types/User"
+import { User } from "@/features/discussion-circle/types/User"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 

@@ -1,6 +1,6 @@
-import { Message } from "@/types/Message"
-import { Room } from "@/types/Room"
-import { User } from "@/types/User"
+import { Message } from "@/features/discussion-circle/types/Message"
+import { Room } from "@/features/discussion-circle/types/Room"
+import { User } from "@/features/discussion-circle/types/User"
 
 export const defaultPeople: User[] = [
     {name: "John", icon: "/vercel.svg", id: 0},

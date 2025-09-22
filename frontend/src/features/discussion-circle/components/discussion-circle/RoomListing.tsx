@@ -1,4 +1,4 @@
-import { Room } from "@/types/Room"
+import { Room } from "@/features/discussion-circle/types/Room"
 import Image from "next/image"
 
 export default function RoomListing({room}: {room: Room}) {
