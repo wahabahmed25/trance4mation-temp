@@ -52,14 +52,14 @@ function Home() {
     const scrollTestimonialsLeft = () => {
         // If the testimonials div exists, scroll it to the left
         if (testimonialsRef.current) {
-            testimonialsRef.current.scrollBy({ left: -920, behavior: 'smooth' }); // testimonial card width + gap
+            testimonialsRef.current.scrollBy({ left: -820, behavior: 'smooth' }); // testimonial card width + gap
         }
     };
 
     const scrollTestimonialsRight = () => {
         // If the testimonials div exists, scroll it to the right
         if (testimonialsRef.current) {
-            testimonialsRef.current.scrollBy({ left: 920, behavior: 'smooth' }); // testimonial card width + gap
+            testimonialsRef.current.scrollBy({ left: 820, behavior: 'smooth' }); // testimonial card width + gap
         }
     };
 
