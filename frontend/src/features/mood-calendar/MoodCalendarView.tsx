@@ -1,87 +1,95 @@
 "use client";
-
 import { useState } from "react";
+import { addMonths, subMonths } from "date-fns";
 import { CalendarGrid } from "./components/CalendarGrid";
-import { SummarySidebar } from "./components/SummarySidebar";
 import { MoodPicker } from "./components/MoodPicker";
+import { SummarySidebar } from "./components/SummarySidebar";
 import { ReminderToast } from "./components/ReminderToast";
-import { addDays, startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "./utils/date";
-import type { MoodDay, MoodType } from "./types";
-
-const INITIAL_MOODS: Record<string, MoodType | null> = {}; 
-// key = "YYYY-MM-DD", value = mood emoji key (e.g., "happy") or null
+import { generateMonthDays } from "./utils/calendar";
+import type { MoodType } from "./types";
 
 export default function MoodCalendarView() {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const [moodsByDay, setMoodsByDay] = useState<Record<string, MoodType | null>>(INITIAL_MOODS);
-  const [pickerFor, setPickerFor] = useState<string | null>(null); // date key
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [moodsByDay, setMoodsByDay] = useState<Record<string, MoodType | null>>({});
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Construct visible days (full weeks covering the month)
-  const monthStart = startOfMonth(selectedDate);
-  const monthEnd = endOfMonth(selectedDate);
-  const gridStart = startOfWeek(monthStart);
-  const gridEnd = endOfWeek(monthEnd);
+  function handlePick(dateKey: string) {
+    setSelectedDate(dateKey);
+  }
 
-  const days: MoodDay[] = [];
-  for (let d = gridStart; d <= gridEnd; d = addDays(d, 1)) {
-    const key = d.toISOString().slice(0, 10);
-    days.push({
-      date: d,
-      key,
-      mood: moodsByDay[key] ?? null,
-      isCurrentMonth: d.getMonth() === selectedDate.getMonth(),
-      isToday: key === new Date().toISOString().slice(0,10),
-    });
+  function handleSelectMood(mood: MoodType) {
+    if (!selectedDate) return;
+    setMoodsByDay((prev) => ({ ...prev, [selectedDate]: mood }));
+    setSelectedDate(null);
   }
-  function setMood(dateKey: string, mood: MoodType) {
-    setMoodsByDay(prev => ({ ...prev, [dateKey]: mood }));
-    setPickerFor(null);
-  }
-// line 44 -> change main calendar bar color
-// line 72 -> change sidebar color
+
+  const days = generateMonthDays(currentMonth, moodsByDay);
+
   return (
-    <main className="mx-auto grid max-w-6xl grid-cols-1 gap-6 p-6 md:grid-cols-[1fr_320px]">
-      <section className="rounded-2xl border bg-violet-400 p-4 shadow-sm">
-        <header className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-semibold">Mood Calendar</h1>
-          <div className="flex items-center gap-2">
-            <button
-              className="rounded-lg border px-3 py-1 hover:bg-red-400"
-              onClick={() => setSelectedDate(addDays(startOfMonth(selectedDate), -1))}
-            >
-              ◀ Prev
-            </button>
-            <div className="text-sm text-black">
-              {selectedDate.toLocaleString(undefined, { month: "long", year: "numeric" })}
-            </div>
-            <button
-              className="rounded-lg border px-3 py-1 hover:bg-red-400"
-              onClick={() => setSelectedDate(addDays(endOfMonth(selectedDate), 1))}
-            >
-              Next ▶
-            </button>
+    <main className="min-h-screen bg-gradient-to-br from-brand-paper to-white p-4 sm:p-6 lg:p-8">
+      {/* Header */}
+      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-brand-teal sm:text-4xl">
+            Mood Calendar
+          </h1>
+          <p className="text-sm text-brand-ink/70">
+            Track your daily emotions and see your growth journey.
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <button
+            className="rounded-lg border border-brand-teal/20 px-3 py-1.5 text-sm text-brand-teal hover:bg-brand-teal/10 transition"
+            onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+          >
+            ◀ Prev
+          </button>
+          <div className="rounded-lg bg-white px-4 py-1.5 text-sm font-medium text-brand-ink shadow-card">
+            {currentMonth.toLocaleString(undefined, { month: "long", year: "numeric" })}
           </div>
-        </header>
+          <button
+            className="rounded-lg border border-brand-teal/20 px-3 py-1.5 text-sm text-brand-teal hover:bg-brand-teal/10 transition"
+            onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+          >
+            Next ▶
+          </button>
+        </div>
+      </header>
 
-        <CalendarGrid
-          days={days}
-          onPick={(dateKey) => setPickerFor(dateKey)}
-        />
-      </section>
+      {/* Layout */}
+      <div className="flex flex-col gap-6 lg:flex-row">
+        <section className="flex-1 rounded-2xl border border-brand-ink/10 bg-white p-4 shadow-card hover:shadow-hover transition">
+          <CalendarGrid days={days} onPick={handlePick} />
+        </section>
 
-      <aside className="rounded-2xl border bg-violet-400 p-4 shadow-sm">
-        <SummarySidebar moodsByDay={moodsByDay} monthDate={selectedDate} />
-      </aside>
+        <aside className="lg:w-80">
+          <div
+            className="mb-2 flex cursor-pointer items-center justify-between lg:hidden"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+          >
+            <h3 className="text-lg font-bold text-brand-teal">This Month</h3>
+            <span className="text-sm text-brand-ink/70">{sidebarOpen ? "▴" : "▾"}</span>
+          </div>
+          {sidebarOpen && (
+            <div className="rounded-2xl border border-brand-ink/10 bg-white p-4 shadow-card hover:shadow-hover transition">
+              <SummarySidebar moodsByDay={moodsByDay} monthDate={currentMonth} />
+            </div>
+          )}
+        </aside>
+      </div>
 
-      <ReminderToast />
-
-      {pickerFor && (
+      {/* Mood Picker */}
+      {selectedDate && (
         <MoodPicker
-          dateKey={pickerFor}
-          onSelect={(m) => setMood(pickerFor, m)}
-          onClose={() => setPickerFor(null)}
+          dateKey={selectedDate}
+          onSelect={handleSelectMood}
+          onClose={() => setSelectedDate(null)}
         />
       )}
+
+      <ReminderToast />
     </main>
   );
 }
