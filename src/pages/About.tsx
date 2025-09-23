@@ -77,20 +77,15 @@ function About() {
 
                <br></br>
 
-               <div className="message-box">
-                  <label htmlFor="text-inbox"></label>
-                  <input
-                     type="text"
-                     id="email-address"
-                     name="emailAddress"
-                     placeholder="Your Message"
-                  />
-               </div>
+               <textarea
+                  className="message-box"
+                  placeholder="Your message here"
+               ></textarea>
 
                <br></br>
 
                <div className="submit-button">
-                  <input type="submit" value="Submit" />
+                  <button>Submit</button>
                </div>
             </div>
          </section>
@@ -128,117 +123,302 @@ function About() {
             <h1>Meet the Interns</h1>
             <div>
                <ul className="interns-container">
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 1"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
+                  <h2>
+                     Speak to Me Game || Trill Addictions Prevention & Recovery
+                     Game
+                  </h2>
+                  <div className="intern-group">
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 1"
+                           />
+                           <div>
+                              <h2>Michael Coleman</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Sasha Shifrina</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Kelvin Chen</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>An Van</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Zhen Tao Pan</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
                   </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
+                  <h2>
+                     Play to Heal || Campus Connection Platform Development Team
+                     || Keep It Real & Keep It Real 100 Games
+                  </h2>
+                  <div className="intern-group">
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 1"
+                           />
+                           <div>
+                              <h2>Wahab Ahmed</h2>
+                              <h2>Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Ragib</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Zhen Tao Pan</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Efti Saroare</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Kevin Li</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Khadeja Ahmar</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
                   </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
+
+                  <h2>
+                     Call It Out Anti-Bullying Game || Remembrance Grief & Loss
+                     Support Game
+                  </h2>
+
+                  <div className="intern-group">
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 1"
+                           />
+                           <div>
+                              <h2>Faraaz Ali</h2>
+                              <h2>Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Gordon Mo</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Paulo Zapata</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Jan Calle-Ortiz</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
                   </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
+
+                  <h2>
+                     Landing Page Design & Development || Campus Resources
+                     Directory UI
+                  </h2>
+
+                  <div className="intern-group">
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 1"
+                           />
+                           <div>
+                              <h2>Jin Wang</h2>
+                              <h2>Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
+
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 2"
+                           />
+                           <div>
+                              <h2>Zhen Tao Pan</h2>
+                              <h2>Co-Lead</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
                   </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
-                  </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
-                  </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
-                  </div>
-                  <div>
-                     <li>
-                        <img
-                           src="/src/assets/intern_placeholder.jpeg"
-                           width="60%"
-                           alt="Intern 2"
-                        />
-                        <div>
-                           <h2>Intern Name</h2>
-                           <h2>Intern Role</h2>
-                           <h2>Intern Project</h2>
-                        </div>
-                     </li>
+
+                  <h2>Social Media & Digital Engagement Lead</h2>
+                  <div className="intern-group">
+                     <div>
+                        <li>
+                           <img
+                              src="/src/assets/intern_placeholder.jpeg"
+                              width="60%"
+                              alt="Intern 1"
+                           />
+                           <div>
+                              <h2>Jan Calle-Ortiz</h2>
+                              <h2>Role</h2>
+                              <h2>Insert sentence here</h2>
+                           </div>
+                        </li>
+                     </div>
                   </div>
                </ul>
             </div>
