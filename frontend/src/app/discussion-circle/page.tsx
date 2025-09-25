@@ -4,9 +4,9 @@ import { User } from "@/features/discussion-circle/types/User"
 import Carousel from '@/features/discussion-circle/components/Carousel'
 import ChatLog from '@/features/discussion-circle/components/ChatLog'
 import Navbar from '@/features/discussion-circle/components/Navbar'
-import { defaultRooms, defaultMessages, defaultPeople } from './defaults'
-import Rooms from "@/features/discussion-circle/components/Rooms"
-
+import { defaultRooms, defaultMessages, defaultPeople, YELLOW, PURPLE, TEAL, BLUE, RED } from './defaults'
+import TextInput from "@/features/discussion-circle/components/TextInput"
+import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState(defaultRooms)
@@ -34,16 +34,19 @@ export default function DiscussionCircle() {
 
     return (
         <div className="flex flex-row h-screen">
-            {(!collapsed) ? <Rooms rooms={defaultRooms}/> : <></>}
+            {(!collapsed) ? <RoomBrowser rooms={roomListings}/> : <></>}
             
-            <div className="flex flex-col bg-blue-200 w-3/4 grow">
+            <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
                 <Navbar/>
-                <ChatLog messages={defaultMessages}/>
-                <div style={{
-                    height: "80px",
-                    marginTop: "50px"
-                }}>
-                    <Carousel users={people}/>
+                <div className="flex flex-col p-2 grow justify-end gap-2">
+                    <ChatLog messages={defaultMessages}/>
+                    <TextInput placeholder="Message"/>
+                    <div style={{
+                        height: "80px",
+                        marginTop: "50px"
+                    }}>
+                        <Carousel users={people}/>
+                    </div>
                 </div>
             </div>
         </div>

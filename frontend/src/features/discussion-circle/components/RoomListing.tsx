@@ -1,10 +1,25 @@
 import { Room } from "@/features/discussion-circle/types/Room"
 import Image from "next/image"
+import { RED, YELLOW, POPPINS_BOLD, MERRIWEATHER, TEAL } from "@/app/discussion-circle/defaults"
 
-export default function RoomListing({room}: {room: Room}) {
+interface RoomListing {
+    room: Room, 
+    onRoomClick?: (room: Room) => void | undefined
+}
+
+export default function RoomListing({room, onRoomClick}: RoomListing) {
     return (
-        <div className="flex flex-col bg-blue-200 rounded-md">
-            <div className="flex grow-2 bg-blue-100 m-1 rounded-md items-center px-1 gap-2">
+        <div 
+        style={{
+            backgroundColor: YELLOW,
+            borderColor: TEAL
+        }}
+        className="flex flex-col rounded-md border-2"
+        onClick={() => onRoomClick ? onRoomClick(room): {}}
+        >
+            <div 
+            style={{backgroundColor: RED}}
+            className="flex grow-2 m-1 rounded-md items-center px-1 gap-2">
                 {/* Room icon */}
                 <Image 
                 src={room.icon}
@@ -16,12 +31,12 @@ export default function RoomListing({room}: {room: Room}) {
 
                 <div className="flex flex-col">
                     {/* Room name */}
-                    <div className="text-base">
+                    <div className={`text-base ${POPPINS_BOLD.className}`}>
                         {room.name}
                     </div>
 
                     {/* Room description */}
-                    <div className="text-sm">
+                    <div className={`text-sm ${MERRIWEATHER}`}>
                         {room.description}
                     </div>
                 </div>
@@ -29,7 +44,7 @@ export default function RoomListing({room}: {room: Room}) {
 
             <div className="flex grow-1 gap-4">
                 {/* Participant count */}
-                <div className="flex items-center w-12">
+                <div className={`flex items-center w-12 ${MERRIWEATHER}`}>
                     <Image 
                     src={"/user-regular-full.svg"}
                     alt="participants"
@@ -43,7 +58,7 @@ export default function RoomListing({room}: {room: Room}) {
                 </div>
 
                 {/* Time limit */}
-                <div className="flex items-center w-12">
+                <div className={`flex items-center w-12 ${MERRIWEATHER}`}>
                     <Image 
                     src={"/alarm-clock-regular-full.svg"}
                     alt="time limit"
@@ -55,7 +70,7 @@ export default function RoomListing({room}: {room: Room}) {
                 </div>
 
                 {/* Number of rounds */}
-                <div className="flex items-center w-12">
+                <div className={`flex items-center w-12 ${MERRIWEATHER}`}>
                     <Image 
                     src={"/rotate-left-regular-full.svg"}
                     alt="number of rounds"

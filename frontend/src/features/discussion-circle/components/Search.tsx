@@ -1,22 +1,33 @@
 import Image from "next/image"
+import { RED } from "@/app/discussion-circle/defaults"
+import ImageButton from "./ImageButton"
+import TextInput from "./TextInput"
+import { ChangeEventHandler, MouseEventHandler } from "react"
 
-export default function Search() {
+interface SearchProps {
+    onCreateButtonClick?: MouseEventHandler<HTMLImageElement> | undefined, 
+    onQuery?: ChangeEventHandler<HTMLInputElement> | undefined
+}
+
+export default function Search({onCreateButtonClick, onQuery}: SearchProps) {
     return (
-        <div className="flex w-full bg-blue-300 p-2">
-            <input
-            type="text"
-            placeholder="Room Code"
-            className="bg-blue-200 rounded-full text-base p-1 px-2 w-full"
-            >
-            </input>
-            
-            <Image
-            src={"/plus-regular-full.svg"}
-            alt="Create Room"
-            width={30}
-            height={30}
-            priority
-            />
+        <div 
+        className="flex flex-col p-2 gap-2"
+        style={{backgroundColor: RED}}
+        >
+            <div 
+            className="flex w-full">
+                <TextInput
+                placeholder="Room Code"
+                onChange={onQuery}
+                />
+
+                <ImageButton
+                src={"/plus-regular-full.svg"}
+                alt="Create Room"
+                onClick={onCreateButtonClick}
+                />
+            </div>
         </div>
     )
 }

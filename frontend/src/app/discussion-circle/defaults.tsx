@@ -1,6 +1,20 @@
 import { Message } from "@/features/discussion-circle/types/Message"
 import { Room } from "@/features/discussion-circle/types/Room"
 import { User } from "@/features/discussion-circle/types/User"
+import { Poppins, Merriweather } from "next/font/google"
+
+export const POPPINS_BOLD = Poppins({
+    weight: "700"
+})
+export const MERRIWEATHER = Merriweather({
+    weight: "400"
+})
+
+export const RED = "#ff8661"
+export const TEAL = "#006D77"
+export const YELLOW = "#FFD166"
+export const BLUE = "#55CCF2"
+export const PURPLE = "#985DE5"
 
 export const defaultPeople: User[] = [
     {name: "John", icon: "/vercel.svg", id: 0},
