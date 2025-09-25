@@ -1,4 +1,9 @@
 /* About Page Styles */
+h2 {
+   color: black;
+   text-shadow: none;
+   font-size: 50px;
+}
 /* ==========================================
                 ABOUT SECTION
    ========================================== */
@@ -7,11 +12,66 @@
    flex-direction: row;
    align-items: center;
    padding: 1%;
+   border: 0px;
 }
 
 /* ==========================================
                 CONTACT US SECTION
    ========================================== */
+
+.contact-us-section {
+   background: radial-gradient(circle, rgba(110, 211, 255, 1) 0%, rgba(255, 127, 127, 1) 100%);
+}
+
+.contact-us {
+   display: flex;
+   flex-direction: column;
+   padding: 2%;
+   border: none;
+   max-width: 600px;
+   width: 100%;
+}
+.contact-us-container {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 5%;
+   padding: 2%;
+   border: none;
+   align-content: center;
+   justify-self: center;
+}
+
+.socmed-icons {
+   display: flex;
+   flex-direction: row;
+   gap: 20px;
+   padding: 2%;
+   border: none;
+   align-content: center;
+   justify-self: center;
+}
+
+#full-name {
+   width: 100%;
+   max-width: 600px;
+   padding: 12px;
+   font-size: 16px;
+
+   box-sizing: border-box;
+   outline: none;
+   border: none;
+}
+
+#email-address {
+   width: 100%;
+   max-width: 600px;
+   padding: 12px;
+   font-size: 16px;
+   box-sizing: border-box;
+   outline: none;
+   border: none;
+}
 .message-box {
    width: 100%;
    max-width: 600px;
@@ -20,6 +80,7 @@
    font-size: 16px;
    resize: vertical;
    box-sizing: border-box;
+   background-color: var(--white);
 }
 /* ==========================================
                 FOUNDER SECTION
@@ -35,6 +96,10 @@
 /* ==========================================
                 INTERNS SECTION
    ========================================== */
+.interns {
+   background: radial-gradient(circle at 20% 80%, var(--sky-blue-30) 0%, transparent 50%);
+}
+
 .interns-container {
    margin: 2%;
 }
