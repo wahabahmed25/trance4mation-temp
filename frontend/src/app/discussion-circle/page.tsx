@@ -1,12 +1,10 @@
 'use client'
 import { useEffect, useState } from "react"
 import { UserData } from "@/features/discussion-circle/types/UserData"
-import Carousel from '@/features/discussion-circle/components/Carousel'
-import ChatLog from '@/features/discussion-circle/components/ChatLog'
-import Navbar from '@/features/discussion-circle/components/Navbar'
-import { defaultRooms, defaultMessages, defaultPeople, YELLOW} from './defaults'
-import TextInput from "@/features/discussion-circle/components/TextInput"
+import { defaultRooms, defaultPeople} from './defaults'
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
+import Room from "@/features/discussion-circle/components/Room"
+import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState(defaultRooms)
@@ -36,19 +34,8 @@ export default function DiscussionCircle() {
         <div className="flex flex-row h-screen">
             {(!collapsed) ? <RoomBrowser rooms={roomListings}/> : <></>}
             
-            <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
-                <Navbar/>
-                <div className="flex flex-col p-2 grow justify-end gap-2">
-                    <ChatLog messages={defaultMessages}/>
-                    <TextInput placeholder="Message"/>
-                    <div style={{
-                        height: "80px",
-                        marginTop: "50px"
-                    }}>
-                        <Carousel users={people}/>
-                    </div>
-                </div>
-            </div>
+            {/* <Room/> */}
+            <RoomCreationMenu/>
         </div>
     )
 }

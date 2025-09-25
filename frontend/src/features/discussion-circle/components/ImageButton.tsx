@@ -7,10 +7,11 @@ interface ImageButtonProps {
     alt?: string,
     width?: number, 
     height?: number,
-    style?: CSSProperties
+    style?: CSSProperties,
+    className?: string
 }
 
-export default function ImageButton({onClick, src, alt = src, width = 30, height = 30, style = {}}: ImageButtonProps) {
+export default function ImageButton({onClick, src, alt = src, width = 30, height = 30, style = {}, className}: ImageButtonProps) {
     return (
         <Image
         src={src}
@@ -22,6 +23,7 @@ export default function ImageButton({onClick, src, alt = src, width = 30, height
             cursor: "pointer",
             ...style
         }}
+        className={className}
         onClick={onClick}
         />
     )
