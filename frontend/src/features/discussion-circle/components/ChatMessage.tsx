@@ -1,4 +1,4 @@
-import { Message } from "@/features/discussion-circle/types/Message";
+import { Message } from "@/features/discussion-circle/types/MessageData";
 import { BLUE, TEAL, YELLOW } from "@/app/discussion-circle/defaults";
 
 export default function ChatMessage({message}: {message: Message}) {

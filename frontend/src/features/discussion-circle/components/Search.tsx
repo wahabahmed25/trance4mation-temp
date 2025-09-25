@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { RED } from "@/app/discussion-circle/defaults"
 import ImageButton from "./ImageButton"
 import TextInput from "./TextInput"

@@ -1,4 +1,4 @@
-import { User } from "@/features/discussion-circle/types/User"
+import { User } from "@/features/discussion-circle/types/UserData"
 import Person from "./Person"
 import { CarouselElement } from "./CarouselElement"
 import React from "react"

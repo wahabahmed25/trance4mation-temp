@@ -1,14 +1,14 @@
-import { Room } from "@/features/discussion-circle/types/Room";
+import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import RoomListing from "./RoomListing";
 import Search from "./Search";
-import { TEAL, PURPLE, BLUE } from "@/app/discussion-circle/defaults";
-import { ChangeEventHandler, InputEventHandler, MouseEventHandler } from "react";
+import { TEAL, BLUE } from "@/app/discussion-circle/defaults";
+import { ChangeEventHandler, MouseEventHandler } from "react";
 
 interface RoomBrowserProps {
-    rooms: Room[],
+    rooms: RoomData[],
     onQuery?: ChangeEventHandler<HTMLInputElement>,
     onCreateButtonClick?: MouseEventHandler<HTMLImageElement>,
-    onRoomClick?: (room: Room) => void | undefined
+    onRoomClick?: (room: RoomData) => void | undefined
 }
 
 export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRoomClick}: RoomBrowserProps) {

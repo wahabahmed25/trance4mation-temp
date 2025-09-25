@@ -1,4 +1,4 @@
-export type Room = {
+export type RoomData = {
     isAnonymous: boolean,
     numParticipants: number,
     maxParticipants: number,

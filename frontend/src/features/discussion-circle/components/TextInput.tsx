@@ -1,4 +1,3 @@
-import { BLUE, YELLOW } from "@/app/discussion-circle/defaults"
 import { ChangeEventHandler, CSSProperties, FormEventHandler } from "react"
 
 interface TextInputProps {

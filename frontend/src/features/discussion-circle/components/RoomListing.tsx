@@ -1,10 +1,10 @@
-import { Room } from "@/features/discussion-circle/types/Room"
+import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import Image from "next/image"
 import { RED, YELLOW, POPPINS_BOLD, MERRIWEATHER, TEAL } from "@/app/discussion-circle/defaults"
 
 interface RoomListing {
-    room: Room, 
-    onRoomClick?: (room: Room) => void | undefined
+    room: RoomData, 
+    onRoomClick?: (room: RoomData) => void | undefined
 }
 
 export default function RoomListing({room, onRoomClick}: RoomListing) {

@@ -1,4 +1,4 @@
-import { Message } from "@/features/discussion-circle/types/Message"
+import { Message } from "@/features/discussion-circle/types/MessageData"
 import ChatMessage from "./ChatMessage"
 import ChatInput from "./TextInput"
 import { YELLOW } from "@/app/discussion-circle/defaults"

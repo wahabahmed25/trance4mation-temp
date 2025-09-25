@@ -1,4 +1,3 @@
-import Image from "next/image"
 import { RED, POPPINS_BOLD } from "@/app/discussion-circle/defaults"
 import ImageButton from "./ImageButton"
 import { MouseEventHandler } from "react"
