@@ -33,7 +33,6 @@ export function SummarySidebar({
 
   return (
     <div>
-      <h3 className="text-lg font-bold text-teal">This Month</h3>
       <p className="mt-1 text-sm text-ink/70">
         {monthDate.toLocaleString(undefined, { month: "long", year: "numeric" })}
       </p>
@@ -58,7 +57,7 @@ export function SummarySidebar({
       </div>
 
       <div className="mt-6 rounded-2xl border border-teal/20 bg-teal/10 p-3 text-sm text-teal">
-        Log once a day to unlock weekly insights and gentle tips.
+        Log once a day to unlock weekly insights and tips.
       </div>
     </div>
   );

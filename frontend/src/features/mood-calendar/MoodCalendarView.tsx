@@ -1,12 +1,14 @@
 "use client";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 import { addMonths, subMonths } from "date-fns";
 import { CalendarGrid } from "./components/CalendarGrid";
 import { MoodPicker } from "./components/MoodPicker";
 import { SummarySidebar } from "./components/SummarySidebar";
 import { ReminderToast } from "./components/ReminderToast";
 import { generateMonthDays } from "./utils/calendar";
-import type { MoodType } from "./types";
+import type { MoodType } from "@/features/mood-calendar/types";
+import { saveMood, loadMoods } from "@/lib/api/moods";
 
 export default function MoodCalendarView() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -14,13 +16,43 @@ export default function MoodCalendarView() {
   const [moodsByDay, setMoodsByDay] = useState<Record<string, MoodType | null>>({});
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
+  // TODO: replace with real Firebase Auth user later
+  const userId = "testUser";
+
+  // ✅ Load moods from Firestore when the month changes
+  useEffect(() => {
+    async function fetchMoods() {
+      try {
+        const prefix = `${currentMonth.getFullYear()}-${String(
+          currentMonth.getMonth() + 1
+        ).padStart(2, "0")}`;
+        const loaded = await loadMoods(userId, prefix);
+        setMoodsByDay(loaded);
+      } catch (err) {
+        console.error("Error loading moods:", err);
+      }
+    }
+    fetchMoods();
+  }, [currentMonth]);
+
   function handlePick(dateKey: string) {
     setSelectedDate(dateKey);
   }
 
-  function handleSelectMood(mood: MoodType) {
+  async function handleSelectMood(mood: MoodType) {
     if (!selectedDate) return;
+
+    // Update UI immediately
     setMoodsByDay((prev) => ({ ...prev, [selectedDate]: mood }));
+
+    // Save to Firestore
+    try {
+      await saveMood(userId, selectedDate, mood);
+      console.log("Mood saved:", mood, selectedDate);
+    } catch (err) {
+      console.error("Error saving mood:", err);
+    }
+
     setSelectedDate(null);
   }
 
@@ -47,7 +79,10 @@ export default function MoodCalendarView() {
             ◀ Prev
           </button>
           <div className="rounded-lg bg-white px-4 py-1.5 text-sm font-medium text-brand-ink shadow-card">
-            {currentMonth.toLocaleString(undefined, { month: "long", year: "numeric" })}
+            {currentMonth.toLocaleString(undefined, {
+              month: "long",
+              year: "numeric",
+            })}
           </div>
           <button
             className="rounded-lg border border-brand-teal/20 px-3 py-1.5 text-sm text-brand-teal hover:bg-brand-teal/10 transition"
@@ -70,7 +105,9 @@ export default function MoodCalendarView() {
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
             <h3 className="text-lg font-bold text-brand-teal">This Month</h3>
-            <span className="text-sm text-brand-ink/70">{sidebarOpen ? "▴" : "▾"}</span>
+            <span className="text-sm text-brand-ink/70">
+              {sidebarOpen ? "▴" : "▾"}
+            </span>
           </div>
           {sidebarOpen && (
             <div className="rounded-2xl border border-brand-ink/10 bg-white p-4 shadow-card hover:shadow-hover transition">

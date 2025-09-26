@@ -42,9 +42,9 @@ export function CalendarGrid({
                 "aspect-square rounded-xl sm:rounded-2xl",
                 "border p-1 sm:p-2 md:p-3 flex flex-col justify-between",
                 "text-xs sm:text-sm md:text-base font-medium",
-                "hover:shadow-md hover:-translate-y-[1px] transition",
+                "hover:shadow-md hover:-translate-y-[1px] transition text-teal-700",
                 moodClass,
-                d.isCurrentMonth ? "" : "opacity-50",
+                d.isCurrentMonth ? "" : "opacity-50 text-teal-800",
                 d.isToday ? "ring-2 ring-teal" : "",
               ].join(" ")}
             >
