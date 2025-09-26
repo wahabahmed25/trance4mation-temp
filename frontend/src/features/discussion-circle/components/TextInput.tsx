@@ -16,7 +16,6 @@ export default function TextInput({ placeholder="", style, onChange, onSubmit, c
         className={`text-base p-1 px-2 border-b-1 ${className}`}
         style={{
             minWidth: 0,
-            flexGrow: 1,
             ...style
         }}
         onChange={onChange}

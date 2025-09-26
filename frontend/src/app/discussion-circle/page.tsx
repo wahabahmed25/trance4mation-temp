@@ -34,8 +34,8 @@ export default function DiscussionCircle() {
         <div className="flex flex-row h-screen">
             {(!collapsed) ? <RoomBrowser rooms={roomListings}/> : <></>}
             
-            {/* <Room/> */}
-            <RoomCreationMenu/>
+            <Room/>
+            {/* <RoomCreationMenu/> */}
         </div>
     )
 }

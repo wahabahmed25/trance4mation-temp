@@ -19,6 +19,9 @@ export default function Search({onCreateButtonClick, onQuery}: SearchProps) {
                 <TextInput
                 placeholder="Room Code"
                 onChange={onQuery}
+                style={{
+                    flexGrow: 1
+                }}
                 />
 
                 <ImageButton

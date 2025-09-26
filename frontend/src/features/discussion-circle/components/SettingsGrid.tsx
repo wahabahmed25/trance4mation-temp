@@ -3,7 +3,7 @@ import SettingsCell from "./SettingsCell";
 
 export default function SettingsGrid() {
     return (
-        <div>
+        <div className="flex flex-col gap-2">
             <div className={`${POPPINS_BOLD.className}`}>
                 Settings
             </div>
