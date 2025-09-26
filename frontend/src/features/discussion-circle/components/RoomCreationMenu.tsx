@@ -1,15 +1,12 @@
-import { POPPINS_BOLD, YELLOW, defaultMessages, defaultPeople } from "@/app/discussion-circle/defaults";
-import { RoomData } from "../types/RoomData";
-import Carousel from "./Carousel";
-import ChatLog from "./ChatLog";
-import Navbar from "./Navbar";
+import { POPPINS_BOLD, YELLOW} from "@/app/discussion-circle/defaults";
 import TextInput from "./TextInput";
 import Image from "next/image";
+import SettingsGrid from "./SettingsGrid";
 
 export default function RoomCreationMenu() {
     return (
-        <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
-            <div className="flex gap-6 p-6 items-start">
+        <div className="flex flex-col w-3/4 grow p-6 gap-4" style={{backgroundColor: YELLOW}}>
+            <div className="flex gap-6 items-start">
                 <div className="rounded-full size-24 border-1 shrink-0 flex justify-center items-center">
                     <Image 
                     src={"/vercel.svg"}
@@ -35,6 +32,7 @@ export default function RoomCreationMenu() {
                     </textarea>
                 </div>
             </div>
+            <SettingsGrid/>
         </div>
     )
 }

@@ -3,6 +3,30 @@ import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
+
+export const DISCUSSION_CIRCLE_SETTINGS = [
+    {
+        image: "/user-regular-full.svg",
+        label: "Participants",
+        type: "number"
+    },
+    {
+        image: "/alarm-clock-regular-full.svg",
+        label: "Time Limit",
+        type: "number"
+    },
+    {
+        image: "/rotate-left-regular-full.svg",
+        label: "Rounds",
+        type: "number"
+    },
+    {
+        image: "/mask-solid-full.svg",
+        label: "Anonymous",
+        type: "checkbox"
+    },
+]
+
 export const POPPINS_BOLD = Poppins({
     weight: "700"
 })
