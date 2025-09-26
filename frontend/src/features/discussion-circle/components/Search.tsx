@@ -17,7 +17,7 @@ export default function Search({onCreateButtonClick, onQuery}: SearchProps) {
             <div 
             className="flex w-full">
                 <TextInput
-                placeholder="Room Code"
+                placeholder="Search"
                 onChange={onQuery}
                 style={{
                     flexGrow: 1

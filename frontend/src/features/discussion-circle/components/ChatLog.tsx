@@ -1,9 +1,7 @@
-import { Message } from "@/features/discussion-circle/types/MessageData"
+import { MessageData } from "@/features/discussion-circle/types/MessageData"
 import ChatMessage from "./ChatMessage"
-import ChatInput from "./TextInput"
-import { YELLOW } from "@/app/discussion-circle/defaults"
 
-export default function ChatLog({messages}: {messages: Message[]}) {
+export default function ChatLog({messages}: {messages: MessageData[]}) {
     return (
         <div 
         className="flex flex-col gap-2"

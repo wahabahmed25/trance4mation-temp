@@ -1,9 +1,15 @@
 import Image from "next/image"
 import { DiscussionCircleSetting } from "../types/DiscussionCircleSetting"
+import { RED } from "@/app/discussion-circle/defaults"
 
-export default function SettingsCell({setting}: {setting: DiscussionCircleSetting}) {
+export default function SettingsCell({setting, onChange}: {setting: DiscussionCircleSetting, onChange: (label: string, value: unknown) => void}) {
     return(
-        <div className="flex gap-2 border-1 rounded-sm p-2">
+        <div 
+        className="flex gap-2 border-1 rounded-sm p-2"
+        style={{
+            backgroundColor: RED
+        }}
+        >
             <Image 
             className="grow-0"
             src={setting.image}
@@ -23,6 +29,7 @@ export default function SettingsCell({setting}: {setting: DiscussionCircleSettin
             className="w-12 grow-0"
             type={setting.type}
             placeholder="5"
+            onChange={(event) => {onChange(setting.label, event.target.value)}}
             />
         </div>
     )

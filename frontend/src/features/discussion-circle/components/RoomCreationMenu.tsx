@@ -1,17 +1,33 @@
-import { POPPINS_BOLD, YELLOW} from "@/app/discussion-circle/defaults";
+import { DEFAULT_ROOM_SETTINGS, POPPINS_BOLD, PURPLE, YELLOW} from "@/app/discussion-circle/defaults";
 import TextInput from "./TextInput";
 import Image from "next/image";
 import SettingsGrid from "./SettingsGrid";
 import Navbar from "./Navbar";
+import { MouseEventHandler, useState } from "react";
+import { RoomSettings } from "../types/RoomSettings";
 
-export default function RoomCreationMenu() {
+interface RoomCreationMenuProps {
+    onCloseButtonClick?: MouseEventHandler<HTMLImageElement>,
+    onConfirmButtonClick?: (settings: RoomSettings) => void 
+}
+
+export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
+    const [settings, setSettings] = useState(DEFAULT_ROOM_SETTINGS)
+
+    function changeSetting(setting: string, value: unknown) {
+        setSettings({
+            ...settings,
+            [setting]: value
+        })
+    }
+
     return (
         <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
             <Navbar 
             header="Room Creation"
             rightSideButtons={[{
                 icon: "/xmark-solid-full.svg",
-                onClick: () => {}
+                onClick: onCloseButtonClick
             }]}
             />
             <div className="flex flex-col p-6 gap-2">
@@ -29,6 +45,7 @@ export default function RoomCreationMenu() {
                         <TextInput
                         placeholder="Room Name"
                         className={POPPINS_BOLD.className}
+                        onChange={(event) => changeSetting("name", event.target.value)}
                         />
                         <textarea 
                         className="border-1 rounded-sm p-2 grow text-base"
@@ -36,12 +53,25 @@ export default function RoomCreationMenu() {
                         style={{
                             resize: "none",
                         }}
+                        onChange={(event) => changeSetting("description", event.target.value)}
                         >
                             
                         </textarea>
                     </div>
                 </div>
-                <SettingsGrid/>
+                <SettingsGrid onChange={changeSetting}/>
+            </div>
+            <div className="flex justify-center grow items-end p-6">
+                <button
+                className="border-1 p-2 rounded-sm w-40 text-center"
+                style={{
+                    backgroundColor: PURPLE,
+                    cursor: "pointer"
+                }}
+                onClick={() => onConfirmButtonClick ? onConfirmButtonClick(settings) : {}}
+                >
+                    Create and Join
+                </button>
             </div>
         </div>
     )

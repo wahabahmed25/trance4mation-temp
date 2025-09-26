@@ -1,22 +1,28 @@
 import { YELLOW, defaultMessages, defaultPeople } from "@/app/discussion-circle/defaults";
-import { RoomData } from "../types/RoomData";
 import Carousel from "./Carousel";
 import ChatLog from "./ChatLog";
 import Navbar from "./Navbar";
 import TextInput from "./TextInput";
+import { MouseEventHandler } from "react";
 
-export default function Room({roomData} : {roomData?: RoomData}) {
+interface RoomProps {
+    roomCode: string,
+    onMenuButtonClick?: MouseEventHandler<HTMLImageElement>,
+    onExitButtonClick?: MouseEventHandler<HTMLImageElement>
+}
+
+export default function Room({roomCode, onMenuButtonClick, onExitButtonClick} : RoomProps) {
     return (
         <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
             <Navbar 
-            header={roomData?.name}
+            header={roomCode}
             leftSideButtons={[{
                 icon: "chevron-right-regular-full.svg",
-                onClick: () => {}
+                onClick: onMenuButtonClick
             }]}
             rightSideButtons={[{
                 icon: "right-from-bracket-regular-full.svg",
-                onClick: () => {}
+                onClick: onExitButtonClick
             }]}
             />
             <div className="flex flex-col p-2 grow justify-end gap-2">

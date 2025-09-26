@@ -1,9 +1,9 @@
-import { User } from "@/features/discussion-circle/types/UserData"
+import { UserData } from "@/features/discussion-circle/types/UserData"
 import Person from "./Person"
 import { CarouselElement } from "./CarouselElement"
 import React from "react"
 
-export default function Carousel({users, radius = 100}: {users: User[], radius?: number}) {        
+export default function Carousel({users, radius = 100}: {users: UserData[], radius?: number}) {        
     return (
         <div style={{
             perspective: "1000px",

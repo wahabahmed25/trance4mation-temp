@@ -1,28 +1,43 @@
 import { MessageData } from "@/features/discussion-circle/types/MessageData"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
+import { RoomSettings } from "@/features/discussion-circle/types/RoomSettings"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
+export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
+    isAnonymous: false,
+    maxParticipants: 5,
+    colorTheme: "default",
+    timeLimit: 30,
+    rounds: 3,
+    name: "",
+    icon: "/globe.svg",
+    description: ""
+}
 
-export const DISCUSSION_CIRCLE_SETTINGS = [
+export const ROOM_SETTINGS = [
     {
         image: "/user-regular-full.svg",
         label: "Participants",
+        field: "participants",
         type: "number"
     },
     {
         image: "/alarm-clock-regular-full.svg",
         label: "Time Limit",
+        field: "timeLimit",
         type: "number"
     },
     {
         image: "/rotate-left-regular-full.svg",
         label: "Rounds",
+        field: "rounds",
         type: "number"
     },
     {
         image: "/mask-solid-full.svg",
         label: "Anonymous",
+        field: "isAnonymous",
         type: "checkbox"
     },
 ]

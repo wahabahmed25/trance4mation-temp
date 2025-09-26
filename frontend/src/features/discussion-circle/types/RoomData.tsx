@@ -1,12 +1,11 @@
-export type RoomData = {
-    isAnonymous: boolean,
+import { MessageData } from "./MessageData"
+import { RoomSettings } from "./RoomSettings"
+import { UserData } from "./UserData"
+
+export type RoomData = RoomSettings & {
     numParticipants: number,
-    maxParticipants: number,
-    colorTheme: string,
-    timeLimit: number,
-    rounds: number,
     code: string,
-    name: string,
-    icon: string,
-    description: string
+    messages?: MessageData[],
+    participants?: UserData[],
+    currentSpeaker?: UserData
 }

@@ -1,7 +1,7 @@
-import { Message } from "@/features/discussion-circle/types/MessageData";
-import { BLUE, TEAL, YELLOW } from "@/app/discussion-circle/defaults";
+import { MessageData } from "@/features/discussion-circle/types/MessageData";
+import { BLUE, TEAL } from "@/app/discussion-circle/defaults";
 
-export default function ChatMessage({message}: {message: Message}) {
+export default function ChatMessage({message}: {message: MessageData}) {
     return (
         <div 
         className="rounded-sm p-1 px-2 border-1"
