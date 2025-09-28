@@ -41,9 +41,7 @@ const SignupPage = () => {
         setError("");
         setInputValue({ name: "", email: "", password: "" });
 
-        setTimeout(() => {
-          router.push("/home");
-        }, 1000);
+        router.push("/login")
       } else {
         setError("Error signing up ❌");
       }
