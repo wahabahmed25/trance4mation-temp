@@ -6,11 +6,12 @@ interface propType {
   name: string;
   placeholder: string;
   value: string;
+  className?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
-const InputField = ({ type, name, placeholder, value, onChange }: propType) => {
+const InputField = ({ className = "",type, name, placeholder, value, onChange }: propType) => {
   return (
     <div className="flex justify-center w-full">
       <input
@@ -20,10 +21,11 @@ const InputField = ({ type, name, placeholder, value, onChange }: propType) => {
         value={value}
         onChange={onChange}
         className={`w-full max-w-md px-4 py-3 rounded-lg border border-gray-400 
-                   focus:ring-2 focus:ring-purple-600 focus:border-purple-600 
+                   focus:ring-2  
                    outline-none shadow-md transition duration-200 text-gray-200
-                   placeholder-gray-500 flex-1`}
+                   placeholder-gray-500 flex-1 ${className}`}
       />
+    
     </div>
   )
 }
