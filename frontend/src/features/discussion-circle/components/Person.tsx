@@ -1,8 +1,8 @@
-import { User } from "@/features/discussion-circle/types/User"
+import { UserData } from "@/features/discussion-circle/types/UserData"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-export default function Person({person, timerOn = false, timerDuration = 10} : {person: User, timerOn?: boolean, timerDuration?: number}) {
+export default function Person({person, timerOn = false, timerDuration = 10} : {person: UserData, timerOn?: boolean, timerDuration?: number}) {
     const strokeDashArray = 2 * Math.PI * 46
     const [strokeDashOffset, setStrokeDashOffset] = useState(timerOn ? strokeDashArray : 0)
 

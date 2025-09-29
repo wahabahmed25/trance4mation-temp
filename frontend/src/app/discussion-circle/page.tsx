@@ -1,18 +1,18 @@
 'use client'
 import { useEffect, useState } from "react"
-import { User } from "@/features/discussion-circle/types/User"
-import Carousel from '@/features/discussion-circle/components/discussion-circle/Carousel'
-import ChatLog from '@/features/discussion-circle/components/discussion-circle/ChatLog'
-import Navbar from '@/features/discussion-circle/components/discussion-circle/Navbar'
-import { defaultRooms, defaultMessages, defaultPeople } from './defaults'
-import Rooms from "@/features/discussion-circle/components/discussion-circle/Rooms"
-
+import { UserData } from "@/features/discussion-circle/types/UserData"
+import { defaultRooms, defaultPeople} from './defaults'
+import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
+import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
+import Room from "@/features/discussion-circle/components/Room"
+import { RoomData } from "@/features/discussion-circle/types/RoomData"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState(defaultRooms)
-    const [room, setRoom] = useState<string | null>(null)
-    const [people, setPeople] = useState<User[]>(defaultPeople)
+    const [roomCode, setRoomCode] = useState<string | null>(null)
+    const [people, setPeople] = useState<UserData[]>(defaultPeople)
     const [collapsed, setCollapsed] = useState(false)
+    const [isCreationMenuOpen, setIsCreationMenuOpen] = useState(false)
 
     useEffect(() => {
         function onResize() {
@@ -32,20 +32,35 @@ export default function DiscussionCircle() {
         }
     }, [])
 
+    function openRoomCreationMenu() {
+        setIsCreationMenuOpen(true)
+    }
+
+    function closeRoomCreationMenu() {
+        setIsCreationMenuOpen(false)
+    }
+
+    function joinRoom(roomData: RoomData) {
+        if (!roomData.code) {
+            return
+        }
+        setRoomCode(roomData.code)
+        // fetch data
+    }
+
+    function createRoom(roomData: RoomData) {
+        console.log(roomData)
+    }
+
     return (
         <div className="flex flex-row h-screen">
-            {(!collapsed) ? <Rooms rooms={defaultRooms}/> : <></>}
+            {(!collapsed) ? <RoomBrowser rooms={roomListings} onCreateButtonClick={openRoomCreationMenu} onRoomClick={joinRoom}/> : <></>}
             
-            <div className="flex flex-col bg-blue-200 w-3/4 grow">
-                <Navbar/>
-                <ChatLog messages={defaultMessages}/>
-                <div style={{
-                    height: "80px",
-                    marginTop: "50px"
-                }}>
-                    <Carousel users={people}/>
-                </div>
-            </div>
+            {
+            isCreationMenuOpen  ? <RoomCreationMenu onCloseButtonClick={closeRoomCreationMenu} onConfirmButtonClick={createRoom}/> : 
+            (roomCode != null)  ? <Room roomCode={roomCode}/> : <></>
+            }
+            {/* <Room/> */}
         </div>
     )
 }
