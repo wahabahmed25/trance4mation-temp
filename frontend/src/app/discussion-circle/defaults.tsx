@@ -15,7 +15,7 @@ export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
     description: ""
 }
 
-export const ROOM_SETTINGS = [
+export const ROOM_CREATION_SETTINGS = [
     {
         image: "/user-regular-full.svg",
         label: "Participants",
