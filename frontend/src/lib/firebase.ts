@@ -1,20 +1,24 @@
+// src/lib/firebase.ts
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBIovxclPI4pTeIAq7GJcn1cJ2hHbNAcKs",
-  authDomain: "test-5c0a6.firebaseapp.com",
-  projectId: "test-5c0a6",
-  storageBucket: "test-5c0a6.firebasestorage.app",
-  messagingSenderId: "1089635971902",
-  appId: "1:1089635971902:web:e9065e397b3d3369f3f26f",
-  measurementId: "G-16106XDNQZ"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app)
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 export const analytics = getAnalytics(app);
-export const auth = getAuth(app)
+
+// Default export for compatibility
+export default app;
