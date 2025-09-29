@@ -1,10 +1,10 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SubmitButton from "@/feature/signup/SubmitButton";
 import InputField from "@/feature/signup/InputField";
 import { signup } from "@/lib/api/ApiCalls";
-
+import { initAnalytics } from "@/lib/firebase";
 const SignupPage = () => {
   const router = useRouter();
   const [inputValue, setInputValue] = useState({
@@ -14,6 +14,10 @@ const SignupPage = () => {
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+    initAnalytics();
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

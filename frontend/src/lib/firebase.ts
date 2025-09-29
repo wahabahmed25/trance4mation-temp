@@ -2,7 +2,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,7 +17,13 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-export const analytics = getAnalytics(app);
 
-// Default export for compatibility with social-feature
+// Minimal, SSR-safe Analytics init (lazy + supported-only)
+export async function initAnalytics() {
+  if (typeof window === "undefined") return null; // guard SSR
+  const { isSupported, getAnalytics } = await import("firebase/analytics");
+  return (await isSupported()) ? getAnalytics(app) : null;
+}
+
+// Default export for compatibility
 export default app;
