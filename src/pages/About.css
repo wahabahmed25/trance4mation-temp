@@ -1,6 +1,6 @@
 /* About Page Styles */
 h2 {
-   color: black;
+   color: var(--dark-blue);
    text-shadow: none;
    font-size: 50px;
 }
@@ -13,6 +13,7 @@ h2 {
    align-items: center;
    padding: 1%;
    border: 0px;
+   padding-top: 2rem;
 }
 
 /* ==========================================
@@ -126,7 +127,8 @@ h2 {
 }
 
 .interns-container h2 {
-   font-size: 15px;
+   font-size: 17.5px;
+   font-weight: bold;
 }
 
 .intern-group {

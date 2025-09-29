@@ -43,7 +43,7 @@
    font-size: 4.5rem;
    font-weight: 900;
    margin-bottom: 1.5rem;
-   color: var(--golden-glow);
+   color: var(--healing-coral);
    text-align: center;
    text-shadow: 0 0 30px rgba(255, 127, 127, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3);
    letter-spacing: 3px;
@@ -58,12 +58,7 @@
    transform: translateX(-50%);
    width: 80%;
    height: 4px;
-   background: linear-gradient(
-      90deg,
-      transparent,
-      var(--golden-glow),
-      transparent
-   );
+   background: linear-gradient(90deg, transparent, var(--healing-coral), transparent);
    border-radius: 2px;
 }
 
@@ -113,8 +108,7 @@
    display: flex;
    flex-direction: column;
    border-top: none;
-   box-shadow: 0 20px 60px var(--black-alpha-20),
-      inset 0 1px 0 var(--white-alpha-90);
+   box-shadow: 0 20px 60px var(--black-alpha-20), inset 0 1px 0 var(--white-alpha-90);
    position: relative;
    overflow: hidden;
 }
@@ -129,16 +123,7 @@
    left: 0;
    right: 0;
    bottom: 0;
-   background: radial-gradient(
-         circle at 20% 80%,
-         var(--coral-alpha-10) 0%,
-         transparent 50%
-      ),
-      radial-gradient(
-         circle at 80% 20%,
-         var(--coral-alpha-10) 0%,
-         transparent 50%
-      );
+   background: radial-gradient(circle at 20% 80%, var(--coral-alpha-10) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--coral-alpha-10) 0%, transparent 50%);
    pointer-events: none;
 }
 
@@ -363,7 +348,7 @@ button {
    display: block;
    width: 100px;
    min-height: 30px;
-   background-color: var(--golden-glow);
+   background-color: var(--healing-coral);
    color: var(--text-white);
    border: none;
    border-radius: 5px;
@@ -388,7 +373,7 @@ h2 {
    display: block;
    width: 100px;
    min-height: 30px;
-   background-color: var(--golden-glow);
+   background-color: var(--healing-coral);
    color: var(--text-white);
    border: none;
    border-radius: 5px;

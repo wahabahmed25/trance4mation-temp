@@ -95,7 +95,7 @@ function About() {
                         <li>
                            <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
                            <div>
-                              <h2>Michael Coleman</h2>
+                              <h3>Michael Coleman</h3>
                               <h2>Co-Lead</h2>
                               <h2>Insert sentence here</h2>
                            </div>
@@ -140,7 +140,7 @@ function About() {
                            <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
                            <div>
                               <h2>Zhen Tao Pan</h2>
-                              <h2>Role</h2>
+                              <h2>Co-Lead in Platform and Landing Page Development</h2>
                               <h2>Insert sentence here</h2>
                            </div>
                         </li>
@@ -174,19 +174,8 @@ function About() {
                         <li>
                            <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
                            <div>
-                              <h2>Zhen Tao Pan</h2>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
                               <h2>Efti Saroare</h2>
-                              <h2>Role</h2>
+                              <h2> Role</h2>
                               <h2>Insert sentence here</h2>
                            </div>
                         </li>
@@ -214,9 +203,7 @@ function About() {
                         </li>
                      </div>
                   </div>
-
                   <h2>Call It Out Anti-Bullying Game || Remembrance Grief & Loss Support Game</h2>
-
                   <div className="intern-group">
                      <div>
                         <li>
@@ -256,15 +243,13 @@ function About() {
                            <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
                            <div>
                               <h2>Jan Calle-Ortiz</h2>
-                              <h2>Role</h2>
+                              <h2>Developer and Social Media & Digital Engagement Lead</h2>
                               <h2>Insert sentence here</h2>
                            </div>
                         </li>
                      </div>
                   </div>
-
                   <h2>Landing Page Design & Development || Campus Resources Directory UI</h2>
-
                   <div className="intern-group">
                      <div>
                         <li>
@@ -276,20 +261,8 @@ function About() {
                            </div>
                         </li>
                      </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Zhen Tao Pan</h2>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
                   </div>
-
-                  <h2>Social Media & Digital Engagement Lead</h2>
+                  {/* <h2>Social Media & Digital Engagement Lead</h2>
                   <div className="intern-group">
                      <div>
                         <li>
@@ -301,7 +274,7 @@ function About() {
                            </div>
                         </li>
                      </div>
-                  </div>
+                  </div>*/}
                </ul>
             </div>
          </section>

@@ -1,5 +1,5 @@
 :root {
-   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+   font-family: system-ui, "Poppins", Avenir, Helvetica, Arial, sans-serif;
    line-height: 1.5;
    font-weight: 400;
    margin: 0px;
@@ -15,11 +15,13 @@
    }
 
    /* Colors */
-   --healing-coral: #e55a4a;
-   --deep-teal: #004a52;
-   --golden-glow: #ff7f7f;
-   --sky-blue: #2a8bb5;
+   --healing-coral: #ff8661;
+   --deep-teal: #006d77;
+   --golden-glow: #ffd166;
+   --sky-blue: #55ccf2;
+   --soft-violet: #9b5de5;
    --warm-beige: #e8d5c4;
+   --dark-blue: #042159;
    --white: #ffffff;
    --black: #000000;
 
@@ -29,7 +31,7 @@
    --nav-bg: #2a8bb5;
 
    /* Text Colors */
-   --text-primary: #000000;
+   --text-primary: #042159;
    --text-secondary: #3f1f1f;
    --text-white: #ffffff;
 
@@ -46,16 +48,8 @@
 
    /* Gradients */
    --gradient-coral: linear-gradient(135deg, var(--healing-coral) 0%, #ff7f7f 100%);
-   --gradient-coral-reverse: linear-gradient(
-      135deg,
-      #ff7f7f 0%,
-      var(--healing-coral) 100%
-   );
-   --gradient-section: linear-gradient(
-      135deg,
-      var(--coral-alpha-15) 0%,
-      rgba(10, 79, 87, 0.1) 100%
-   );
+   --gradient-coral-reverse: linear-gradient(135deg, #ff7f7f 0%, var(--healing-coral) 100%);
+   --gradient-section: linear-gradient(135deg, var(--coral-alpha-15) 0%, rgba(10, 79, 87, 0.1) 100%);
 
    color-scheme: light-dark;
    color: var(--text-primary);
@@ -64,8 +58,12 @@
    text-rendering: optimizeLegibility;
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
-}
 
-.logo-div {
-   display: flex;
+   @font-face {
+      font-family: "Poppins";
+      src: url("/src/assets/Poppins/Poppins-Black.ttf") format("ttf");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+   }
 }
