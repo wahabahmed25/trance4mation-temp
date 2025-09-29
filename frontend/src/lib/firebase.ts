@@ -20,5 +20,5 @@ export const db = getFirestore(app);
 export const auth = getAuth(app);
 export const analytics = getAnalytics(app);
 
-// Default export for compatibility
+// Default export for compatibility with social-feature
 export default app;
