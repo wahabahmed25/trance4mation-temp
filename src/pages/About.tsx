@@ -56,7 +56,6 @@ function About() {
                   <br></br>
 
                   <textarea className="message-box" placeholder="Your message here"></textarea>
-
                   <br></br>
 
                   <div className="submit-button">
