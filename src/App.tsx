@@ -5,23 +5,31 @@ import About from "./pages/About";
 import Game from "./pages/Game";
 
 function App() {
-  return (
-    <div className="App">
-      {/* Navigation */}
-      <nav className="nav">
-        <Link to="/">Home</Link>
-        <Link to="/game">Game</Link>
-        <Link to="/about">About</Link>
-      </nav>
+   /** nav bar gradient when user scrolls */
+   const nav = document.querySelector(".nav") as HTMLElement;
+   window.addEventListener("scroll", () => {
+      const scrollPostion = window.scrollY;
+      const opacity = Math.min(scrollPostion / 500, 1);
+      nav.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255, 255, 255, ${opacity}))`;
+   });
 
-      {/* Router to facilitate navigation */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/game" element={<Game />}/>
-        <Route path="/about" element={<About />}/>
-      </Routes>
-    </div>
-  )
+   return (
+      <div className="App">
+         {/* Navigation */}
+         <nav className="nav">
+            <Link to="/">Home</Link>
+            <Link to="/game">Game</Link>
+            <Link to="/about">About</Link>
+         </nav>
+
+         {/* Router to facilitate navigation */}
+         <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/game" element={<Game />} />
+            <Route path="/about" element={<About />} />
+         </Routes>
+      </div>
+   );
 }
 
 export default App;
