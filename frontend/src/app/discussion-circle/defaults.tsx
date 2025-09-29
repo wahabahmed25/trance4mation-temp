@@ -1,10 +1,10 @@
 import { MessageData } from "@/features/discussion-circle/types/MessageData"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
-import { RoomSettings } from "@/features/discussion-circle/types/RoomSettings"
+import { RoomSetting } from "@/features/discussion-circle/types/RoomSetting"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
-export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
+export const DEFAULT_ROOM_DATA: RoomData = {
     isAnonymous: false,
     maxParticipants: 5,
     colorTheme: "default",
@@ -15,30 +15,35 @@ export const DEFAULT_ROOM_SETTINGS: RoomSettings = {
     description: ""
 }
 
-export const ROOM_CREATION_SETTINGS = [
+export const ROOM_CREATION_SETTINGS: RoomSetting[] = [
     {
         image: "/user-regular-full.svg",
         label: "Participants",
-        field: "participants",
-        type: "number"
+        field: "maxParticipants",
+        type: "number",
+        defaultValue: 5
     },
     {
         image: "/alarm-clock-regular-full.svg",
         label: "Time Limit",
         field: "timeLimit",
-        type: "number"
+        type: "number",
+        defaultValue: 30,
+        step: 5
     },
     {
         image: "/rotate-left-regular-full.svg",
         label: "Rounds",
         field: "rounds",
-        type: "number"
+        type: "number",
+        defaultValue: 3
     },
     {
         image: "/mask-solid-full.svg",
         label: "Anonymous",
         field: "isAnonymous",
-        type: "checkbox"
+        type: "checkbox",
+        defaultValue: false
     },
 ]
 

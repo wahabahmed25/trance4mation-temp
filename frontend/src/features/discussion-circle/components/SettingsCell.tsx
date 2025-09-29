@@ -1,16 +1,17 @@
 import Image from "next/image"
-import { DiscussionCircleSetting } from "../types/DiscussionCircleSetting"
 import { RED } from "@/app/discussion-circle/defaults"
 import { RoomSetting } from "../types/RoomSetting"
 import { useState } from "react"
 
 interface SettingsCellProps {
     setting: RoomSetting,
-    onChange: (label: string, value: string | number | readonly string[] | undefined) => void,
+    onChange: (field: string, value: string | number | boolean | undefined) => void,
 }
 
 export default function SettingsCell({setting, onChange}: SettingsCellProps) {
-    const [value, setValue] = useState<string | number | readonly string[] | undefined>(setting.defaultValue)
+    const [value, setValue] = useState<string | number | boolean | undefined>(setting.defaultValue)
+
+    // console.log(setting.defaultValue)
 
     return(
         <div 
@@ -37,10 +38,17 @@ export default function SettingsCell({setting, onChange}: SettingsCellProps) {
             <input
             className="w-12 grow-0"
             type={setting.type}
-            value={value}
+            value={typeof(value) === "boolean" ? undefined : value}
+            checked={typeof(value) === "boolean" ? value : undefined}
+            step={setting.step ?? 1}
             onChange={(event) => {
+                if (setting.type == "checkbox") {
+                    onChange(setting.field, event.target.checked)
+                }
+                else if (setting.type === "number") {
+                    onChange(setting.field, parseFloat(event.target.value))
+                }
                 setValue(event.target.value)
-                onChange(setting.label, event.target.value)
             }}
             />
         </div>

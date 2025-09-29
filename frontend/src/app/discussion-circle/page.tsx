@@ -41,12 +41,15 @@ export default function DiscussionCircle() {
     }
 
     function joinRoom(roomData: RoomData) {
+        if (!roomData.code) {
+            return
+        }
         setRoomCode(roomData.code)
         // fetch data
     }
 
-    function createRoom() {
-
+    function createRoom(roomData: RoomData) {
+        console.log(roomData)
     }
 
     return (

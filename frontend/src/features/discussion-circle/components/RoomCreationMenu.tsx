@@ -1,20 +1,20 @@
-import { DEFAULT_ROOM_SETTINGS, POPPINS_BOLD, PURPLE, YELLOW} from "@/app/discussion-circle/defaults";
+import { DEFAULT_ROOM_DATA, POPPINS_BOLD, PURPLE, YELLOW } from "@/app/discussion-circle/defaults";
 import TextInput from "./TextInput";
 import Image from "next/image";
 import SettingsGrid from "./SettingsGrid";
 import Navbar from "./Navbar";
 import { MouseEventHandler, useState } from "react";
-import { RoomSettings } from "../types/RoomSettings";
+import { RoomData } from "../types/RoomData";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLImageElement>,
-    onConfirmButtonClick?: (settings: RoomSettings) => void 
+    onConfirmButtonClick?: (roomData: RoomData) => void 
 }
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
-    const [settings, setSettings] = useState(DEFAULT_ROOM_SETTINGS)
+    const [settings, setSettings] = useState(DEFAULT_ROOM_DATA)
 
-    function changeSetting(setting: string, value: unknown) {
+    function changeSetting(setting: string, value: string | number | boolean | undefined) {
         setSettings({
             ...settings,
             [setting]: value
@@ -47,6 +47,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                         className={POPPINS_BOLD.className}
                         onChange={(event) => changeSetting("name", event.target.value)}
                         />
+
                         <textarea 
                         className="border-1 rounded-sm p-2 grow text-base"
                         placeholder="Description"
@@ -54,13 +55,12 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                             resize: "none",
                         }}
                         onChange={(event) => changeSetting("description", event.target.value)}
-                        >
-                            
-                        </textarea>
+                        />
                     </div>
                 </div>
                 <SettingsGrid onChange={changeSetting}/>
             </div>
+            
             <div className="flex justify-center grow items-end p-6">
                 <button
                 className="border-1 p-2 rounded-sm w-40 text-center"

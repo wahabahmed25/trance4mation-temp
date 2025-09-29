@@ -1,7 +1,11 @@
 import { POPPINS_BOLD, ROOM_CREATION_SETTINGS } from "@/app/discussion-circle/defaults";
 import SettingsCell from "./SettingsCell";
 
-export default function SettingsGrid({onChange} : {onChange: (label: string, value: unknown) => void}) {
+interface SettingsGridProps {
+    onChange: (field: string, value: string | number | boolean | undefined) => void
+}
+
+export default function SettingsGrid({onChange} : SettingsGridProps) {
     return (
         <div className="flex flex-col gap-2">
             <div className={`${POPPINS_BOLD.className}`}>

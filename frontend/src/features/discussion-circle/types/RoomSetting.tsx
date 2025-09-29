@@ -6,5 +6,6 @@ export type RoomSetting = {
     label: string,
     field: string,
     type: HTMLInputTypeAttribute | undefined,
-    defaultValue?: string | number | readonly string[] | undefined
+    defaultValue?: string | number | boolean | undefined,
+    step?: number
 }
