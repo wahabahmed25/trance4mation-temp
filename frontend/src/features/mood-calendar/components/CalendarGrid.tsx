@@ -1,7 +1,8 @@
 "use client";
-import type { MoodDay } from "../types";
+import type { MoodDay, MoodType } from "../types";
+import { moodColors } from "../types";
 
-const MOOD_EMOJIS: Record<string, string> = {
+const MOOD_EMOJIS: Record<MoodType, string> = {
   happy: "😊",
   neutral: "😐",
   sad: "😢",
@@ -15,31 +16,45 @@ export function CalendarGrid({
   days: MoodDay[];
   onPick: (dateKey: string) => void;
 }) {
-  const WEEKDAYS = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   return (
     <div>
-      <div className="mb-2 grid grid-cols-7 text-center text-xs text-gray-900">
-        {WEEKDAYS.map((w) => <div key={w} className="py-1">{w}</div>)}
-      </div>
-      <div className="grid grid-cols-7 gap-2">
-        {days.map((d) => (
-          <button
-            key={d.key}
-            onClick={() => onPick(d.key)}
-            className={[
-              "h-20 rounded-xl border p-2 text-left transition text-black",
-              d.isCurrentMonth ? "bg-gray-100" : "bg-sky-200 text-black",
-              d.isToday ? "ring-3 ring-yellow-400" : "",
-              "hover:bg-red-400"
-            ].join(" ")}
-          >
-            <div className="text-xs">{d.date.getDate()}</div>
-            <div className="mt-2 text-center text-2xl">
-              {d.mood ? MOOD_EMOJIS[d.mood] : "—"}
-            </div>
-          </button>
+      {/* Weekday headers */}
+      <div className="mb-2 grid grid-cols-7 text-center text-[10px] sm:text-xs md:text-sm font-medium text-ink/70">
+        {WEEKDAYS.map((w) => (
+          <div key={w} className="py-1 tracking-wide">
+            {w}
+          </div>
         ))}
+      </div>
+
+      {/* Calendar days */}
+      <div className="grid grid-cols-7 gap-1 sm:gap-2 md:gap-3">
+        {days.map((d) => {
+          const moodClass = d.mood ? moodColors[d.mood] : "bg-white border-ink/10";
+
+          return (
+            <button
+              key={d.key}
+              onClick={() => onPick(d.key)}
+              className={[
+                "aspect-square rounded-xl sm:rounded-2xl",
+                "border p-1 sm:p-2 md:p-3 flex flex-col justify-between",
+                "text-xs sm:text-sm md:text-base font-medium",
+                "hover:shadow-md hover:-translate-y-[1px] transition text-teal-700",
+                moodClass,
+                d.isCurrentMonth ? "" : "opacity-50 text-teal-800",
+                d.isToday ? "ring-2 ring-teal" : "",
+              ].join(" ")}
+            >
+              <span>{d.date.getDate()}</span>
+              <span className="text-lg sm:text-2xl">
+                {d.mood ? MOOD_EMOJIS[d.mood] : "—"}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

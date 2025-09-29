@@ -46,10 +46,10 @@ export default function Home() {
           Discussion circle
         </Link>
         <Link
-          href="/mood-calender"
+          href="/mood-calendar"
           className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
         >
-          Mood Calender
+          Mood Calendar
         </Link>
         <Link
           href="/landing"
