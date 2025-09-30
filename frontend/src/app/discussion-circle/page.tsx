@@ -11,6 +11,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, s
 import { onAuthStateChanged, User } from "firebase/auth"
 import { getAuth, signInAnonymously } from "firebase/auth";
 import RoomListing from "@/features/discussion-circle/components/RoomListing"
+import { MessageData } from "@/features/discussion-circle/types/MessageData"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -31,6 +32,7 @@ export default function DiscussionCircle() {
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>(undefined)
     const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
+    const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
 
     function fetchData() {
         getRooms()
@@ -63,6 +65,7 @@ export default function DiscussionCircle() {
             // Also, set security rules to:
             // - allow writes to the messages subcollection only if this participantId and uid match the ones in the participants subcollection
             setParticipantId(participantRef.id)
+            console.log(participantRef.id)
         })
     }
 
@@ -87,6 +90,17 @@ export default function DiscussionCircle() {
         .then(() => {
             setCurrentRoom(undefined)
             setParticipantId(undefined)
+        })
+    }
+
+    async function sendMessage(message: string) {
+        if (!currentRoom) {
+            return
+        }
+
+        await addDoc(collection(firestore, "rooms", currentRoom.id, "messages"), {
+            text: message,
+            sender: participantId
         })
     }
 
@@ -118,23 +132,29 @@ export default function DiscussionCircle() {
         });
     }, [])
 
+    if (isCreationMenuOpen) {
+        return (
+            <RoomCreationMenu
+            onCloseButtonClick={() => setCreationMenuOpen(false)}
+            onConfirmButtonClick={async (roomData: Omit<RoomData, "id">) => {
+                await createRoom(roomData)
+                if (isCreationMenuOpen) {
+                    setCreationMenuOpen(false)
+                }
+                fetchData()
+            }}
+            />
+        )
+    }
+
     if (currentRoom === undefined) {
         return (
             <div className={"w-screen h-screen bg-[#006D77] p-8"}>
                 <h1 className="font-bold text-3xl">Discussion Circle</h1>
                 <button onClick={async () => {
-                    const placeholder = {
-                        description: "this is a room i just created",
-                        isAnonymous: true,
-                        maxSize: 3,
-                        name: "my new room",
-                        palette: "still default",
-                        rounds: 2,
-                        size: 0,
-                        time: 30,
-                    }
-                    await createRoom(placeholder)
-                    fetchData()
+                    setCreationMenuOpen(true)
+                    // await createRoom(placeholder)
+                    // fetchData()
                 }}>
                     Create
                 </button>
@@ -155,11 +175,13 @@ export default function DiscussionCircle() {
             </div>
         )
     }
+
     else {
         return (
             <Room 
             roomData={currentRoom}
             onExitButtonClick={leaveRoom}
+            onSendMessageButtonClick={sendMessage}
             />
         )
     }
@@ -179,7 +201,7 @@ async function getRooms() {
             palette: data.palette,
             rounds: data.rounds,
             size: data.size,
-            time: data.time,
+            timeLimit: data.timeLimit,
         }
     })
     return rooms

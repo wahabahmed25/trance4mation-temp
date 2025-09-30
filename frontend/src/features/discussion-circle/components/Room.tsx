@@ -3,7 +3,7 @@ import Carousel from "./Carousel";
 import ChatLog from "./ChatLog";
 import Navbar from "./Navbar";
 import TextInput from "./TextInput";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, MouseEventHandler, useEffect, useState } from "react";
 import { collection, getDocs, getFirestore, onSnapshot } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { RoomData } from "../types/RoomData";
@@ -26,10 +26,11 @@ const firestore = getFirestore(app)
 interface RoomProps {
     roomData: RoomData,
     onMenuButtonClick?: MouseEventHandler<HTMLImageElement>,
-    onExitButtonClick?: MouseEventHandler<HTMLImageElement>
+    onExitButtonClick?: MouseEventHandler<HTMLImageElement>,
+    onSendMessageButtonClick?: (message: string) => void
 }
 
-export default function Room({roomData, onMenuButtonClick, onExitButtonClick} : RoomProps) {
+export default function Room({roomData, onMenuButtonClick, onExitButtonClick, onSendMessageButtonClick} : RoomProps) {
     const [messages, setMessages] = useState<MessageData[]>([])
     
     useEffect(() => {
@@ -73,7 +74,7 @@ export default function Room({roomData, onMenuButtonClick, onExitButtonClick} : 
             />
             <div className="flex flex-col p-2 grow justify-end gap-2">
                 <ChatLog messages={messages}/>
-                <TextInput placeholder="Message"/>
+                <TextInput placeholder="Message" onSend={onSendMessageButtonClick}/>
                 <div style={{
                     height: "80px",
                     marginTop: "50px"

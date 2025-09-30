@@ -4,16 +4,16 @@ import { RoomSetting } from "@/features/discussion-circle/types/RoomSetting"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
-// export const DEFAULT_ROOM_DATA: RoomData = {
-//     isAnonymous: false,
-//     maxParticipants: 5,
-//     colorTheme: "default",
-//     timeLimit: 30,
-//     rounds: 3,
-//     name: "",
-//     icon: "/globe.svg",
-//     description: ""
-// }
+export const DEFAULT_ROOM_DATA: Omit<RoomData, "id"> = {
+    isAnonymous: false,
+    maxSize: 5,
+    palette: "default",
+    time: 30,
+    rounds: 3,
+    name: "",
+    size: 0,
+    description: ""
+}
 
 export const ROOM_CREATION_SETTINGS: RoomSetting[] = [
     {

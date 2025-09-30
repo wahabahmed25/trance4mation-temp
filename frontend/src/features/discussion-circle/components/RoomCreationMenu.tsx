@@ -8,11 +8,11 @@ import { RoomData } from "../types/RoomData";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLImageElement>,
-    onConfirmButtonClick?: (roomData: RoomData) => void 
+    onConfirmButtonClick?: (roomData: Omit<RoomData, "id">) => void 
 }
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
-    const [settings, setSettings] = useState(DEFAULT_ROOM_DATA)
+    const [settings, setSettings] = useState<Omit<RoomData, "id">>(DEFAULT_ROOM_DATA)
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
         setSettings({
@@ -22,7 +22,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
     }
 
     return (
-        <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
+        <div className="flex flex-col w-screen h-screen grow" style={{backgroundColor: YELLOW}}>
             <Navbar 
             header="Room Creation"
             rightSideButtons={[{
@@ -70,7 +70,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                 }}
                 onClick={() => onConfirmButtonClick ? onConfirmButtonClick(settings) : {}}
                 >
-                    Create and Join
+                    Create
                 </button>
             </div>
         </div>

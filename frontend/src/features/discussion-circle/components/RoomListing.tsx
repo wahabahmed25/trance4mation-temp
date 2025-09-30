@@ -66,7 +66,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                     height={20}
                     priority
                     />
-                    {roomData.time}s
+                    {roomData.timeLimit}s
                 </div>
 
                 {/* Number of rounds */}
@@ -80,6 +80,21 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                     />
                     {roomData.rounds}
                 </div>
+
+                {/* Anonymity */}
+                {roomData.isAnonymous
+                    ? <div className={`flex items-center w-12 ${MERRIWEATHER}`}>
+                        <Image 
+                        src={"/mask-solid-full.svg"}
+                        alt="isAnonymous"
+                        width={20}
+                        height={20}
+                        priority
+                        />
+                        {/* {roomData.rounds} */}
+                    </div>
+                    : <></>
+                }
             </div>
         </div>
     )
