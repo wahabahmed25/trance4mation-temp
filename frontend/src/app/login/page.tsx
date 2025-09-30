@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
 import { login } from "@/lib/api/ApiCalls";
-import InputField from "@/feature/signup/InputField";
-import LoginButton from "@/feature/login/LoginButton";
+import InputField from "@/user-signup/signup/InputField";
+import LoginButton from "@/user-signup/login/LoginButton";
 interface loginForm {
   email: string;
   password: string;

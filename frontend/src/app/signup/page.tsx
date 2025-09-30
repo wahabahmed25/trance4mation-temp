@@ -1,8 +1,8 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
-import SubmitButton from "@/feature/signup/SubmitButton";
-import InputField from "@/feature/signup/InputField";
+import SubmitButton from "@/user-signup/signup/SubmitButton";
+import InputField from "@/user-signup/signup/InputField";
 import { signup } from "@/lib/api/ApiCalls";
 import { initAnalytics } from "@/lib/firebase";
 const SignupPage = () => {

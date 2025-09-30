@@ -1,4 +1,5 @@
 // src/lib/firebase.ts
+//create a .env file for your firebase.config
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
