@@ -1,4 +1,5 @@
 import "./About.css";
+import ContactUs from "../components/ContactForm";
 
 function About() {
    return (
@@ -40,29 +41,7 @@ function About() {
                      <img src="/src/assets/insta.png" />
                   </div>
                </div>
-               <div className="contact-us">
-                  <div className="full-name">
-                     <label htmlFor="full-name"></label>
-                     <input type="text" id="full-name" name="fullName" placeholder="Your Name" />
-                  </div>
-
-                  <br></br>
-
-                  <div className="email-address">
-                     <label htmlFor="email-address"></label>
-                     <input type="text" id="email-address" name="emailAddress" placeholder="Your Email" />
-                  </div>
-
-                  <br></br>
-
-                  <textarea className="message-box" placeholder="Your message here"></textarea>
-
-                  <br></br>
-
-                  <div className="submit-button">
-                     <button>Submit</button>
-                  </div>
-               </div>
+               <ContactUs />
             </div>
          </section>
 
