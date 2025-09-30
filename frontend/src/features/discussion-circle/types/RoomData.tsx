@@ -2,18 +2,13 @@ import { MessageData } from "./MessageData"
 import { UserData } from "./UserData"
 
 export type RoomData = {
-    isAnonymous: boolean,
-    maxParticipants: number,
-    colorTheme: string,
-    timeLimit: number,
-    rounds: number,
-    name: string,
-    icon: string,
+    id: string,
     description: string,
-
-    numParticipants?: number,
-    code?: string,
-    messages?: MessageData[],
-    participants?: UserData[],
-    currentSpeaker?: UserData
+    isAnonymous: boolean,
+    maxSize: number,
+    name: string,
+    palette: string,
+    rounds: number, 
+    size: number,
+    time: number
 }

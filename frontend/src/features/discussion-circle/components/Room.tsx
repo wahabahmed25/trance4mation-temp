@@ -3,19 +3,65 @@ import Carousel from "./Carousel";
 import ChatLog from "./ChatLog";
 import Navbar from "./Navbar";
 import TextInput from "./TextInput";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
+import { collection, getDocs, getFirestore, onSnapshot } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { RoomData } from "../types/RoomData";
+import { MessageData } from "../types/MessageData";
+
+const firebaseConfig = {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+};
+
+
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app)
 
 interface RoomProps {
-    roomCode: string,
+    roomData: RoomData,
     onMenuButtonClick?: MouseEventHandler<HTMLImageElement>,
     onExitButtonClick?: MouseEventHandler<HTMLImageElement>
 }
 
-export default function Room({roomCode, onMenuButtonClick, onExitButtonClick} : RoomProps) {
+export default function Room({roomData, onMenuButtonClick, onExitButtonClick} : RoomProps) {
+    const [messages, setMessages] = useState<MessageData[]>([])
+    
+    useEffect(() => {
+        const unsubscribe = onSnapshot(collection(firestore, "rooms", roomData.id, "messages"), (snapshot) => {
+            snapshot.docChanges().forEach((change) => {
+                if (change.type === "added") {
+                    // Message added
+                    setMessages((prev) => {
+                        const added = {
+                            text: change.doc.data().text,
+                            id: change.doc.id,
+                            sender: change.doc.data().sender
+                        }
+                        return prev.concat([added])
+                    })
+                }
+                if (change.type === "modified") {
+                    // Message modified
+                }
+                if (change.type === "removed") {
+                    // Message removed
+                }
+            })
+        })
+
+        return unsubscribe
+    },[])
+    
     return (
-        <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
+        <div className={"w-screen h-screen bg-[#FFD166] flex flex-col"}>
             <Navbar 
-            header={roomCode}
+            header={roomData.name}
             leftSideButtons={[{
                 icon: "chevron-right-regular-full.svg",
                 onClick: onMenuButtonClick
@@ -26,7 +72,7 @@ export default function Room({roomCode, onMenuButtonClick, onExitButtonClick} : 
             }]}
             />
             <div className="flex flex-col p-2 grow justify-end gap-2">
-                <ChatLog messages={defaultMessages}/>
+                <ChatLog messages={messages}/>
                 <TextInput placeholder="Message"/>
                 <div style={{
                     height: "80px",

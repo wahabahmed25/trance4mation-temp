@@ -10,7 +10,7 @@ export default function ChatMessage({message}: {message: MessageData}) {
             borderColor: TEAL
         }}
         >
-            {message.text} - {message.sender.name}
+            {message.text} - {message.sender}
         </div>
     )
 }

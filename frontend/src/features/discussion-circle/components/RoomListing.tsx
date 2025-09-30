@@ -3,11 +3,11 @@ import Image from "next/image"
 import { RED, YELLOW, POPPINS_BOLD, MERRIWEATHER, TEAL } from "@/app/discussion-circle/defaults"
 
 interface RoomListing {
-    room: RoomData, 
-    onRoomClick?: (room: RoomData) => void | undefined
+    roomData: RoomData, 
+    onClick?: (room: RoomData) => void | undefined
 }
 
-export default function RoomListing({room, onRoomClick}: RoomListing) {
+export default function RoomListing({roomData, onClick}: RoomListing) {
     return (
         <div 
         style={{
@@ -15,29 +15,29 @@ export default function RoomListing({room, onRoomClick}: RoomListing) {
             borderColor: TEAL
         }}
         className="flex flex-col rounded-md border-2"
-        onClick={() => onRoomClick ? onRoomClick(room): {}}
+        onClick={() => onClick ? onClick(roomData): {}}
         >
             <div 
             style={{backgroundColor: RED}}
             className="flex grow-2 m-1 rounded-md items-center px-1 gap-2">
                 {/* Room icon */}
-                <Image 
-                src={room.icon}
+                {/* <Image 
+                src={roomData.icon}
                 alt="Sidebar"
                 width={20}
                 height={20}
                 priority
-                />
+                /> */}
 
                 <div className="flex flex-col">
                     {/* Room name */}
                     <div className={`text-base ${POPPINS_BOLD.className}`}>
-                        {room.name}
+                        {roomData.name}
                     </div>
 
                     {/* Room description */}
                     <div className={`text-sm ${MERRIWEATHER}`}>
-                        {room.description}
+                        {roomData.description}
                     </div>
                 </div>
             </div>
@@ -52,9 +52,9 @@ export default function RoomListing({room, onRoomClick}: RoomListing) {
                     height={20}
                     priority
                     />
-                    {room.numParticipants}
+                    {roomData.size}
                     /
-                    {room.maxParticipants}
+                    {roomData.maxSize}
                 </div>
 
                 {/* Time limit */}
@@ -66,7 +66,7 @@ export default function RoomListing({room, onRoomClick}: RoomListing) {
                     height={20}
                     priority
                     />
-                    {room.timeLimit}s
+                    {roomData.time}s
                 </div>
 
                 {/* Number of rounds */}
@@ -78,7 +78,7 @@ export default function RoomListing({room, onRoomClick}: RoomListing) {
                     height={20}
                     priority
                     />
-                    {room.rounds}
+                    {roomData.rounds}
                 </div>
             </div>
         </div>
