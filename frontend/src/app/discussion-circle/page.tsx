@@ -84,6 +84,10 @@ export default function DiscussionCircle() {
                 size: increment(-1)
             })
         ])
+        .then(() => {
+            setCurrentRoom(undefined)
+            setParticipantId(undefined)
+        })
     }
 
     useEffect(() => {
@@ -142,7 +146,8 @@ export default function DiscussionCircle() {
                     key={roomData.id} 
                     roomData={roomData} 
                     onClick={(roomData) => {
-                        console.log(roomData)
+                        // console.log(roomData)
+                        joinRoom(roomData)
                         setCurrentRoom(roomData)
                     }}
                     />
@@ -152,7 +157,10 @@ export default function DiscussionCircle() {
     }
     else {
         return (
-            <Room roomData={currentRoom}/>
+            <Room 
+            roomData={currentRoom}
+            onExitButtonClick={leaveRoom}
+            />
         )
     }
 
