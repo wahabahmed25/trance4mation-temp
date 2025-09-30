@@ -12,6 +12,9 @@ import { onAuthStateChanged, User } from "firebase/auth"
 import { getAuth, signInAnonymously } from "firebase/auth";
 import RoomListing from "@/features/discussion-circle/components/RoomListing"
 import { MessageData } from "@/features/discussion-circle/types/MessageData"
+import Welcome from "@/features/discussion-circle/components/Welcome"
+import { Input } from "@headlessui/react"
+import Image from "next/image"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -131,6 +134,65 @@ export default function DiscussionCircle() {
             }
         });
     }, [])
+
+    return (
+        <div className={"w-screen h-screen bg-black p-8 flex gap-8"}>
+            <div className="w-1/4 h-full flex flex-col gap-2">
+                <h1 className="font-bold text-3xl text-white">Discussion Circle</h1>
+                <div className="flex gap-1 items-center">
+                    <Input type="text" placeholder="Search" className="bg-slate-900 grow rounded-full text-gray-500 px-3 p-1" style={{minWidth: 0}}/>
+                    <button className="relative size-6 shrink-0" onClick={async () => {
+                        setCreationMenuOpen(true)
+                        // await createRoom(placeholder)
+                        // fetchData()
+                    }}>
+                        <Image 
+                        src={"/plus-solid-full.svg"}
+                        alt="Create"
+                        fill={true}
+                        style={{filter: "invert(1)"}}
+                        />
+                    </button>
+                    <button className="relative size-5 shrink-0" onClick={fetchData}>
+                        <Image 
+                        src={"/rotate-right-regular-full.svg"}
+                        alt="Reload"
+                        fill={true}
+                        style={{filter: "invert(1)"}}
+                        />
+                    </button>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                    {roomListings.map((roomData) => 
+                        <RoomListing 
+                        key={roomData.id} 
+                        roomData={roomData} 
+                        onClick={(roomData) => {
+                            // console.log(roomData)
+                            joinRoom(roomData)
+                            setCurrentRoom(roomData)
+                        }}
+                        />
+                    )}
+                </div>
+            </div>
+            
+            <div className="bg-slate-900 h-full w-1"></div>
+
+            <div className="w-3/4 h-full">
+                {currentRoom 
+                    ? <Room 
+                    roomData={currentRoom}
+                    onExitButtonClick={leaveRoom}
+                    onSendMessageButtonClick={sendMessage}
+                    />
+                    : <Welcome/>
+                }
+            </div>
+        
+        </div>
+    )
 
     if (isCreationMenuOpen) {
         return (
