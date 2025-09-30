@@ -9,7 +9,7 @@ function App() {
    const nav = document.querySelector(".nav") as HTMLElement;
    window.addEventListener("scroll", () => {
       const scrollPostion = window.scrollY;
-      const opacity = Math.min(scrollPostion / 500, 1);
+      const opacity = Math.min(scrollPostion / 350, 1);
       nav.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255, 255, 255, ${opacity}))`;
    });
 
