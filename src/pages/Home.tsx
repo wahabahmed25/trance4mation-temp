@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import GameCard from "../components/GameCard";
 import sampleImg from "../assets/sample_img.jpg";
+import KeepitReal100 from "../assets/KIR100 Logo.png";
 
 function Home() {
    const navigate = useNavigate();
@@ -91,14 +92,14 @@ function Home() {
                <div className="game-cards-container" ref={carouselRef}>
                   <GameCard title="Speak to Me" image={sampleImg} description="In a world that often asks us to hide, Speak to Me dares us to be seen." />
                   <GameCard title="Keep It Real" image={sampleImg} description="Keep It Real harbors a magic that changes people." />
-                  <GameCard title="Keep It Real 100" image={sampleImg} description="Where BIPOC youth, adults, and allies gather to speak truth, share stories, and listen with heart." />
+                  <GameCard title="Keep It Real 100" image={KeepitReal100} description="Where BIPOC youth, adults, and allies gather to speak truth, share stories, and listen with heart." />
                   <GameCard title="Call it Out" image={sampleImg} description="More than just a game, Call It Out is a movement—one that sparks courage, connection, and change." />
-                  <GameCard
+                  {/* <GameCard
                      title="Remembrance"
                      image={sampleImg}
                      description="A gentle, conversation-based game that offers comfort, connection, and healing for those navigating grief and loss."
                   />
-                  <GameCard title="Trill (True & Real)" image={sampleImg} description="A therapeutic dialogue game designed to support individuals and communities impacted by addiction." />
+                  <GameCard title="Trill (True & Real)" image={sampleImg} description="A therapeutic dialogue game designed to support individuals and communities impacted by addiction." /> */}
                </div>
                <button className="carousel-arrow carousel-arrow-right" onClick={scrollRight}>
                   &#8250;

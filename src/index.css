@@ -1,9 +1,9 @@
 :root {
-   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+   font-family: system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
    line-height: 1.5;
    font-weight: 400;
    margin: 0px;
-   background-color: #eee4db;
+   background-color: #fcfaee;
 
    * {
       margin: 0px;
@@ -20,15 +20,15 @@
    --golden-glow: #ffd166;
    --sky-blue: #55ccf2;
    --soft-violet: #9b5de5;
-   --warm-beige: #e8d5c4;
+   --warm-beige: #fcfaee;
    --dark-blue: #042159;
    --white: #ffffff;
    --black: #000000;
 
    /* Background Colors */
-   --section-bg: #e8d5c4;
-   --section-bg-alt: #e8d5c4;
-   --nav-bg: #2a8bb5;
+   --section-bg: #fcfaee;
+   --section-bg-alt: #fcfaee;
+   --nav-bg: #55ccf2;
 
    /* Text Colors */
    --text-primary: #042159;

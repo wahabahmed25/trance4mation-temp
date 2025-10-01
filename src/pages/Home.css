@@ -10,12 +10,14 @@
 }
 
 .hero-left {
+   padding-top: 7rem;
    display: flex;
    justify-content: center;
    align-items: center;
 }
 
 .hero-right {
+   padding-top: 7rem;
    display: flex;
    flex-direction: column;
    justify-content: center;
@@ -113,6 +115,7 @@
 }
 .game-section h2 {
    margin-top: 2rem;
+   font-weight: bold;
 }
 
 .game-section::before {
@@ -261,10 +264,11 @@ h2 {
    display: flex;
    align-items: center;
    gap: 3rem;
-   border: 2px solid white;
+   border: 5px solid var(--sky-blue);
    border-radius: 10px;
    padding: 3rem;
    scroll-snap-align: center;
+   backdrop-filter: blur(150px);
 }
 
 .testimonial-img {
@@ -283,7 +287,7 @@ h2 {
 
 .testimonial-quote p {
    font-size: 1.8rem;
-   color: var(--text-white);
+   color: var(--text-primary);
    font-style: italic;
    line-height: 1.5;
    margin: 0;
@@ -291,7 +295,7 @@ h2 {
 
 .testimonial-author {
    font-size: 1.2rem;
-   color: var(--text-white);
+   color: var(--text-primary);
    font-weight: 600;
    text-align: right;
 }
