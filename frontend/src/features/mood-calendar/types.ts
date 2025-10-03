@@ -1,4 +1,5 @@
 export type MoodType = "happy" | "neutral" | "sad" | "angry";
+export type NullableMood = MoodType | null;
 
 export type MoodDay = {
   key: string; // "YYYY-MM-DD"
