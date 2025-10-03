@@ -1,6 +1,6 @@
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import Image from "next/image"
-import { RED, YELLOW, POPPINS_BOLD, MERRIWEATHER, TEAL } from "@/app/discussion-circle/defaults"
+import { POPPINS_BOLD, MERRIWEATHER } from "@/app/discussion-circle/defaults"
 
 interface RoomListing {
     roomData: RoomData, 
@@ -15,15 +15,6 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
         >
             <div 
             className="flex grow-2 m-1 rounded-md items-center p-2 gap-2 bg-slate-950">
-                {/* Room icon */}
-                {/* <Image 
-                src={roomData.icon}
-                alt="Sidebar"
-                width={20}
-                height={20}
-                priority
-                /> */}
-
                 <div className="flex flex-col">
                     {/* Room name */}
                     <div className={`text-base ${POPPINS_BOLD.className} text-white`}>
@@ -81,7 +72,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
 
                 {/* Anonymity */}
                 {roomData.isAnonymous
-                    ? <div className={`flex items-center w-6`}>
+                    ? <div className={`flex items-center w-6 shrink-0`}>
                         <Image 
                         src={"/mask-solid-full.svg"}
                         alt="isAnonymous"

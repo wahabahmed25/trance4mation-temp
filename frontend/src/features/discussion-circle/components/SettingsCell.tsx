@@ -1,5 +1,4 @@
 import Image from "next/image"
-import { RED } from "@/app/discussion-circle/defaults"
 import { RoomSetting } from "../types/RoomSetting"
 import { useState } from "react"
 
@@ -14,12 +13,7 @@ export default function SettingsCell({setting, onChange}: SettingsCellProps) {
     // console.log(setting.defaultValue)
 
     return(
-        <div 
-        className="flex gap-2 border-1 rounded-sm p-2"
-        style={{
-            backgroundColor: RED
-        }}
-        >
+        <div className="flex gap-2 border-2 border-slate-600 text-white rounded-sm p-2">
             <Image 
             className="grow-0"
             src={setting.image}
@@ -27,6 +21,9 @@ export default function SettingsCell({setting, onChange}: SettingsCellProps) {
             width={20}
             height={20}
             priority
+            style={{
+                filter: "invert(1)"
+            }}
             />
 
             <div 

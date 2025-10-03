@@ -36,6 +36,8 @@ export default function DiscussionCircle() {
     const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
+    const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
+    const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
 
     function fetchData() {
         getRooms()
@@ -72,7 +74,7 @@ export default function DiscussionCircle() {
         })
     }
 
-    async function leaveRoom() {
+    async function leaveCurrentRoom() {
         if (!currentRoom) {
             return
         }
@@ -133,120 +135,76 @@ export default function DiscussionCircle() {
                 setUser(undefined)
             }
         });
+
+        function onResize() {
+            if (window.innerWidth < 768) {
+                setSmallScreen(true)
+            }
+            else {
+                setSmallScreen(false)
+            }
+        }
+
+        window.addEventListener("resize", onResize)
+        onResize()
+
+        return () => {
+            window.removeEventListener("resize", onResize)
+        }
+
     }, [])
 
     return (
-        <div className={"w-screen h-screen bg-black p-8 flex gap-8"}>
-            <div className="w-1/4 h-full flex flex-col gap-2">
-                <h1 className="font-bold text-3xl text-white">Discussion Circle</h1>
-                <div className="flex gap-1 items-center">
-                    <Input type="text" placeholder="Search" className="bg-slate-900 grow rounded-full text-gray-500 px-3 p-1" style={{minWidth: 0}}/>
-                    <button className="relative size-6 shrink-0" onClick={async () => {
-                        setCreationMenuOpen(true)
-                        // await createRoom(placeholder)
-                        // fetchData()
-                    }}>
-                        <Image 
-                        src={"/plus-solid-full.svg"}
-                        alt="Create"
-                        fill={true}
-                        style={{filter: "invert(1)"}}
-                        />
-                    </button>
-                    <button className="relative size-5 shrink-0" onClick={fetchData}>
-                        <Image 
-                        src={"/rotate-right-regular-full.svg"}
-                        alt="Reload"
-                        fill={true}
-                        style={{filter: "invert(1)"}}
-                        />
-                    </button>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    {roomListings.map((roomData) => 
-                        <RoomListing 
-                        key={roomData.id} 
-                        roomData={roomData} 
-                        onClick={(roomData) => {
-                            // console.log(roomData)
-                            joinRoom(roomData)
-                            setCurrentRoom(roomData)
-                        }}
-                        />
-                    )}
-                </div>
+        <div className="w-screen h-screen bg-black flex relative">
+            <div className="h-full flex border-r-4 border-slate-900"
+            style={{
+                width: `${isSmallScreen ? "100%" : "25%"}`,
+                position: `${isSmallScreen ? "absolute" : "relative"}`,
+                padding: `${.25 * 8}rem`,
+                visibility: `${
+                    isRoomBrowserOpen ? 
+                        isSmallScreen ?
+                            !(isCreationMenuOpen || currentRoom) ?
+                                "visible"
+                            : "hidden"
+                    :"visible" 
+                    : "hidden"
+                }`
+            }}
+            >
+                <RoomBrowser
+                rooms={roomListings}
+                onCreateButtonClick={() => setCreationMenuOpen(true)}
+                onReloadButtonClick={() => fetchData()}
+                onRoomClick={(roomData: RoomData) => {
+                    leaveCurrentRoom()
+                    joinRoom(roomData)
+                    setCurrentRoom(roomData)
+                }}
+                />
             </div>
-            
-            <div className="bg-slate-900 h-full w-1"></div>
 
-            <div className="w-3/4 h-full">
-                {currentRoom 
-                    ? <Room 
+            <div className="grow h-full p-8">
+                {isCreationMenuOpen ? 
+                    <RoomCreationMenu
+                    onCloseButtonClick={() => {
+                        setCreationMenuOpen(false)
+                    }}
+                    />
+                : currentRoom ? 
+                    <Room 
                     roomData={currentRoom}
-                    onExitButtonClick={leaveRoom}
+                    onExitButtonClick={leaveCurrentRoom}
                     onSendMessageButtonClick={sendMessage}
                     />
-                    : <Welcome/>
+                : isSmallScreen ?
+                    <></>
+                : <Welcome/>
                 }
             </div>
         
         </div>
     )
-
-    if (isCreationMenuOpen) {
-        return (
-            <RoomCreationMenu
-            onCloseButtonClick={() => setCreationMenuOpen(false)}
-            onConfirmButtonClick={async (roomData: Omit<RoomData, "id">) => {
-                await createRoom(roomData)
-                if (isCreationMenuOpen) {
-                    setCreationMenuOpen(false)
-                }
-                fetchData()
-            }}
-            />
-        )
-    }
-
-    if (currentRoom === undefined) {
-        return (
-            <div className={"w-screen h-screen bg-[#006D77] p-8"}>
-                <h1 className="font-bold text-3xl">Discussion Circle</h1>
-                <button onClick={async () => {
-                    setCreationMenuOpen(true)
-                    // await createRoom(placeholder)
-                    // fetchData()
-                }}>
-                    Create
-                </button>
-                <button onClick={fetchData}>
-                    Reload
-                </button>
-                {roomListings.map((roomData) => 
-                    <RoomListing 
-                    key={roomData.id} 
-                    roomData={roomData} 
-                    onClick={(roomData) => {
-                        // console.log(roomData)
-                        joinRoom(roomData)
-                        setCurrentRoom(roomData)
-                    }}
-                    />
-                )}
-            </div>
-        )
-    }
-
-    else {
-        return (
-            <Room 
-            roomData={currentRoom}
-            onExitButtonClick={leaveRoom}
-            onSendMessageButtonClick={sendMessage}
-            />
-        )
-    }
 
 }
 
