@@ -1,5 +1,6 @@
 import "./About.css";
 import ContactUs from "../components/ContactForm";
+import InternList from "../components/Interns";
 
 function About() {
    return (
@@ -22,9 +23,12 @@ function About() {
                      dialogue games, Play to Heal provides an inclusive, accessible, and proactive space for healing, resilience, and belonging. Without it, campuses will continue to see
                      rising crises, dropout rates, and disconnection, especially among first-generation and marginalized students, losing the chance to transform silence and suffering into
                      connection, empowerment, and collective well- being. The Play to Heal Campus Connection Hub addresses this urgent need by creating a structured, student-driven platform
-                     where young people can come together for healing dialogue, emotional support, and community building. Unlike traditional interventions, Play to Heal meets students where
-                     they are—peer-to-peer, accessible 24/7, grounded in therapeutic games designed to open safe conversations about mental health, resilience, and connection. It shifts the
-                     model from reactive crisis management to proactive prevention and empowerment.
+                     where young people can come together for healing dialogue, emotional support, and community building.
+                  </p>
+                  <br></br>
+                  <p>
+                     Unlike traditional interventions, Play to Heal meets students where they are—peer-to-peer, accessible 24/7, grounded in therapeutic games designed to open safe
+                     conversations about mental health, resilience, and connection. It shifts the model from reactive crisis management to proactive prevention and empowerment.
                   </p>
                </div>
             </div>
@@ -68,192 +72,7 @@ function About() {
             <h1>Meet the Interns</h1>
             <div>
                <ul className="interns-container">
-                  <h2>Speak to Me Game || Trill Addictions Prevention & Recovery Game</h2>
-                  <div className="intern-group">
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
-                           <div>
-                              <h3>Michael Coleman</h3>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Sasha Shifrina</h2>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Kelvin Chen</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>An Van</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Zhen Tao Pan</h2>
-                              <h2>Co-Lead in Platform and Landing Page Development</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-                  </div>
-                  <h2>Play to Heal || Campus Connection Platform Development Team || Keep It Real & Keep It Real 100 Games</h2>
-                  <div className="intern-group">
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
-                           <div>
-                              <h2>Wahab Ahmed</h2>
-                              <h2>Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Ragib</h2>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Efti Saroare</h2>
-                              <h2> Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Kevin Li</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Khadeja Ahmar</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-                  </div>
-                  <h2>Call It Out Anti-Bullying Game || Remembrance Grief & Loss Support Game</h2>
-                  <div className="intern-group">
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
-                           <div>
-                              <h2>Faraaz Ali</h2>
-                              <h2>Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Gordon Mo</h2>
-                              <h2>Co-Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Paulo Zapata</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 2" />
-                           <div>
-                              <h2>Jan Calle-Ortiz</h2>
-                              <h2>Developer and Social Media & Digital Engagement Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-                  </div>
-                  <h2>Landing Page Design & Development || Campus Resources Directory UI</h2>
-                  <div className="intern-group">
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
-                           <div>
-                              <h2>Jin Wang</h2>
-                              <h2>Lead</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-                  </div>
-                  {/* <h2>Social Media & Digital Engagement Lead</h2>
-                  <div className="intern-group">
-                     <div>
-                        <li>
-                           <img src="/src/assets/intern_placeholder.jpeg" width="60%" alt="Intern 1" />
-                           <div>
-                              <h2>Jan Calle-Ortiz</h2>
-                              <h2>Role</h2>
-                              <h2>Insert sentence here</h2>
-                           </div>
-                        </li>
-                     </div>
-                  </div>*/}
+                  <InternList />
                </ul>
             </div>
          </section>

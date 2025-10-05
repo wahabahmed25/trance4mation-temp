@@ -3,7 +3,7 @@
    line-height: 1.5;
    font-weight: 400;
    margin: 0px;
-   background-color: #fcfaee;
+   background-color: #fff0f0;
 
    * {
       margin: 0px;
@@ -26,7 +26,7 @@
    --black: #000000;
 
    /* Background Colors */
-   --section-bg: #fcfaee;
+   --section-bg: #fff0f0;
    --section-bg-alt: #fcfaee;
    --nav-bg: #55ccf2;
 
