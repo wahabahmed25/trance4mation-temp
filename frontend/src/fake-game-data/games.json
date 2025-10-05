@@ -1,0 +1,95 @@
+[
+  {
+    "name": "Mind Quest",
+    "tags": ["focus", "memory"],
+    "plays": 12900,
+    "rating": 5,
+    "featured": true,
+    "isTrending": true,
+    "continuePlaying": true,
+    "progress": 64
+  },
+  {
+    "name": "Calm Runner",
+    "tags": ["breathing", "mindful"],
+    "plays": 9700,
+    "rating": 5,
+    "featured": false,
+    "isTrending": true,
+    "continuePlaying": true,
+    "progress": 38
+  },
+  {
+    "name": "Focus Builder",
+    "tags": ["focus", "productivity"],
+    "plays": 15200,
+    "rating": 4,
+    "featured": true,
+    "continuePlaying": true,
+    "progress": 80
+  },
+  {
+    "name": "Resilience Puzzle",
+    "tags": ["problem-solving", "confidence"],
+    "plays": 18420,
+    "rating": 5,
+    "featured": true,
+    "ForYou": true,
+    "isNew": true
+  },
+  {
+    "name": "Focus Builder",
+    "tags": ["focus", "relaxation"],
+    "plays": 15200,
+    "rating": 4,
+    "featured": false
+  },
+  {
+    "name": "Sleep Symphony",
+    "tags": ["sleep", "calm"],
+    "plays": 8700,
+    "rating": 4,
+    "featured": false
+  },
+  {
+    "name": "Gratitude Grove",
+    "tags": ["gratitude", "positivity"],
+    "plays": 10400,
+    "rating": 5,
+    "featured": true
+  },
+  {
+    "name": "Mindflow Maze",
+    "tags": ["focus", "strategy"],
+    "plays": 11800,
+    "rating": 4,
+    "ForYou": true,
+    "featured": true
+  },
+  {
+    "name": "Zen Painter",
+    "tags": ["creative", "mindful"],
+    "plays": 9200,
+    "rating": 4,
+    "ForYou": true,
+    "featured": false
+    
+  },
+  {
+    "name": "Emotion Explorer",
+    "tags": ["empathy", "reflection"],
+    "plays": 13400,
+    "rating": 5,
+    "featured": true,
+    "ForYou": true,
+    "isTrending": true
+  },
+  {
+    "name": "Breathe & Balance",
+    "tags": ["breathing", "relaxation"],
+    "plays": 7600,
+    "rating": 4,
+    "ForYou": true,
+    "featured": false
+  }
+]
