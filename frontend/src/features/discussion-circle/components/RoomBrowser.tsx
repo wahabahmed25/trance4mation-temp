@@ -17,7 +17,7 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
         <div className="w-full h-full flex flex-col gap-2 grow">
             <h1 className="font-bold text-3xl text-white">Discussion Circle</h1>
             <div className="flex gap-1 items-center">
-                <Input type="text" placeholder="Search" className="bg-slate-900 grow rounded-full text-gray-500 px-3 p-1" style={{minWidth: 0}}/>
+                <Input type="text" placeholder="Search" className="bg-slate-900 grow rounded-full text-white px-3 p-1" style={{minWidth: 0}}/>
                 <button className="relative size-6 shrink-0" onClick={onCreateButtonClick}>
                     <Image 
                     src={"/plus-solid-full.svg"}

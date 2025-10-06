@@ -74,9 +74,9 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
 
             <div className="relative z-1">
                 <div className="absolute flex bg-neutral-900 border-2 border-slate-800 rounded-md flex-col p-2">
-                    <div className="flex justify-start">
-                        <h1 className="text-gray-200 font-semibold text-md pb-1">Prompt:</h1>
-                        <button className="relative size-6" onClick={() => setPromptVisible((curr) => !curr)}>
+                    <div className="flex justify-start" onClick={() => setPromptVisible((curr) => !curr)}>
+                        <h1 className="text-gray-200 font-semibold text-md pb-1 cursor-pointer">Prompt:</h1>
+                        <button className="relative size-6 cursor-pointer">
                             <Image 
                             src={"/chevron-down-solid-full.svg"}
                             alt="collapse"
@@ -99,8 +99,8 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
             <Circle/>
             
 
-            <div className="flex flex-col gap-2">
-                <div className="flex text-3xl justify-center">
+            <div className="flex flex-col gap-2 relative">
+                <div className="flex text-3xl justify-center absolute w-full">
                     <button>👍</button>
                     <button>❤️</button>
                     <button>👏</button>
