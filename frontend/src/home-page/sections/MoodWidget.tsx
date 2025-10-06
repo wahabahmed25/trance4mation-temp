@@ -13,7 +13,6 @@ const moods = [
 
 const MoodWidget = () => {
   return (
-    <Link href="/mood-calender">
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -67,7 +66,7 @@ const MoodWidget = () => {
               Circle
             </Link>
             <Link
-              href="/mood"
+              href="/mood-calender"
               className="flex items-center gap-1 bg-white/5 hover:bg-white/10 text-white/80 rounded-xl px-3 py-1.5 text-sm transition"
             >
               <Calendar size={16} />
@@ -89,7 +88,7 @@ const MoodWidget = () => {
           </p>
         </div>
       </motion.section>
-    </Link>
+
   );
 };
 

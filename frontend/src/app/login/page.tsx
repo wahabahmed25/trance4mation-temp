@@ -6,10 +6,14 @@ import { useState } from "react";
 import { login } from "@/lib/api/ApiCalls";
 import InputField from "@/user-signup/signup/InputField";
 import LoginButton from "@/user-signup/login/LoginButton";
+import { useAuth } from "@/context/AuthContext";
+
+
 interface loginForm {
   email: string;
   password: string;
 }
+
 
 const page = () => {
     const router = useRouter();
@@ -18,6 +22,7 @@ const page = () => {
     password: "",
   });
   const [error, setError] = useState("");
+  const { loginUser } = useAuth();
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,9 +43,11 @@ const page = () => {
     }
     try {
       const result = await login(email, password);
-      if (result.success){
+      console.log("these are results", result);
+      if (result.success && result.user){
+        loginUser(result.user);
         router.push('/home')
-        setInputValue({ email: "", password: "" });
+        console.log("user: ", result.user)
         console.log("successfully logged in")
       }
       else{

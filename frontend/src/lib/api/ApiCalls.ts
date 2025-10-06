@@ -2,6 +2,22 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, setDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
+
+interface UserData {
+  uid: string;
+  name: string;
+  email: string;
+  profilePic: string;
+  [key: string]: any; // in case i store extra fields in Firestore
+}
+
+interface LoginResponse {
+  success: boolean;
+  user?: UserData;
+  error?: string;
+}
+
+
 export async function signup(name: string, email: string, password: string) {
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -20,24 +36,32 @@ export async function signup(name: string, email: string, password: string) {
   }
 }
 
-
-export async function login (email: string, password: string){
-  try{
+export async function login(email: string, password: string): Promise<LoginResponse> {
+  try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    // Optionally fetch user profile from Firestore
+
+    // Pull Firestore data
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      return { success: true, uid: user.uid, data: userSnap.data() };
-    } else {
-      // fallback: user logged in but no Firestore doc
-      return { success: true, uid: user.uid, data: null };
-    }
-  } catch (error) {
+    const firestoreData = userSnap.exists() ? userSnap.data() : {};
+
+    // ✅ Ensure fields never undefined
+    const userData: UserData = {
+      uid: user.uid,
+      name: firestoreData.name || user.displayName || "Anonymous User",
+      email: user.email || "unknown@example.com",
+      profilePic: firestoreData.profilePic || user.photoURL || "/default-avatar.png",
+      ...firestoreData,
+    };
+
+    return { success: true, user: userData };
+  } catch (error: any) {
     console.error("Login error:", error);
-    return { success: false, error };
+    return {
+      success: false,
+      error: error.message || "Failed to log in. Please try again.",
+    };
   }
-  
 }

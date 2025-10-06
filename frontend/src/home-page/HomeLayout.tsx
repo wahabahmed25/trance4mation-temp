@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Navbar from "@/home-page/sections/HomeNavbar";
+import Navbar from "@/home-page/components/HomeNavbar";
 import { motion } from "framer-motion";
 
 interface HomeLayoutProps {

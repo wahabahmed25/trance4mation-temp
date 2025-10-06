@@ -5,10 +5,10 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react"; // for the icons
 import logo from "../../images/play-to-heal.png";
-
+import { useAuth } from "@/context/AuthContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const {user} = useAuth();
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-[#0F4C5C]/90 backdrop-blur-md shadow-lg">
       <div className="flex justify-between items-center px-6 md:px-10 py-3">
@@ -25,6 +25,7 @@ const Navbar = () => {
           <h1 className="text-lg md:text-2xl font-bold text-[#F4C95D] tracking-wide">
             PLAY-TO-HEAL
           </h1>
+          <h1>{user?.name || "Guest"}</h1>
         </div>
          </Link>
 
@@ -80,11 +81,11 @@ const Navbar = () => {
                 Games
               </Link>
               <Link
-                href="/landing"
+                href="/profile"
                 onClick={() => setIsOpen(false)}
                 className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors"
               >
-                Landing
+                profile
               </Link>
               <Link
                 href="/logout"
