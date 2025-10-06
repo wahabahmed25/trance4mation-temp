@@ -37,7 +37,7 @@ const MoodWidget = () => {
           {/* Emoji mood selector */}
           <div className="flex justify-start flex-wrap gap-3 mb-8">
             {moods.map((mood, i) => (
-              <Link key={i} href="/mood">
+              <Link key={i} href="/mood-calender">
                 <motion.div
                   whileHover={{ scale: 1.15 }}
                   whileTap={{ scale: 0.9 }}
@@ -59,7 +59,7 @@ const MoodWidget = () => {
           {/* Quick action buttons */}
           <div className="flex flex-wrap gap-3 mb-6">
             <Link
-              href="/circle"
+              href="/discussion-circle"
               className="flex items-center gap-1 bg-white/5 hover:bg-white/10 text-white/80 rounded-xl px-3 py-1.5 text-sm transition"
             >
               <MessageCircle size={16} />
