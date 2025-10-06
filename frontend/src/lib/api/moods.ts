@@ -5,23 +5,30 @@ import {
   collection,
   doc,
   setDoc,
+  getDoc,
   getDocs,
-  query,
-  where,
+  deleteDoc,
 } from "firebase/firestore";
-import type { MoodType } from "@/features/mood-calendar/types";
+import type { MoodType, NullableMood } from "@/features/mood-calendar/types";
 
 /**
  * Save a mood entry for a given user+date
+ * If mood === null → delete the entry
  */
 export async function saveMood(
   userId: string,
   dateKey: string,
-  mood: MoodType
+  mood: NullableMood
 ) {
-  // Document path: moods/{userId}/entries/{dateKey}
   const ref = doc(collection(db, "moods", userId, "entries"), dateKey);
 
+  if (mood === null) {
+    // ✅ remove the mood if cleared
+    await deleteDoc(ref);
+    return;
+  }
+
+  // ✅ otherwise set/merge the mood
   await setDoc(
     ref,
     {
@@ -30,7 +37,7 @@ export async function saveMood(
       mood,
       updatedAt: new Date().toISOString(),
     },
-    { merge: true } // don’t overwrite existing fields
+    { merge: true }
   );
 }
 
@@ -41,8 +48,8 @@ export async function saveMood(
 export async function loadMoods(
   userId: string,
   prefix?: string
-): Promise<Record<string, MoodType>> {
-  const moods: Record<string, MoodType> = {};
+): Promise<Record<string, NullableMood>> {
+  const moods: Record<string, NullableMood> = {};
 
   const entriesRef = collection(db, "moods", userId, "entries");
   const snap = await getDocs(entriesRef);
