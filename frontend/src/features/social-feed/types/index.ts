@@ -4,6 +4,7 @@ export interface Post {
   id: string;
   author: string;
   content: string;
+  prompt?: string; // The prompt question the user is answering
   timestamp: string;
   supportCount: number;
   relateCount: number;
@@ -14,6 +15,7 @@ export interface Post {
 
 export interface PostCreationData {
   content: string;
+  prompt?: string;
   type: Post['type'];
 }
 

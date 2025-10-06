@@ -21,15 +21,15 @@ const GradientButton: React.FC<GradientButtonProps> = ({
   const getVariantClasses = () => {
     switch (variant) {
       case 'primary':
-        return 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white';
+        return 'bg-gradient-to-r from-[#006D77] to-[#55CCF2] hover:from-[#005760] hover:to-[#3DB8E0] text-white';
       case 'secondary':
         return 'bg-white/80 backdrop-blur-md text-gray-600 hover:bg-white border border-white/50';
       case 'support':
-        return 'bg-gradient-to-r from-pink-100 to-red-100 text-pink-600 hover:from-pink-200 hover:to-red-200 border border-pink-200/50';
+        return 'bg-gradient-to-r from-[#FF8661]/20 to-[#FF8661]/30 text-[#FF8661] hover:from-[#FF8661]/30 hover:to-[#FF8661]/40 border border-[#FF8661]/50';
       case 'relate':
-        return 'bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-600 hover:from-blue-200 hover:to-cyan-200 border border-blue-200/50';
+        return 'bg-gradient-to-r from-[#55CCF2]/20 to-[#55CCF2]/30 text-[#55CCF2] hover:from-[#55CCF2]/30 hover:to-[#55CCF2]/40 border border-[#55CCF2]/50';
       default:
-        return 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white';
+        return 'bg-gradient-to-r from-[#006D77] to-[#55CCF2] hover:from-[#005760] hover:to-[#3DB8E0] text-white';
     }
   };
 
