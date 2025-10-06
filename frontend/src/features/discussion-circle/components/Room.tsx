@@ -100,7 +100,11 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
             
 
             <div className="flex flex-col gap-2 relative">
-                <div className="flex text-3xl justify-center absolute w-full">
+                <div className="flex text-3xl justify-center absolute w-full"
+                style={{
+                    top: "-1.5em"
+                }}
+                >
                     <button>👍</button>
                     <button>❤️</button>
                     <button>👏</button>
