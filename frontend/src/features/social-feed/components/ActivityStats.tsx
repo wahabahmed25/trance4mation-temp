@@ -33,11 +33,11 @@ const ActivityStats: React.FC<ActivityStatsProps> = ({
   const getColorClasses = (color: string) => {
     switch (color) {
       case 'purple':
-        return 'bg-purple-100 text-purple-600';
+        return 'bg-[#9B5DE5]/20 text-[#9B5DE5]';
       case 'pink':
-        return 'bg-pink-100 text-pink-600';
+        return 'bg-[#FF8661]/20 text-[#FF8661]';
       case 'blue':
-        return 'bg-blue-100 text-blue-600';
+        return 'bg-[#55CCF2]/20 text-[#006D77]';
       default:
         return 'bg-gray-100 text-gray-600';
     }
@@ -45,10 +45,10 @@ const ActivityStats: React.FC<ActivityStatsProps> = ({
 
   return (
     <div className="relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 blur-xl rounded-3xl"></div>
-      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-orange-200/50">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#FF8661]/20 to-[#FFD166]/20 blur-xl rounded-3xl"></div>
+      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-[#FF8661]/30">
         <div className="flex items-center space-x-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-pink-500 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-[#FF8661] to-[#FFD166] rounded-xl flex items-center justify-center">
             <span className="text-white font-bold">📊</span>
           </div>
           <h3 className="text-xl font-bold text-gray-800">Your Activity</h3>

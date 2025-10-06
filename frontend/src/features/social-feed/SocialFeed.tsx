@@ -12,7 +12,7 @@ import { usePosts } from './hooks/usePosts'
 import { PostCreationData, SupportAction } from './types'
 
 const SocialFeed = () => {
-  const { posts, loading, error, addPost, handleSupportAction } = usePosts()
+  const { posts, loading, error, addPost, updatePost, deletePost, handleSupportAction } = usePosts()
   const [showMyPosts, setShowMyPosts] = useState(false)
   const [postLoading, setPostLoading] = useState(false)
 
@@ -24,6 +24,22 @@ const SocialFeed = () => {
       console.error('Error creating post:', error)
     } finally {
       setPostLoading(false)
+    }
+  }
+
+  const handleEditPost = async (postId: string, newContent: string) => {
+    try {
+      await updatePost(postId, newContent)
+    } catch (error) {
+      console.error('Error editing post:', error)
+    }
+  }
+
+  const handleDeletePost = async (postId: string) => {
+    try {
+      await deletePost(postId)
+    } catch (error) {
+      console.error('Error deleting post:', error)
     }
   }
 
@@ -54,7 +70,7 @@ const SocialFeed = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#55CCF2]/20 via-[#9B5DE5]/10 to-[#FFD166]/20 relative overflow-hidden">
       <BackgroundElements />
 
       <div className="relative z-10 p-6">
@@ -63,11 +79,11 @@ const SocialFeed = () => {
           <div className="flex justify-between items-center mb-12">
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-[#006D77] to-[#55CCF2] rounded-2xl flex items-center justify-center shadow-lg">
                   <span className="text-white text-xl">✨</span>
                 </div>
                 <div>
-                  <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
+                  <h1 className="text-5xl font-bold bg-gradient-to-r from-[#006D77] to-[#55CCF2] bg-clip-text text-transparent mb-2">
                     Social Feed
                   </h1>
                   <p className="text-gray-600 text-lg">Share positivity and support with your community</p>
@@ -75,11 +91,11 @@ const SocialFeed = () => {
               </div>
               <div className="flex items-center space-x-6 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-[#FFD166] rounded-full animate-pulse"></div>
                   <span>247 students online</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse delay-500"></div>
+                  <div className="w-2 h-2 bg-[#9B5DE5] rounded-full animate-pulse delay-500"></div>
                   <span>{posts.length} posts shared today</span>
                 </div>
               </div>
@@ -89,7 +105,7 @@ const SocialFeed = () => {
               className="group relative px-8 py-4 bg-white/80 backdrop-blur-md text-gray-700 font-semibold rounded-2xl hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl border border-white/50"
             >
               <span className="relative z-10">← Home</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#006D77]/10 to-[#55CCF2]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>
           </div>
 
@@ -121,7 +137,7 @@ const SocialFeed = () => {
               {loading && (
                 <div className="flex items-center justify-center py-12">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full animate-pulse"></div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#006D77] to-[#55CCF2] rounded-full animate-pulse"></div>
                     <div className="text-gray-600 font-medium">Loading posts...</div>
                   </div>
                 </div>
@@ -148,7 +164,10 @@ const SocialFeed = () => {
                       key={post.id}
                       post={post}
                       onSupportAction={handleSupportClick}
+                      onEdit={handleEditPost}
+                      onDelete={handleDeletePost}
                       index={index}
+                      isOwner={true}
                     />
                   ))
                 )}

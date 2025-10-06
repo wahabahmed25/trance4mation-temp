@@ -7,6 +7,7 @@ import {
   addDoc, 
   getDocs, 
   updateDoc, 
+  deleteDoc,
   doc, 
   orderBy, 
   query, 
@@ -36,6 +37,7 @@ export const usePosts = () => {
           id: doc.id,
           author: data.author || 'Anonymous Student',
           content: data.content,
+          prompt: data.prompt || undefined,
           timestamp: data.timestamp || 'Just now',
           supportCount: data.supportCount || 0,
           relateCount: data.relateCount || 0,
@@ -60,6 +62,7 @@ export const usePosts = () => {
     try {
       const newPost = {
         content: postData.content,
+        prompt: postData.prompt || null,
         type: postData.type,
         author: 'Anonymous Student', // In real app, get from auth
         timestamp: 'Just now',
@@ -83,6 +86,44 @@ export const usePosts = () => {
     } catch (err) {
       console.error('Error adding post:', err);
       setError('Failed to create post');
+      throw err;
+    }
+  };
+
+  // Update/Edit post
+  const updatePost = async (postId: string, content: string) => {
+    try {
+      const postRef = doc(db, 'posts', postId);
+      await updateDoc(postRef, {
+        content: content,
+        timestamp: 'Edited'
+      });
+
+      // Update local state
+      setPosts(prev => prev.map(post => 
+        post.id === postId 
+          ? { ...post, content, timestamp: 'Edited' }
+          : post
+      ));
+    } catch (err) {
+      console.error('Error updating post:', err);
+      setError('Failed to update post');
+      throw err;
+    }
+  };
+
+  // Delete post
+  const deletePost = async (postId: string) => {
+    try {
+      const postRef = doc(db, 'posts', postId);
+      // Actually delete the document from Firebase
+      await deleteDoc(postRef);
+
+      // Remove from local state
+      setPosts(prev => prev.filter(post => post.id !== postId));
+    } catch (err) {
+      console.error('Error deleting post:', err);
+      setError('Failed to delete post');
       throw err;
     }
   };
@@ -123,6 +164,8 @@ export const usePosts = () => {
     loading,
     error,
     addPost,
+    updatePost,
+    deletePost,
     handleSupportAction,
     refetchPosts: fetchPosts
   };
