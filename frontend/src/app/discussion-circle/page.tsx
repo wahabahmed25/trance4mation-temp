@@ -190,6 +190,10 @@ export default function DiscussionCircle() {
                     onCloseButtonClick={() => {
                         setCreationMenuOpen(false)
                     }}
+                    onConfirmButtonClick={(roomData) => {
+                        createRoom(roomData)
+                        fetchData()
+                    }}
                     />
                 : currentRoom ? 
                     <Room 
