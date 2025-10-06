@@ -4,14 +4,14 @@ import { RoomSetting } from "@/features/discussion-circle/types/RoomSetting"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
-export const DEFAULT_ROOM_DATA: RoomData = {
+export const DEFAULT_ROOM_DATA: Omit<RoomData, "id"> = {
     isAnonymous: false,
-    maxParticipants: 5,
-    colorTheme: "default",
-    timeLimit: 30,
+    maxSize: 5,
+    palette: "default",
+    time: 30,
     rounds: 3,
     name: "",
-    icon: "/globe.svg",
+    size: 0,
     description: ""
 }
 
@@ -76,40 +76,40 @@ export const defaultMessages: MessageData[] = [
 ]
 
 export const defaultRooms: RoomData[] = [
-    {
-        isAnonymous: false,
-        numParticipants: 2,
-        maxParticipants: 3,
-        colorTheme: "idk",
-        timeLimit: 10,
-        rounds: 3,
-        code: "ABCD",
-        name: "counseling",
-        icon: "/vercel.svg",
-        description: "this is a room to talk about school"
-    },
-    {
-        isAnonymous: true,
-        numParticipants: 3,
-        maxParticipants: 4,
-        colorTheme: "idk",
-        timeLimit: 5,
-        rounds: 3,
-        code: "EFGH",
-        name: "philosophical cookies",
-        icon: "/next.svg",
-        description: "this is a room to talk about the meaning of life and also cookie recipes"
-    },
-    {
-        isAnonymous: true,
-        numParticipants: 3,
-        maxParticipants: 4,
-        colorTheme: "idk",
-        timeLimit: 5,
-        rounds: 3,
-        code: "IJKL",
-        name: "room 1",
-        icon: "/window.svg",
-        description: ""
-    },
+    // {
+    //     isAnonymous: false,
+    //     numParticipants: 2,
+    //     maxParticipants: 3,
+    //     colorTheme: "idk",
+    //     timeLimit: 10,
+    //     rounds: 3,
+    //     code: "ABCD",
+    //     name: "counseling",
+    //     icon: "/vercel.svg",
+    //     description: "this is a room to talk about school"
+    // },
+    // {
+    //     isAnonymous: true,
+    //     numParticipants: 3,
+    //     maxParticipants: 4,
+    //     colorTheme: "idk",
+    //     timeLimit: 5,
+    //     rounds: 3,
+    //     code: "EFGH",
+    //     name: "philosophical cookies",
+    //     icon: "/next.svg",
+    //     description: "this is a room to talk about the meaning of life and also cookie recipes"
+    // },
+    // {
+    //     isAnonymous: true,
+    //     numParticipants: 3,
+    //     maxParticipants: 4,
+    //     colorTheme: "idk",
+    //     timeLimit: 5,
+    //     rounds: 3,
+    //     code: "IJKL",
+    //     name: "room 1",
+    //     icon: "/window.svg",
+    //     description: ""
+    // },
 ]

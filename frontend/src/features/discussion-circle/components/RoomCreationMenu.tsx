@@ -1,18 +1,17 @@
-import { DEFAULT_ROOM_DATA, POPPINS_BOLD, PURPLE, YELLOW } from "@/app/discussion-circle/defaults";
-import TextInput from "./TextInput";
+import { DEFAULT_ROOM_DATA, POPPINS_BOLD, ROOM_CREATION_SETTINGS } from "@/app/discussion-circle/defaults";
 import Image from "next/image";
-import SettingsGrid from "./SettingsGrid";
-import Navbar from "./Navbar";
 import { MouseEventHandler, useState } from "react";
 import { RoomData } from "../types/RoomData";
+import { Input, Textarea } from "@headlessui/react";
+import SettingsCell from "./SettingsCell";
 
 interface RoomCreationMenuProps {
-    onCloseButtonClick?: MouseEventHandler<HTMLImageElement>,
-    onConfirmButtonClick?: (roomData: RoomData) => void 
+    onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
+    onConfirmButtonClick?: (roomData: Omit<RoomData, "id">) => void 
 }
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
-    const [settings, setSettings] = useState(DEFAULT_ROOM_DATA)
+    const [settings, setSettings] = useState<Omit<RoomData, "id">>(DEFAULT_ROOM_DATA)
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
         setSettings({
@@ -22,55 +21,52 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
     }
 
     return (
-        <div className="flex flex-col w-3/4 grow" style={{backgroundColor: YELLOW}}>
-            <Navbar 
-            header="Room Creation"
-            rightSideButtons={[{
-                icon: "/xmark-solid-full.svg",
-                onClick: onCloseButtonClick
-            }]}
-            />
-            <div className="flex flex-col p-6 gap-2">
-                <div className="flex gap-6 items-start">
-                    <div className="rounded-full size-24 border-1 shrink-0 flex justify-center items-center">
-                        <Image 
-                        src={"/vercel.svg"}
-                        alt="Sidebar"
-                        width={90}
-                        height={90}
-                        priority
-                        />
-                    </div>
-                    <div className="flex flex-col grow shrink gap-2 min-w-0">
-                        <TextInput
-                        placeholder="Room Name"
-                        className={POPPINS_BOLD.className}
-                        onChange={(event) => changeSetting("name", event.target.value)}
-                        />
+        <div className="flex flex-col grow h-full gap-4">
+            <div className="flex items-center">
+                <h1 className="text-white font-bold text-3xl grow">Create a Room</h1>
+                <button className="relative size-8 shrink-0" onClick={onCloseButtonClick}>
+                    <Image 
+                    src={"/xmark-solid-full.svg"}
+                    alt="close"
+                    fill={true}
+                    style={{filter: "invert(1)"}}
+                    />
+                </button>
+            </div>
 
-                        <textarea 
-                        className="border-1 rounded-sm p-2 grow text-base"
-                        placeholder="Description"
-                        style={{
-                            resize: "none",
-                        }}
-                        onChange={(event) => changeSetting("description", event.target.value)}
-                        />
-                    </div>
-                </div>
-                <SettingsGrid onChange={changeSetting}/>
+            <div className="flex flex-col gap-2">
+                <Input
+                placeholder="Room Name"
+                className={`${POPPINS_BOLD.className} text-white text-base p-1 px-2 border-b-2 border-slate-600`}
+                onChange={(event) => changeSetting("name", event.target.value)}
+                />
+                
+                <Textarea 
+                className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600"
+                placeholder="Description"
+                style={{
+                    resize: "none",
+                }}
+                onChange={(event) => changeSetting("description", event.target.value)}
+                />
             </div>
             
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+                {ROOM_CREATION_SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
+            </div>
+            
+
+
             <div className="flex justify-center grow items-end p-6">
                 <button
-                className="border-1 p-2 rounded-sm w-40 text-center"
-                style={{
-                    backgroundColor: PURPLE,
-                    cursor: "pointer"
-                }}
+                className="border-3 p-1 rounded-full w-40 text-center cursor-pointer font-bold text-xl
+                border-slate-600 text-slate-600
+                hover:border-[#006D77] hover:text-[#006D77]
+                "
                 onClick={() => onConfirmButtonClick ? onConfirmButtonClick(settings) : {}}
                 >
-                    Create and Join
+                    Create
                 </button>
             </div>
         </div>
