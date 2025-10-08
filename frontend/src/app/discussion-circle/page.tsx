@@ -1,20 +1,15 @@
 'use client'
 import { useEffect, useState } from "react"
-import { UserData } from "@/features/discussion-circle/types/UserData"
-import { defaultRooms, defaultPeople, BLUE, TEAL} from './defaults'
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
 import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
 import Room from "@/features/discussion-circle/components/Room"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import { initializeApp } from "firebase/app"
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore"
 import { onAuthStateChanged, User } from "firebase/auth"
 import { getAuth, signInAnonymously } from "firebase/auth";
-import RoomListing from "@/features/discussion-circle/components/RoomListing"
-import { MessageData } from "@/features/discussion-circle/types/MessageData"
 import Welcome from "@/features/discussion-circle/components/Welcome"
-import { Input } from "@headlessui/react"
-import Image from "next/image"
+import { useAuth } from "@/context/AuthContext";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -29,15 +24,18 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app)
+const auth = getAuth()
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>(undefined)
-    const [user, setUser] = useState<User | undefined>(undefined)
+    // const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
+    const [user, setUser] = useState<User | undefined>(undefined)
+    // const user = useAuth()
 
     function fetchData() {
         getRooms()
@@ -110,23 +108,10 @@ export default function DiscussionCircle() {
     }
 
     useEffect(() => {
-        const auth = getAuth();
-        signInAnonymously(auth)
-            .then(() => {
-                // Signed in..
-                console.log("signed in as ", auth)
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-            });
-
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/auth.user
-                const uid = user.uid;
                 console.log(user)
                 setUser(user)
                 fetchData()
