@@ -10,6 +10,7 @@ import { onAuthStateChanged, User } from "firebase/auth"
 import { getAuth, signInAnonymously } from "firebase/auth";
 import Welcome from "@/features/discussion-circle/components/Welcome"
 import { useAuth } from "@/context/AuthContext";
+import { createPortal } from "react-dom"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -36,6 +37,7 @@ export default function DiscussionCircle() {
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
     const [user, setUser] = useState<User | undefined>(undefined)
     // const user = useAuth()
+    const [mounted, setMounted] = useState(false)
 
     function fetchData() {
         getRooms()
@@ -107,7 +109,27 @@ export default function DiscussionCircle() {
         })
     }
 
+    async function _joinRoom(roomData: RoomData) {
+        if (!user) {
+            console.log("not signed in")
+            return
+        }
+
+        const backendUrl =""
+        auth.currentUser?.getIdToken(true).then((idToken) => {
+            fetch(backendUrl, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                },
+                body: roomData.id
+            })
+        })
+    }
+
     useEffect(() => {
+        setMounted(true)
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
@@ -140,21 +162,37 @@ export default function DiscussionCircle() {
     }, [])
 
     return (
+        <>
+        {isCreationMenuOpen ?
+            <div className="p-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
+                <div className="flex border-slate-900 border-4 bg-black rounded-xl p-8">
+                    <RoomCreationMenu
+                    onCloseButtonClick={() => {
+                        setCreationMenuOpen(false)
+                    }}
+                    onConfirmButtonClick={(roomData) => {
+                        createRoom(roomData)
+                        fetchData()
+                    }}
+                    />
+                </div>
+            </div>
+         : null}
         <div className="w-screen h-screen bg-black flex relative">
             <div className="h-full flex border-r-4 border-slate-900"
             style={{
                 width: `${isSmallScreen ? "100%" : "25%"}`,
                 position: `${isSmallScreen ? "absolute" : "relative"}`,
                 padding: `${.25 * 8}rem`,
-                visibility: `${
-                    isRoomBrowserOpen ? 
-                        isSmallScreen ?
-                            !(isCreationMenuOpen || currentRoom) ?
-                                "visible"
-                            : "hidden"
-                    :"visible" 
-                    : "hidden"
-                }`
+                // visibility: `${
+                //     isRoomBrowserOpen ? 
+                //         isSmallScreen ?
+                //             !(isCreationMenuOpen || currentRoom) ?
+                //                 "visible"
+                //             : "hidden"
+                //     : "visible" 
+                //     : "hidden"
+                // }`
             }}
             >
                 <RoomBrowser
@@ -170,17 +208,19 @@ export default function DiscussionCircle() {
             </div>
 
             <div className="grow h-full p-8">
-                {isCreationMenuOpen ? 
-                    <RoomCreationMenu
-                    onCloseButtonClick={() => {
-                        setCreationMenuOpen(false)
-                    }}
-                    onConfirmButtonClick={(roomData) => {
-                        createRoom(roomData)
-                        fetchData()
-                    }}
-                    />
-                : currentRoom ? 
+                {
+                // isCreationMenuOpen ? 
+                //     <RoomCreationMenu
+                //     onCloseButtonClick={() => {
+                //         setCreationMenuOpen(false)
+                //     }}
+                //     onConfirmButtonClick={(roomData) => {
+                //         createRoom(roomData)
+                //         fetchData()
+                //     }}
+                //     />
+                // :
+                 currentRoom ? 
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}
@@ -190,9 +230,9 @@ export default function DiscussionCircle() {
                     <></>
                 : <Welcome/>
                 }
-            </div>
-        
+            </div>        
         </div>
+        </>
     )
 
 }

@@ -38,13 +38,13 @@ export const ROOM_CREATION_SETTINGS: RoomSetting[] = [
         type: "number",
         defaultValue: 3
     },
-    {
-        image: "/mask-solid-full.svg",
-        label: "Anonymous",
-        field: "isAnonymous",
-        type: "checkbox",
-        defaultValue: false
-    },
+    // {
+    //     image: "/mask-solid-full.svg",
+    //     label: "Anonymous",
+    //     field: "isAnonymous",
+    //     type: "checkbox",
+    //     defaultValue: false
+    // },
 ]
 
 export const POPPINS_BOLD = Poppins({

@@ -52,13 +52,13 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
             </div>
             
 
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {ROOM_CREATION_SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
             </div>
             
 
 
-            <div className="flex justify-center grow items-end p-6">
+            <div className="flex justify-center grow items-end">
                 <button
                 className="border-3 p-1 rounded-full w-40 text-center cursor-pointer font-bold text-xl
                 border-slate-600 text-slate-600
