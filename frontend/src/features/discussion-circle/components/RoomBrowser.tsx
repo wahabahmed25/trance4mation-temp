@@ -17,7 +17,19 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
         <div className="w-full h-full flex flex-col gap-2 grow">
             <h1 className="font-bold text-3xl text-white">Discussion Circle</h1>
             <div className="flex gap-1 items-center">
-                <Input type="text" placeholder="Search" className="bg-slate-900 grow rounded-full text-white px-3 p-1" style={{minWidth: 0}}/>
+                <div 
+                style={{minWidth: 0}}
+                className="grow rounded-lg py-1 pr-2
+                    border border-white/10 bg-white/5 
+                    text-gray-200 placeholder-gray-500 flex">
+
+                    <p className="px-2">🔎</p>
+
+                    <input type="text" placeholder="Search" 
+                    className="outline-none"
+                    style={{minWidth: 0}}
+                    />
+                </div>
                 <button className="relative size-6 shrink-0" onClick={onCreateButtonClick}>
                     <Image 
                     src={"/plus-solid-full.svg"}
@@ -36,7 +48,10 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
                 </button>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div 
+            className="flex flex-col gap-2 overflow-scroll"
+            style={{scrollbarWidth: "none"}}
+            >
                 {rooms.map((roomData) => 
                     <RoomListing 
                     key={roomData.id} 

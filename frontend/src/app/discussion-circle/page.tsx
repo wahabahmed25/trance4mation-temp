@@ -11,6 +11,7 @@ import { getAuth, signInAnonymously } from "firebase/auth";
 import Welcome from "@/features/discussion-circle/components/Welcome"
 import { useAuth } from "@/context/AuthContext";
 import { createPortal } from "react-dom"
+import { DEFAULT_ROOM_DATA } from "./defaults"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,7 +29,7 @@ const firestore = getFirestore(app)
 const auth = getAuth()
 
 export default function DiscussionCircle() {
-    const [roomListings, setRoomListings] = useState<RoomData[]>([])
+    const [roomListings, setRoomListings] = useState<RoomData[]>([DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA])
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>(undefined)
     // const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
@@ -178,8 +179,8 @@ export default function DiscussionCircle() {
                 </div>
             </div>
          : null}
-        <div className="w-screen h-screen bg-black flex relative">
-            <div className="h-full flex border-r-4 border-slate-900"
+        <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
+            <div className="h-full flex"
             style={{
                 width: `${isSmallScreen ? "100%" : "25%"}`,
                 position: `${isSmallScreen ? "absolute" : "relative"}`,

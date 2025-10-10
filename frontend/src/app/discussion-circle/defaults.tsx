@@ -4,15 +4,16 @@ import { RoomSetting } from "@/features/discussion-circle/types/RoomSetting"
 import { UserData } from "@/features/discussion-circle/types/UserData"
 import { Poppins, Merriweather } from "next/font/google"
 
-export const DEFAULT_ROOM_DATA: Omit<RoomData, "id"> = {
+export const DEFAULT_ROOM_DATA: RoomData = {
     isAnonymous: false,
     maxSize: 5,
     palette: "default",
-    time: 30,
+    timeLimit: 30,
     rounds: 3,
-    name: "",
+    name: "Test room",
     size: 0,
-    description: ""
+    description: "This is for testing",
+    id: "not a real id"
 }
 
 export const ROOM_CREATION_SETTINGS: RoomSetting[] = [
