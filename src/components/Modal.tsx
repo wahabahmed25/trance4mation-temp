@@ -7,7 +7,7 @@ import type { Intern } from "./Interns";
 interface ModalProps {
    isOpen: boolean;
    onClose: () => void;
-   intern: Intern | null; // This can be null or an intern object
+   intern: Intern | null;
 }
 
 // embedding links into description
@@ -98,7 +98,7 @@ const extraLinkContents = {
       GitHub: "https://github.com/ragibasif",
    },
    8: {
-      LinkedIn: "www.linkedin.com/in/efti-saroare-515b84205",
+      LinkedIn: "https://www.linkedin.com/in/efti-saroare-515b84205/",
    },
    9: {
       GitHub: "https://github.com/Luominai",

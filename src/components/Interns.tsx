@@ -5,6 +5,7 @@ import "./Interns.css";
 import placeholderImg from "../assets/intern_placeholder.jpeg";
 import Micheal from "../assets/MichealColeman.jpeg";
 import Sasha from "../assets/SashaShifrina.jpeg";
+import Kelvin from "../assets/KelvinChen.jpg";
 import AnVan from "../assets/AnVan.jpg";
 import Wahab from "../assets/WahabAhmed.jpeg";
 import Ragib from "../assets/RagibAsif.jpg";
@@ -36,18 +37,20 @@ const interns: Intern[] = [
       role: "Co-Lead",
       image: Micheal,
       description:
-         "Michael is a creative and detail-oriented computer science student at Hunter College, with a strong foundation in software development, web technologies, and database design He is passionate about web development and making impactful, user-friendly websites Michael has built everything from achievement tracking systems to interactive games and full-stack applications. Michael blends technical skills with real-world experience, having worked in roles ranging from audio engineering to tutoring and customer service. With professional proficiency in Spanish and a passion for problem-solving, he brings versatility and energy to every project.",
+         "Michael is a creative and detail-oriented computer science student at Hunter College, with a strong foundation in software development, web technologies, and database design He is passionate about web development and making impactful, user-friendly websites. Michael has built everything from achievement tracking systems to interactive games and full-stack applications. Michael blends technical skills with real-world experience, having worked in roles ranging from audio engineering to tutoring and customer service. With professional proficiency in Spanish and a passion for problem-solving, he brings versatility and energy to every project.",
       extra1: '"I am excited to use my technical skills to help create games that will engage people in meaningful ways."',
       extra2: "  ",
       section: "Speak to Me and Trill Addictions Prevention & Recovery Game Development Team",
    },
    {
       id: 2,
-      name: "Sasha Shifrina",
+      name: "Aleksandra Shifrina",
       role: "Co-Lead",
       image: Sasha,
-      description: " ",
-      extra1: " ",
+      description:
+         '"I am currently majoring in computer science at Hunter College. I have a passion for software engineering - starting from scratch, to give life to an idea and ultimately creating something impactful at scale.  I am a Daedalus Scholar with a strong track record in software development and data engineering and have built creative projects like SelfGrowth, a gamified iOS productivity app, and Milo, a fitness-focused AI web app developed at the Cornell AI Hackathon. I also also interned at Cognizant TriZetto, helping reimagine large-scale healthcare dataflows. With experience in full-stack development, machine learning, and UI design, I combine technical depth with a passion for building tools that engage and empower users."',
+      extra1:
+         "I am excited to work on this project because Trance4mation Games mission resonates with my goal to make accessible, meaningful applications for those that may not have many resources at their disposable. I’m incredibly grateful for the opportunity to directly contribute to such a significant project this semester. ",
       extra2: "  ",
       section: "Speak to Me and Trill Addictions Prevention & Recovery Game Development Team",
    },
@@ -55,12 +58,12 @@ const interns: Intern[] = [
       id: 3,
       name: "Kelvin Chen",
       role: "Developer",
-      image: placeholderImg,
+      image: Kelvin,
       description:
-         "Kelvin is a Computer Science student at Hunter College who loves turning ideas into interactive, user-friendly apps. He’ has worked on projects like News.AI, which uses AI to summarize news, and AI Flashcards, a smart study tool for students. Kelvin is always looking for new ways to grow his skills and to build cool, impactful projects. He is passionate about being able to use technology to make a positive impact on the world.",
+         "Kelvin is a Computer Science student at Hunter College who loves turning ideas into interactive, user-friendly apps. He has worked on projects like News.AI, which uses AI to summarize news, and AI Flashcards, a smart study tool for students. Kelvin is always looking for new ways to grow his skills and to build cool, impactful projects. He is passionate about being able to use technology to make a positive impact on the world.",
       extra1:
          ' "I am excited about this project because I get the chance to be able to help create therapeutic games that could help people to improve their mental health and build connections. I am excited about being part of a team that is improving the world through innovative solutions."',
-      extra2: "input",
+      extra2: "  ",
       section: "Speak to Me and Trill Addictions Prevention & Recovery Game Development Team",
    },
    {
@@ -151,7 +154,7 @@ const interns: Intern[] = [
       description:
          "Faraaz is a Software Engineer and Illustrator, always looking to turn complicated problems into artistic solutions, as well as a Hunter College Computer Science and Math Honors student who loves turning big ideas into digital realities. From building Unity games and web apps for nonprofits to designing art for 70+ clients, he thrives at the intersection of creativity and tech. Always eager to learn, Faraaz has organized successful charity events, joined Google’s Software Engineering Program, and is passionate about using code to make a difference. Faraaz is the Lead for the team building the Remembrance Grief Support game and the Call It Out Loud Anti-Bullying Game. ",
       extra1:
-         ' "I am excited about this project because the mission resonates with me, and I am honored to work on a project that&#39;ll help build bridges between people."',
+         ' "I am excited about this project because the mission resonates with me, and I am honored to work on a project that\'ll help build bridges between people."',
       extra2: "Faraaz's LinkedIn",
       section: "Call It Out Anti-Bullying Game || Remembrance Grief & Loss Support Game Development Team",
    },
@@ -182,7 +185,7 @@ const interns: Intern[] = [
    {
       id: 14,
       name: "Jan Calle-Ortiz",
-      role: "Developer",
+      role: "Developer and Digital Engagement Lead",
       image: Jan,
       description:
          "Jan is currently pursuing a double major in Computer Science and Chinese through the Chinese Flagship Program. Alongside his studies, he creates content on TikTok and Instagram (@jancalleortiz), and you can find all of his projects and socials here. \n With a strong interest in technology, equity, and global cultures, Jan combines technical skills with real-world impact. He earned 2nd place in the Macaulay Honors x MTA Datathon for analyzing public transit equity and is currently part of the Google Mentorship Program, building a full-stack web app with peers. As a Chinese Flagship Scholar, Jan studied abroad in Taiwan and speaks fluent English and Spanish, with intermediate Mandarin. \n Jan is also learning guitar and exploring music composition, which is his passion for creativity and self-expression. In the future, Jan hopes to combine his technical skills, language abilities, and creative interests to contribute to impactful global projects.",
@@ -195,9 +198,10 @@ const interns: Intern[] = [
       name: "Jin Wang",
       role: "Lead",
       image: Jin,
-      description: "aaaaaaaaaa.",
-      extra1: "input",
-      extra2: "input",
+      description:
+         "Jin is currently pursuing a computer science major and a media studies minor at CUNY Hunter College. She is passionate in web development and software engineering, hoping to create impactful projects that can help others. Jin has created a website focused on spreading awareness about Asian hate crimes during the pandemic as well participated in the 2025 Macaulay Honors x MTA Datathon, cleaning and sorting datasets to investigate the effects of congestion pricing on ACE violations. She loves to draw and read in her free time and she is fluent in English and Mandarin.",
+      extra1: "  ",
+      extra2: "  ",
       section: "Landing Page Design and Development Team",
    },
 ];
