@@ -4,6 +4,7 @@ import { MouseEventHandler, useState } from "react";
 import { RoomData } from "../types/RoomData";
 import { Input, Textarea } from "@headlessui/react";
 import SettingsCell from "./SettingsCell";
+import { useAuth } from "@/context/AuthContext";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
@@ -12,6 +13,7 @@ interface RoomCreationMenuProps {
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
     const [settings, setSettings] = useState<Omit<RoomData, "id">>(DEFAULT_ROOM_DATA)
+    const user = useAuth()
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
         setSettings({
@@ -37,12 +39,12 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
             <div className="flex flex-col gap-2">
                 <Input
                 placeholder="Room Name"
-                className={`${POPPINS_BOLD.className} text-white text-base p-1 px-2 border-b-2 border-slate-600`}
+                className={`text-white text-base p-1 px-2 border-b-2 border-slate-600 outline-none`}
                 onChange={(event) => changeSetting("name", event.target.value)}
                 />
                 
                 <Textarea 
-                className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600"
+                className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600 outline-none"
                 placeholder="Description"
                 style={{
                     resize: "none",
@@ -51,20 +53,22 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                 />
             </div>
             
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {ROOM_CREATION_SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
             </div>
-            
-
 
             <div className="flex justify-center grow items-end">
                 <button
-                className="border-3 p-1 rounded-full w-40 text-center cursor-pointer font-bold text-xl
+                className="border-2 p-1 rounded-xl w-40 text-center cursor-pointer font-bold text-xl
                 border-slate-600 text-slate-600
                 hover:border-[#006D77] hover:text-[#006D77]
                 "
-                onClick={() => onConfirmButtonClick ? onConfirmButtonClick(settings) : {}}
+                onClick={() => {
+                    if (!onConfirmButtonClick || !user.user) {
+                        return
+                    }
+                    onConfirmButtonClick({...settings, ["creator"]: user.user.uid})
+                }}
                 >
                     Create
                 </button>

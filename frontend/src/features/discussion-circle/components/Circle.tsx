@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { UserData } from "../types/UserData";
 import Image from "next/image";
+import { useAuth } from "@/context/AuthContext";
 
 const placeholder: UserData[] = [
     {name: "Jerry", icon: "/globe.svg", id: "kjad"},
@@ -14,6 +15,7 @@ const placeholder: UserData[] = [
 export default function Circle({users = placeholder}: {users?: UserData[]}) {
     const [speaker, setSpeaker] = useState<UserData>(users[0])
     const [radius, setRadius] = useState<number>(120)
+    const user = useAuth()
     
     return (
         <div className="grow flex justify-center items-center">
@@ -48,12 +50,22 @@ export default function Circle({users = placeholder}: {users?: UserData[]}) {
                 <div className="border-3 rounded-full border-[#FFD166]">
                     <div className="size-20 p-2 rounded-full bg-slate-700">
                         <div className="size-16 relative">
-                            <Image
-                            src={speaker.icon}
-                            alt={speaker.icon}
-                            fill={true}
-                            priority
-                            />
+                            {speaker ? 
+                                <Image
+                                src={speaker.icon}
+                                alt={speaker.icon}
+                                fill={true}
+                                priority
+                                />
+                            : 
+                                <Image
+                                src={user.user?.profilePic ?? ""}
+                                alt={user.user?.name ?? ""}
+                                fill={true}
+                                priority
+                                />
+                            }
+
                         </div>
                     </div>
                 </div>

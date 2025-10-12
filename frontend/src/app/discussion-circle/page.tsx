@@ -5,13 +5,11 @@ import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreati
 import Room from "@/features/discussion-circle/components/Room"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import { initializeApp } from "firebase/app"
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, query, updateDoc, where } from "firebase/firestore"
 import { onAuthStateChanged, User } from "firebase/auth"
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import Welcome from "@/features/discussion-circle/components/Welcome"
 import { useAuth } from "@/context/AuthContext";
-import { createPortal } from "react-dom"
-import { DEFAULT_ROOM_DATA } from "./defaults"
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,27 +21,29 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app)
 const auth = getAuth()
 
 export default function DiscussionCircle() {
-    const [roomListings, setRoomListings] = useState<RoomData[]>([DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA, DEFAULT_ROOM_DATA])
-    const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>(undefined)
+    const [roomListings, setRoomListings] = useState<RoomData[]>([])
+    const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
     // const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
     const [user, setUser] = useState<User | undefined>(undefined)
-    // const user = useAuth()
+    const loginUser = useAuth()
     const [mounted, setMounted] = useState(false)
 
     function fetchData() {
         getRooms()
         .then((rooms) => {
             setRoomListings(rooms)
+        })
+        .catch((error) => {
+            console.log(error)
         })
     }
 
@@ -166,7 +166,7 @@ export default function DiscussionCircle() {
         <>
         {isCreationMenuOpen ?
             <div className="p-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
-                <div className="flex border-slate-900 border-4 bg-black rounded-xl p-8">
+                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8">
                     <RoomCreationMenu
                     onCloseButtonClick={() => {
                         setCreationMenuOpen(false)
@@ -185,15 +185,15 @@ export default function DiscussionCircle() {
                 width: `${isSmallScreen ? "100%" : "25%"}`,
                 position: `${isSmallScreen ? "absolute" : "relative"}`,
                 padding: `${.25 * 8}rem`,
-                // visibility: `${
-                //     isRoomBrowserOpen ? 
-                //         isSmallScreen ?
-                //             !(isCreationMenuOpen || currentRoom) ?
-                //                 "visible"
-                //             : "hidden"
-                //     : "visible" 
-                //     : "hidden"
-                // }`
+                visibility: `${
+                    isRoomBrowserOpen ? 
+                        isSmallScreen ?
+                            !(isCreationMenuOpen || currentRoom) ?
+                                "visible"
+                            : "hidden"
+                    : "visible" 
+                    : "hidden"
+                }`
             }}
             >
                 <RoomBrowser
@@ -239,7 +239,8 @@ export default function DiscussionCircle() {
 }
 
 async function getRooms() {
-    const querySnapshot = await getDocs(collection(firestore, "rooms"));
+    const q = query(collection(firestore, "rooms"), where("isActive", "==", false))
+    const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
         const data = document.data()
         return {
