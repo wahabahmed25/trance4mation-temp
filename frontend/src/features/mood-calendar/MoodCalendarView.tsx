@@ -6,6 +6,7 @@ import { CalendarGrid } from "./components/CalendarGrid";
 import { MoodPicker } from "./components/MoodPicker";
 import { SummarySidebar } from "./components/SummarySidebar";
 import { ReminderToast } from "./components/ReminderToast";
+import { QuickLogCard } from "./components/QuickLogCard";
 import { generateMonthDays } from "./utils/calendar";
 import type { MoodType, NullableMood } from "@/features/mood-calendar/types";
 import { saveMood, loadMoods } from "@/lib/api/moods";
@@ -20,7 +21,7 @@ export default function MoodCalendarView() {
   const [userId, setUserId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
 
-  // 🔑 Handle Auth State
+  // Handle Auth State
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -34,7 +35,7 @@ export default function MoodCalendarView() {
     return unsubscribe;
   }, []);
 
-  // ✅ Load moods from Firestore when user and month are ready
+  // Load moods from Firestore when user and month are ready
   useEffect(() => {
     if (!userId) return;
 
@@ -73,7 +74,7 @@ export default function MoodCalendarView() {
 
   const days = generateMonthDays(currentMonth, moodsByDay);
 
-  // ✅ Show Sign-In screen if not logged in
+  // Show Sign-In screen if not logged in
   if (!userId) {
     return (
       <main className="min-h-screen flex items-center justify-center bg-[#0F4C5C] text-white">
@@ -99,7 +100,11 @@ export default function MoodCalendarView() {
         <div className="flex flex-col gap-1">
           {/* 👋 Greeting */}
           <span className="text-sm text-white/70">
-            Welcome back, <span className="font-semibold text-white">{userName?.split(" ")[0]}</span> 👋
+            Welcome back,{" "}
+            <span className="font-semibold text-white">
+              {userName?.split(" ")[0]}
+            </span>{" "}
+            👋
           </span>
 
           <h1 className="text-4xl font-extrabold tracking-tight text-white drop-shadow-sm">
@@ -134,7 +139,7 @@ export default function MoodCalendarView() {
             </button>
           </div>
 
-          {/* 🔥 Log Out */}
+          {/* Log Out */}
           <button
             onClick={() => signOut(auth)}
             className="rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition shadow-[0_0_8px_rgba(255,255,255,0.25)]"
@@ -152,7 +157,8 @@ export default function MoodCalendarView() {
         </section>
 
         {/* Sidebar */}
-        <aside className="lg:w-80">
+        <aside className="lg:w-80 flex flex-col gap-6">
+          {/* This Month */}
           <div
             className="mb-2 flex cursor-pointer items-center justify-between lg:hidden"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -162,11 +168,36 @@ export default function MoodCalendarView() {
               {sidebarOpen ? "▴" : "▾"}
             </span>
           </div>
+
           {sidebarOpen && (
-            <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md">
-              <SummarySidebar moodsByDay={moodsByDay} monthDate={currentMonth} />
-            </div>
-          )}
+  <>
+  {/* Quick Log for Today (now on top visually) */}
+  <QuickLogCard
+    onSelect={async (mood) => {
+      if (!userId) return;
+
+      // Fix: use local date, not UTC
+      const today = new Date().toLocaleDateString("en-CA", {
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      });
+
+      setMoodsByDay((prev) => ({ ...prev, [today]: mood }));
+
+      try {
+        await saveMood(userId, today, mood);
+        console.log("Quick logged today's mood:", mood, "for", today);
+      } catch (err) {
+        console.error("Error saving quick log mood:", err);
+      }
+    }}
+  />
+
+      <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md">
+        <SummarySidebar moodsByDay={moodsByDay} monthDate={currentMonth} />
+      </div>
+    </>
+  )}
+  
         </aside>
       </div>
 
