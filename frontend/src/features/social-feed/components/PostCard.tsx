@@ -20,7 +20,7 @@ const PostCard: React.FC<PostCardProps> = ({
   onEdit,
   onDelete,
   index = 0,
-  isOwner = true // For now, default to true since we don't have auth
+  isOwner = false // Only show edit/delete if user owns the post
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editContent, setEditContent] = useState(post.content);
