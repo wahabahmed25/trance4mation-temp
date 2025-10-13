@@ -4,7 +4,7 @@ import { moodColors } from "../types";
 
 const MOOD_EMOJIS: Record<MoodType, string> = {
   happy: "😊",
-  neutral: "🙂",
+  neutral: "😐",
   sad: "😔",
   angry: "😠",
 };

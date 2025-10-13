@@ -2,10 +2,10 @@
 import type { MoodType } from "../types";
 
 const MOODS: { key: MoodType; label: string; emoji: string; color: string }[] = [
-  { key: "happy",   label: "Happy",      emoji: "😊", color: "#F4C95D" }, // Golden Glow
-  { key: "neutral", label: "Neutral",       emoji: "🙂", color: "#7EC8E3" }, // Sky Blue
-  { key: "sad",     label: "Sad",       emoji: "😔", color: "#A78BFA" }, // Soft Violet
-  { key: "angry",   label: "Angry", emoji: "😠", color: "#FF6F61" }, // Coral
+  { key: "happy",   label: "Happy",  emoji: "😊", color: "#F4C95D" }, // Golden Glow
+  { key: "neutral", label: "Neutral",emoji: "😐", color: "#7EC8E3" }, // Sky Blue
+  { key: "sad",     label: "Sad",    emoji: "😔", color: "#A78BFA" }, // Soft Violet
+  { key: "angry",   label: "Angry",  emoji: "😠", color: "#FF6F61" }, // Coral
 ];
 
 export function MoodPicker({
