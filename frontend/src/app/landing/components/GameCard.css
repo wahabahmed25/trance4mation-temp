@@ -1,0 +1,39 @@
+.game-card {
+   border-radius: 16px;
+   padding: 2rem;
+   margin: 1rem 0;
+   min-width: 280px;
+   width: 280px;
+   height: 475px;
+   border: 5px solid rgba(255, 255, 255, 0.4);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   flex-shrink: 0;
+   scroll-snap-align: center;
+}
+
+.game-card-title {
+   color: var(--dark-blue);
+   font-size: 1.6rem;
+   margin-bottom: 1.5rem;
+   font-weight: 600;
+   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+   letter-spacing: 1px;
+}
+
+.game-card-image {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   border-radius: 4px;
+   margin-bottom: 1rem;
+   display: block;
+}
+
+.game-card-description {
+   color: rgba(255, 255, 255, 0.9);
+   line-height: 1.7;
+   margin: 0;
+}
