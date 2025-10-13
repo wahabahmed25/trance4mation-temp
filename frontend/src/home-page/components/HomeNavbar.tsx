@@ -1,20 +1,51 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react"; // for the icons
+import { Menu, X } from "lucide-react";
 import logo from "../../images/play-to-heal.png";
 import { useAuth } from "@/context/AuthContext";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const {user} = useAuth();
+  const [opacity, setOpacity] = useState(0); // white overlay opacity (0 → 1)
+  const { user } = useAuth();
+
+  // Match your vanilla JS behavior: opacity = min(scrollY / 350, 1)
+  useEffect(() => {
+    const onScroll = () => {
+      const o = Math.min(window.scrollY / 350, 1);
+      setOpacity(o);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // This mimics: linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255, opacity))
+  const style: React.CSSProperties = {
+    // define --nav-bg like in your CSS example (top blue used on landing)
+    // tweak alpha if you want it a bit stronger at the top
+    // @ts-expect-error CSS var inline (fine at runtime)
+    ["--nav-bg"]: "rgba(126, 200, 227, 0.95)",
+    backgroundImage: `linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255,${opacity}))`,
+    transition: "background-image 0.4s ease",
+  };
+
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#0F4C5C]/90 backdrop-blur-md shadow-lg">
-      <div className="flex justify-between items-center px-6 md:px-10 py-3">
-        <Link href="/home">
-       
-        <div className="flex items-center gap-3">
+    <nav
+      className="
+        fixed top-0 left-0 w-full z-50
+        backdrop-blur-[25px]
+        
+      "
+      style={style}
+    >
+      {/* Padding: 2rem like your example */}
+      <div className="mx-auto max-w-7xl px-6 md:px-10 py-8 flex items-center justify-between">
+        {/* Left — Logo + Title */}
+        <Link href="/home" className="flex items-center gap-3">
           <Image
             src={logo}
             alt="Play-to-Heal Logo"
@@ -22,78 +53,95 @@ const Navbar = () => {
             height={45}
             className="object-contain"
           />
-          <h1 className="text-lg md:text-2xl font-bold text-[#F4C95D] tracking-wide">
+          <h1 className="text-xl md:text-2xl font-bold text-white tracking-wide">
             PLAY-TO-HEAL
           </h1>
-          <h1>{user?.name || "Guest"}</h1>
-        </div>
-         </Link>
+          <span className="text-white/90 italic text-sm md:text-base">
+            {user?.name || "Guest"}
+          </span>
+        </Link>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden md:flex gap-8 text-lg">
-          <Link href="/about" className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors">
-            About
-          </Link>
-          <Link href="/games" className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors">
-            Games
-          </Link>
-          <Link href="/landing" className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors">
-            Landing
-          </Link>
-          <Link href="/logout" className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors">
-            Logout
-          </Link>
+        {/* Desktop Links: centered feel with generous gaps */}
+        <div className="hidden md:flex items-center gap-16">
+          {[
+            { label: "About", href: "/about" },
+            { label: "Games", href: "/games" },
+            { label: "Landing", href: "/landing" },
+            { label: "Logout", href: "/logout" },
+          ].map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="
+                text-white
+                text-lg font-semibold tracking-wide
+                px-4 py-2 rounded-xl
+                transition-all duration-300
+                hover:bg-[rgba(255,111,97,0.15)]
+              "
+            >
+              {l.label}
+            </Link>
+          ))}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Mobile toggle */}
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-[#F4C95D] focus:outline-none"
+          onClick={() => setIsOpen((s) => !s)}
+          className="md:hidden text-white focus:outline-none"
+          aria-label="Toggle navigation menu"
         >
           {isOpen ? <X size={30} /> : <Menu size={30} />}
         </button>
       </div>
 
-      {/* Mobile Overlay Menu */}
+      {/* Mobile sheet */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="mobile-menu"
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="absolute top-full left-0 w-full bg-[#0F4C5C]/95 backdrop-blur-lg shadow-lg md:hidden z-40"
+            className="
+              md:hidden
+              absolute top-full left-0 w-full
+              border-t border-white/20
+              backdrop-blur-[25px]
+              z-40
+            "
+            style={{
+              // keep same gradient direction + palette for the mobile sheet
+              backgroundImage: `linear-gradient(
+                to bottom,
+                var(--nav-bg),
+                rgba(255,255,255,${Math.max(opacity, 0.85)})
+              )`,
+            }}
           >
             <div className="flex flex-col items-center gap-6 py-8 text-xl">
-              <Link
-                href="/about"
-                onClick={() => setIsOpen(false)}
-                className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors"
-              >
-                About
-              </Link>
-              <Link
-                href="/games"
-                onClick={() => setIsOpen(false)}
-                className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors"
-              >
-                Games
-              </Link>
-              <Link
-                href="/profile"
-                onClick={() => setIsOpen(false)}
-                className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors"
-              >
-                profile
-              </Link>
-              <Link
-                href="/logout"
-                onClick={() => setIsOpen(false)}
-                className="text-[#7EC8E3] hover:text-[#FF6F61] transition-colors"
-              >
-                Logout
-              </Link>
+              {[
+                { label: "About", href: "/about" },
+                { label: "Games", href: "/games" },
+                { label: "Profile", href: "/profile" },
+                { label: "Logout", href: "/logout" },
+              ].map((l) => (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  onClick={() => setIsOpen(false)}
+                  className="
+                    text-white
+                    font-semibold tracking-wide
+                    px-4 py-2 rounded-xl
+                    hover:bg-[rgba(255,111,97,0.15)]
+                    transition-colors
+                  "
+                >
+                  {l.label}
+                </Link>
+              ))}
             </div>
           </motion.div>
         )}

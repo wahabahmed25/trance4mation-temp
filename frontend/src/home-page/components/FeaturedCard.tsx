@@ -28,7 +28,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
       transition={{ type: "spring", stiffness: 250 }}
       className="
         relative 
-        bg-[#0C1723]/70 
+        bg-[#0C1723]/60 
         backdrop-blur-sm 
         border border-white/10 
         rounded-2xl 

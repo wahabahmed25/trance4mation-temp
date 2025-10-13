@@ -12,7 +12,7 @@ const PALETTE = {
   violet: "#A78BFA",
 };
 
-const ContinuePlayingSection = () => {
+const PlayAgainSection = () => {
   const continueGames = gamesData.filter((g) => g.continuePlaying);
 
   return (
@@ -21,7 +21,7 @@ const ContinuePlayingSection = () => {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white">
-            Continue Playing
+            Play Again
           </h2>
           <p className="text-white/70 text-sm">
             Pick up where you left off
@@ -96,4 +96,4 @@ const ContinuePlayingSection = () => {
   );
 };
 
-export default ContinuePlayingSection;
+export default PlayAgainSection;
