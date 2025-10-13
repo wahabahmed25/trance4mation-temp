@@ -8,7 +8,7 @@ const Landing = () => {
    return (
       <div>
          <Home />
-         <About />
+
          <h1>Welcome to the Landing Page</h1>
       </div>
    );
