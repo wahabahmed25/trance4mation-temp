@@ -1,12 +1,11 @@
 import SearchCardSection from "@/home-page/sections/SearchCardSection";
 import MoodWidget from "@/home-page/sections/MoodWidget";
 import HomeLayout from "@/home-page/HomeLayout";
-import ContinuePlayingSection from "@/home-page/sections/ContinuePlayingSection";
 import ForyouGames from "@/home-page/sections/ForyouGames";
 import TrendingGamesSection from "@/home-page/sections/TrendingGamesSection";
 import FeaturedGamesSection from "@/home-page/sections/FeaturedGamesSection";
 import GameHubSection from "@/home-page/sections/GameHubSection";
-
+import PlayAgainSection from "@/home-page/sections/PlayAgainSection";
 export default function Home() {
   return (
     <HomeLayout>
@@ -25,16 +24,16 @@ export default function Home() {
 
       {/* 🔹 Everything else stacked below */}
       <div className="flex flex-col mx-auto w-full mt-8">
-        <FeaturedGamesSection />
+        
+        <GameHubSection />
 
         {/* ✅ Full-width Continue Playing */}
         <div className="w-screen -mx-[calc((100vw-100%)/2)]">
-          <ContinuePlayingSection />
+          <PlayAgainSection />
         </div>
-
+        <FeaturedGamesSection />
         <ForyouGames />
         <TrendingGamesSection />
-        <GameHubSection />
       </div>
     </HomeLayout>
   );

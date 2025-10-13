@@ -9,15 +9,23 @@ interface HomeLayoutProps {
 
 const PALETTE = {
   violet: "#A78BFA",
-  coral: "#FF6F61",
+  coralLight: "#FDE7D8",
+  coral: "#FCA17D",
+  coralDeep: "#F6765E",
+  gold: "#FFD166",
   blue: "#7EC8E3",
-  gold: "#F4C95D",
-  teal: "#0F4C5C",
 };
 
 const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   return (
-    <div className="relative min-h-screen flex flex-col bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] text-white overflow-hidden">
+    <div
+      className="relative min-h-screen flex flex-col text-[#2C2C2C] overflow-hidden"
+      style={{
+        // soft peach → coral gradient background
+        background:
+          "linear-gradient(180deg, #FDE7D8 0%, #FCA17D 45%, #FDE7D8 100%)",
+      }}
+    >
       <Navbar />
 
       <motion.main
@@ -29,20 +37,26 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
         {children}
       </motion.main>
 
+      {/* === Subtle background glows for depth === */}
+      {/* Soft violet glow (top left) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[-100px] left-[-100px] h-[300px] w-[300px] rounded-full blur-3xl opacity-20"
+        className="pointer-events-none absolute top-[-100px] left-[-100px] h-[320px] w-[320px] rounded-full blur-[120px] opacity-15"
         style={{ background: PALETTE.violet }}
       />
+
+      {/* Warm gold glow (bottom right) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[250px] w-[250px] rounded-full blur-3xl opacity-10"
-        style={{ background: PALETTE.blue }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 h-[200px] w-[600px] blur-[120px] opacity-5"
+        className="pointer-events-none absolute bottom-[-120px] right-[-100px] h-[250px] w-[250px] rounded-full blur-[150px] opacity-20"
         style={{ background: PALETTE.gold }}
+      />
+
+      {/* Cool blue subtle contrast (bottom center) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-[-60px] left-1/2 -translate-x-1/2 h-[200px] w-[600px] blur-[150px] opacity-10"
+        style={{ background: PALETTE.blue }}
       />
     </div>
   );
