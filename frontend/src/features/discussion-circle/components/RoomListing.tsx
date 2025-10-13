@@ -10,14 +10,14 @@ interface RoomListing {
 export default function RoomListing({roomData, onClick}: RoomListing) {
     return (
         <div 
-        className="flex flex-col rounded-md border-2 bg-slate-900 border-slate-800"
+        className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20"
         onClick={() => onClick ? onClick(roomData): {}}
         >
             <div 
-            className="flex grow-2 m-1 rounded-md items-center p-2 gap-2 bg-slate-950">
+            className="flex grow-2 m-1 rounded-md items-center gap-2 border-white/10">
                 <div className="flex flex-col">
                     {/* Room name */}
-                    <div className={`text-base ${POPPINS_BOLD.className} text-white`}>
+                    <div className="text-white font-semibold text-lg">
                         {roomData.name}
                     </div>
 
@@ -28,9 +28,9 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                 </div>
             </div>
 
-            <div className="flex grow-1 gap-4 p-1">
+            <div className="flex flex-wrap grow-1 gap-2 p-1">
                 {/* Participant count */}
-                <div className={`flex items-center w-12 ${MERRIWEATHER} text-white`}>
+                <div className="pl-2 pr-3 py-0.5 flex items-center rounded-full bg-white/5 border border-white/10 text-white/70">
                     <Image 
                     src={"/user-regular-full.svg"}
                     alt="participants"
@@ -45,7 +45,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                 </div>
 
                 {/* Time limit */}
-                <div className={`flex items-center w-12 ${MERRIWEATHER} text-white`}>
+                <div className="pl-2 pr-3 py-0.5 flex items-center rounded-full bg-white/5 border border-white/10 text-white/70">
                     <Image 
                     src={"/alarm-clock-regular-full.svg"}
                     alt="time limit"
@@ -58,7 +58,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                 </div>
 
                 {/* Number of rounds */}
-                <div className={`flex items-center w-8 ${MERRIWEATHER} text-white`}>
+                <div className="pl-2 pr-3 py-0.5 flex items-center rounded-full bg-white/5 border border-white/10 text-white/70">
                     <Image 
                     src={"/rotate-left-regular-full.svg"}
                     alt="number of rounds"
@@ -69,22 +69,6 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                     />
                     {roomData.rounds}
                 </div>
-
-                {/* Anonymity */}
-                {roomData.isAnonymous
-                    ? <div className={`flex items-center w-6 shrink-0`}>
-                        <Image 
-                        src={"/mask-solid-full.svg"}
-                        alt="isAnonymous"
-                        width={20}
-                        height={20}
-                        priority
-                        style={{filter: "invert(1)"}}
-                        />
-                        {/* {roomData.rounds} */}
-                    </div>
-                    : <></>
-                }
             </div>
         </div>
     )

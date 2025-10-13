@@ -10,5 +10,6 @@ export type RoomData = {
     palette: string,
     rounds: number, 
     size: number,
-    timeLimit: number
+    timeLimit: number,
+    creator?: string
 }

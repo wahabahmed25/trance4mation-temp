@@ -1,20 +1,15 @@
 'use client'
 import { useEffect, useState } from "react"
-import { UserData } from "@/features/discussion-circle/types/UserData"
-import { defaultRooms, defaultPeople, BLUE, TEAL} from './defaults'
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
 import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
 import Room from "@/features/discussion-circle/components/Room"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import { initializeApp } from "firebase/app"
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, setDoc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, query, updateDoc, where } from "firebase/firestore"
 import { onAuthStateChanged, User } from "firebase/auth"
-import { getAuth, signInAnonymously } from "firebase/auth";
-import RoomListing from "@/features/discussion-circle/components/RoomListing"
-import { MessageData } from "@/features/discussion-circle/types/MessageData"
+import { getAuth } from "firebase/auth";
 import Welcome from "@/features/discussion-circle/components/Welcome"
-import { Input } from "@headlessui/react"
-import Image from "next/image"
+import { useAuth } from "@/context/AuthContext";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -26,23 +21,29 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app)
+const auth = getAuth()
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
-    const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>(undefined)
-    const [user, setUser] = useState<User | undefined>(undefined)
+    const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
+    // const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
+    const [user, setUser] = useState<User | undefined>(undefined)
+    const loginUser = useAuth()
+    const [mounted, setMounted] = useState(false)
 
     function fetchData() {
         getRooms()
         .then((rooms) => {
             setRoomListings(rooms)
+        })
+        .catch((error) => {
+            console.log(error)
         })
     }
 
@@ -109,24 +110,31 @@ export default function DiscussionCircle() {
         })
     }
 
-    useEffect(() => {
-        const auth = getAuth();
-        signInAnonymously(auth)
-            .then(() => {
-                // Signed in..
-                console.log("signed in as ", auth)
+    async function _joinRoom(roomData: RoomData) {
+        if (!user) {
+            console.log("not signed in")
+            return
+        }
+
+        const backendUrl =""
+        auth.currentUser?.getIdToken(true).then((idToken) => {
+            fetch(backendUrl, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                },
+                body: roomData.id
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-            });
+        })
+    }
+
+    useEffect(() => {
+        setMounted(true)
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/auth.user
-                const uid = user.uid;
                 console.log(user)
                 setUser(user)
                 fetchData()
@@ -155,8 +163,24 @@ export default function DiscussionCircle() {
     }, [])
 
     return (
-        <div className="w-screen h-screen bg-black flex relative">
-            <div className="h-full flex border-r-4 border-slate-900"
+        <>
+        {isCreationMenuOpen ?
+            <div className="p-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
+                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8">
+                    <RoomCreationMenu
+                    onCloseButtonClick={() => {
+                        setCreationMenuOpen(false)
+                    }}
+                    onConfirmButtonClick={(roomData) => {
+                        createRoom(roomData)
+                        fetchData()
+                    }}
+                    />
+                </div>
+            </div>
+         : null}
+        <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
+            <div className="h-full flex"
             style={{
                 width: `${isSmallScreen ? "100%" : "25%"}`,
                 position: `${isSmallScreen ? "absolute" : "relative"}`,
@@ -167,7 +191,7 @@ export default function DiscussionCircle() {
                             !(isCreationMenuOpen || currentRoom) ?
                                 "visible"
                             : "hidden"
-                    :"visible" 
+                    : "visible" 
                     : "hidden"
                 }`
             }}
@@ -185,17 +209,19 @@ export default function DiscussionCircle() {
             </div>
 
             <div className="grow h-full p-8">
-                {isCreationMenuOpen ? 
-                    <RoomCreationMenu
-                    onCloseButtonClick={() => {
-                        setCreationMenuOpen(false)
-                    }}
-                    onConfirmButtonClick={(roomData) => {
-                        createRoom(roomData)
-                        fetchData()
-                    }}
-                    />
-                : currentRoom ? 
+                {
+                // isCreationMenuOpen ? 
+                //     <RoomCreationMenu
+                //     onCloseButtonClick={() => {
+                //         setCreationMenuOpen(false)
+                //     }}
+                //     onConfirmButtonClick={(roomData) => {
+                //         createRoom(roomData)
+                //         fetchData()
+                //     }}
+                //     />
+                // :
+                 currentRoom ? 
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}
@@ -205,15 +231,16 @@ export default function DiscussionCircle() {
                     <></>
                 : <Welcome/>
                 }
-            </div>
-        
+            </div>        
         </div>
+        </>
     )
 
 }
 
 async function getRooms() {
-    const querySnapshot = await getDocs(collection(firestore, "rooms"));
+    const q = query(collection(firestore, "rooms"), where("isActive", "==", false))
+    const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
         const data = document.data()
         return {

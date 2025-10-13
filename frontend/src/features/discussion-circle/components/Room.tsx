@@ -97,7 +97,6 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
             </div>
 
             <Circle/>
-            
 
             <div className="flex flex-col gap-2 relative">
                 <div className="flex text-3xl justify-center absolute w-full"
@@ -111,13 +110,6 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                     <button>😂</button>
                     <button>😮</button>
                 </div>
-                <Textarea 
-                className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600"
-                placeholder="Message"
-                style={{
-                    resize: "none",
-                }}
-                />
             </div>
         </div>
     )
