@@ -12,7 +12,7 @@ import { usePosts } from './hooks/usePosts'
 import { PostCreationData, SupportAction } from './types'
 
 const SocialFeed = () => {
-  const { posts, loading, error, addPost, updatePost, deletePost, handleSupportAction } = usePosts()
+  const { posts, loading, error, currentUserId, addPost, updatePost, deletePost, handleSupportAction } = usePosts()
   const [showMyPosts, setShowMyPosts] = useState(false)
   const [postLoading, setPostLoading] = useState(false)
 
@@ -22,6 +22,7 @@ const SocialFeed = () => {
       await addPost(postData)
     } catch (error) {
       console.error('Error creating post:', error)
+      alert('Failed to create post. Please make sure you are logged in.')
     } finally {
       setPostLoading(false)
     }
@@ -32,6 +33,7 @@ const SocialFeed = () => {
       await updatePost(postId, newContent)
     } catch (error) {
       console.error('Error editing post:', error)
+      alert('Failed to edit post. You can only edit your own posts.')
     }
   }
 
@@ -40,6 +42,7 @@ const SocialFeed = () => {
       await deletePost(postId)
     } catch (error) {
       console.error('Error deleting post:', error)
+      alert('Failed to delete post. You can only delete your own posts.')
     }
   }
 
@@ -47,14 +50,14 @@ const SocialFeed = () => {
     await handleSupportAction(postId, action)
   }
 
-  // Filter posts if showing "My Posts" (would need user auth to implement properly)
+  // Filter posts if showing "My Posts"
   const filteredPosts = showMyPosts 
-    ? posts.filter(post => post.userId === 'current-user-id') // Replace with actual user ID
+    ? posts.filter(post => post.userId === currentUserId)
     : posts
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-[#55CCF2]/20 via-[#9B5DE5]/10 to-[#FFD166]/20 flex items-center justify-center">
         <div className="bg-white/90 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-red-200">
           <div className="text-center">
             <div className="text-6xl mb-4">😔</div>
@@ -167,7 +170,7 @@ const SocialFeed = () => {
                       onEdit={handleEditPost}
                       onDelete={handleDeletePost}
                       index={index}
-                      isOwner={true}
+                      isOwner={post.userId === currentUserId}
                     />
                   ))
                 )}
