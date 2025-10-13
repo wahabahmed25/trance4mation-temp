@@ -39,7 +39,7 @@ const GameSection: React.FC<GameSectionProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1">
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-700 mb-1">
             {title}
           </h2>
           {subtitle && (

@@ -4,11 +4,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 const PALETTE = {
-  violet: "#A78BFA",
-  coral: "#FF6F61",
-  blue: "#7EC8E3",
-  gold: "#F4C95D",
-  teal: "#0F4C5C",
+  coral: "#FF6F61", // bright accent
+  coralSoft: "#FCA17D", // warm muted orange for headers
+  cream: "#F6EDE8", // background tone
+  blue: "#7EC8E3", // subtle accent
+  textDark: "#2C2C2C",
 };
 
 const tags = ["focus", "mindful", "sleep", "gratitude", "community"];
@@ -35,38 +35,41 @@ const SearchCardSection = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative w-full h-full rounded-3xl 
-                 bg-[rgba(250,150,107,0)] 
-                 backdrop-blur-xl 
-                 border border-[rgba(255,111,97,0.3)]
-                 shadow-[0_0_30px_rgba(255,111,97,0.2)]
-                 p-6 text-left flex flex-col justify-between"
+                 bg-white/70 backdrop-blur-xl 
+                 border border-[rgba(0,0,0,0.05)]
+                 shadow-[0_8px_30px_rgba(0,0,0,0.08)]
+                 p-8 sm:p-10 text-left flex flex-col justify-between"
     >
-      {/* Background glow overlay */}
+      {/* Background subtle gradient for depth */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 rounded-3xl 
-                   bg-gradient-to-br from-[#FFB199]/30 via-[#FF8661]/20 to-[#FF6F61]/25"
+        className="pointer-events-none absolute inset-0 rounded-3xl
+                   bg-gradient-to-br from-[#ffffff]/70 via-[#F6EDE8]/30 to-[#FDE7D8]/30"
       />
 
       {/* Foreground content */}
-      <div className="relative z-10">
+      <div className="relative z-10 space-y-5">
         {/* Header */}
-        <h1 className="text-4xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 leading-tight drop-shadow-[0_1px_4px_rgba(0,0,0,0.3)]">
-          Build calm, focus, and resilience—through play
+        <h1
+          className="text-4xl sm:text-3xl md:text-4xl font-extrabold mb-2 leading-tight"
+          style={{ color: PALETTE.coralSoft }}
+        >
+          Build Calm, Focus, and Resilience — Through Play
         </h1>
-        <p className="text-white/80 text-sm sm:text-base max-w-2xl mb-6">
-          Bite-size games designed with mental wellness in mind. Track your
-          mood, join a circle, and keep streaks that actually feel good.
+
+        <p className="text-[#333]/70 text-sm sm:text-base max-w-2xl mb-6">
+          Discover games designed for emotional wellness. Track your mood,
+          share moments, and connect with others — one mindful step at a time.
         </p>
 
         {/* Buttons */}
         <div className="flex flex-wrap gap-3 mb-8">
           <button
             onClick={handleSearch}
-            className="rounded-lg bg-gradient-to-r from-[#FFB199] via-[#FF8661] to-[#FF6F61] 
+            className="rounded-lg bg-gradient-to-r from-[#FFB199] via-[#FF8661] to-[#FF6F61]
              px-6 py-2.5 text-white font-semibold 
-             shadow-[0_0_12px_rgba(255,111,97,0.4)] 
-             hover:shadow-[0_0_18px_rgba(255,111,97,0.6)] 
+             shadow-[0_0_10px_rgba(255,111,97,0.4)] 
+             hover:shadow-[0_0_15px_rgba(255,111,97,0.6)] 
              hover:scale-[1.02] active:scale-[0.98] 
              transition-all duration-200"
           >
@@ -74,9 +77,9 @@ const SearchCardSection = () => {
           </button>
           <Link
             href="/mood"
-            className="rounded-lg border border-white/20 px-6 py-2.5 text-white/80 hover:text-white hover:border-white/40 transition"
+            className="rounded-lg border border-[#FF8661]/30 px-6 py-2.5 text-[#FF6F61] hover:bg-[#FF6F61]/10 transition"
           >
-            Log today’s mood
+            Log Today’s Mood
           </Link>
         </div>
 
@@ -85,14 +88,14 @@ const SearchCardSection = () => {
           <label htmlFor="search" className="sr-only">
             Search games
           </label>
-          <div className="flex items-center gap-2 rounded-2xl border border-white/20 bg-white/10 px-4 py-2.5">
-            <span className="text-lg">🔎</span>
+          <div className="flex items-center gap-2 rounded-2xl border border-[#000]/10 bg-white/60 px-4 py-2.5 backdrop-blur-sm">
+            <span className="text-lg text-[#FF6F61]">🔎</span>
             <input
               id="search"
               value={query}
               onChange={handleChange}
               placeholder="Search games, e.g. focus, breathing, gratitude…"
-              className="w-full bg-transparent text-sm text-white placeholder:text-white/60 focus:outline-none"
+              className="w-full bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
             />
           </div>
 
@@ -102,7 +105,8 @@ const SearchCardSection = () => {
               <button
                 key={tag}
                 onClick={() => handleTagClick(tag)}
-                className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-white/80 hover:text-white hover:border-white/40 transition-all"
+                className="rounded-full border border-[#000]/10 bg-white/40 px-3 py-1 
+                           text-[#444] hover:border-[#FF6F61]/40 hover:text-[#FF6F61] transition-all"
               >
                 #{tag}
               </button>
