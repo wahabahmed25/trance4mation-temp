@@ -9,7 +9,6 @@ import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, q
 import { onAuthStateChanged, User } from "firebase/auth"
 import { getAuth } from "firebase/auth";
 import Welcome from "@/features/discussion-circle/components/Welcome"
-import { useAuth } from "@/context/AuthContext";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -28,13 +27,11 @@ const auth = getAuth()
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
-    // const [user, setUser] = useState<User | undefined>(undefined)
     const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
     const [user, setUser] = useState<User | undefined>(undefined)
-    const loginUser = useAuth()
     const [mounted, setMounted] = useState(false)
 
     function fetchData() {
@@ -165,7 +162,7 @@ export default function DiscussionCircle() {
     return (
         <>
         {isCreationMenuOpen ?
-            <div className="p-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
+            <div className="py-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
                 <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8">
                     <RoomCreationMenu
                     onCloseButtonClick={() => {
@@ -180,15 +177,12 @@ export default function DiscussionCircle() {
             </div>
          : null}
         <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
-            <div className="h-full flex"
+            <div className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
             style={{
-                width: `${isSmallScreen ? "100%" : "25%"}`,
-                position: `${isSmallScreen ? "absolute" : "relative"}`,
-                padding: `${.25 * 8}rem`,
                 visibility: `${
                     isRoomBrowserOpen ? 
                         isSmallScreen ?
-                            !(isCreationMenuOpen || currentRoom) ?
+                            !(currentRoom) ?
                                 "visible"
                             : "hidden"
                     : "visible" 
@@ -209,19 +203,7 @@ export default function DiscussionCircle() {
             </div>
 
             <div className="grow h-full p-8">
-                {
-                // isCreationMenuOpen ? 
-                //     <RoomCreationMenu
-                //     onCloseButtonClick={() => {
-                //         setCreationMenuOpen(false)
-                //     }}
-                //     onConfirmButtonClick={(roomData) => {
-                //         createRoom(roomData)
-                //         fetchData()
-                //     }}
-                //     />
-                // :
-                 currentRoom ? 
+                {currentRoom ? 
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}

@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore"
 import { MessageData } from "./MessageData"
 import { UserData } from "./UserData"
 
@@ -11,5 +12,6 @@ export type RoomData = {
     rounds: number, 
     size: number,
     timeLimit: number,
-    creator?: string
+    creator?: string,
+    speakerStart?: Timestamp
 }

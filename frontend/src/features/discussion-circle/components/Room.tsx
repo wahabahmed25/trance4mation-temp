@@ -1,5 +1,5 @@
 import { MouseEventHandler, useEffect, useState } from "react";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
+import { collection, doc, getFirestore, onSnapshot, Timestamp } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { RoomData } from "../types/RoomData";
 import { MessageData } from "../types/MessageData";
@@ -29,31 +29,49 @@ interface RoomProps {
 }
 
 export default function Room({roomData, onExitButtonClick, onSendMessageButtonClick} : RoomProps) {
-    const [messages, setMessages] = useState<MessageData[]>([])
+    const [speakerStart, setSpeakerStart] = useState<Timestamp | undefined>(undefined)
+    const [timeLimit, setTimeLimit] = useState(0)
+    const [timeLeft, setTimeLeft] = useState<number>(0)
+    const [timer, setTimer] = useState()
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
     
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(firestore, "rooms", roomData.id, "messages"), (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    // Message added
-                    setMessages((prev) => {
-                        const added = {
-                            text: change.doc.data().text,
-                            id: change.doc.id,
-                            sender: change.doc.data().sender
-                        }
-                        return prev.concat([added])
-                    })
-                }
-                if (change.type === "modified") {
-                    // Message modified
-                }
-                if (change.type === "removed") {
-                    // Message removed
-                }
-            })
+        const unsubscribe = onSnapshot(doc(firestore, "rooms", roomData.id), (doc) => {
+            const speakerStart: Timestamp = doc.data()?.speakerStart
+            const timeLimit: number = doc.data()?.timeLimit
+            setSpeakerStart(speakerStart)
+            setTimeLimit(timeLimit)
+            
+            clearInterval(timer)
+            const timerId = setInterval(() => {
+                const timeElapsed = Timestamp.now().seconds - speakerStart.seconds
+                setTimeLeft(timeLimit - timeElapsed)
+                console.log(timeLimit - timeElapsed)
+            }, 100)
+            setTimer(timerId)
         })
+
+        // const unsubscribe = onSnapshot(collection(firestore, "rooms", roomData.id, "messages"), (snapshot) => {
+        //     snapshot.docChanges().forEach((change) => {
+        //         if (change.type === "added") {
+        //             // Message added
+        //             setMessages((prev) => {
+        //                 const added = {
+        //                     text: change.doc.data().text,
+        //                     id: change.doc.id,
+        //                     sender: change.doc.data().sender
+        //                 }
+        //                 return prev.concat([added])
+        //             })
+        //         }
+        //         if (change.type === "modified") {
+        //             // Message modified
+        //         }
+        //         if (change.type === "removed") {
+        //             // Message removed
+        //         }
+        //     })
+        // })
 
         return unsubscribe
     },[roomData.id])
