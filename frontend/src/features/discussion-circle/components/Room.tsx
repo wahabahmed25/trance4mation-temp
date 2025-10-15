@@ -1,11 +1,11 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { collection, doc, getFirestore, onSnapshot, Timestamp } from "firebase/firestore";
+import { collection, doc, getDoc, getFirestore, onSnapshot, query, Timestamp } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { RoomData } from "../types/RoomData";
-import { MessageData } from "../types/MessageData";
 import Image from "next/image";
-import { Textarea } from "@headlessui/react";
 import Circle from "./Circle";
+import { useAuth } from "@/context/AuthContext";
+import { UserData } from "../types/UserData";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -23,23 +23,26 @@ const firestore = getFirestore(app)
 
 interface RoomProps {
     roomData: RoomData,
-    onMenuButtonClick?: MouseEventHandler<HTMLButtonElement>,
     onExitButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onSendMessageButtonClick?: (message: string) => void
 }
 
-export default function Room({roomData, onExitButtonClick, onSendMessageButtonClick} : RoomProps) {
+export default function Room({roomData, onExitButtonClick} : RoomProps) {
     const [timeLimit, setTimeLimit] = useState(0)
     const [timeLeft, setTimeLeft] = useState<number>(0)
+    const [prompt, setPrompt] = useState<string>("")
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
+    const [speaker, setSpeaker] = useState<UserData | undefined>(undefined)
+    const [participants, setParticipants] = useState<UserData[]>([])
     const speakerStartTime = useRef<number>(undefined)
     const timer = useRef<NodeJS.Timeout>(undefined)
     
     useEffect(() => {
-        const unsubscribe = onSnapshot(doc(firestore, "rooms", roomData.id), (doc) => {
-            const data = doc.data()
-            // set the time limit state variable for use in rendering the clock
-            setTimeLimit(data?.timeLimit)
+        const unsubscribe = onSnapshot(doc(firestore, "rooms", roomData.id), (roomSnap) => {
+            const data: RoomData = roomSnap.data() as RoomData
+            setTimeLimit(data.timeLimit)
+            setPrompt(data.prompt)
+            setParticipants(data.participants)
+            setSpeaker(data.participants[data.speakerIndex])
 
             // set the start time ref variable. not used for rendering
             speakerStartTime.current = data?.speakerStart.seconds
@@ -50,9 +53,9 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                     return
                 }
                 const timeElapsed = Timestamp.now().seconds - speakerStartTime.current
-                setTimeLeft(data?.timeLimit - timeElapsed)
+                setTimeLeft(Math.max(0, data?.timeLimit - timeElapsed))
 
-                if (timeElapsed === data?.timeLimit) {
+                if (timeElapsed >= data?.timeLimit) {
                     clearInterval(timerId)
                 }
             })
@@ -96,9 +99,7 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                     </div>
                     {isPromptVisible ?
                         <p className="text-gray-200 font-semibold text-sm">
-                            I wonder how, I wonder why. Yesterday you told me about the blue, blue sky, 
-                            but all that I can see, is just a yellow lemon tree. I&apos;m turning my head. Up and down.
-                            Turning, turning, turning, turning around
+                            {prompt}
                         </p>
                     : <></>
                     }
@@ -106,7 +107,8 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
             </div>
 
             <Circle
-            // users={}
+            speaker={speaker}
+            participants={participants}
             timeLimit={timeLimit}
             timeLeft={timeLeft}
             />

@@ -45,28 +45,16 @@ export default function DiscussionCircle() {
     }
 
     async function joinRoom(roomData: RoomData) {
-        // TODO: set security rules to 
-        // - prevent joining if the room is full. 
-        // - only allow updating the size if the user is in the room.
         await Promise.all([
-            // add a new participant
-            // TODO: set security rules to
-            // - (DONE) prevent reads if the room is anonymous
             addDoc(collection(firestore, "rooms", roomData.id, "participants"), {
                 name: user?.isAnonymous ? "Anonymous" : "jerry",
                 uid: user?.uid
             }),
-            // update room size
             updateDoc(doc(collection(firestore, "rooms"), roomData.id), {
                 size: increment(1)
             })
         ])
         .then(([participantRef, roomRef]) => {
-            // get the id of the newly created doc. use this id for validation since it's not tied to any user data
-            // TODO: modify the participants subcollection to
-            // - (DONE) track which participantId belongs to each uid 
-            // Also, set security rules to:
-            // - allow writes to the messages subcollection only if this participantId and uid match the ones in the participants subcollection
             setParticipantId(participantRef.id)
             console.log(participantRef.id)
         })
@@ -77,15 +65,8 @@ export default function DiscussionCircle() {
             return
         }
 
-        // TODO: set security rules to check 
-        // - if the uid of the user that's leaving matches the uid of the authenticated user. 
-        // - if the room size increment is coming from a user in the room
         await Promise.all([
-            // remove from participants
-            // TODO: set security rules to
-            // - allow writes to the participants subcollection only if this participantId and uid match the ones in the participants subcollection
             deleteDoc(doc(collection(firestore, "rooms", currentRoom.id, "participants"), participantId)),
-            // update room size
             updateDoc(doc(collection(firestore, "rooms"), currentRoom.id), {
                 size: increment(-1)
             })
@@ -93,17 +74,6 @@ export default function DiscussionCircle() {
         .then(() => {
             setCurrentRoom(undefined)
             setParticipantId(undefined)
-        })
-    }
-
-    async function sendMessage(message: string) {
-        if (!currentRoom) {
-            return
-        }
-
-        await addDoc(collection(firestore, "rooms", currentRoom.id, "messages"), {
-            text: message,
-            sender: participantId
         })
     }
 
@@ -132,7 +102,7 @@ export default function DiscussionCircle() {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/auth.user
-                console.log(user)
+                // console.log(user)
                 setUser(user)
                 fetchData()
             } else {
@@ -207,7 +177,6 @@ export default function DiscussionCircle() {
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}
-                    onSendMessageButtonClick={sendMessage}
                     />
                 : isSmallScreen ?
                     <></>
@@ -224,18 +193,10 @@ async function getRooms() {
     const q = query(collection(firestore, "rooms"), where("isActive", "==", false))
     const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
-        const data = document.data()
         return {
-            id: document.id,
-            description: data.description,
-            isAnonymous: data.isAnonymous,
-            maxSize: data.maxSize,
-            name: data.name,
-            palette: data.palette,
-            rounds: data.rounds,
-            size: data.size,
-            timeLimit: data.timeLimit,
-        }
+            ...document.data(),
+            "id": document.id
+        } as RoomData
     })
     return rooms
 }
