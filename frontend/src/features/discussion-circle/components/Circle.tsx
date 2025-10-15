@@ -12,7 +12,7 @@ const placeholder: UserData[] = [
     {name: "Jelly", icon: "/user-regular-full.svg", id: "iiaeb"}
 ]
 
-export default function Circle({users = placeholder}: {users?: UserData[]}) {
+export default function Circle({users = placeholder, timeLimit, timeLeft}: {users?: UserData[], timeLimit: number, timeLeft: number}) {
     const [speaker, setSpeaker] = useState<UserData>(users[0])
     const [radius, setRadius] = useState<number>(120)
     const user = useAuth()
@@ -47,26 +47,38 @@ export default function Circle({users = placeholder}: {users?: UserData[]}) {
             )}
 
             <div className="absolute">
-                <div className="border-3 rounded-full border-[#FFD166]">
+                <div className="border-3 rounded-full ">
                     <div className="size-20 p-2 rounded-full bg-slate-700">
-                        <div className="size-16 relative">
-                            {speaker ? 
-                                <Image
-                                src={speaker.icon}
-                                alt={speaker.icon}
-                                fill={true}
-                                priority
-                                />
-                            : 
-                                <Image
-                                src={user.user?.profilePic ?? ""}
-                                alt={user.user?.name ?? ""}
-                                fill={true}
-                                priority
-                                />
-                            }
-
-                        </div>
+                        {speaker ? 
+                            <div className="relative flex justify-center items-end">
+                                <div className="size-16 relative flex items-center justify-center">
+                                    <svg className="size-24 absolute -rotate-90">
+                                        <circle 
+                                        cx="50%" cy="50%" r="40px" 
+                                        fill="none" stroke="#FFD166" 
+                                        strokeWidth={3} strokeDasharray={2 * 40 * Math.PI} strokeDashoffset={2 * 40 * Math.PI * (1 - timeLeft / timeLimit)}
+                                        />
+                                    </svg>
+                                    <Image
+                                    src={speaker.icon}
+                                    alt={speaker.icon}
+                                    fill={true}
+                                    priority
+                                    className="z-0"
+                                    />
+                                </div>
+                                <div className="text-white text-xl font-semibold z-1 absolute rounded-full -bottom-10">
+                                    <p>{timeLeft}</p>
+                                </div>
+                            </div>
+                        : 
+                            <Image
+                            src={user.user?.profilePic ?? ""}
+                            alt={user.user?.name ?? ""}
+                            fill={true}
+                            priority
+                            />
+                        }
                     </div>
                 </div>
             </div>

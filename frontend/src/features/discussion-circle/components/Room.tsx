@@ -1,4 +1,4 @@
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { collection, doc, getFirestore, onSnapshot, Timestamp } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { RoomData } from "../types/RoomData";
@@ -29,51 +29,42 @@ interface RoomProps {
 }
 
 export default function Room({roomData, onExitButtonClick, onSendMessageButtonClick} : RoomProps) {
-    const [speakerStart, setSpeakerStart] = useState<Timestamp | undefined>(undefined)
     const [timeLimit, setTimeLimit] = useState(0)
     const [timeLeft, setTimeLeft] = useState<number>(0)
-    const [timer, setTimer] = useState()
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
+    const speakerStartTime = useRef<number>(undefined)
+    const timer = useRef<NodeJS.Timeout>(undefined)
     
     useEffect(() => {
         const unsubscribe = onSnapshot(doc(firestore, "rooms", roomData.id), (doc) => {
-            const speakerStart: Timestamp = doc.data()?.speakerStart
-            const timeLimit: number = doc.data()?.timeLimit
-            setSpeakerStart(speakerStart)
-            setTimeLimit(timeLimit)
-            
-            clearInterval(timer)
+            const data = doc.data()
+            // set the time limit state variable for use in rendering the clock
+            setTimeLimit(data?.timeLimit)
+
+            // set the start time ref variable. not used for rendering
+            speakerStartTime.current = data?.speakerStart.seconds
+            // this interval uses the values of timeLimit and speakerStart grabbed when the interval was started
+            // it does not update when the state variables update, only when the fields in Firebase update 
             const timerId = setInterval(() => {
-                const timeElapsed = Timestamp.now().seconds - speakerStart.seconds
-                setTimeLeft(timeLimit - timeElapsed)
-                console.log(timeLimit - timeElapsed)
-            }, 100)
-            setTimer(timerId)
+                if (!speakerStartTime.current) {
+                    return
+                }
+                const timeElapsed = Timestamp.now().seconds - speakerStartTime.current
+                setTimeLeft(data?.timeLimit - timeElapsed)
+
+                if (timeElapsed === data?.timeLimit) {
+                    clearInterval(timerId)
+                }
+            })
+            timer.current = timerId
         })
 
-        // const unsubscribe = onSnapshot(collection(firestore, "rooms", roomData.id, "messages"), (snapshot) => {
-        //     snapshot.docChanges().forEach((change) => {
-        //         if (change.type === "added") {
-        //             // Message added
-        //             setMessages((prev) => {
-        //                 const added = {
-        //                     text: change.doc.data().text,
-        //                     id: change.doc.id,
-        //                     sender: change.doc.data().sender
-        //                 }
-        //                 return prev.concat([added])
-        //             })
-        //         }
-        //         if (change.type === "modified") {
-        //             // Message modified
-        //         }
-        //         if (change.type === "removed") {
-        //             // Message removed
-        //         }
-        //     })
-        // })
-
-        return unsubscribe
+        return () => {
+            unsubscribe()
+            if (timer.current) {
+                clearInterval(timer.current)
+            }
+        }
     },[roomData.id])
     
     return (
@@ -114,7 +105,11 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                 </div>
             </div>
 
-            <Circle/>
+            <Circle
+            // users={}
+            timeLimit={timeLimit}
+            timeLeft={timeLeft}
+            />
 
             <div className="flex flex-col gap-2 relative">
                 <div className="flex text-3xl justify-center absolute w-full"

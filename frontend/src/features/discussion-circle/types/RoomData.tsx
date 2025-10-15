@@ -1,6 +1,4 @@
 import { Timestamp } from "firebase/firestore"
-import { MessageData } from "./MessageData"
-import { UserData } from "./UserData"
 
 export type RoomData = {
     id: string,
