@@ -2,26 +2,27 @@
 import { useEffect, useState } from "react";
 
 export function ReminderToast() {
-  const [show, setShow] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setShow(true), 1200);
-    return () => clearTimeout(t);
+    const show = setTimeout(() => setVisible(true), 2000);
+    const hide = setTimeout(() => setVisible(false), 8000);
+    return () => {
+      clearTimeout(show);
+      clearTimeout(hide);
+    };
   }, []);
 
-  if (!show) return null;
+  if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-30 sm:bottom-6 sm:right-6 sm:left-auto sm:w-auto">
-      <div className="mx-2 sm:mx-0 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white shadow-[0_0_15px_rgba(255,255,255,0.15)] backdrop-blur-md">
-        Don’t forget to log today’s mood 😊
-        <button
-          className="ml-3 rounded-lg border border-white/20 px-2 py-0.5 text-xs text-white/80 hover:bg-white/10 transition"
-          onClick={() => setShow(false)}
-        >
-          Dismiss
-        </button>
-      </div>
+    <div className="fixed bottom-6 right-6 rounded-2xl px-5 py-3 shadow-lg border border-[#FCA17D]/40 backdrop-blur-md text-white text-sm font-medium"
+      style={{
+        background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)",
+        boxShadow: "0 6px 20px rgba(246,118,94,0.4)",
+      }}
+    >
+       Don’t forget to log your mood today!
     </div>
   );
 }

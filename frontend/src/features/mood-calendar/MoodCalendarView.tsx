@@ -9,196 +9,136 @@ import { ReminderToast } from "./components/ReminderToast";
 import { QuickLogCard } from "./components/QuickLogCard";
 import { generateMonthDays } from "./utils/calendar";
 import type { MoodType, NullableMood } from "@/features/mood-calendar/types";
-import { saveMood, loadMoods } from "@/lib/api/moods";
-import { auth, signInWithGoogle } from "@/lib/firebase";
-import { signOut } from "firebase/auth";
+import BackgroundElements from "@/components/ui/BackgroundElements";
 
 export default function MoodCalendarView() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [moodsByDay, setMoodsByDay] = useState<Record<string, NullableMood>>({});
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [userId, setUserId] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
 
-  // Handle Auth State
+  // Load moods from localStorage
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserId(user.uid);
-        setUserName(user.displayName ?? user.email ?? "User");
-      } else {
-        setUserId(null);
-        setUserName(null);
-      }
-    });
-    return unsubscribe;
+    const saved = localStorage.getItem("moodsByDay");
+    if (saved) setMoodsByDay(JSON.parse(saved));
   }, []);
 
-  // Load moods from Firestore when user and month are ready
+  // Persist moods locally
   useEffect(() => {
-    if (!userId) return;
+    localStorage.setItem("moodsByDay", JSON.stringify(moodsByDay));
+  }, [moodsByDay]);
 
-    async function fetchMoods() {
-      try {
-        const prefix = `${currentMonth.getFullYear()}-${String(
-          currentMonth.getMonth() + 1
-        ).padStart(2, "0")}`;
-        const loaded = await loadMoods(userId!, prefix);
-        setMoodsByDay(loaded);
-      } catch (err) {
-        console.error("Error loading moods:", err);
-      }
-    }
+  const handlePick = (dateKey: string) => setSelectedDate(dateKey);
 
-    fetchMoods();
-  }, [userId, currentMonth]);
-
-  function handlePick(dateKey: string) {
-    setSelectedDate(dateKey);
-  }
-
-  async function handleSelectMood(mood: NullableMood) {
-    if (!selectedDate || !userId) return;
+  const handleSelectMood = (mood: NullableMood) => {
+    if (!selectedDate) return;
     setMoodsByDay((prev) => ({ ...prev, [selectedDate]: mood }));
-
-    try {
-      await saveMood(userId, selectedDate, mood);
-      console.log("Mood saved:", mood, selectedDate);
-    } catch (err) {
-      console.error("Error saving mood:", err);
-    }
-
     setSelectedDate(null);
-  }
+  };
 
   const days = generateMonthDays(currentMonth, moodsByDay);
 
-  // Show Sign-In screen if not logged in
-  if (!userId) {
-    return (
-      <main className="min-h-screen flex items-center justify-center bg-[#0F4C5C] text-white">
-        <div className="text-center space-y-4">
-          <h1 className="text-3xl font-bold">
-            Sign in to access your Mood Calendar
-          </h1>
-          <button
-            onClick={signInWithGoogle}
-            className="rounded-xl bg-white/10 border border-white/20 px-4 py-2 text-white hover:bg-white/20 transition"
-          >
-            Sign in with Google
-          </button>
-        </div>
-      </main>
-    );
-  }
-
   return (
-    <main className="min-h-screen px-4 py-8 md:px-8">
-      {/* Header */}
-      <header className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-1">
-          {/* 👋 Greeting */}
-          <span className="text-sm text-white/70">
-            Welcome back,{" "}
-            <span className="font-semibold text-white">
-              {userName?.split(" ")[0]}
-            </span>{" "}
-            👋
-          </span>
+    <main
+      className="relative min-h-[90vh] flex flex-col items-center justify-start px-4 py-12 md:px-8 text-[#3C2F2F] overflow-hidden"
+    >
+      <BackgroundElements />
 
-          <h1 className="text-4xl font-extrabold tracking-tight text-white drop-shadow-sm">
-            Mood Calendar
-          </h1>
-          <p className="text-sm text-white/70">
-            Track your daily emotions and see your growth journey.
-          </p>
-        </div>
+      {/* === Outer Framed Container === */}
+      <div
+        className="
+          relative w-full max-w-7xl rounded-[2rem] border 
+          border-[#FCA17D]/40 bg-white/60 backdrop-blur-md 
+          shadow-[0_0_30px_rgba(252,161,125,0.15)] 
+          ring-1 ring-white/40
+          overflow-hidden
+          transition-all duration-300
+        "
+      >
+        {/* Subtle inner coral gradient overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "radial-gradient(circle at 80% 0%, rgba(252,161,125,0.08), transparent 70%)",
+          }}
+        />
 
-        {/* Controls (Month switcher + Log Out) */}
-        <div className="flex items-center gap-3 self-start sm:self-auto">
-          {/* Month switcher */}
-          <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-2 py-2 backdrop-blur">
-            <button
-              className="rounded-xl px-3 py-2 text-white/80 hover:bg-white/10 transition"
-              onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-            >
-              ◀ Prev
-            </button>
-            <span className="px-3 py-1 text-lg font-semibold tabular-nums text-white">
-              {currentMonth.toLocaleString(undefined, {
-                month: "long",
-                year: "numeric",
-              })}
-            </span>
-            <button
-              className="rounded-xl px-3 py-2 text-white/80 hover:bg-white/10 transition"
-              onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-            >
-              Next ▶
-            </button>
+        {/* ===== Header ===== */}
+        <header className="relative z-10 mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-8 pt-8">
+          <div>
+            <h1 className="text-4xl font-extrabold tracking-tight text-[#F6765E] drop-shadow-sm">
+              Mood Calendar
+            </h1>
+            <p className="text-sm text-[#7C6A65] mt-1">
+              Track your daily emotions and celebrate progress 🌤️
+            </p>
           </div>
 
-          {/* Log Out */}
-          <button
-            onClick={() => signOut(auth)}
-            className="rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white/80 hover:bg-white/20 hover:text-white transition shadow-[0_0_8px_rgba(255,255,255,0.25)]"
-          >
-            Log Out
-          </button>
-        </div>
-      </header>
+          {/* Month Switcher */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 rounded-2xl bg-white/70 px-3 py-2 shadow-inner border border-[#FCA17D]/40 backdrop-blur-sm">
+              {/* Coral Prev Button */}
+              <button
+                onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
+                className="flex items-center justify-center rounded-xl px-4 py-2 text-white font-medium shadow-md transition-all hover:scale-[1.05]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)",
+                  boxShadow:
+                    "inset 0 1px 4px rgba(255,255,255,0.4), 0 4px 12px rgba(246,118,94,0.35)",
+                }}
+              >
+                ◀ Prev
+              </button>
 
-      {/* Layout */}
-      <div className="flex flex-col gap-6 lg:flex-row">
-        {/* Calendar block */}
-        <section className="flex-1 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md">
-          <CalendarGrid days={days} onPick={handlePick} />
-        </section>
+              {/* Month Label */}
+              <span className="px-3 py-1 text-lg font-semibold text-[#3C2F2F]">
+                {currentMonth.toLocaleString(undefined, {
+                  month: "long",
+                  year: "numeric",
+                })}
+              </span>
 
-        {/* Sidebar */}
-        <aside className="lg:w-80 flex flex-col gap-6">
-          {/* This Month */}
-          <div
-            className="mb-2 flex cursor-pointer items-center justify-between lg:hidden"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            <h3 className="text-lg font-bold text-white">This Month</h3>
-            <span className="text-sm text-white/70">
-              {sidebarOpen ? "▴" : "▾"}
-            </span>
+              {/* Coral Next Button */}
+              <button
+                onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
+                className="flex items-center justify-center rounded-xl px-4 py-2 text-white font-medium shadow-md transition-all hover:scale-[1.05]"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)",
+                  boxShadow:
+                    "inset 0 1px 4px rgba(255,255,255,0.4), 0 4px 12px rgba(246,118,94,0.35)",
+                }}
+              >
+                Next ▶
+              </button>
+            </div>
           </div>
+        </header>
 
-          {sidebarOpen && (
-  <>
-  {/* Quick Log for Today (now on top visually) */}
-  <QuickLogCard
-    onSelect={async (mood) => {
-      if (!userId) return;
+        {/* ===== Main Layout ===== */}
+        <div className="relative z-10 flex flex-col gap-8 lg:flex-row px-8 pb-10">
+          {/* Calendar Section */}
+          <section className="flex-1 rounded-3xl bg-white/75 p-6 shadow-inner border border-[#FCA17D]/30 backdrop-blur-md transition-all hover:shadow-lg">
+            <CalendarGrid days={days} onPick={handlePick} />
+          </section>
 
-      // Fix: use local date, not UTC
-      const today = new Date().toLocaleDateString("en-CA", {
-        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      });
-
-      setMoodsByDay((prev) => ({ ...prev, [today]: mood }));
-
-      try {
-        await saveMood(userId, today, mood);
-        console.log("Quick logged today's mood:", mood, "for", today);
-      } catch (err) {
-        console.error("Error saving quick log mood:", err);
-      }
-    }}
-  />
-
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md">
-        <SummarySidebar moodsByDay={moodsByDay} monthDate={currentMonth} />
-      </div>
-    </>
-  )}
-  
-        </aside>
+          {/* Sidebar Section */}
+          <aside className="lg:w-80 flex flex-col gap-6">
+            <QuickLogCard
+              onSelect={(mood) => {
+                const today = new Date().toLocaleDateString("en-CA", {
+                  timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                });
+                setMoodsByDay((prev) => ({ ...prev, [today]: mood }));
+              }}
+            />
+            <SummarySidebar
+              moodsByDay={moodsByDay}
+              monthDate={currentMonth}
+            />
+          </aside>
+        </div>
       </div>
 
       {/* Mood Picker Modal */}
