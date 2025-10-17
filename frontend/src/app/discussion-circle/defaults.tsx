@@ -1,52 +1,6 @@
-import { MessageData } from "@/features/discussion-circle/types/MessageData"
-import { RoomData } from "@/features/discussion-circle/types/RoomData"
-import { RoomSetting } from "@/features/discussion-circle/types/RoomSetting"
-import { UserData } from "@/features/discussion-circle/types/UserData"
+import { initializeApp } from "firebase/app"
+import { getFirestore } from "firebase/firestore"
 import { Poppins, Merriweather } from "next/font/google"
-
-export const DEFAULT_ROOM_DATA: RoomData = {
-    isAnonymous: false,
-    maxSize: 5,
-    palette: "default",
-    timeLimit: 30,
-    rounds: 3,
-    name: "Test room",
-    size: 0,
-    description: "This is for testing",
-    id: "not a real id"
-}
-
-export const ROOM_CREATION_SETTINGS: RoomSetting[] = [
-    {
-        image: "/user-regular-full.svg",
-        label: "Participants",
-        field: "maxParticipants",
-        type: "number",
-        defaultValue: 5
-    },
-    {
-        image: "/alarm-clock-regular-full.svg",
-        label: "Time Limit",
-        field: "timeLimit",
-        type: "number",
-        defaultValue: 30,
-        step: 5
-    },
-    {
-        image: "/rotate-left-regular-full.svg",
-        label: "Rounds",
-        field: "rounds",
-        type: "number",
-        defaultValue: 3
-    },
-    // {
-    //     image: "/mask-solid-full.svg",
-    //     label: "Anonymous",
-    //     field: "isAnonymous",
-    //     type: "checkbox",
-    //     defaultValue: false
-    // },
-]
 
 export const POPPINS_BOLD = Poppins({
     weight: "700"
@@ -61,56 +15,15 @@ export const YELLOW = "#FFD166"
 export const BLUE = "#55CCF2"
 export const PURPLE = "#985DE5"
 
-export const defaultPeople: UserData[] = [
-    {name: "John", icon: "/vercel.svg", id: 0},
-    {name: "Jane", icon: "/window.svg", id: 1},
-    {name: "Jerry", icon: "/next.svg", id: 2},
-    {name: "Joe", icon: "/vercel.svg", id: 3},
-    {name: "Jill", icon: "/window.svg", id: 4},
-]
+const firebaseConfig = {
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+};
 
-export const defaultMessages: MessageData[] = [
-    {text: "i am john", sender: defaultPeople[0], id: 0},
-    {text: "jane am i", sender: defaultPeople[1], id: 1},
-    {text: "Donec efficitur mattis nibh nec gravida. Phasellus varius lorem vel turpis convallis scelerisque.", 
-        sender: defaultPeople[2], id: 2}
-]
-
-export const defaultRooms: RoomData[] = [
-    // {
-    //     isAnonymous: false,
-    //     numParticipants: 2,
-    //     maxParticipants: 3,
-    //     colorTheme: "idk",
-    //     timeLimit: 10,
-    //     rounds: 3,
-    //     code: "ABCD",
-    //     name: "counseling",
-    //     icon: "/vercel.svg",
-    //     description: "this is a room to talk about school"
-    // },
-    // {
-    //     isAnonymous: true,
-    //     numParticipants: 3,
-    //     maxParticipants: 4,
-    //     colorTheme: "idk",
-    //     timeLimit: 5,
-    //     rounds: 3,
-    //     code: "EFGH",
-    //     name: "philosophical cookies",
-    //     icon: "/next.svg",
-    //     description: "this is a room to talk about the meaning of life and also cookie recipes"
-    // },
-    // {
-    //     isAnonymous: true,
-    //     numParticipants: 3,
-    //     maxParticipants: 4,
-    //     colorTheme: "idk",
-    //     timeLimit: 5,
-    //     rounds: 3,
-    //     code: "IJKL",
-    //     name: "room 1",
-    //     icon: "/window.svg",
-    //     description: ""
-    // },
-]
+const app = initializeApp(firebaseConfig);
+export const FIRESTORE = getFirestore(app)

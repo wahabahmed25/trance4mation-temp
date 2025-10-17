@@ -61,6 +61,5 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
                 )}
             </div>
         </div>
-        // <div className="bg-slate-900 h-full w-1"></div>
     )
 }

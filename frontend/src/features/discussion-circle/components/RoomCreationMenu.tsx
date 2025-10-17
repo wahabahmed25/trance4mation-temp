@@ -1,18 +1,57 @@
-import { DEFAULT_ROOM_DATA, POPPINS_BOLD, ROOM_CREATION_SETTINGS } from "@/app/discussion-circle/defaults";
 import Image from "next/image";
 import { MouseEventHandler, useState } from "react";
-import { RoomData } from "../types/RoomData";
 import { Input, Textarea } from "@headlessui/react";
 import SettingsCell from "./SettingsCell";
 import { useAuth } from "@/context/AuthContext";
+import { RoomSetting } from "../types/RoomSetting";
+import { ClientRoomData } from "../types/ClientRoomData";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onConfirmButtonClick?: (roomData: Omit<RoomData, "id">) => void 
+    onConfirmButtonClick?: (roomData: ClientRoomData) => void 
+}
+
+const SETTINGS: RoomSetting[] = [
+    {
+        image: "/user-regular-full.svg",
+        label: "Participants",
+        field: "maxSize",
+        type: "number",
+        defaultValue: 5
+    },
+    {
+        image: "/alarm-clock-regular-full.svg",
+        label: "Time Limit",
+        field: "timeLimit",
+        type: "number",
+        defaultValue: 30,
+        step: 5
+    },
+    {
+        image: "/rotate-left-regular-full.svg",
+        label: "Rounds",
+        field: "rounds",
+        type: "number",
+        defaultValue: 3
+    },
+]
+
+const DEFAULT_SETTINGS = {
+    description: "",
+    // id: string,
+    isActive: false,
+    maxSize: 5,
+    name: "",
+    participants: [],
+    // prompt: string,
+    rounds: 3, 
+    // speakerIndex: number,
+    // speakerStart: Timestamp
+    timeLimit: 30
 }
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
-    const [settings, setSettings] = useState<Omit<RoomData, "id">>(DEFAULT_ROOM_DATA)
+    const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS)
     const user = useAuth()
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
@@ -54,7 +93,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {ROOM_CREATION_SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
+                {SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
             </div>
 
             <div className="flex justify-center grow items-end">
@@ -67,7 +106,9 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                     if (!onConfirmButtonClick || !user.user) {
                         return
                     }
-                    onConfirmButtonClick({...settings, ["creator"]: user.user.uid})
+                    onConfirmButtonClick({
+                        ...settings,
+                    })
                 }}
                 >
                     Create

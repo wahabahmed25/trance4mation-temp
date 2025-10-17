@@ -8,6 +8,8 @@ interface RoomListing {
 }
 
 export default function RoomListing({roomData, onClick}: RoomListing) {
+    const size = roomData.participants.length
+
     return (
         <div 
         className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20"
@@ -39,7 +41,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                     priority
                     style={{filter: "invert(1)"}}
                     />
-                    {roomData.size}
+                    {size}
                     /
                     {roomData.maxSize}
                 </div>

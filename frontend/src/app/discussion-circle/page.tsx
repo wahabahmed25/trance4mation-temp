@@ -1,38 +1,23 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
 import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
 import Room from "@/features/discussion-circle/components/Room"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
-import { initializeApp } from "firebase/app"
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, query, updateDoc, where } from "firebase/firestore"
-import { onAuthStateChanged, User } from "firebase/auth"
-import { getAuth } from "firebase/auth";
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, onSnapshot, query, updateDoc } from "firebase/firestore"
 import Welcome from "@/features/discussion-circle/components/Welcome"
-
-const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app)
-const auth = getAuth()
+import { useAuth } from "@/context/AuthContext"
+import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData"
+import { FIRESTORE } from "./defaults"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
-    const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
-    const [user, setUser] = useState<User | undefined>(undefined)
-    const [mounted, setMounted] = useState(false)
+    const user = useAuth()
+    const unsubscribe = useRef<() => void>(undefined)
 
     function fetchData() {
         getRooms()
@@ -45,71 +30,41 @@ export default function DiscussionCircle() {
     }
 
     async function joinRoom(roomData: RoomData) {
-        await Promise.all([
-            addDoc(collection(firestore, "rooms", roomData.id, "participants"), {
-                name: user?.isAnonymous ? "Anonymous" : "jerry",
-                uid: user?.uid
-            }),
-            updateDoc(doc(collection(firestore, "rooms"), roomData.id), {
-                size: increment(1)
+        unsubscribe.current = onSnapshot(doc(FIRESTORE, "rooms", roomData.id), (snap) => {
+            const newRoomData = {
+                ...snap.data(),
+                "id": roomData.id
+            } as RoomData
+            setCurrentRoom(newRoomData)
+            console.log(newRoomData)
+        })
+        await updateDoc(doc(collection(FIRESTORE, "rooms"), roomData.id), {
+            participants: arrayUnion({
+                name: user.user?.name,
+                uid: user.user?.uid
             })
-        ])
-        .then(([participantRef, roomRef]) => {
-            setParticipantId(participantRef.id)
-            console.log(participantRef.id)
         })
     }
 
     async function leaveCurrentRoom() {
-        if (!currentRoom) {
+        if (unsubscribe.current != undefined) {
+            unsubscribe.current()
+            unsubscribe.current = undefined
+        }
+        if (!currentRoom?.id) {
             return
         }
-
-        await Promise.all([
-            deleteDoc(doc(collection(firestore, "rooms", currentRoom.id, "participants"), participantId)),
-            updateDoc(doc(collection(firestore, "rooms"), currentRoom.id), {
-                size: increment(-1)
-            })
-        ])
-        .then(() => {
-            setCurrentRoom(undefined)
-            setParticipantId(undefined)
-        })
-    }
-
-    async function _joinRoom(roomData: RoomData) {
-        if (!user) {
-            console.log("not signed in")
-            return
-        }
-
-        const backendUrl =""
-        auth.currentUser?.getIdToken(true).then((idToken) => {
-            fetch(backendUrl, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${idToken}`
-                },
-                body: roomData.id
+        await updateDoc(doc(collection(FIRESTORE, "rooms"), currentRoom?.id), {
+            participants: arrayRemove({
+                name: user.user?.name,
+                uid: user.user?.uid
             })
         })
+        setCurrentRoom(undefined)
     }
 
     useEffect(() => {
-        setMounted(true)
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/auth.user
-                // console.log(user)
-                setUser(user)
-                fetchData()
-            } else {
-                // User is signed out
-                setUser(undefined)
-            }
-        });
+        fetchData()
 
         function onResize() {
             if (window.innerWidth < 768) {
@@ -132,8 +87,8 @@ export default function DiscussionCircle() {
     return (
         <>
         {isCreationMenuOpen ?
-            <div className="py-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
-                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8">
+            <div className="py-40 px-8 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
+                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8 grow max-w-120">
                     <RoomCreationMenu
                     onCloseButtonClick={() => {
                         setCreationMenuOpen(false)
@@ -190,7 +145,7 @@ export default function DiscussionCircle() {
 }
 
 async function getRooms() {
-    const q = query(collection(firestore, "rooms"), where("isActive", "==", false))
+    const q = query(collection(FIRESTORE, "rooms"))
     const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
         return {
@@ -201,6 +156,6 @@ async function getRooms() {
     return rooms
 }
 
-async function createRoom(settings: Omit<RoomData, "id">) {
-    await addDoc(collection(firestore, "rooms"), settings)
+async function createRoom(settings: ClientRoomData) {
+    await addDoc(collection(FIRESTORE, "rooms"), settings)
 }

@@ -27,48 +27,7 @@ interface RoomProps {
 }
 
 export default function Room({roomData, onExitButtonClick} : RoomProps) {
-    const [timeLimit, setTimeLimit] = useState(0)
-    const [timeLeft, setTimeLeft] = useState<number>(0)
-    const [prompt, setPrompt] = useState<string>("")
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
-    const [speaker, setSpeaker] = useState<UserData | undefined>(undefined)
-    const [participants, setParticipants] = useState<UserData[]>([])
-    const speakerStartTime = useRef<number>(undefined)
-    const timer = useRef<NodeJS.Timeout>(undefined)
-    
-    useEffect(() => {
-        const unsubscribe = onSnapshot(doc(firestore, "rooms", roomData.id), (roomSnap) => {
-            const data: RoomData = roomSnap.data() as RoomData
-            setTimeLimit(data.timeLimit)
-            setPrompt(data.prompt)
-            setParticipants(data.participants)
-            setSpeaker(data.participants[data.speakerIndex])
-
-            // set the start time ref variable. not used for rendering
-            speakerStartTime.current = data?.speakerStart.seconds
-            // this interval uses the values of timeLimit and speakerStart grabbed when the interval was started
-            // it does not update when the state variables update, only when the fields in Firebase update 
-            const timerId = setInterval(() => {
-                if (!speakerStartTime.current) {
-                    return
-                }
-                const timeElapsed = Timestamp.now().seconds - speakerStartTime.current
-                setTimeLeft(Math.max(0, data?.timeLimit - timeElapsed))
-
-                if (timeElapsed >= data?.timeLimit) {
-                    clearInterval(timerId)
-                }
-            })
-            timer.current = timerId
-        })
-
-        return () => {
-            unsubscribe()
-            if (timer.current) {
-                clearInterval(timer.current)
-            }
-        }
-    },[roomData.id])
     
     return (
         <div className="flex flex-col grow h-full gap-2">
@@ -99,7 +58,7 @@ export default function Room({roomData, onExitButtonClick} : RoomProps) {
                     </div>
                     {isPromptVisible ?
                         <p className="text-gray-200 font-semibold text-sm">
-                            {prompt}
+                            {roomData.prompt}
                         </p>
                     : <></>
                     }
@@ -107,10 +66,11 @@ export default function Room({roomData, onExitButtonClick} : RoomProps) {
             </div>
 
             <Circle
-            speaker={speaker}
-            participants={participants}
-            timeLimit={timeLimit}
-            timeLeft={timeLeft}
+            // speaker={speaker}
+            // participants={participants}
+            // timeLimit={timeLimit}
+            // timeLeft={timeLeft}
+            roomData={roomData}
             />
 
             <div className="flex flex-col gap-2 relative">
