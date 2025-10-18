@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app"
+import { getAuth } from "firebase/auth"
 import { getFirestore } from "firebase/firestore"
 import { Poppins, Merriweather } from "next/font/google"
 
@@ -25,5 +26,6 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
-export const FIRESTORE = getFirestore(app)
+export const FIREBASE_APP = initializeApp(firebaseConfig);
+export const FIRESTORE = getFirestore(FIREBASE_APP)
+// export const AUTH = getAuth(FIREBASE_APP)

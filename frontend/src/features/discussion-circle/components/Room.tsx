@@ -1,32 +1,15 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { collection, doc, getDoc, getFirestore, onSnapshot, query, Timestamp } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
 import { RoomData } from "../types/RoomData";
 import Image from "next/image";
 import Circle from "./Circle";
-import { useAuth } from "@/context/AuthContext";
-import { UserData } from "../types/UserData";
-
-const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app)
 
 interface RoomProps {
     roomData: RoomData,
     onExitButtonClick?: MouseEventHandler<HTMLButtonElement>,
+    onStartButtonClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Room({roomData, onExitButtonClick} : RoomProps) {
+export default function Room({roomData, onExitButtonClick, onStartButtonClick} : RoomProps) {
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
     
     return (
@@ -66,11 +49,8 @@ export default function Room({roomData, onExitButtonClick} : RoomProps) {
             </div>
 
             <Circle
-            // speaker={speaker}
-            // participants={participants}
-            // timeLimit={timeLimit}
-            // timeLeft={timeLeft}
             roomData={roomData}
+            onStartButtonClick={onStartButtonClick}
             />
 
             <div className="flex flex-col gap-2 relative">
@@ -79,11 +59,24 @@ export default function Room({roomData, onExitButtonClick} : RoomProps) {
                     top: "-1.5em"
                 }}
                 >
-                    <button>👍</button>
-                    <button>❤️</button>
-                    <button>👏</button>
-                    <button>😂</button>
-                    <button>😮</button>
+                    {roomData.isActive ?
+                        <>
+                            <button>👍</button>
+                            <button>❤️</button>
+                            <button>👏</button>
+                            <button>😂</button>
+                            <button>😮</button>
+                        </>
+                    :   <div className="grow rounded-lg p-2
+                        border border-white/10 bg-white/5 
+                        text-gray-200 placeholder-gray-500 text-base
+                        flex justify-between">
+                            <p>{roomData.url ?? "url goes here"}</p>
+                            <button className="cursor-pointer">
+                                🔗
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

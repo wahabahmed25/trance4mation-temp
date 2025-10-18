@@ -39,10 +39,10 @@ const SETTINGS: RoomSetting[] = [
 const DEFAULT_SETTINGS = {
     description: "",
     // id: string,
-    isActive: false,
+    // isActive: false,
     maxSize: 5,
     name: "",
-    participants: [],
+    // participants: [],
     // prompt: string,
     rounds: 3, 
     // speakerIndex: number,

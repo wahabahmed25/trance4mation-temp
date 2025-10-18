@@ -8,7 +8,7 @@ export type RoomData = {
     maxSize: number,
     name: string,
     participants: ParticipantData[],
-    prompt: string,
+    prompt?: string,
     rounds: number, 
     speakerIndex: number,
     speakerStart: Timestamp

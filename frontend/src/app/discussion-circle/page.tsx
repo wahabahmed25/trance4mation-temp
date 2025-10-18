@@ -8,7 +8,10 @@ import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, onSnapshot, 
 import Welcome from "@/features/discussion-circle/components/Welcome"
 import { useAuth } from "@/context/AuthContext"
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData"
-import { FIRESTORE } from "./defaults"
+import { FIREBASE_APP, FIRESTORE } from "./defaults"
+import { getAuth, onAuthStateChanged, User } from "firebase/auth"
+
+const backendUrl = "http://localhost:5000"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
@@ -16,6 +19,7 @@ export default function DiscussionCircle() {
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
+    const [auth, setAuth] = useState<User | undefined>(undefined)
     const user = useAuth()
     const unsubscribe = useRef<() => void>(undefined)
 
@@ -54,17 +58,55 @@ export default function DiscussionCircle() {
         if (!currentRoom?.id) {
             return
         }
+        setCurrentRoom(undefined)
         await updateDoc(doc(collection(FIRESTORE, "rooms"), currentRoom?.id), {
             participants: arrayRemove({
                 name: user.user?.name,
                 uid: user.user?.uid
             })
         })
-        setCurrentRoom(undefined)
+    }
+
+    async function startRound() {
+        if (!auth || !currentRoom) {
+            return
+        }
+        auth.getIdToken(true)
+        .then((token) => {
+            fetch(`${backendUrl}/start-round`, {
+                method: "POST",
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    roomId: currentRoom.id
+                })
+            })
+            .then((response) => {
+                response.json()
+                .then((data) => console.log(data))
+                .catch((error) => console.log(error))
+            })
+        })
     }
 
     useEffect(() => {
         fetchData()
+
+        const auth = getAuth(FIREBASE_APP)
+        onAuthStateChanged(auth, (authData) => {
+            if (authData) {
+                // User is signed in, see docs for a list of available properties
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                setAuth(authData);
+                // ...
+            } else {
+                // User is signed out
+                // ...
+                setAuth(undefined)
+            }
+        });
 
         function onResize() {
             if (window.innerWidth < 768) {
@@ -132,6 +174,7 @@ export default function DiscussionCircle() {
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}
+                    onStartButtonClick={startRound}
                     />
                 : isSmallScreen ?
                     <></>
@@ -156,6 +199,23 @@ async function getRooms() {
     return rooms
 }
 
+// async function createRoom(settings: ClientRoomData) {
+//     await addDoc(collection(FIRESTORE, "rooms"), settings)
+// }
+
 async function createRoom(settings: ClientRoomData) {
-    await addDoc(collection(FIRESTORE, "rooms"), settings)
+    fetch(`${backendUrl}/create-room`, {
+        method: "POST",
+        body: JSON.stringify(settings),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+        response.json()
+        .then((data) => console.log(data))
+    })
+    .catch((error) => {
+        console.log("create room failed")
+    })
 }
