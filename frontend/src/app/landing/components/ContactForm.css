@@ -7,6 +7,8 @@
    box-sizing: border-box;
    outline: none;
    border: none;
+
+   background-color: var(--white);
 }
 
 #email-address {
@@ -17,6 +19,8 @@
    box-sizing: border-box;
    outline: none;
    border: none;
+
+   background-color: var(--white);
 }
 .message-box {
    width: 100%;
@@ -27,4 +31,20 @@
    resize: vertical;
    box-sizing: border-box;
    background-color: var(--white);
+}
+
+.submit-button {
+   padding: 1%;
+   padding-top: 5%;
+   border-radius: 8px;
+   width: 150px;
+}
+
+.submit-button button {
+   width: 100px;
+   height: 45px;
+   margin: 0.5rem;
+   font-size: 1rem;
+   font-weight: bold;
+   padding: 2%;
 }

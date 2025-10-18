@@ -90,9 +90,11 @@ const linkContents = {
    here: "https://linktr.ee/jancalleortiz?utm_source=linktree_profile_share&ltsid=6c6fccc9-65b4-4c20-91ba-d8c79b9e2e60",
 };
 const extraLinkContents = {
+   5: {
+      LinkedIn: "https://www.linkedin.com/in/zhen-tao-pan",
+   },
    6: {
-      LinkedIn:
-         "https://www.linkedin.com/in/wahab-ahmed-12020a298?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
+      LinkedIn: "https://www.linkedin.com/in/wahab-ahmed-12020a298?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
    },
    7: {
       GitHub: "https://github.com/ragibasif",
@@ -104,8 +106,7 @@ const extraLinkContents = {
       GitHub: "https://github.com/Luominai",
    },
    10: {
-      LinkedIn:
-         "https://www.linkedin.com/in/khadeja-ahmar-098909282?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
+      LinkedIn: "https://www.linkedin.com/in/khadeja-ahmar-098909282?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
       GitHub: "https://github.com/khadeja02",
    },
    11: {
@@ -121,16 +122,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, intern }) => {
    return (
       <div className="modal-overlay" onClick={onClose}>
          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={onClose}>
-               X
-            </button>
             <img src={intern.image} alt={intern.name} className="modal-image" />
             <div className="modal-text">
+               <span className="close-button" onClick={onClose}>
+                  X
+               </span>
                <h2>{intern.name}</h2>
                <h3>{intern.role}</h3>
+               <div className="div-rectangle"></div>
                <p>{intern.extra1}</p>
                <div className="internDescription"> {embeddedLinks(intern.description, linkContents)}</div>
-               <div className="internDescription"> {extraLinks(intern.extra2, intern.id, extraLinkContents)}</div>
+               <div className="extraLinkStyle"> {extraLinks(intern.extra2, intern.id, extraLinkContents)}</div>
             </div>
          </div>
       </div>

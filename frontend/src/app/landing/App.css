@@ -8,10 +8,11 @@
 .nav {
    background-image: linear-gradient(to bottom, var(--nav-bg), rgba(255, 0, 0, 0));
    backdrop-filter: blur(150px);
-   padding: 2rem 0;
+   padding: 5rem 0;
    display: flex;
    gap: 4rem;
    justify-content: center;
+   height: 15%;
 
    /* stay fixed on top of screen*/
    position: fixed;
@@ -23,17 +24,24 @@
 }
 
 .nav a {
+   height: 35px;
    color: var(--text-primary);
    text-decoration: none;
    font-weight: 500;
-   font-size: 1.2rem;
-   padding: 0.8rem 1.5rem;
+   font-size: 1.4rem;
+   padding: 1.5rem 2rem;
    border-radius: 12px;
-   transition: all 0.4s ease;
+   transition: all 0.3s ease;
    letter-spacing: 1px;
    font-weight: 600;
+
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 85%;
 }
 
 .nav a:hover {
+   transform: scale(0.85);
    background: var(--coral-alpha-15);
 }

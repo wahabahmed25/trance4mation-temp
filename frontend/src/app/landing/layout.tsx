@@ -26,8 +26,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
          {/* Navigation */}
          <nav className="nav">
             <Link href="/landing/pages/home">Home</Link>
-            <Link href="/game">Game</Link>
+            {/*<Link href="/game">Game</Link>*/}
             <Link href="/landing/pages/about">About</Link>
+            <Link href="/landing/pages/faq">FAQ</Link>
          </nav>
          <main>{children}</main>
       </div>

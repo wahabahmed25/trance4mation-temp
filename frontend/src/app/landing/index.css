@@ -19,10 +19,10 @@
    --deep-teal: #006d77;
    --golden-glow: #ffd166;
    --sky-blue: #55ccf2;
-   --soft-violet: #9b5de5;
-   --warm-beige: #fcfaee;
+   --soft-violet: #ebdbff;
+   --warm-beige: #fff0f0;
    --dark-blue: #042159;
-   --white: #ffffff;
+   --white: #fff7f7;
    --black: #000000;
 
    /* Background Colors */
@@ -51,6 +51,31 @@
    --gradient-coral-reverse: linear-gradient(135deg, #ff7f7f 0%, var(--healing-coral) 100%);
    --gradient-section: linear-gradient(135deg, var(--coral-alpha-15) 0%, rgba(10, 79, 87, 0.1) 100%);
 
+   h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+   }
+
+   h2 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+   }
+
+   h3 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+   }
+   p {
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+   }
    color-scheme: light-dark;
    color: var(--text-primary);
 

@@ -8,6 +8,31 @@ p {
    font-size: 17px;
    text-align: center;
 }
+
+@keyframes appear {
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+.fade-in {
+   animation: appear linear;
+   animation-timeline: view();
+   animation-range: entry 0% cover 30%;
+}
+
+.fade-in-top {
+   opacity: 0;
+   animation: appear 1s ease-out forwards;
+   animation-delay: 0.2s;
+}
+.about-container {
+   padding-top: 5rem;
+}
 /* ==========================================
                 ABOUT SECTION
    ========================================== */
@@ -17,70 +42,112 @@ p {
    align-items: center;
    padding: 1%;
    border: 0px;
-   padding-top: 5rem;
+   gap: 1px;
 }
 
-/* ==========================================
-                CONTACT US SECTION
-   ========================================== */
-
-.contact-us-section {
-   background: radial-gradient(circle, rgba(110, 211, 255, 1) 0%, rgba(255, 127, 127, 1) 100%);
+.about-section h1 {
+   font-size: 2.4rem;
+   font-weight: 900;
+   margin-bottom: 0.5rem;
+   color: var(--healing-coral);
+   text-align: center;
+   text-shadow: 0 0 20px rgba(255, 127, 127, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1);
+   letter-spacing: 3px;
+   position: relative;
 }
 
-.contact-us {
-   display: flex;
-   flex-direction: column;
-   padding: 2%;
-   border: none;
-   max-width: 600px;
-   width: 100%;
-}
-.contact-us-container {
-   display: flex;
-   flex-direction: row;
-   align-items: center;
-   gap: 5%;
-   padding: 2%;
-   border: none;
-   align-content: center;
-   justify-self: center;
+.about-section h1::after {
+   position: absolute;
+   bottom: -10px;
+   left: 50%;
 }
 
-.socmed-icons {
-   display: flex;
-   flex-direction: row;
-   gap: 20px;
-   padding: 2%;
-   border: none;
-   align-content: center;
-   justify-self: center;
+.about-rectangle {
+   width: 200px;
+   height: 5px;
+   background: linear-gradient(90deg, transparent, var(--soft-violet), transparent);
+   margin: 10px auto;
+   border-radius: 5px;
 }
 
+.about-section p {
+   text-align: justify;
+}
+
+.about-p {
+   margin: 2%;
+}
 /* ==========================================
                 FOUNDER SECTION
    ========================================== */
+
+.div-rectangle {
+   width: 200px;
+   height: 5px;
+   background: linear-gradient(90deg, transparent, var(--healing-coral), transparent);
+   margin: 10px auto;
+   border-radius: 5px;
+}
+
 .founder-container {
    display: flex;
    align-items: center;
    gap: 20px;
-
    padding: 2%;
+   background-color: var(--soft-violet);
+   border-radius: 30px;
+   gap: 2%;
+}
+
+.founder-container img {
+   width: 400px;
+   height: auto;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   border-radius: 15px;
+}
+
+.founder-container h2 {
+   padding-top: 2%;
+   text-align: center;
+   font-weight: bold;
+}
+.founder-container h3 {
+   text-align: center;
+   font-weight: bold;
+   padding: 0%;
+}
+
+.founder-text {
+   background: var(--warm-beige);
+   border: 1px solid #e0e0e0;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+   border-radius: 15px;
+}
+.founder-text p {
+   padding: 0% 4%;
+   text-align: justify;
+}
+.text-scroll {
+   max-height: 475px;
+   overflow-y: auto;
+   overflow-x: hidden;
+   border-radius: 10px;
+   padding: 0.5rem;
+   line-height: 1;
+   scrollbar-width: thick;
+   scrollbar-color: rgb(255, 134, 97) var(--warm-beige);
 }
 
 /* ==========================================
                 INTERNS SECTION
    ========================================== */
-.interns {
-   background: radial-gradient(circle at 20% 80%, var(--sky-blue-30) 0%, transparent 50%);
-}
 
 .interns-container {
    display: grid;
    grid-template-columns: repeat(5, 1fr);
    grid-template-rows: auto;
    grid-auto-flow: row;
-   gap: 20px;
+   gap: 10px;
    margin-bottom: 0.5%;
 }
 
@@ -91,10 +158,10 @@ p {
 .interns-container img {
    max-width: 100%;
    display: block;
-   padding: 4%;
-   padding-left: 5%;
+   padding: 1%;
    text-align: center;
 }
+
 .interns-container h1 {
    font-size: 24px;
    font-weight: bold;

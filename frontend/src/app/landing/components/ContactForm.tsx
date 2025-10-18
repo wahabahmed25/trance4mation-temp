@@ -43,15 +43,7 @@ const ContactUs: React.FC = () => {
 
             <br></br>
 
-            <textarea
-               className="message-box"
-               id="messageBox"
-               name="message"
-               value={formData.message}
-               onChange={handleInput}
-               placeholder="Your message here"></textarea>
-
-            <br></br>
+            <textarea className="message-box" id="messageBox" name="message" value={formData.message} onChange={handleInput} placeholder="Your message here"></textarea>
 
             <div className="submit-button">
                <button>Submit</button>

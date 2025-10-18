@@ -66,9 +66,13 @@ function Home() {
    return (
       <div className="home-page">
          <section className="hero-section">
-            <div className="hero-left">
-               <img src="/landing-page-img/logo.png" alt="Play to Heal Logo" />
-            </div>
+            {/*
+               <div className="hero-left">
+               <h3>
+                  This is your place to connect, laugh, share, and discover just how powerful it feels to be part of a community that’s got your back. Whether you’re looking for support,
+                  inspiration, or just a safe space to be yourself—you’ve found it. Let’s play, connect, and heal together!
+               </h3>
+            </div> **/}
             <div className="hero-right">
                <h1>PLAY TO HEAL</h1>
                <div className="tag-lines">
@@ -76,6 +80,10 @@ function Home() {
                   <h3>Build Connection</h3>
                   <h3>Heal Together</h3>
                </div>
+               <h3>
+                  This is your place to connect, laugh, share, and discover just how powerful it feels to be part of a community that’s got your back. Whether you’re looking for support,
+                  inspiration, or just a safe space to be yourself—you’ve found it. Let’s play, connect, and heal together!
+               </h3>
                <button className="cta-button" onClick={() => router.push("/game")}>
                   Start Your Journey
                </button>
@@ -89,16 +97,8 @@ function Home() {
                   &#8249;
                </button>
                <div className="game-cards-container" ref={carouselRef}>
-                  <GameCard
-                     title="Speak to Me"
-                     image={"/landing-page-img/sample_img.jpg"}
-                     description="In a world that often asks us to hide, Speak to Me dares us to be seen."
-                  />
-                  <GameCard
-                     title="Keep It Real"
-                     image={"/landing-page-img/sample_img.jpg"}
-                     description="Keep It Real harbors a magic that changes people."
-                  />
+                  <GameCard title="Speak to Me" image={"/landing-page-img/sample_img.jpg"} description="In a world that often asks us to hide, Speak to Me dares us to be seen." />
+                  <GameCard title="Keep It Real" image={"/landing-page-img/sample_img.jpg"} description="Keep It Real harbors a magic that changes people." />
                   <GameCard
                      title="Keep It Real 100"
                      image={"/landing-page-img/KIR100 Logo.png"}
