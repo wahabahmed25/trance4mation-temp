@@ -1,0 +1,50 @@
+#full-name {
+   width: 100%;
+   max-width: 600px;
+   padding: 12px;
+   font-size: 16px;
+
+   box-sizing: border-box;
+   outline: none;
+   border: none;
+
+   background-color: var(--white);
+}
+
+#email-address {
+   width: 100%;
+   max-width: 600px;
+   padding: 12px;
+   font-size: 16px;
+   box-sizing: border-box;
+   outline: none;
+   border: none;
+
+   background-color: var(--white);
+}
+.message-box {
+   width: 100%;
+   max-width: 600px;
+   max-height: 300px;
+   padding: 12px;
+   font-size: 16px;
+   resize: vertical;
+   box-sizing: border-box;
+   background-color: var(--white);
+}
+
+.submit-button {
+   padding: 1%;
+   padding-top: 5%;
+   border-radius: 8px;
+   width: 150px;
+}
+
+.submit-button button {
+   width: 100px;
+   height: 45px;
+   margin: 0.5rem;
+   font-size: 1rem;
+   font-weight: bold;
+   padding: 2%;
+}

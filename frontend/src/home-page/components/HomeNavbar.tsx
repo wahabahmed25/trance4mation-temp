@@ -64,10 +64,13 @@ const Navbar = () => {
         {/* Desktop Links: centered feel with generous gaps */}
         <div className="hidden md:flex items-center gap-16">
           {[
-            { label: "About", href: "/about" },
-            { label: "Games", href: "/games" },
+            { label: "Games", href: "/about" },
+            { label: "Home", href: "/games" },
             { label: "Landing", href: "/landing" },
-            { label: "Logout", href: "/logout" },
+            { label: "Profile", href: "/logout" },
+            { label: "About", href: "/logout" },
+            { label: "FAQ", href: "/logout" },
+
           ].map((l) => (
             <Link
               key={l.href}
@@ -75,7 +78,7 @@ const Navbar = () => {
               className="
                 text-white
                 text-lg font-semibold tracking-wide
-                px-4 py-2 rounded-xl
+                px-1 py-2 rounded-xl
                 transition-all duration-300
                 hover:bg-[rgba(255,111,97,0.15)]
               "
@@ -122,7 +125,7 @@ const Navbar = () => {
           >
             <div className="flex flex-col items-center gap-6 py-8 text-xl">
               {[
-                { label: "About", href: "/about" },
+                { label: "About", href: "/landing/pages/about" },
                 { label: "Games", href: "/games" },
                 { label: "Profile", href: "/profile" },
                 { label: "Logout", href: "/logout" },
