@@ -28,27 +28,27 @@ const PostCard: React.FC<PostCardProps> = ({
 
   const getPostTypeGradient = (type: string) => {
     switch (type) {
-      case 'win': return 'from-[#FFD166] to-[#FF8661]';
-      case 'encouragement': return 'from-[#9B5DE5] to-[#55CCF2]';
-      case 'checkin': return 'from-[#55CCF2] to-[#006D77]';
+      case 'win': return 'from-[#F4A89F] to-[#E88B7F]';
+      case 'encouragement': return 'from-[#B8A6D9] to-[#9B8BBE]';
+      case 'checkin': return 'from-[#5AB4C5] to-[#4A90A4]';
       default: return 'from-gray-400 to-gray-500';
     }
   };
 
   const getPostTypeBorder = (type: string) => {
     switch (type) {
-      case 'win': return 'border-[#FFD166]/30';
-      case 'encouragement': return 'border-[#9B5DE5]/30';
-      case 'checkin': return 'border-[#55CCF2]/30';
+      case 'win': return 'border-[#F4A89F]/30';
+      case 'encouragement': return 'border-[#B8A6D9]/30';
+      case 'checkin': return 'border-[#5AB4C5]/30';
       default: return 'border-gray-200';
     }
   };
 
   const getPostTypeLabel = (type: string) => {
     switch (type) {
-      case 'win': return { emoji: '🎉', label: 'Win', color: 'bg-[#FFD166]/20 text-[#FF8661]' };
-      case 'encouragement': return { emoji: '💪', label: 'Support', color: 'bg-[#9B5DE5]/20 text-[#9B5DE5]' };
-      case 'checkin': return { emoji: '✅', label: 'Check-in', color: 'bg-[#55CCF2]/20 text-[#006D77]' };
+      case 'win': return { emoji: '🎉', label: 'Win', color: 'bg-[#F4A89F]/20 text-[#E88B7F]' };
+      case 'encouragement': return { emoji: '💪', label: 'Support', color: 'bg-[#B8A6D9]/20 text-[#7B6BA0]' };
+      case 'checkin': return { emoji: '✅', label: 'Check-in', color: 'bg-[#5AB4C5]/20 text-[#4A90A4]' };
       default: return { emoji: '💬', label: 'General', color: 'bg-gray-100 text-gray-700' };
     }
   };
@@ -122,12 +122,12 @@ const PostCard: React.FC<PostCardProps> = ({
 
         {/* Prompt Display - Shows what question the user is answering */}
         {post.prompt && (
-          <div className="mb-4 pb-4 border-b-2 border-[#FFD166]/30">
+          <div className="mb-4 pb-4 border-b-2 border-[#F4A89F]/30">
             <div className="flex items-start space-x-2">
-              <span className="text-[#FFD166] text-lg">💭</span>
+              <span className="text-[#F4A89F] text-lg">💭</span>
               <div>
                 <p className="text-xs text-gray-500 uppercase font-semibold tracking-wide mb-1">Answering Prompt</p>
-                <p className="text-sm font-semibold text-[#006D77]">
+                <p className="text-sm font-semibold text-[#4A90A4]">
                   {post.prompt}
                 </p>
               </div>
@@ -141,7 +141,7 @@ const PostCard: React.FC<PostCardProps> = ({
             <textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              className="w-full p-4 border-2 border-[#55CCF2] rounded-xl resize-none focus:outline-none bg-white text-gray-800"
+              className="w-full p-4 border-2 border-[#5AB4C5] rounded-xl resize-none focus:outline-none bg-white text-gray-800"
               rows={4}
               maxLength={280}
             />
@@ -156,7 +156,7 @@ const PostCard: React.FC<PostCardProps> = ({
                 </button>
                 <button
                   onClick={handleSaveEdit}
-                  className="px-4 py-2 bg-gradient-to-r from-[#006D77] to-[#55CCF2] text-white rounded-lg hover:opacity-90 transition-opacity"
+                  className="px-4 py-2 bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] text-white rounded-lg hover:opacity-90 transition-opacity"
                 >
                   Save
                 </button>
@@ -169,7 +169,7 @@ const PostCard: React.FC<PostCardProps> = ({
 
         {/* Delete Confirmation */}
         {showDeleteConfirm && (
-          <div className="mb-6 p-4 bg-[#FF8661]/10 border border-[#FF8661]/30 rounded-xl">
+          <div className="mb-6 p-4 bg-[#F4A89F]/10 border border-[#F4A89F]/30 rounded-xl">
             <p className="text-gray-800 font-medium mb-3">Are you sure you want to delete this post?</p>
             <div className="flex space-x-2">
               <button
@@ -180,7 +180,7 @@ const PostCard: React.FC<PostCardProps> = ({
               </button>
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 bg-[#FF8661] text-white rounded-lg hover:bg-[#FF8661]/90 transition-colors"
+                className="px-4 py-2 bg-[#E88B7F] text-white rounded-lg hover:bg-[#E88B7F]/90 transition-colors"
               >
                 Delete
               </button>
