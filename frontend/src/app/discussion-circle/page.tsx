@@ -1,41 +1,27 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser"
 import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu"
 import Room from "@/features/discussion-circle/components/Room"
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
-import { initializeApp } from "firebase/app"
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, increment, query, updateDoc, where } from "firebase/firestore"
-import { onAuthStateChanged, User } from "firebase/auth"
-import { getAuth } from "firebase/auth";
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, onSnapshot, query, updateDoc } from "firebase/firestore"
 import Welcome from "@/features/discussion-circle/components/Welcome"
-import { useAuth } from "@/context/AuthContext";
+import { useAuth } from "@/context/AuthContext"
+import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData"
+import { FIREBASE_APP, FIRESTORE } from "./defaults"
+import { getAuth, onAuthStateChanged, User } from "firebase/auth"
 
-const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app)
-const auth = getAuth()
+const backendUrl = "http://localhost:5000"
 
 export default function DiscussionCircle() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([])
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
-    // const [user, setUser] = useState<User | undefined>(undefined)
-    const [participantId, setParticipantId] = useState<string | undefined>(undefined)
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isRoomBrowserOpen, setRoomBrowserOpen] = useState<boolean>(true);
     const [isSmallScreen, setSmallScreen] = useState<boolean>(false)
-    const [user, setUser] = useState<User | undefined>(undefined)
-    const loginUser = useAuth()
-    const [mounted, setMounted] = useState(false)
+    const [auth, setAuth] = useState<User | undefined>(undefined)
+    const user = useAuth()
+    const unsubscribe = useRef<() => void>(undefined)
 
     function fetchData() {
         getRooms()
@@ -48,99 +34,77 @@ export default function DiscussionCircle() {
     }
 
     async function joinRoom(roomData: RoomData) {
-        // TODO: set security rules to 
-        // - prevent joining if the room is full. 
-        // - only allow updating the size if the user is in the room.
-        await Promise.all([
-            // add a new participant
-            // TODO: set security rules to
-            // - (DONE) prevent reads if the room is anonymous
-            addDoc(collection(firestore, "rooms", roomData.id, "participants"), {
-                name: user?.isAnonymous ? "Anonymous" : "jerry",
-                uid: user?.uid
-            }),
-            // update room size
-            updateDoc(doc(collection(firestore, "rooms"), roomData.id), {
-                size: increment(1)
+        unsubscribe.current = onSnapshot(doc(FIRESTORE, "rooms", roomData.id), (snap) => {
+            const newRoomData = {
+                ...snap.data(),
+                "id": roomData.id
+            } as RoomData
+            setCurrentRoom(newRoomData)
+            console.log(newRoomData)
+        })
+        await updateDoc(doc(collection(FIRESTORE, "rooms"), roomData.id), {
+            participants: arrayUnion({
+                name: user.user?.name,
+                uid: user.user?.uid
             })
-        ])
-        .then(([participantRef, roomRef]) => {
-            // get the id of the newly created doc. use this id for validation since it's not tied to any user data
-            // TODO: modify the participants subcollection to
-            // - (DONE) track which participantId belongs to each uid 
-            // Also, set security rules to:
-            // - allow writes to the messages subcollection only if this participantId and uid match the ones in the participants subcollection
-            setParticipantId(participantRef.id)
-            console.log(participantRef.id)
         })
     }
 
     async function leaveCurrentRoom() {
-        if (!currentRoom) {
+        if (unsubscribe.current != undefined) {
+            unsubscribe.current()
+            unsubscribe.current = undefined
+        }
+        if (!currentRoom?.id) {
             return
         }
-
-        // TODO: set security rules to check 
-        // - if the uid of the user that's leaving matches the uid of the authenticated user. 
-        // - if the room size increment is coming from a user in the room
-        await Promise.all([
-            // remove from participants
-            // TODO: set security rules to
-            // - allow writes to the participants subcollection only if this participantId and uid match the ones in the participants subcollection
-            deleteDoc(doc(collection(firestore, "rooms", currentRoom.id, "participants"), participantId)),
-            // update room size
-            updateDoc(doc(collection(firestore, "rooms"), currentRoom.id), {
-                size: increment(-1)
+        setCurrentRoom(undefined)
+        await updateDoc(doc(collection(FIRESTORE, "rooms"), currentRoom?.id), {
+            participants: arrayRemove({
+                name: user.user?.name,
+                uid: user.user?.uid
             })
-        ])
-        .then(() => {
-            setCurrentRoom(undefined)
-            setParticipantId(undefined)
         })
     }
 
-    async function sendMessage(message: string) {
-        if (!currentRoom) {
+    async function startRound() {
+        if (!auth || !currentRoom) {
             return
         }
-
-        await addDoc(collection(firestore, "rooms", currentRoom.id, "messages"), {
-            text: message,
-            sender: participantId
-        })
-    }
-
-    async function _joinRoom(roomData: RoomData) {
-        if (!user) {
-            console.log("not signed in")
-            return
-        }
-
-        const backendUrl =""
-        auth.currentUser?.getIdToken(true).then((idToken) => {
-            fetch(backendUrl, {
+        auth.getIdToken(true)
+        .then((token) => {
+            fetch(`${backendUrl}/start-round`, {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${idToken}`
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 },
-                body: roomData.id
+                body: JSON.stringify({
+                    roomId: currentRoom.id
+                })
+            })
+            .then((response) => {
+                response.json()
+                .then((data) => console.log(data))
+                .catch((error) => console.log(error))
             })
         })
     }
 
     useEffect(() => {
-        setMounted(true)
+        fetchData()
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
+        const auth = getAuth(FIREBASE_APP)
+        onAuthStateChanged(auth, (authData) => {
+            if (authData) {
                 // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/auth.user
-                console.log(user)
-                setUser(user)
-                fetchData()
+                // https://firebase.google.com/docs/reference/js/firebase.User
+                setAuth(authData);
+                // ...
             } else {
                 // User is signed out
-                setUser(undefined)
+                // ...
+                setAuth(undefined)
             }
         });
 
@@ -165,8 +129,8 @@ export default function DiscussionCircle() {
     return (
         <>
         {isCreationMenuOpen ?
-            <div className="p-40 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
-                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8">
+            <div className="py-40 px-8 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
+                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8 grow max-w-120">
                     <RoomCreationMenu
                     onCloseButtonClick={() => {
                         setCreationMenuOpen(false)
@@ -180,15 +144,12 @@ export default function DiscussionCircle() {
             </div>
          : null}
         <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
-            <div className="h-full flex"
+            <div className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
             style={{
-                width: `${isSmallScreen ? "100%" : "25%"}`,
-                position: `${isSmallScreen ? "absolute" : "relative"}`,
-                padding: `${.25 * 8}rem`,
                 visibility: `${
                     isRoomBrowserOpen ? 
                         isSmallScreen ?
-                            !(isCreationMenuOpen || currentRoom) ?
+                            !(currentRoom) ?
                                 "visible"
                             : "hidden"
                     : "visible" 
@@ -209,23 +170,11 @@ export default function DiscussionCircle() {
             </div>
 
             <div className="grow h-full p-8">
-                {
-                // isCreationMenuOpen ? 
-                //     <RoomCreationMenu
-                //     onCloseButtonClick={() => {
-                //         setCreationMenuOpen(false)
-                //     }}
-                //     onConfirmButtonClick={(roomData) => {
-                //         createRoom(roomData)
-                //         fetchData()
-                //     }}
-                //     />
-                // :
-                 currentRoom ? 
+                {currentRoom ? 
                     <Room 
                     roomData={currentRoom}
                     onExitButtonClick={leaveCurrentRoom}
-                    onSendMessageButtonClick={sendMessage}
+                    onStartButtonClick={startRound}
                     />
                 : isSmallScreen ?
                     <></>
@@ -239,25 +188,34 @@ export default function DiscussionCircle() {
 }
 
 async function getRooms() {
-    const q = query(collection(firestore, "rooms"), where("isActive", "==", false))
+    const q = query(collection(FIRESTORE, "rooms"))
     const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
-        const data = document.data()
         return {
-            id: document.id,
-            description: data.description,
-            isAnonymous: data.isAnonymous,
-            maxSize: data.maxSize,
-            name: data.name,
-            palette: data.palette,
-            rounds: data.rounds,
-            size: data.size,
-            timeLimit: data.timeLimit,
-        }
+            ...document.data(),
+            "id": document.id
+        } as RoomData
     })
     return rooms
 }
 
-async function createRoom(settings: Omit<RoomData, "id">) {
-    await addDoc(collection(firestore, "rooms"), settings)
+// async function createRoom(settings: ClientRoomData) {
+//     await addDoc(collection(FIRESTORE, "rooms"), settings)
+// }
+
+async function createRoom(settings: ClientRoomData) {
+    fetch(`${backendUrl}/create-room`, {
+        method: "POST",
+        body: JSON.stringify(settings),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((response) => {
+        response.json()
+        .then((data) => console.log(data))
+    })
+    .catch((error) => {
+        console.log("create room failed")
+    })
 }

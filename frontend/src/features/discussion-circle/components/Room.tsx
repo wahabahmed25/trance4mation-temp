@@ -1,62 +1,16 @@
-import { MouseEventHandler, useEffect, useState } from "react";
-import { collection, getFirestore, onSnapshot } from "firebase/firestore";
-import { initializeApp } from "firebase/app";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { RoomData } from "../types/RoomData";
-import { MessageData } from "../types/MessageData";
 import Image from "next/image";
-import { Textarea } from "@headlessui/react";
 import Circle from "./Circle";
-
-const firebaseConfig = {
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-};
-
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app)
 
 interface RoomProps {
     roomData: RoomData,
-    onMenuButtonClick?: MouseEventHandler<HTMLButtonElement>,
     onExitButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onSendMessageButtonClick?: (message: string) => void
+    onStartButtonClick?: MouseEventHandler<HTMLButtonElement>
 }
 
-export default function Room({roomData, onExitButtonClick, onSendMessageButtonClick} : RoomProps) {
-    const [messages, setMessages] = useState<MessageData[]>([])
+export default function Room({roomData, onExitButtonClick, onStartButtonClick} : RoomProps) {
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
-    
-    useEffect(() => {
-        const unsubscribe = onSnapshot(collection(firestore, "rooms", roomData.id, "messages"), (snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === "added") {
-                    // Message added
-                    setMessages((prev) => {
-                        const added = {
-                            text: change.doc.data().text,
-                            id: change.doc.id,
-                            sender: change.doc.data().sender
-                        }
-                        return prev.concat([added])
-                    })
-                }
-                if (change.type === "modified") {
-                    // Message modified
-                }
-                if (change.type === "removed") {
-                    // Message removed
-                }
-            })
-        })
-
-        return unsubscribe
-    },[roomData.id])
     
     return (
         <div className="flex flex-col grow h-full gap-2">
@@ -87,16 +41,17 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                     </div>
                     {isPromptVisible ?
                         <p className="text-gray-200 font-semibold text-sm">
-                            I wonder how, I wonder why. Yesterday you told me about the blue, blue sky, 
-                            but all that I can see, is just a yellow lemon tree. I&apos;m turning my head. Up and down.
-                            Turning, turning, turning, turning around
+                            {roomData.prompt}
                         </p>
                     : <></>
                     }
                 </div>
             </div>
 
-            <Circle/>
+            <Circle
+            roomData={roomData}
+            onStartButtonClick={onStartButtonClick}
+            />
 
             <div className="flex flex-col gap-2 relative">
                 <div className="flex text-3xl justify-center absolute w-full"
@@ -104,11 +59,24 @@ export default function Room({roomData, onExitButtonClick, onSendMessageButtonCl
                     top: "-1.5em"
                 }}
                 >
-                    <button>👍</button>
-                    <button>❤️</button>
-                    <button>👏</button>
-                    <button>😂</button>
-                    <button>😮</button>
+                    {roomData.isActive ?
+                        <>
+                            <button>👍</button>
+                            <button>❤️</button>
+                            <button>👏</button>
+                            <button>😂</button>
+                            <button>😮</button>
+                        </>
+                    :   <div className="grow rounded-lg p-2
+                        border border-white/10 bg-white/5 
+                        text-gray-200 placeholder-gray-500 text-base
+                        flex justify-between">
+                            <p>{roomData.url ?? "url goes here"}</p>
+                            <button className="cursor-pointer">
+                                🔗
+                            </button>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

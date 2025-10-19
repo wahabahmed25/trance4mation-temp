@@ -1,76 +1,69 @@
-import { useState } from "react";
-import { UserData } from "../types/UserData";
-import Image from "next/image";
-import { useAuth } from "@/context/AuthContext";
+import { Timestamp } from "firebase/firestore";
+import { ParticipantData } from "../types/ParticipantData";
+import { RoomData } from "../types/RoomData";
+import Participant from "./Participant";
+import Speaker from "./Speaker";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 
-const placeholder: UserData[] = [
-    {name: "Jerry", icon: "/globe.svg", id: "kjad"},
-    {name: "Jane", icon: "/mask-solid-full.svg", id: "hjav"},
-    {name: "John", icon: "/next.svg", id: "awss"},
-    {name: "Jack", icon: "/window.svg", id: "asd"},
-    {name: "Jill", icon: "/vercel.svg", id: "yhhvf"},
-    {name: "Jelly", icon: "/user-regular-full.svg", id: "iiaeb"}
-]
+const radius = 120
 
-export default function Circle({users = placeholder}: {users?: UserData[]}) {
-    const [speaker, setSpeaker] = useState<UserData>(users[0])
-    const [radius, setRadius] = useState<number>(120)
-    const user = useAuth()
-    
+interface CircleProps {
+    roomData: RoomData,
+    onStartButtonClick?: MouseEventHandler<HTMLButtonElement>
+}
+
+export default function Circle({roomData, onStartButtonClick}: CircleProps) {
+    const [timeLeft, setTimeLeft] = useState<number>(0)
+    const speaker = roomData.isActive ? roomData.participants[roomData.speakerIndex] : undefined
+
+    useEffect(() => {
+        if (!roomData.isActive) {
+            return  
+        }
+
+        const timerId = setInterval(() => {
+            const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds
+            setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed))
+
+            if (timeElapsed >= roomData?.timeLimit) {
+                clearInterval(timerId)
+            }
+        })
+
+        return () => {
+            clearInterval(timerId)
+        }
+    }, [roomData.speakerStart, roomData.timeLimit, roomData.isActive])
+
     return (
         <div className="grow flex justify-center items-center">
-            {placeholder.map((user, index) => {
-                const baseAngle = 2 * Math.PI / users.length
-                const angle = baseAngle * index
+            {roomData.participants.map((participant, index) => {
+                const baseAngle = 2 * Math.PI / roomData.participants.length
+                const angle = baseAngle * index - Math.PI / 2
                 const xTranslate = radius * Math.cos(angle)
                 const yTranslate = radius * Math.sin(angle)
-                const isSpeaker = user.id === speaker.id
+                const isSpeaker = participant.uid === speaker?.uid
 
                 return(
-                    <div key={user.name} className="absolute" style={{
+                    <div key={participant.uid} className="absolute" style={{
                         transform: `translate(${xTranslate}px, ${yTranslate}px)`
                     }}>
-                        <div className="border-3 rounded-full" style={{borderColor: isSpeaker ? "#FFD166" : "#066D77"}}>
-                            <div className="size-16 p-2 rounded-full bg-slate-700">
-                                <div className="size-12 relative">
-                                    <Image
-                                    src={user.icon}
-                                    alt={user.icon}
-                                    fill={true}
-                                    priority
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                        <Participant userData={participant} isSpeaker={isSpeaker}/>
                     </div>
                 )}
             )}
 
-            <div className="absolute">
-                <div className="border-3 rounded-full border-[#FFD166]">
-                    <div className="size-20 p-2 rounded-full bg-slate-700">
-                        <div className="size-16 relative">
-                            {speaker ? 
-                                <Image
-                                src={speaker.icon}
-                                alt={speaker.icon}
-                                fill={true}
-                                priority
-                                />
-                            : 
-                                <Image
-                                src={user.user?.profilePic ?? ""}
-                                alt={user.user?.name ?? ""}
-                                fill={true}
-                                priority
-                                />
-                            }
-
-                        </div>
-                    </div>
+            {roomData.isActive ?
+                <div className="absolute">
+                    <Speaker userData={speaker} timeLeft={timeLeft} timeLimit={roomData.timeLimit}/>
                 </div>
-            </div>
+            :   <button 
+                className="flex absolute text-6xl items-center justify-center cursor-pointer"
+                onClick={onStartButtonClick}
+                >
+                   ▶️
+                </button>
+            }
         </div>
     )
-    
 }
