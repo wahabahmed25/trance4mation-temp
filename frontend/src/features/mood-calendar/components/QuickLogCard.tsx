@@ -1,13 +1,11 @@
 "use client";
-
 import type { MoodType } from "../types";
-import { moodColors } from "../types";
 
 const MOODS: { key: MoodType; label: string; emoji: string }[] = [
   { key: "happy", label: "Happy", emoji: "😊" },
-  { key: "neutral", label: "Okay", emoji: "😐" },
-  { key: "sad", label: "Down", emoji: "😔" },
-  { key: "angry", label: "Frustrated", emoji: "😠" },
+  { key: "neutral", label: "Neutral", emoji: "😐" },
+  { key: "sad", label: "Sad", emoji: "😔" },
+  { key: "angry", label: "Angry", emoji: "😠" },
 ];
 
 export function QuickLogCard({
@@ -16,22 +14,25 @@ export function QuickLogCard({
   onSelect: (mood: MoodType) => void;
 }) {
   return (
-    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur-md transition hover:shadow-[0_0_15px_rgba(255,255,255,0.08)]">
-      <h3 className="text-lg font-semibold text-white mb-4">Quick Log – Today</h3>
-      <p className="text-sm text-white/70 mb-5">How do you feel right now?</p>
+    <div className="rounded-3xl p-5 shadow-md border border-[#FCA17D]/40 bg-gradient-to-br from-[#FDE7D8]/90 to-[#FFF7E8]/90 backdrop-blur-md">
+      <h3 className="text-lg font-semibold text-[#F6765E] mb-3">
+        Quick Log – Today
+      </h3>
 
       <div className="grid grid-cols-2 gap-3">
         {MOODS.map((m) => (
           <button
             key={m.key}
             onClick={() => onSelect(m.key)}
-            className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/10 px-4 py-3 hover:bg-white/20 active:scale-[0.97] transition"
+            className="flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium text-white shadow-md transition-all hover:scale-[1.03]"
             style={{
-              boxShadow: `0 0 10px ${moodColors[m.key]}33`,
+              background:
+                "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)",
+              boxShadow:
+                "0 4px 12px rgba(246,118,94,0.3), inset 0 1px 4px rgba(255,255,255,0.3)",
             }}
           >
-            <span className="text-sm text-white">{m.label}</span>
-            <span className="text-xl">{m.emoji}</span>
+            <span>{m.emoji}</span> {m.label}
           </button>
         ))}
       </div>

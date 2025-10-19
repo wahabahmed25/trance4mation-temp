@@ -1,14 +1,14 @@
 "use client";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { MessageCircle, Calendar, Users } from "lucide-react";
 
 const moods = [
-  { emoji: "😊", label: "Happy", color: "#FFD166" }, // warm gold
-  { emoji: "😐", label: "Neutral", color: "#A78BFA" }, // soft violet
-  { emoji: "😔", label: "Sad", color: "#FF8661" }, // coral
-  { emoji: "😰", label: "Worried", color: "#FF6F61" }, // deep coral
-  { emoji: "😡", label: "Angry", color: "#F87171" }, // red accent
+  { emoji: "😊", label: "Happy", color: "#FFD166" }, // golden glow
+  { emoji: "😐", label: "Neutral", color: "#7EC8E3" }, // sky blue
+  { emoji: "😔", label: "Sad", color: "#A78BFA" }, // violet
+  { emoji: "😠", label: "Angry", color: "#F6765E" }, // coral red
 ];
 
 const MoodWidget = () => {
@@ -19,11 +19,11 @@ const MoodWidget = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative w-full max-w-md rounded-3xl
                  bg-white/60 backdrop-blur-xl
-                 border border-[rgba(0,0,0,0.08)]
-                 shadow-[0_8px_25px_rgba(0,0,0,0.08)]
-                 p-8 text-left flex flex-col justify-between"
+                 border border-[rgba(252,161,125,0.25)]
+                 shadow-[0_8px_25px_rgba(252,161,125,0.15)]
+                 p-8 text-left flex flex-col justify-between overflow-hidden"
     >
-      {/* Subtle soft gradient for warmth */}
+      {}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
@@ -32,11 +32,11 @@ const MoodWidget = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <h3 className="text-2xl font-semibold text-[#2C2C2C] mb-2">
+        <h3 className="text-2xl font-semibold text-[#3C2F2F] mb-2">
           Log your mood today
         </h3>
-        <p className="text-[#444]/70 text-sm mb-6">
-          Reflect and track your emotions through playful moods.
+        <p className="text-[#5A4A47]/70 text-sm mb-6">
+          Reflect and track your emotions through simple daily moods.
         </p>
 
         {/* Emoji mood selector */}
@@ -63,43 +63,34 @@ const MoodWidget = () => {
 
         {/* Quick action buttons */}
         <div className="flex flex-wrap gap-3 mb-6">
-          {/* Circle */}
           <Link
             href="/discussion-circle"
-            className="flex items-center gap-1
-                       
-                       text-black rounded-xl px-3 py-1.5 text-sm 
-                       hover:shadow-[0_0_18px_rgba(255,111,97,0.6)]
+            className="flex items-center gap-1 text-[#3C2F2F] rounded-xl px-3 py-1.5 text-sm 
+                       hover:shadow-[0_0_18px_rgba(246,118,94,0.4)]
                        hover:scale-[1.03] active:scale-[0.98]
-                       transition-all duration-200"
+                       transition-all duration-200 bg-white/70 border border-[#FCA17D]/30 backdrop-blur-sm"
           >
             <MessageCircle size={16} />
             Circle
           </Link>
 
-          {/* Mood */}
           <Link
             href="/mood-calendar"
-            className="flex items-center gap-1
-                       
-                       text-black rounded-xl px-3 py-1.5 text-sm 
-                       hover:shadow-[0_0_18px_rgba(255,111,97,0.6)]
+            className="flex items-center gap-1 text-[#3C2F2F] rounded-xl px-3 py-1.5 text-sm 
+                       hover:shadow-[0_0_18px_rgba(246,118,94,0.4)]
                        hover:scale-[1.03] active:scale-[0.98]
-                       transition-all duration-200"
+                       transition-all duration-200 bg-white/70 border border-[#FCA17D]/30 backdrop-blur-sm"
           >
             <Calendar size={16} />
             Mood
           </Link>
 
-          {/* Social */}
           <Link
             href="/social"
-            className="flex items-center gap-1
-                       
-                       text-black rounded-xl px-3 py-1.5 text-sm 
-                       hover:shadow-[0_0_18px_rgba(255,111,97,0.6)]
+            className="flex items-center gap-1 text-[#3C2F2F] rounded-xl px-3 py-1.5 text-sm 
+                       hover:shadow-[0_0_18px_rgba(246,118,94,0.4)]
                        hover:scale-[1.03] active:scale-[0.98]
-                       transition-all duration-200"
+                       transition-all duration-200 bg-white/70 border border-[#FCA17D]/30 backdrop-blur-sm"
           >
             <Users size={16} />
             Social
@@ -107,7 +98,7 @@ const MoodWidget = () => {
         </div>
 
         {/* Footer */}
-        <p className="text-xs text-[#666]">
+        <p className="text-xs text-[#6B5A56]">
           Your emotional well-being matters{" "}
           <span className="text-[#FFD166]">💛</span>
         </p>

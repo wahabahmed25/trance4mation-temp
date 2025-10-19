@@ -2,10 +2,10 @@
 import type { MoodType } from "../types";
 
 const MOODS: { key: MoodType; label: string; emoji: string; color: string }[] = [
-  { key: "happy",   label: "Happy",  emoji: "😊", color: "#F4C95D" }, // Golden Glow
-  { key: "neutral", label: "Neutral",emoji: "😐", color: "#7EC8E3" }, // Sky Blue
-  { key: "sad",     label: "Sad",    emoji: "😔", color: "#A78BFA" }, // Soft Violet
-  { key: "angry",   label: "Angry",  emoji: "😠", color: "#FF6F61" }, // Coral
+  { key: "happy", label: "Happy", emoji: "😊", color: "#F4C95D" },
+  { key: "neutral", label: "Neutral", emoji: "😐", color: "#7EC8E3" },
+  { key: "sad", label: "Sad", emoji: "😔", color: "#A78BFA" },
+  { key: "angry", label: "Angry", emoji: "😠", color: "#F6765E" },
 ];
 
 export function MoodPicker({
@@ -14,40 +14,36 @@ export function MoodPicker({
   onClose,
 }: {
   dateKey: string;
-  onSelect: (mood: MoodType | null) => Promise<void> | void;  // ✅ allow null + async
+  onSelect: (mood: MoodType | null) => void;
   onClose: () => void;
 }) {
   return (
-    <div className="fixed inset-0 z-40 grid place-items-center bg-black/60 backdrop-blur-sm">
-      <div className="w-[min(92vw,520px)] rounded-3xl border border-white/10 bg-[#0C2F39] p-5 text-white shadow-2xl">
-        {/* Header */}
+    <div className="fixed inset-0 z-40 grid place-items-center bg-[#000]/40 backdrop-blur-sm">
+      <div className="w-[min(92vw,480px)] rounded-3xl border border-[#FBD6C4]/50 bg-white/90 p-6 shadow-2xl">
         <div className="mb-4 flex items-center justify-between">
-          <h3 className="text-lg font-semibold">
+          <h3 className="text-lg font-semibold text-[#2C2C2C]">
             Log mood – {dateKey}
           </h3>
           <button
             onClick={onClose}
-            className="rounded-xl px-2 py-1 text-white/70 hover:bg-white/10"
+            className="rounded-xl px-2 py-1 text-[#666] hover:bg-[#FDE7D8]"
           >
             ✕
           </button>
         </div>
 
-        {/* Mood options */}
         <div className="grid grid-cols-2 gap-3">
           {MOODS.map((m) => (
             <button
               key={m.key}
-              onClick={async () => {
-                await onSelect(m.key);
+              onClick={() => {
+                onSelect(m.key);
                 onClose();
               }}
-              className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left outline-none transition hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white/30"
+              className="flex items-center justify-between rounded-2xl border border-[#FBD6C4]/50 bg-white/70 px-4 py-3 text-left transition hover:bg-[#FFF3E8]"
             >
-              <span className="flex items-center gap-2">
-                <span className="text-xl" aria-hidden>
-                  {m.emoji}
-                </span>
+              <span className="flex items-center gap-2 text-[#2C2C2C]">
+                <span className="text-xl">{m.emoji}</span>
                 {m.label}
               </span>
               <span
@@ -58,13 +54,12 @@ export function MoodPicker({
           ))}
         </div>
 
-        {/* Clear option */}
         <button
-          onClick={async () => {
-            await onSelect(null);
+          onClick={() => {
+            onSelect(null);
             onClose();
           }}
-          className="mt-5 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80 hover:bg-white/10"
+          className="mt-5 w-full rounded-2xl border border-[#FBD6C4]/50 bg-white/70 px-4 py-2 text-sm text-[#555] hover:bg-[#FFF3E8]"
         >
           Clear mood for this day
         </button>
