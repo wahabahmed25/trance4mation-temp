@@ -73,7 +73,7 @@ const SocialFeed = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#55CCF2]/20 via-[#9B5DE5]/10 to-[#FFD166]/20 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#E8F4F8] via-[#F5E6F1] to-[#FFF0ED] relative overflow-hidden">
       <BackgroundElements />
 
       <div className="relative z-10 p-6">
@@ -82,11 +82,11 @@ const SocialFeed = () => {
           <div className="flex justify-between items-center mb-12">
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-[#006D77] to-[#55CCF2] rounded-2xl flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] rounded-2xl flex items-center justify-center shadow-lg">
                   <span className="text-white text-xl">✨</span>
                 </div>
                 <div>
-                  <h1 className="text-5xl font-bold bg-gradient-to-r from-[#006D77] to-[#55CCF2] bg-clip-text text-transparent mb-2">
+                  <h1 className="text-5xl font-bold bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] bg-clip-text text-transparent mb-2">
                     Social Feed
                   </h1>
                   <p className="text-gray-600 text-lg">Share positivity and support with your community</p>
@@ -94,11 +94,11 @@ const SocialFeed = () => {
               </div>
               <div className="flex items-center space-x-6 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-[#FFD166] rounded-full animate-pulse"></div>
+                  <div className="w-2 h-2 bg-[#F4A89F] rounded-full animate-pulse"></div>
                   <span>247 students online</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-[#9B5DE5] rounded-full animate-pulse delay-500"></div>
+                  <div className="w-2 h-2 bg-[#B8A6D9] rounded-full animate-pulse delay-500"></div>
                   <span>{posts.length} posts shared today</span>
                 </div>
               </div>
@@ -108,7 +108,7 @@ const SocialFeed = () => {
               className="group relative px-8 py-4 bg-white/80 backdrop-blur-md text-gray-700 font-semibold rounded-2xl hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl border border-white/50"
             >
               <span className="relative z-10">← Home</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#006D77]/10 to-[#55CCF2]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#4A90A4]/10 to-[#5AB4C5]/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>
           </div>
 
@@ -140,7 +140,7 @@ const SocialFeed = () => {
               {loading && (
                 <div className="flex items-center justify-center py-12">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-[#006D77] to-[#55CCF2] rounded-full animate-pulse"></div>
+                    <div className="w-8 h-8 bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] rounded-full animate-pulse"></div>
                     <div className="text-gray-600 font-medium">Loading posts...</div>
                   </div>
                 </div>
@@ -186,4 +186,4 @@ const SocialFeed = () => {
   )
 }
 
-export default SocialFeed
+export default SocialFeed;

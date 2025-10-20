@@ -1,4 +1,3 @@
-// frontend/src/features/social-feed/components/ActivityStats.tsx
 import React from 'react';
 import { ActivityStats as ActivityStatsType } from '../types';
 
@@ -33,11 +32,11 @@ const ActivityStats: React.FC<ActivityStatsProps> = ({
   const getColorClasses = (color: string) => {
     switch (color) {
       case 'purple':
-        return 'bg-[#9B5DE5]/20 text-[#9B5DE5]';
+        return 'bg-[#B8A6D9]/20 text-[#7B6BA0]';
       case 'pink':
-        return 'bg-[#FF8661]/20 text-[#FF8661]';
+        return 'bg-[#F4A89F]/20 text-[#E88B7F]';
       case 'blue':
-        return 'bg-[#55CCF2]/20 text-[#006D77]';
+        return 'bg-[#5AB4C5]/20 text-[#4A90A4]';
       default:
         return 'bg-gray-100 text-gray-600';
     }
@@ -45,10 +44,10 @@ const ActivityStats: React.FC<ActivityStatsProps> = ({
 
   return (
     <div className="relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#FF8661]/20 to-[#FFD166]/20 blur-xl rounded-3xl"></div>
-      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-[#FF8661]/30">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#F4A89F]/20 to-[#B8A6D9]/20 blur-xl rounded-3xl"></div>
+      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-[#F4A89F]/30">
         <div className="flex items-center space-x-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-[#FF8661] to-[#FFD166] rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-[#F4A89F] to-[#B8A6D9] rounded-xl flex items-center justify-center">
             <span className="text-white font-bold">📊</span>
           </div>
           <h3 className="text-xl font-bold text-gray-800">Your Activity</h3>

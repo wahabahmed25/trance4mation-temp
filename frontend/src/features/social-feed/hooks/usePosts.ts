@@ -11,7 +11,9 @@ import {
   doc, 
   orderBy, 
   query, 
-  serverTimestamp
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove
 } from 'firebase/firestore';
 import { db, auth } from '../../../lib/firebase';
 import { Post, PostCreationData, SupportAction } from '../types';
@@ -51,6 +53,8 @@ export const usePosts = () => {
           timestamp: data.timestamp || 'Just now',
           supportCount: data.supportCount || 0,
           relateCount: data.relateCount || 0,
+          supportedBy: data.supportedBy || [],
+          relatedBy: data.relatedBy || [],
           type: data.type || 'general',
           createdAt: data.createdAt?.toDate() || new Date(),
           userId: data.userId
@@ -67,24 +71,26 @@ export const usePosts = () => {
     }
   };
 
-  // Add new post to Firebase (only if authenticated)
+  // Add new post to Firebase (requires authentication)
   const addPost = async (postData: PostCreationData) => {
-    // TEMPORARY: Allow posting without auth for testing
-    // Remove this check once authentication is fully working
-    const userId = auth.currentUser?.uid || 'anonymous-user';
-    const displayName = auth.currentUser?.displayName || 'Anonymous Student';
+    if (!auth.currentUser) {
+      setError('You must be logged in to create a post');
+      throw new Error('User not authenticated');
+    }
 
     try {
       const newPost = {
         content: postData.content,
-        prompt: postData.prompt || null,
+        prompt: postData.prompt || undefined,
         type: postData.type,
-        author: displayName,
+        author: auth.currentUser.displayName || 'Anonymous Student',
         timestamp: 'Just now',
         supportCount: 0,
         relateCount: 0,
+        supportedBy: [],
+        relatedBy: [],
         createdAt: serverTimestamp(),
-        userId: userId
+        userId: auth.currentUser.uid
       };
 
       const docRef = await addDoc(collection(db, 'posts'), newPost);
@@ -107,12 +113,14 @@ export const usePosts = () => {
 
   // Update/Edit post (only if user owns the post)
   const updatePost = async (postId: string, content: string) => {
-    // TEMPORARY: Allow editing without strict auth check for testing
-    const userId = auth.currentUser?.uid || 'anonymous-user';
+    if (!auth.currentUser) {
+      setError('You must be logged in to edit a post');
+      throw new Error('User not authenticated');
+    }
 
     // Check if user owns this post
     const post = posts.find(p => p.id === postId);
-    if (post && post.userId !== userId) {
+    if (post && post.userId !== auth.currentUser.uid) {
       setError('You can only edit your own posts');
       throw new Error('Unauthorized');
     }
@@ -139,12 +147,14 @@ export const usePosts = () => {
 
   // Delete post (only if user owns the post)
   const deletePost = async (postId: string) => {
-    // TEMPORARY: Allow deleting without strict auth check for testing
-    const userId = auth.currentUser?.uid || 'anonymous-user';
+    if (!auth.currentUser) {
+      setError('You must be logged in to delete a post');
+      throw new Error('User not authenticated');
+    }
 
     // Check if user owns this post
     const post = posts.find(p => p.id === postId);
-    if (post && post.userId !== userId) {
+    if (post && post.userId !== auth.currentUser.uid) {
       setError('You can only delete your own posts');
       throw new Error('Unauthorized');
     }
@@ -162,24 +172,59 @@ export const usePosts = () => {
     }
   };
 
-  // Handle support actions (Send Support, I Relate) - anyone can do this
+  // Handle support actions (Send Support, I Relate) - one click per user
   const handleSupportAction = async (postId: string, action: SupportAction) => {
+    if (!auth.currentUser) {
+      setError('You must be logged in to react');
+      return;
+    }
+
     try {
       const postRef = doc(db, 'posts', postId);
-      const fieldToUpdate = action === 'support' ? 'supportCount' : 'relateCount';
-      
-      // Update in Firebase
       const currentPost = posts.find(p => p.id === postId);
-      if (currentPost) {
-        const newCount = currentPost[fieldToUpdate] + 1;
+      
+      if (!currentPost) return;
+
+      const userId = auth.currentUser.uid;
+      const fieldToUpdate = action === 'support' ? 'supportCount' : 'relateCount';
+      const arrayField = action === 'support' ? 'supportedBy' : 'relatedBy';
+      const userArray = action === 'support' ? currentPost.supportedBy : currentPost.relatedBy;
+
+      // Check if user already reacted
+      const hasReacted = userArray?.includes(userId);
+
+      if (hasReacted) {
+        // User already clicked - remove their reaction (toggle off)
         await updateDoc(postRef, {
-          [fieldToUpdate]: newCount
+          [fieldToUpdate]: currentPost[fieldToUpdate] - 1,
+          [arrayField]: arrayRemove(userId)
         });
 
         // Update local state
         setPosts(prev => prev.map(post => 
           post.id === postId 
-            ? { ...post, [fieldToUpdate]: newCount }
+            ? { 
+                ...post, 
+                [fieldToUpdate]: post[fieldToUpdate] - 1,
+                [arrayField]: post[arrayField]?.filter(id => id !== userId) || []
+              }
+            : post
+        ));
+      } else {
+        // User hasn't clicked - add their reaction
+        await updateDoc(postRef, {
+          [fieldToUpdate]: currentPost[fieldToUpdate] + 1,
+          [arrayField]: arrayUnion(userId)
+        });
+
+        // Update local state
+        setPosts(prev => prev.map(post => 
+          post.id === postId 
+            ? { 
+                ...post, 
+                [fieldToUpdate]: post[fieldToUpdate] + 1,
+                [arrayField]: [...(post[arrayField] || []), userId]
+              }
             : post
         ));
       }

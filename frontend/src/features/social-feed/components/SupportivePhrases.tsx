@@ -16,10 +16,10 @@ const SupportivePhrases: React.FC = () => {
 
   return (
     <div className="relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#9B5DE5]/20 to-[#55CCF2]/20 blur-xl rounded-3xl"></div>
-      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-[#9B5DE5]/30">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#B8A6D9]/20 to-[#5AB4C5]/20 blur-xl rounded-3xl"></div>
+      <div className="relative bg-white/90 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-[#B8A6D9]/30">
         <div className="flex items-center space-x-3 mb-4">
-          <div className="w-10 h-10 bg-gradient-to-r from-[#9B5DE5] to-[#55CCF2] rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-gradient-to-r from-[#B8A6D9] to-[#9B8BBE] rounded-xl flex items-center justify-center">
             <span className="text-white font-bold">💬</span>
           </div>
           <h3 className="text-xl font-bold text-gray-800">Quick Support</h3>
@@ -30,7 +30,7 @@ const SupportivePhrases: React.FC = () => {
             <button
               key={index}
               onClick={() => handleCopyPhrase(phrase)}
-              className="w-full text-left p-3 text-sm bg-gradient-to-r from-[#9B5DE5]/10 to-[#55CCF2]/10 hover:from-[#9B5DE5]/20 hover:to-[#55CCF2]/20 rounded-xl transition-all duration-300 border border-[#9B5DE5]/20 hover:border-[#9B5DE5]/40 hover:shadow-md transform hover:-translate-y-0.5"
+              className="w-full text-left p-3 text-sm bg-gradient-to-r from-[#B8A6D9]/10 to-[#5AB4C5]/10 hover:from-[#B8A6D9]/20 hover:to-[#5AB4C5]/20 rounded-xl transition-all duration-300 border border-[#B8A6D9]/20 hover:border-[#B8A6D9]/40 hover:shadow-md transform hover:-translate-y-0.5"
             >
               {phrase}
             </button>

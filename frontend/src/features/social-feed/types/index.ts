@@ -8,6 +8,8 @@ export interface Post {
   timestamp: string;
   supportCount: number;
   relateCount: number;
+  supportedBy?: string[]; // Array of user IDs who clicked Support
+  relatedBy?: string[]; // Array of user IDs who clicked I Relate
   type: 'win' | 'encouragement' | 'checkin' | 'general';
   createdAt: Date;
   userId?: string; // Firebase Auth user ID
