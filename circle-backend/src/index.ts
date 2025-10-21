@@ -5,13 +5,15 @@ import { initializeApp } from "firebase-admin/app"
 import { getFirestore, Timestamp } from "firebase-admin/firestore";
 import 'dotenv/config'
 import cors from "cors"
-import { getAuth } from "firebase-admin/auth";
 
+const port = 5000
+
+// initialize the express app to accept cross-origin requests and read the body of incoming requests as json
 const app = e()
 app.use(cors())
 app.use(e.json())
-const port = 5000
 
+// initialize the service account. Changes made through these firebase / firestore instances ignore security rules
 const firebase = initializeApp({
     credential: admin.credential.cert({
         projectId: process.env.FIREBASE_SERVICE_ACCOUNT_PROJECT_ID,
@@ -21,6 +23,7 @@ const firebase = initializeApp({
 });
 const firestore = getFirestore(firebase)
 
+// list of prompts to choose from. feel free to move this to a different file to declutter this file
 const prompts = [
     "How do you feel about your commute to school?",
     "What was the worst schedule you’ve ever had?",
@@ -41,6 +44,7 @@ const prompts = [
     "What’s the worst class you’ve taken so far?"
 ]
 
+// lists all rooms. no purpose other than to test that the service account is authenticated correction
 app.get("/", (req: Request, res: Response) => {
     firestore.collection("rooms").listDocuments()
         .then((data) => {
@@ -48,6 +52,7 @@ app.get("/", (req: Request, res: Response) => {
         })
 })
 
+// creates a room with only the data necessary for browsing rooms. data relating to the game state is added later
 app.post('/create-room', (req: Request, res: Response) => {
     if (isValidCreateRoomRequest(req)) {
         console.log(req.body)
@@ -58,8 +63,6 @@ app.post('/create-room', (req: Request, res: Response) => {
             name: req.body.name,
             participants: [],
             rounds: req.body.rounds, 
-            // speakerIndex: number,
-            // speakerStart: Timestamp,
             timeLimit: req.body.timeLimit,
         })
         res.json("valid")
@@ -69,6 +72,7 @@ app.post('/create-room', (req: Request, res: Response) => {
     }
 })
 
+// starts the game
 app.post('/start-round', (req: Request, res: Response) => {
     // const authToken = getRequestAuthToken(req)
     const roomId = req.body.roomId
@@ -88,7 +92,7 @@ app.post('/start-round', (req: Request, res: Response) => {
                 speakerIndex: 0,
                 speakerStart: Timestamp.now()
             })
-            // play turns until the game is finished
+            // recursively play turns until the game is finished
             playTurn(roomId)
         })
     }
@@ -101,6 +105,7 @@ app.listen(port, () => {
     console.log(`server running on http://localhost:${port}`)
 })
 
+// validate incoming request body to make sure we don't write bad data to the firestore
 function isValidCreateRoomRequest(req: Request) {
     const body = req.body
     return (
@@ -114,15 +119,11 @@ function isValidCreateRoomRequest(req: Request) {
     )
 }
 
-function initRound(roomId: string) {
-    firestore.doc(`rooms/${roomId}`).update({
-        isActive: true,
-        prompt: prompts[Math.floor(Math.random() * prompts.length)],
-        speakerIndex: 0,
-        speakerStart: Timestamp.now()
-    })
-}
-
+/**
+ * Plays a turn of the game. After the turn ends, this function recursively calls itself 
+ * until the room's roundsLeft field becomes 0
+ * @param {string} roomId - the document id of the room document to play a turn in
+ */
 function playTurn(roomId: string) {
     // get the data from the room
     firestore.doc(`rooms/${roomId}`).get()
