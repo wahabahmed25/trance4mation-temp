@@ -20,9 +20,9 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
 
     return (
         <div 
-        className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20 hover:scale-103 transition"
+        className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20 hover:scale-103 hover:shadow-lg transition"
         style={{
-            transitionDuration: "0.4s", transitionTimingFunction: "ease-out", 
+            transitionDuration: "0.3s", transitionTimingFunction: "ease-out", 
             transform: `translateY(${yOffset}px)`,
             opacity: opacity
         }}

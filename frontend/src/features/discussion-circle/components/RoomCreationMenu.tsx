@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { Input, Textarea } from "@headlessui/react";
 import SettingsCell from "./SettingsCell";
 import { useAuth } from "@/context/AuthContext";
@@ -50,9 +50,19 @@ const DEFAULT_SETTINGS = {
     timeLimit: 30
 }
 
+const initialYOffset = 30
+const initialOpacity = 0.2
+
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
     const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS)
+    const [yOffset, setYOffset] = useState(initialYOffset)
+    const [opacity, setOpacity] = useState(initialOpacity)
     const user = useAuth()
+
+    useEffect(() => {
+        setYOffset(0)
+        setOpacity(1)
+    }, [])
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
         setSettings({
@@ -62,57 +72,74 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
     }
 
     return (
-        <div className="flex flex-col grow h-full gap-4">
-            <div className="flex items-center">
-                <h1 className="text-white font-bold text-3xl grow">Create a Room</h1>
-                <button className="relative size-8 shrink-0" onClick={onCloseButtonClick}>
-                    <Image 
-                    src={"/xmark-solid-full.svg"}
-                    alt="close"
-                    fill={true}
-                    style={{filter: "invert(1)"}}
-                    />
-                </button>
-            </div>
+        <div className="py-40 px-8 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/50">
+            <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8 grow max-w-120 transition"
+            style={{
+                transitionDuration: "0.3s", transitionTimingFunction: "ease-out", 
+                transform: `translateY(${yOffset}px)`,
+                opacity: opacity
+            }}
+            >
+                <div 
+                className="flex flex-col grow h-full gap-4">
+                    <div className="flex items-center">
+                        <h1 className="text-white font-bold text-3xl grow">Create a Room</h1>
+                        {/* Close modal button */}
+                        <div className="size-10 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
+                            <button className="relative size-8 shrink-0" onClick={onCloseButtonClick}>
+                                <Image 
+                                src={"/xmark-solid-full.svg"}
+                                alt="close"
+                                fill={true}
+                                style={{filter: "invert(1)"}}
+                                />
+                            </button>
+                        </div>
+                    </div>
 
-            <div className="flex flex-col gap-2">
-                <Input
-                placeholder="Room Name"
-                className={`text-white text-base p-1 px-2 border-b-2 border-slate-600 outline-none`}
-                onChange={(event) => changeSetting("name", event.target.value)}
-                />
-                
-                <Textarea 
-                className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600 outline-none"
-                placeholder="Description"
-                style={{
-                    resize: "none",
-                }}
-                onChange={(event) => changeSetting("description", event.target.value)}
-                />
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
-            </div>
+                    <div className="flex flex-col gap-2">
+                        <Input
+                        placeholder="Room Name"
+                        className={`text-white text-base p-1 px-2 border-b-2 border-slate-600 outline-none`}
+                        onChange={(event) => changeSetting("name", event.target.value)}
+                        />
+                        
+                        <Textarea 
+                        className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600 outline-none"
+                        placeholder="Description"
+                        style={{
+                            resize: "none",
+                        }}
+                        onChange={(event) => changeSetting("description", event.target.value)}
+                        />
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                        {SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
+                    </div>
 
-            <div className="flex justify-center grow items-end">
-                <button
-                className="border-2 p-1 rounded-xl w-40 text-center cursor-pointer font-bold text-xl
-                border-slate-600 text-slate-600
-                hover:border-[#006D77] hover:text-[#006D77]
-                "
-                onClick={() => {
-                    if (!onConfirmButtonClick || !user.user) {
-                        return
-                    }
-                    onConfirmButtonClick({
-                        ...settings,
-                    })
-                }}
-                >
-                    Create
-                </button>
+                    {/* Create Button */}
+                    <div className="flex justify-center grow items-end hover:scale-103 transition"
+                    style={{transitionTimingFunction: "ease-out"}}
+                    >
+                        <button
+                        className="border-2 p-1 rounded-xl w-40 text-center cursor-pointer font-bold text-xl
+                        border-slate-600 text-slate-600
+                        hover:border-[#006D77] hover:text-[#006D77]
+                        "
+                        onClick={() => {
+                            if (!onConfirmButtonClick || !user.user) {
+                                return
+                            }
+                            onConfirmButtonClick({
+                                ...settings,
+                            })
+                        }}
+                        >
+                            Create
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )

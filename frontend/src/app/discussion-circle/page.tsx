@@ -129,19 +129,15 @@ export default function DiscussionCircle() {
     return (
         <>
         {isCreationMenuOpen ?
-            <div className="py-40 px-8 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/75">
-                <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8 grow max-w-120">
-                    <RoomCreationMenu
-                    onCloseButtonClick={() => {
-                        setCreationMenuOpen(false)
-                    }}
-                    onConfirmButtonClick={(roomData) => {
-                        createRoom(roomData)
-                        fetchData()
-                    }}
-                    />
-                </div>
-            </div>
+            <RoomCreationMenu
+            onCloseButtonClick={() => {
+                setCreationMenuOpen(false)
+            }}
+            onConfirmButtonClick={(roomData) => {
+                createRoom(roomData)
+                fetchData()
+            }}
+            />
          : null}
         <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
             <div className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
@@ -160,7 +156,10 @@ export default function DiscussionCircle() {
                 <RoomBrowser
                 rooms={roomListings}
                 onCreateButtonClick={() => setCreationMenuOpen(true)}
-                onReloadButtonClick={() => fetchData()}
+                onReloadButtonClick={() => {
+                    setRoomListings([]) 
+                    fetchData()
+                }}
                 onRoomClick={(roomData: RoomData) => {
                     leaveCurrentRoom()
                     joinRoom(roomData)
