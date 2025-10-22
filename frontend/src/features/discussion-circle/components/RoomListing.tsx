@@ -1,6 +1,7 @@
 import { RoomData } from "@/features/discussion-circle/types/RoomData"
 import Image from "next/image"
 import { POPPINS_BOLD, MERRIWEATHER } from "@/app/discussion-circle/defaults"
+import { useEffect, useState } from "react"
 
 interface RoomListing {
     roomData: RoomData, 
@@ -9,10 +10,22 @@ interface RoomListing {
 
 export default function RoomListing({roomData, onClick}: RoomListing) {
     const size = roomData.participants.length
+    const [yOffset, setYOffset] = useState(10)
+    const [opacity, setOpacity] = useState(0.2)
+
+    useEffect(() => {
+        setYOffset(0)
+        setOpacity(1)
+    }, [])
 
     return (
         <div 
-        className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20"
+        className="rounded-2xl flex flex-col border border-white/10 bg-[#0C1723]/80 p-2 hover:border-white/20 hover:scale-103 transition"
+        style={{
+            transitionDuration: "0.4s", transitionTimingFunction: "ease-out", 
+            transform: `translateY(${yOffset}px)`,
+            opacity: opacity
+        }}
         onClick={() => onClick ? onClick(roomData): {}}
         >
             <div 

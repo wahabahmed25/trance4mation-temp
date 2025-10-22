@@ -30,26 +30,32 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
                     style={{minWidth: 0}}
                     />
                 </div>
-                <button className="relative size-6 shrink-0" onClick={onCreateButtonClick}>
-                    <Image 
-                    src={"/plus-solid-full.svg"}
-                    alt="Create"
-                    fill={true}
-                    style={{filter: "invert(1)"}}
-                    />
-                </button>
-                <button className="relative size-5 shrink-0" onClick={onReloadButtonClick}>
-                    <Image 
-                    src={"/rotate-right-regular-full.svg"}
-                    alt="Reload"
-                    fill={true}
-                    style={{filter: "invert(1)"}}
-                    />
-                </button>
+                {/* Create button */}
+                <div className="size-6 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
+                    <button className="relative size-6" onClick={onCreateButtonClick}>
+                        <Image 
+                        src={"/plus-solid-full.svg"}
+                        alt="Create"
+                        fill={true}
+                        style={{filter: "invert(1)"}}
+                        />
+                    </button>
+                </div>
+                {/* Reload button */}
+                <div className="size-6 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
+                    <button className="relative size-5" onClick={onReloadButtonClick}>
+                        <Image 
+                        src={"/rotate-right-regular-full.svg"}
+                        alt="Reload"
+                        fill={true}
+                        style={{filter: "invert(1)"}}
+                        />
+                    </button>
+                </div>
             </div>
 
             <div 
-            className="flex flex-col gap-2 overflow-scroll"
+            className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 overflow-x-visible overflow-y scroll"
             style={{scrollbarWidth: "none"}}
             >
                 {rooms.map((roomData) => 
