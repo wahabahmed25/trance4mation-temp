@@ -16,14 +16,17 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
         <div className="flex flex-col grow h-full gap-2">
             <div className="flex items-center">
                 <h1 className="text-white font-bold text-3xl grow">{roomData.name}</h1>
-                <button className="relative size-8 shrink-0" onClick={onExitButtonClick}>
-                    <Image 
-                    src={"/right-from-bracket-regular-full.svg"}
-                    alt="close"
-                    fill={true}
-                    style={{filter: "invert(1)"}}
-                    />
-                </button>
+                {/* Exit Button */}
+                <div className="size-10 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
+                    <button className="relative size-8 shrink-0" onClick={onExitButtonClick}>
+                        <Image 
+                        src={"/right-from-bracket-regular-full.svg"}
+                        alt="close"
+                        fill={true}
+                        style={{filter: "invert(1)"}}
+                        />
+                    </button>
+                </div>
             </div>
 
             <div className="relative z-1">
