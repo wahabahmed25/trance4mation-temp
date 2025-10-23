@@ -139,7 +139,10 @@ export default function DiscussionCircle() {
             }}
             />
          : null}
-        <div className="w-screen h-screen bg-gradient-to-br from-[#0F4C5C] via-[#1a1a1a] to-[#0F4C5C] flex relative">
+        <div 
+        className="w-screen h-screen flex relative"
+        style={{background: "linear-gradient(180deg, #FDE7D8 0%, #FFF7D8 100%)"}}
+        >
             <div className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
             style={{
                 visibility: `${
@@ -212,7 +215,7 @@ async function createRoom(settings: ClientRoomData) {
     })
     .then((response) => {
         response.json()
-        .then((data) => console.log(data))
+        .then((data) => {console.log(data)})
     })
     .catch((error) => {
         console.log("create room failed")

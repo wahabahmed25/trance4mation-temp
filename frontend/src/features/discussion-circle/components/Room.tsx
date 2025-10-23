@@ -2,6 +2,7 @@ import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { RoomData } from "../types/RoomData";
 import Image from "next/image";
 import Circle from "./Circle";
+import IconButton from "./IconButton";
 
 interface RoomProps {
     roomData: RoomData,
@@ -15,22 +16,21 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
     return (
         <div className="flex flex-col grow h-full gap-2">
             <div className="flex items-center">
-                <h1 className="text-white font-bold text-3xl grow">{roomData.name}</h1>
+                <h1 className="text-[#FCA17D] font-bold text-3xl grow">
+                    {roomData.name}
+                </h1>
                 {/* Exit Button */}
-                <div className="size-10 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
-                    <button className="relative size-8 shrink-0" onClick={onExitButtonClick}>
-                        <Image 
-                        src={"/right-from-bracket-regular-full.svg"}
-                        alt="close"
-                        fill={true}
-                        style={{filter: "invert(1)"}}
-                        />
-                    </button>
-                </div>
+                <IconButton
+                onClick={onExitButtonClick}
+                imageSrc={"/right-from-bracket-regular-full.svg"}
+                imageSize={8}
+                buttonSize={10}
+                />
             </div>
 
             <div className="relative z-1">
                 <div className="absolute flex bg-neutral-900 border-2 border-slate-800 rounded-md flex-col p-2">
+                    {/* Toggle Prompt */}
                     <div className="flex justify-start" onClick={() => setPromptVisible((curr) => !curr)}>
                         <h1 className="text-gray-200 font-semibold text-md pb-1 cursor-pointer">Prompt:</h1>
                         <button className="relative size-6 cursor-pointer">
