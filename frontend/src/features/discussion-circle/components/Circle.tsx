@@ -5,7 +5,6 @@ import Speaker from "./Speaker";
 import { MouseEventHandler, useEffect, useState } from "react";
 
 const defaultRadius = 120
-// const initialRotationOffset = 0
 
 interface CircleProps {
     roomData: RoomData,
@@ -15,7 +14,6 @@ interface CircleProps {
 export default function Circle({roomData, onStartButtonClick}: CircleProps) {
     const [timeLeft, setTimeLeft] = useState<number>(0)
     const [radius, setRadius] = useState(0)
-    // const [initialRotationOffset]
     const speaker = roomData.isActive ? roomData.participants[roomData.speakerIndex] : undefined
 
     useEffect(() => {
@@ -50,7 +48,7 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
 
                 return(
                     <div key={participant.uid} 
-                    className="absolute transition-transform duration-800 ease-out" 
+                    className="absolute transition-transform delay-400 duration-600 ease-out" 
                     style={{
                         transform: `translate(${xTranslate}px, ${yTranslate}px)`
                     }}>
