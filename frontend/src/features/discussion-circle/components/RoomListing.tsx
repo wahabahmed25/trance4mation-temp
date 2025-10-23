@@ -23,8 +23,8 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
         className="rounded-2xl flex flex-col p-2 
         hover:scale-103 transition
         bg-white/60
-        border border-[rgba(252,161,125,0.25)]
-        hover:shadow-lg shadow-[0_8px_25px_rgba(252,161,125,0.15)]"
+        shadow-[0_0_10px_rgba(255,111,97,0.25)]
+        "
         style={{
             transitionDuration: "0.3s", transitionTimingFunction: "ease-out", 
             transform: `translateY(${yOffset}px)`,
@@ -51,13 +51,13 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
                 {/* Participant count */}
                 <Tag 
                 imageSrc={"/user-regular-full.svg"} 
-                text={`${roomData.timeLimit}s`}
+                text={`${size}/${roomData.maxSize}`}
                 />
 
                 {/* Time limit */}
                 <Tag 
                 imageSrc={"/alarm-clock-regular-full.svg"} 
-                text={`${size}/${roomData.maxSize}`}
+                text={`${roomData.timeLimit}s`}
                 />
 
                 {/* Number of rounds */}

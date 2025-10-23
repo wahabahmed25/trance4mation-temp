@@ -5,6 +5,7 @@ import SettingsCell from "./SettingsCell";
 import { useAuth } from "@/context/AuthContext";
 import { RoomSetting } from "../types/RoomSetting";
 import { ClientRoomData } from "../types/ClientRoomData";
+import IconButton from "./IconButton";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
@@ -38,15 +39,9 @@ const SETTINGS: RoomSetting[] = [
 
 const DEFAULT_SETTINGS = {
     description: "",
-    // id: string,
-    // isActive: false,
     maxSize: 5,
     name: "",
-    // participants: [],
-    // prompt: string,
     rounds: 3, 
-    // speakerIndex: number,
-    // speakerStart: Timestamp
     timeLimit: 30
 }
 
@@ -73,39 +68,42 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
 
     return (
         <div className="py-40 px-8 absolute z-2 w-screen h-screen flex items-center justify-center bg-slate-900/50">
-            <div className="flex border border-white/10 bg-[#0C1723]/80 bg-black rounded-xl p-8 grow max-w-120 transition"
+            <div className="flex 
+            shadow-[0_0_10px_rgba(255,111,97,0.4)]
+            rounded-xl p-8 grow max-w-120 transition"
             style={{
                 transitionDuration: "0.3s", transitionTimingFunction: "ease-out", 
                 transform: `translateY(${yOffset}px)`,
-                opacity: opacity
+                opacity: opacity,
+                background: "linear-gradient(135deg, #FDE7D8 0%, #FFF7D8 100%)"
             }}
             >
                 <div 
                 className="flex flex-col grow h-full gap-4">
                     <div className="flex items-center">
-                        <h1 className="text-white font-bold text-3xl grow">Create a Room</h1>
+                        <h1 className="text-[#FCA17D] font-bold text-3xl grow">Create a Room</h1>
                         {/* Close modal button */}
-                        <div className="size-10 shrink-0 hover:bg-gray-200/20 flex items-center justify-center rounded-md">
-                            <button className="relative size-8 shrink-0" onClick={onCloseButtonClick}>
-                                <Image 
-                                src={"/xmark-solid-full.svg"}
-                                alt="close"
-                                fill={true}
-                                style={{filter: "invert(1)"}}
-                                />
-                            </button>
-                        </div>
+                        <IconButton
+                        imageSrc={"/xmark-solid-full.svg"}
+                        imageSize={8}
+                        buttonSize={10}
+                        onClick={onCloseButtonClick}
+                        />
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <Input
+                        <input
                         placeholder="Room Name"
-                        className={`text-white text-base p-1 px-2 border-b-2 border-slate-600 outline-none`}
+                        className="text-black/80 text-base p-1 px-2 outline-none
+                        border-b-2 border-[rgba(252,161,125,0.5)] rounded-sm
+                        "
                         onChange={(event) => changeSetting("name", event.target.value)}
                         />
                         
                         <Textarea 
-                        className="border-2 rounded-sm p-2 grow text-base bg-slate-900 text-white border-slate-600 outline-none"
+                        className="p-2 grow text-base text-black/80 bg-white/60 outline-none
+                        rounded-sm shadow-xs shadow-[#FCA17D]
+                        "
                         placeholder="Description"
                         style={{
                             resize: "none",
@@ -123,10 +121,11 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                     style={{transitionTimingFunction: "ease-out"}}
                     >
                         <button
-                        className="border-2 p-1 rounded-xl w-40 text-center cursor-pointer font-bold text-xl
-                        border-slate-600 text-slate-600
-                        hover:border-[#006D77] hover:text-[#006D77]
+                        className="p-1 w-40 cursor-pointer 
+                        font-bold text-xl text-white text-center
+                        shadow-[0_0_10px_rgba(255,111,97,0.4)] rounded-xl 
                         "
+                        style={{background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)"}}
                         onClick={() => {
                             if (!onConfirmButtonClick || !user.user) {
                                 return

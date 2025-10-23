@@ -1,11 +1,11 @@
 import { Timestamp } from "firebase/firestore";
-import { ParticipantData } from "../types/ParticipantData";
 import { RoomData } from "../types/RoomData";
 import Participant from "./Participant";
 import Speaker from "./Speaker";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 
-const radius = 120
+const defaultRadius = 120
+// const initialRotationOffset = 0
 
 interface CircleProps {
     roomData: RoomData,
@@ -14,12 +14,16 @@ interface CircleProps {
 
 export default function Circle({roomData, onStartButtonClick}: CircleProps) {
     const [timeLeft, setTimeLeft] = useState<number>(0)
+    const [radius, setRadius] = useState(0)
+    // const [initialRotationOffset]
     const speaker = roomData.isActive ? roomData.participants[roomData.speakerIndex] : undefined
 
     useEffect(() => {
         if (!roomData.isActive) {
             return  
         }
+
+        setRadius(defaultRadius)
 
         const timerId = setInterval(() => {
             const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds
@@ -45,7 +49,9 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
                 const isSpeaker = participant.uid === speaker?.uid
 
                 return(
-                    <div key={participant.uid} className="absolute" style={{
+                    <div key={participant.uid} 
+                    className="absolute transition-transform duration-800 ease-out" 
+                    style={{
                         transform: `translate(${xTranslate}px, ${yTranslate}px)`
                     }}>
                         <Participant userData={participant} isSpeaker={isSpeaker}/>
