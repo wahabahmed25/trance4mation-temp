@@ -3,6 +3,7 @@ import { RoomData } from "../types/RoomData";
 import Image from "next/image";
 import Circle from "./Circle";
 import IconButton from "./IconButton";
+import Prompt from "./Prompt";
 
 interface RoomProps {
     roomData: RoomData,
@@ -30,6 +31,7 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
 
             <div className="relative z-1">
                 <div className="absolute flex bg-neutral-900 border-2 border-slate-800 rounded-md flex-col p-2">
+
                     {/* Toggle Prompt */}
                     <div className="flex justify-start" onClick={() => setPromptVisible((curr) => !curr)}>
                         <h1 className="text-gray-200 font-semibold text-md pb-1 cursor-pointer">Prompt:</h1>
@@ -44,7 +46,7 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
                     </div>
                     {isPromptVisible ?
                         <p className="text-gray-200 font-semibold text-sm">
-                            {roomData.prompt}
+                            <Prompt prompt={roomData?.prompt ?? "placeholder"}/>
                         </p>
                     : <></>
                     }
