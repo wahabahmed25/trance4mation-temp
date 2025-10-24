@@ -11,11 +11,23 @@ interface IconButtonProps {
 
 export default function IconButton({onClick, imageSrc, imageSize, buttonSize}: IconButtonProps) {
     return (
-        <div className={`size-${buttonSize} shrink-0 
+        <div className="shrink-0 
         hover:bg-[#FCA17D]/60
-        flex items-center justify-center rounded-md`
-        }>
-            <button className={`relative size-${imageSize}`} onClick={onClick}>
+        flex items-center justify-center rounded-md
+        "
+        style={{
+            width: `calc(var(--spacing) * ${buttonSize})`,
+            height: `calc(var(--spacing) * ${buttonSize})`
+        }}
+        >
+            <button 
+            className="relative" 
+            onClick={onClick}
+            style={{
+                width: `calc(var(--spacing) * ${imageSize})`,
+                height: `calc(var(--spacing) * ${imageSize})`
+            }}
+            >
                 <Image 
                 src={imageSrc}
                 alt={typeof(imageSrc) === "string" ? imageSrc : ""}

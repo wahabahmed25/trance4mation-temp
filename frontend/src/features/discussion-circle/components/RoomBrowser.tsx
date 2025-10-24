@@ -48,6 +48,7 @@ export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onRelo
                 />
 
                 {/* Reload button */}
+                {/* <Image src={"/rotate-right-regular-full.svg"} alt="a" width={20} height={20}/> */}
                 <IconButton 
                 imageSrc={"/rotate-right-regular-full.svg"}
                 onClick={onReloadButtonClick}
