@@ -205,23 +205,20 @@ async function getRooms() {
 // }
 
 async function createRoom(settings: ClientRoomData) {
-    fetch(`${backendUrl}/create-room`, {
+    return fetch(`${backendUrl}/create-room`, {
         method: "POST",
         body: JSON.stringify(settings),
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then((response) => {
-        response.json()
-        .then((data) => {
-            console.log(data)
-            return true
-        })
-    })
-    .catch((error) => {
-        console.log("create room failed")
-        return false
-    })
-    return false
+    // .then((response) => {
+    //     response.json()
+    //     .then((data) => {
+    //         console.log(data)
+    //     })
+    // })
+    // .catch((error) => {
+    //     console.log("create room failed")
+    // })
 }

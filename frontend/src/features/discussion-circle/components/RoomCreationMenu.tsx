@@ -9,7 +9,7 @@ import IconButton from "./IconButton";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onConfirmButtonClick?: (roomData: ClientRoomData) => Promise<boolean> 
+    onConfirmButtonClick?: (roomData: ClientRoomData) => Promise<unknown>
     onRoomCreated?: () => void
 }
 
@@ -55,6 +55,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
     const [opacity, setOpacity] = useState(initialOpacity)
     const [isLoading, setLoading] = useState<boolean>(false)
     const [createButtonMessage, setCreateButtonMessage] = useState<string>("Create")
+    const [errorMessage, setErrorMessage] = useState<string>("")
     const user = useAuth()
     const updateMessage = useRef<NodeJS.Timeout>(undefined)
 
@@ -64,6 +65,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
 
         return () => {
             if (updateMessage.current) {
+                console.log("cleared by useEffect")
                 clearInterval(updateMessage.current)
             }
         }
@@ -126,6 +128,10 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                         {SETTINGS.map((setting) => <SettingsCell key={setting.field} setting={setting} onChange={changeSetting}/>)}
                     </div>
 
+                    <div className="text-center text-red-600">
+                        {errorMessage}
+                    </div>
+
                     {/* Create Button */}
                     <div className="flex justify-center grow items-end hover:scale-103 transition"
                     style={{transitionTimingFunction: "ease-out"}}
@@ -143,10 +149,11 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                             }
                             
                             setLoading(true)
+                            setCreateButtonMessage(".")
+                            setErrorMessage("")
                             if (updateMessage.current) {
                                 clearInterval(updateMessage.current)
                             }
-                            console.log("setting timer")
                             const intervalId = setInterval(() => {
                                 console.log("hi")
                                 setCreateButtonMessage((curr) => {
@@ -156,23 +163,26 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                                     return "."
                                 })
                             }, 500)
-                            console.log(intervalId)
                             updateMessage.current = intervalId
 
                             onConfirmButtonClick({
                                 ...settings,
                             })
-                            .then((success) => {
+                            .then((data) => {
+                                console.log("resolve")
                                 setLoading(false)
+                                clearInterval(intervalId)
+                                setCreateButtonMessage("Create")
                                 if (onRoomCreated) {
                                     onRoomCreated()
                                 }
-                                clearInterval(intervalId)
                             })
                             .catch((error) => {
-                                console.log(error)
+                                console.log("error")
                                 setLoading(false)
                                 clearInterval(intervalId)
+                                setCreateButtonMessage("Create")
+                                setErrorMessage("Something went wrong")
                             })
                         }}
                         >

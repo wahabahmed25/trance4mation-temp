@@ -48,7 +48,7 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
 
                 return(
                     <div key={participant.uid} 
-                    className="absolute transition-transform delay-400 duration-600 ease-out" 
+                    className="absolute transition-transform duration-600 ease-out" 
                     style={{
                         transform: `translate(${xTranslate}px, ${yTranslate}px)`
                     }}>
