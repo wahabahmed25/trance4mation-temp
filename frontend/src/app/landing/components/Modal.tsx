@@ -45,7 +45,11 @@ const embeddedLinks = (description: string, links: { [key: string]: string }) =>
    return <>{parts}</>;
 };
 
-const extraLinks = (extra2: string, id: number, links: { [key: number]: { [key: string]: string } }) => {
+const extraLinks = (
+   extra2: string,
+   id: number,
+   links: { [key: number]: { [key: string]: string } }
+) => {
    const parts: React.ReactNode[] = [];
    let currentIndex = 0;
 
@@ -70,7 +74,11 @@ const extraLinks = (extra2: string, id: number, links: { [key: number]: { [key: 
 
          // Create the clickable link for the matched keyword
          parts.push(
-            <a href={internLinks[key]} target="_blank" rel="noopener noreferrer" key={`${key}-${start}`}>
+            <a
+               href={internLinks[key]}
+               target="_blank"
+               rel="noopener noreferrer"
+               key={`${key}-${start}`}>
                {match[0]}
             </a>
          );
@@ -94,7 +102,8 @@ const extraLinkContents = {
       LinkedIn: "https://www.linkedin.com/in/zhen-tao-pan",
    },
    6: {
-      LinkedIn: "https://www.linkedin.com/in/wahab-ahmed-12020a298?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
+      LinkedIn:
+         "https://www.linkedin.com/in/wahab-ahmed-12020a298?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
    },
    7: {
       GitHub: "https://github.com/ragibasif",
@@ -106,14 +115,24 @@ const extraLinkContents = {
       GitHub: "https://github.com/Luominai",
    },
    10: {
-      LinkedIn: "https://www.linkedin.com/in/khadeja-ahmar-098909282?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
+      LinkedIn:
+         "https://www.linkedin.com/in/khadeja-ahmar-098909282?utm_source=share&amp;utm_campaign=share_via&amp;utm_content=profile&amp;utm_medium=ios_app",
       GitHub: "https://github.com/khadeja02",
    },
    11: {
       LinkedIn: "https://www.linkedin.com/in/faraaz-k-ali/",
    },
 
-   12: {},
+   14: {
+      Linktree:
+         "https://linktr.ee/jancalleortiz?utm_source=linktree_profile_share&ltsid=f7489150-4c85-431b-b8b8-0d96aeb5c3af",
+      Tiktok: "https://www.tiktok.com/@jancalleortiz?is_from_webapp=1&sender_device=pc",
+      Instagram:
+         "https://www.instagram.com/jancalleortiz/?utm_source=ig_web_button_share_sheet",
+   },
+   15: {
+      LinkedIn: "https://www.linkedin.com/in/jin-wang-479834257/",
+   },
 };
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, intern }) => {
    // If not open or intern is null, don't render
@@ -129,10 +148,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, intern }) => {
                </span>
                <h2>{intern.name}</h2>
                <h3>{intern.role}</h3>
+               <div className="extraLinkStyle">
+                  {extraLinks(intern.extra2, intern.id, extraLinkContents)}
+               </div>
+
                <div className="div-rectangle"></div>
                <p>{intern.extra1}</p>
-               <div className="internDescription"> {embeddedLinks(intern.description, linkContents)}</div>
-               <div className="extraLinkStyle"> {extraLinks(intern.extra2, intern.id, extraLinkContents)}</div>
+               <div className="internDescription">
+                  {" "}
+                  {embeddedLinks(intern.description, linkContents)}
+               </div>
             </div>
          </div>
       </div>
