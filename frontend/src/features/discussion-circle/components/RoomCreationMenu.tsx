@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
 import { Input, Textarea } from "@headlessui/react";
 import SettingsCell from "./SettingsCell";
 import { useAuth } from "@/context/AuthContext";
@@ -9,7 +9,8 @@ import IconButton from "./IconButton";
 
 interface RoomCreationMenuProps {
     onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onConfirmButtonClick?: (roomData: ClientRoomData) => void 
+    onConfirmButtonClick?: (roomData: ClientRoomData) => Promise<boolean> 
+    onRoomCreated?: () => void
 }
 
 const SETTINGS: RoomSetting[] = [
@@ -48,15 +49,24 @@ const DEFAULT_SETTINGS = {
 const initialYOffset = 30
 const initialOpacity = 0.2
 
-export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick}: RoomCreationMenuProps) {
+export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick, onRoomCreated}: RoomCreationMenuProps) {
     const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS)
     const [yOffset, setYOffset] = useState(initialYOffset)
     const [opacity, setOpacity] = useState(initialOpacity)
+    const [isLoading, setLoading] = useState<boolean>(false)
+    const [createButtonMessage, setCreateButtonMessage] = useState<string>("Create")
     const user = useAuth()
+    const updateMessage = useRef<NodeJS.Timeout>(undefined)
 
     useEffect(() => {
         setYOffset(0)
         setOpacity(1)
+
+        return () => {
+            if (updateMessage.current) {
+                clearInterval(updateMessage.current)
+            }
+        }
     }, [])
 
     function changeSetting(setting: string, value: string | number | boolean | undefined) {
@@ -126,16 +136,47 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                         shadow-[0_0_10px_rgba(255,111,97,0.4)] rounded-xl 
                         "
                         style={{background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)"}}
+                        disabled={isLoading}
                         onClick={() => {
                             if (!onConfirmButtonClick || !user.user) {
                                 return
                             }
+                            
+                            setLoading(true)
+                            if (updateMessage.current) {
+                                clearInterval(updateMessage.current)
+                            }
+                            console.log("setting timer")
+                            const intervalId = setInterval(() => {
+                                console.log("hi")
+                                setCreateButtonMessage((curr) => {
+                                    if (curr === ".") {return ".."}
+                                    if (curr === "..") {return "..."}
+                                    if (curr === "...") {return "."}
+                                    return "."
+                                })
+                            }, 500)
+                            console.log(intervalId)
+                            updateMessage.current = intervalId
+
                             onConfirmButtonClick({
                                 ...settings,
                             })
+                            .then((success) => {
+                                setLoading(false)
+                                if (onRoomCreated) {
+                                    onRoomCreated()
+                                }
+                                clearInterval(intervalId)
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                setLoading(false)
+                                clearInterval(intervalId)
+                            })
                         }}
                         >
-                            Create
+                            {createButtonMessage}
                         </button>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export default function RoomListing({roomData, onClick}: RoomListing) {
         className="rounded-2xl flex flex-col p-2 
         hover:scale-103 transition
         bg-white/60
-        shadow-[0_0_10px_rgba(255,111,97,0.25)]
+        shadow-xs shadow-[#FCA17D]
         "
         style={{
             transitionDuration: "0.3s", transitionTimingFunction: "ease-out", 

@@ -133,17 +133,16 @@ export default function DiscussionCircle() {
             onCloseButtonClick={() => {
                 setCreationMenuOpen(false)
             }}
-            onConfirmButtonClick={(roomData) => {
-                createRoom(roomData)
-                fetchData()
-            }}
+            onConfirmButtonClick={createRoom}
+            onRoomCreated={fetchData}
             />
          : null}
         <div 
         className="w-screen h-screen flex relative"
-        style={{background: "linear-gradient(180deg, #FDE7D8 0%, #FFF7D8 100%)"}}
+        style={{background: "linear-gradient(180deg, #7EC8E3 0%, #E9F8FF 10%, #FDE7D8 15%, #FFF7E8 55%, #FFF7D8 100%)"}}
         >
-            <div className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
+            <div 
+            className="h-full flex w-full md:w-1/4 absolute md:relative p-8"
             style={{
                 visibility: `${
                     isRoomBrowserOpen ? 
@@ -215,9 +214,14 @@ async function createRoom(settings: ClientRoomData) {
     })
     .then((response) => {
         response.json()
-        .then((data) => {console.log(data)})
+        .then((data) => {
+            console.log(data)
+            return true
+        })
     })
     .catch((error) => {
         console.log("create room failed")
+        return false
     })
+    return false
 }
