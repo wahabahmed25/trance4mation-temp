@@ -12,7 +12,7 @@
    display: flex;
    gap: 4rem;
    justify-content: center;
-   height: 15%;
+   height: 90px;
 
    /* stay fixed on top of screen*/
    position: fixed;
