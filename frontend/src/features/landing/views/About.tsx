@@ -1,5 +1,5 @@
 import "./About.css";
-import InternList from "../../components/Interns";
+import InternList from "@/features/landing/components/Interns";
 import Image from "next/image";
 
 function About() {

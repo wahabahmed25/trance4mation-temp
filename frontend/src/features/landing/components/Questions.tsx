@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react";
-import QuestionAccordian from "./QuestionAccordion";
+import QuestionAccordian from "@/features/landing/components/QuestionAccordion";
 import "./Questions.css";
 
 type Props = {

@@ -1,11 +1,11 @@
-import SearchCardSection from "@/home-page/sections/SearchCardSection";
-import MoodWidget from "@/home-page/sections/MoodWidget";
-import HomeLayout from "@/home-page/HomeLayout";
-import ForyouGames from "@/home-page/sections/ForyouGames";
-import TrendingGamesSection from "@/home-page/sections/TrendingGamesSection";
-import FeaturedGamesSection from "@/home-page/sections/FeaturedGamesSection";
-import GameHubSection from "@/home-page/sections/GameHubSection";
-import PlayAgainSection from "@/home-page/sections/PlayAgainSection";
+import SearchCardSection from "@/features/home/sections/SearchCardSection";
+import MoodWidget from "@/features/home/sections/MoodWidget";
+import HomeLayout from "@/features/home/HomeLayout";
+import ForyouGames from "@/features/home/sections/ForyouGames";
+import TrendingGamesSection from "@/features/home/sections/TrendingGamesSection";
+import FeaturedGamesSection from "@/features/home/sections/FeaturedGamesSection";
+import GameHubSection from "@/features/home/sections/GameHubSection";
+import PlayAgainSection from "@/features/home/sections/PlayAgainSection";
 export default function Home() {
   return (
     <HomeLayout>

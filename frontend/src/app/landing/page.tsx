@@ -1,6 +1,5 @@
 import React from "react";
-import App from "./layout";
-import Home from "./pages/home/Home";
+import Home from "@/features/landing/views/Home";
 import "./index.css";
 
 const Landing = () => {

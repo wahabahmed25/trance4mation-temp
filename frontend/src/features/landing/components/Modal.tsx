@@ -1,7 +1,7 @@
 // Modal.tsx
 import React from "react";
 import "./Modal.css";
-import type { Intern } from "./Interns";
+import type { Intern } from "@/features/landing/components/Interns";
 
 // Define the type for props
 interface ModalProps {

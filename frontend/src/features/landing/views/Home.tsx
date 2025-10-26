@@ -2,7 +2,7 @@
 import "./Home.css";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import GameCard from "../../components/GameCard";
+import GameCard from "@/features/landing/components/GameCard";
 
 function Home() {
    const router = useRouter();

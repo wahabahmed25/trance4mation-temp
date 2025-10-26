@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Modal from "./Modal";
+import Modal from "@/features/landing/components/Modal";
 import Image from "next/image";
 
 import "./Interns.css";
