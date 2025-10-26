@@ -66,13 +66,11 @@ function Home() {
    return (
       <div className="home-page">
          <section className="hero-section">
-            {/*
-               <div className="hero-left">
-               <h3>
-                  This is your place to connect, laugh, share, and discover just how powerful it feels to be part of a community that’s got your back. Whether you’re looking for support,
-                  inspiration, or just a safe space to be yourself—you’ve found it. Let’s play, connect, and heal together!
-               </h3>
-            </div> **/}
+            
+            <div className="hero-left">
+               <img src="landing-page-img/logo.png" alt="Hero Image" />
+            </div>
+            
             <div className="hero-right">
                <h1>PLAY TO HEAL</h1>
                <div className="tag-lines">
@@ -80,16 +78,17 @@ function Home() {
                   <h3>Build Connection</h3>
                   <h3>Heal Together</h3>
                </div>
-               <h3>
+               <p>
                   This is your place to connect, laugh, share, and discover just how
                   powerful it feels to be part of a community that’s got your back.
                   Whether you’re looking for support, inspiration, or just a safe space to
                   be yourself—you’ve found it. Let’s play, connect, and heal together!
-               </h3>
+               </p>
                <button className="cta-button" onClick={() => router.push("/game")}>
                   Start Your Journey
                </button>
             </div>
+
          </section>
 
          <section className="game-section">
