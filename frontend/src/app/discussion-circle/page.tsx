@@ -139,7 +139,7 @@ export default function DiscussionCircle() {
          : null}
         <div 
         className="w-screen h-screen flex relative"
-        style={{background: "linear-gradient(180deg, #7EC8E3 0%, #E9F8FF 10%, #FDE7D8 15%, #FFF7E8 55%, #FFF7D8 100%)"}}
+        style={{background: "linear-gradient(180deg, #7EC8E3 0%, #FDE7D8 20%, #FDE7D8 55%, #fff7d8ff 100%)"}}
         >
             <div 
             className="h-full flex w-full md:w-1/4 absolute md:relative p-8"

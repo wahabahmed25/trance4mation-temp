@@ -5,11 +5,15 @@ const sentenceEndDelay = 300
 const commaDelay = 200
 
 export default function Prompt({prompt}: {prompt: string}) {
+    const [currentPrompt, setCurrentPrompt] = useState<string>("")
     const [text, setText] = useState<string>("")
     
     useEffect(() => {
-        setText("")
-    }, [prompt])
+        if (prompt != currentPrompt) {
+            setText("")
+            setCurrentPrompt(prompt)
+        }
+    }, [prompt, currentPrompt])
 
     useEffect(() => {
         const nextChar = prompt.charAt(text.length)
