@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import logo from "../../images/play-to-heal.png";
 import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
@@ -47,7 +46,7 @@ const Navbar = () => {
         {/* Left — Logo + Title */}
         <Link href="/home" className="flex items-center gap-3">
           <Image
-            src={logo}
+            src="/play-to-heal.png"
             alt="Play-to-Heal Logo"
             width={45}
             height={45}
