@@ -78,8 +78,8 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
                             <button>😮</button>
                         </>
                     :   <div className="grow rounded-lg p-2
-                        border border-white/10 bg-white/5 
-                        text-gray-200 placeholder-gray-500 text-base
+                        border border-[#000]/10 bg-white/60
+                        text-black/80 placeholder-gray-500 flex text-base
                         flex justify-between">
                             <p>{roomData.url ?? "url goes here"}</p>
                             <button className="cursor-pointer">
