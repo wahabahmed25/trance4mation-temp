@@ -17,11 +17,11 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
     const speaker = roomData.isActive ? roomData.participants[roomData.speakerIndex] : undefined
 
     useEffect(() => {
+        setRadius(defaultRadius)
+        
         if (!roomData.isActive) {
             return  
         }
-
-        setRadius(defaultRadius)
 
         const timerId = setInterval(() => {
             const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds
