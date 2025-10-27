@@ -6,10 +6,8 @@ interface FeaturedCardProps {
   name: string;
   tags: string[];
   plays: number;
-  rating: number; // 1–5
-  isTrending?: boolean;
-  isNew?: boolean;
-  featured?: boolean;
+  rating: number;
+  image?: string;
 }
 
 const FeaturedCard: React.FC<FeaturedCardProps> = ({
@@ -17,9 +15,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
   tags,
   plays,
   rating,
-  isTrending,
-  isNew,
-  featured,
+  image,
 }) => {
   return (
     <motion.div
@@ -27,65 +23,57 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 250 }}
       className="
-        relative 
-        bg-[#0C1723]/60 
-        backdrop-blur-sm 
-        border border-white/10 
-        rounded-2xl 
-        p-4 sm:p-5 
-        w-full sm:w-64 
-        min-h-[160px] 
-        flex flex-col justify-between 
-        shadow-md 
-        hover:shadow-lg 
-        hover:border-white/20 
-        cursor-pointer 
-        transition-all
-        
+        relative
+        bg-[rgba(255,255,255,0.85)]
+        backdrop-blur-md
+        border border-[rgba(0,0,0,0.1)]
+        rounded-3xl
+        w-[320px] sm:w-[340px] lg:w-[360px]
+        min-h-[320px]
+        flex flex-col justify-between
+        shadow-[0_6px_18px_rgba(0,0,0,0.1)]
+        hover:shadow-[0_8px_22px_rgba(0,0,0,0.15)]
+        cursor-pointer
+        overflow-hidden
+        transition-all duration-300
       "
     >
-      {/* Title + Tags */}
-      <div>
-        <h3 className="text-white font-semibold text-base sm:text-lg mb-2 line-clamp-1">
-          {name}
-        </h3>
-
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {featured && (
-            <span className="text-[10px] font-semibold bg-[rgba(244,201,93,0.15)] text-[#F4C95D] px-2 py-0.5 rounded-full whitespace-nowrap">
-              FEATURED
-            </span>
-          )}
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[10px] sm:text-[11px] bg-white/5 border border-white/10 text-white/70 px-2 py-0.5 rounded-full whitespace-nowrap"
-            >
-              {tag}
-            </span>
-          ))}
+      {/* Image */}
+      {image && (
+        <div className="h-[180px] w-full overflow-hidden rounded-t-3xl">
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+          />
         </div>
-      </div>
+      )}
 
-      {/* Rating + Plays */}
-      <div className="flex items-center justify-between text-xs sm:text-sm text-white/70 mt-auto">
-        <div className="flex items-center gap-1 flex-wrap">
-          {Array.from({ length: rating }).map((_, i) => (
-            <span key={i}>⭐</span>
-          ))}
-
-          {isTrending && (
-            <span className="ml-1 text-[10px] text-[#F4C95D] font-semibold">
-              TRENDING
-            </span>
-          )}
-          {isNew && (
-            <span className="ml-1 text-[10px] text-[#A78BFA] font-semibold">
-              NEW
-            </span>
-          )}
+      {/* Content */}
+      <div className="p-5 flex flex-col justify-between flex-1">
+        <div>
+          <h3 className="text-lg font-bold text-[#0F4C5C] mb-1">{name}</h3>
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-[11px] bg-[#F6EDE8]/60 border border-[#ddd]/40 text-[#333] px-2 py-0.5 rounded-full"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         </div>
-        <p className="text-right truncate">{plays.toLocaleString()} plays</p>
+
+        {/* Stats */}
+        <div className="flex justify-between text-xs text-gray-600 mt-auto">
+          <div className="flex items-center gap-1">
+            {Array.from({ length: rating }).map((_, i) => (
+              <span key={i}>⭐</span>
+            ))}
+          </div>
+          <p>{plays.toLocaleString()} plays</p>
+        </div>
       </div>
     </motion.div>
   );
