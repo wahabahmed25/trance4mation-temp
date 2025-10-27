@@ -13,6 +13,14 @@ interface RoomProps {
 
 export default function Room({roomData, onExitButtonClick, onStartButtonClick} : RoomProps) {
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
+    const [currentPrompt, setCurrentPrompt] = useState<string>("");
+
+    useEffect(() => {
+        if (roomData.prompt != currentPrompt) {
+            setPromptVisible(true)
+            setCurrentPrompt(roomData.prompt ?? "")
+        }
+    }, [roomData.prompt, currentPrompt])
     
     return (
         <div className="flex flex-col grow h-full gap-2">
@@ -30,7 +38,7 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
             </div>
 
             <div className="relative z-1">
-                <div className="absolute flex bg-neutral-900 border-2 border-slate-800 rounded-md flex-col p-2">
+                <div className="absolute flex bg-[#0C1723]/60 rounded-md flex-col p-2">
 
                     {/* Toggle Prompt */}
                     <div className="flex justify-start" onClick={() => setPromptVisible((curr) => !curr)}>
@@ -44,12 +52,9 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
                             />
                         </button>
                     </div>
-                    {isPromptVisible ?
-                        <p className="text-gray-200 font-semibold text-sm">
-                            <Prompt prompt={roomData?.prompt ?? "placeholder"}/>
-                        </p>
-                    : <></>
-                    }
+                    <p className="text-gray-200 font-semibold text-sm" style={{display: isPromptVisible ? "block" : "none"}}>
+                        <Prompt prompt={roomData?.prompt ?? "placeholder"}/>
+                    </p>
                 </div>
             </div>
 
