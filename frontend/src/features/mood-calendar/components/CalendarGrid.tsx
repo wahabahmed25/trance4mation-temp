@@ -7,14 +7,18 @@ const MOOD_EMOJIS: Record<MoodType, string> = {
   neutral: "😐",
   sad: "😔",
   angry: "😠",
+  calm: "🕊️",
+  tired: "😴",
 };
 
-// helper gradient function
+// 🌀 Gradient background for each mood
 const moodGradients: Record<MoodType, string> = {
-  happy: "linear-gradient(135deg, #FFD166 0%, #FCA17D 100%)",
-  neutral: "linear-gradient(135deg, #7EC8E3 0%, #AEE5F8 100%)",
-  sad: "linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%)",
-  angry: "linear-gradient(135deg, #F6765E 0%, #FCA17D 100%)",
+  happy: "linear-gradient(135deg, #FFD166 0%, #FCA17D 100%)", // gold-coral
+  neutral: "linear-gradient(135deg, #7EC8E3 0%, #AEE5F8 100%)", // sky blue
+  sad: "linear-gradient(135deg, #A78BFA 0%, #C4B5FD 100%)", // violet
+  angry: "linear-gradient(135deg, #F6765E 0%, #FCA17D 100%)", // coral
+  calm: "linear-gradient(135deg, #A3E4B3 0%, #D0F0D0 100%)", // mint green 🌿
+  tired: "linear-gradient(135deg, #CFCFEA 0%, #E4E4F8 100%)", // lavender gray 😴
 };
 
 export function CalendarGrid({

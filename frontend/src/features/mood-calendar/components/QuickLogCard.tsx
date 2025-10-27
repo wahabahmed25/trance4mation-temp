@@ -6,6 +6,8 @@ const MOODS: { key: MoodType; label: string; emoji: string }[] = [
   { key: "neutral", label: "Neutral", emoji: "😐" },
   { key: "sad", label: "Sad", emoji: "😔" },
   { key: "angry", label: "Angry", emoji: "😠" },
+  { key: "calm", label: "Calm", emoji: "🕊️" },
+  { key: "tired", label: "Tired", emoji: "😴" },
 ];
 
 export function QuickLogCard({
@@ -14,8 +16,8 @@ export function QuickLogCard({
   onSelect: (mood: MoodType) => void;
 }) {
   return (
-    <div className="rounded-3xl p-5 shadow-md border border-[#FCA17D]/40 bg-gradient-to-br from-[#FDE7D8]/90 to-[#FFF7E8]/90 backdrop-blur-md">
-      <h3 className="text-lg font-semibold text-[#F6765E] mb-3">
+    <div className="rounded-3xl p-5 shadow-md border border-[#F58D6C]/40 bg-gradient-to-br from-[#FCE1D4]/90 to-[#FFF7E8]/90 backdrop-blur-md">
+      <h3 className="text-lg font-semibold text-[#F58D6C] mb-3">
         Quick Log – Today
       </h3>
 
@@ -27,9 +29,9 @@ export function QuickLogCard({
             className="flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium text-white shadow-md transition-all hover:scale-[1.03]"
             style={{
               background:
-                "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)",
+                "linear-gradient(135deg, #FBC4A6 0%, #F58D6C 100%)",
               boxShadow:
-                "0 4px 12px rgba(246,118,94,0.3), inset 0 1px 4px rgba(255,255,255,0.3)",
+                "0 4px 12px rgba(245,141,108,0.3), inset 0 1px 4px rgba(255,255,255,0.4)",
             }}
           >
             <span>{m.emoji}</span> {m.label}

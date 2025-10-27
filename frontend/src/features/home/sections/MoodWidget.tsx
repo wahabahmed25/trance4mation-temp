@@ -9,6 +9,8 @@ const moods = [
   { emoji: "😐", label: "Neutral", color: "#7EC8E3" }, // sky blue
   { emoji: "😔", label: "Sad", color: "#A78BFA" }, // violet
   { emoji: "😠", label: "Angry", color: "#F6765E" }, // coral red
+  { emoji: "🕊️", label: "Calm", color: "#A3E4B3" }, // mint green
+  { emoji: "😴", label: "Tired", color: "#CFCFEA" }, // lavender gray
 ];
 
 const MoodWidget = () => {
@@ -23,7 +25,7 @@ const MoodWidget = () => {
                  shadow-[0_8px_25px_rgba(252,161,125,0.15)]
                  p-8 text-left flex flex-col justify-between overflow-hidden"
     >
-      {}
+      {/* Subtle gradient overlay */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
@@ -36,7 +38,8 @@ const MoodWidget = () => {
           Log your mood today
         </h3>
         <p className="text-[#5A4A47]/70 text-sm mb-6">
-          Reflect and track your emotions through simple daily moods.
+          Reflect, track, and write why you feel the way you do — your emotions
+          tell your story.
         </p>
 
         {/* Emoji mood selector */}
