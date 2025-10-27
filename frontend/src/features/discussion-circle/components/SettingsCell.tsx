@@ -13,7 +13,9 @@ export default function SettingsCell({setting, onChange}: SettingsCellProps) {
     // console.log(setting.defaultValue)
 
     return(
-        <div className="flex gap-2 border-2 border-slate-600 text-white rounded-sm p-2">
+        <div className="flex gap-2 p-2
+        rounded-sm shadow-xs shadow-[#FCA17D]
+        bg-white/60 text-black/80">
             <Image 
             className="grow-0"
             src={setting.image}
@@ -22,7 +24,7 @@ export default function SettingsCell({setting, onChange}: SettingsCellProps) {
             height={20}
             priority
             style={{
-                filter: "invert(1)"
+                filter: "opacity(0.8)"
             }}
             />
 
