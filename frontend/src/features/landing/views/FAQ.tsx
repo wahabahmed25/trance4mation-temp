@@ -1,7 +1,7 @@
 "use client";
-import ContactUs from "../../components/ContactForm";
-import Questions from "../../components/Questions";
-import faqQuestions from "../../components/questions.json";
+import ContactUs from "@/features/landing/components/ContactForm";
+import Questions from "@/features/landing/components/Questions";
+import faqQuestions from "@/features/landing/components/questions.json";
 import "./FAQ.css";
 import { useState } from "react";
 

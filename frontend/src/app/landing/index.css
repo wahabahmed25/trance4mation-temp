@@ -3,7 +3,10 @@
    line-height: 1.5;
    font-weight: 400;
    margin: 0px;
-   background-color: #fff0f0;
+
+   body {
+      background-color: #ffe6e6;
+   }
 
    * {
       margin: 0px;
@@ -48,8 +51,16 @@
 
    /* Gradients */
    --gradient-coral: linear-gradient(135deg, var(--healing-coral) 0%, #ff7f7f 100%);
-   --gradient-coral-reverse: linear-gradient(135deg, #ff7f7f 0%, var(--healing-coral) 100%);
-   --gradient-section: linear-gradient(135deg, var(--coral-alpha-15) 0%, rgba(10, 79, 87, 0.1) 100%);
+   --gradient-coral-reverse: linear-gradient(
+      135deg,
+      #ff7f7f 0%,
+      var(--healing-coral) 100%
+   );
+   --gradient-section: linear-gradient(
+      135deg,
+      var(--coral-alpha-15) 0%,
+      rgba(10, 79, 87, 0.1) 100%
+   );
 
    h1 {
       font-size: 2.5rem;

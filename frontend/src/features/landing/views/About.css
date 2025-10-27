@@ -46,7 +46,7 @@ p {
 }
 
 .about-section h1 {
-   font-size: 2.4rem;
+   font-size: 2.3rem;
    font-weight: 900;
    margin-bottom: 0.5rem;
    color: var(--healing-coral);
@@ -158,8 +158,7 @@ p {
 .interns-container img {
    max-width: 100%;
    display: block;
-   padding: 1%;
-   text-align: center;
+   align-items: center;
 }
 
 .interns-container h1 {

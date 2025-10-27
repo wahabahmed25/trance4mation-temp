@@ -2,7 +2,7 @@
 import "./Home.css";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
-import GameCard from "../../components/GameCard";
+import GameCard from "@/features/landing/components/GameCard";
 
 function Home() {
    const router = useRouter();
@@ -66,13 +66,11 @@ function Home() {
    return (
       <div className="home-page">
          <section className="hero-section">
-            {/*
-               <div className="hero-left">
-               <h3>
-                  This is your place to connect, laugh, share, and discover just how powerful it feels to be part of a community that’s got your back. Whether you’re looking for support,
-                  inspiration, or just a safe space to be yourself—you’ve found it. Let’s play, connect, and heal together!
-               </h3>
-            </div> **/}
+            
+            <div className="hero-left">
+               <img src="landing-page-img/logo.png" alt="Hero Image" />
+            </div>
+            
             <div className="hero-right">
                <h1>PLAY TO HEAL</h1>
                <div className="tag-lines">
@@ -80,25 +78,38 @@ function Home() {
                   <h3>Build Connection</h3>
                   <h3>Heal Together</h3>
                </div>
-               <h3>
-                  This is your place to connect, laugh, share, and discover just how powerful it feels to be part of a community that’s got your back. Whether you’re looking for support,
-                  inspiration, or just a safe space to be yourself—you’ve found it. Let’s play, connect, and heal together!
-               </h3>
+               <p>
+                  This is your place to connect, laugh, share, and discover just how
+                  powerful it feels to be part of a community that’s got your back.
+                  Whether you’re looking for support, inspiration, or just a safe space to
+                  be yourself—you’ve found it. Let’s play, connect, and heal together!
+               </p>
                <button className="cta-button" onClick={() => router.push("/game")}>
                   Start Your Journey
                </button>
             </div>
+
          </section>
 
          <section className="game-section">
             <h2>You Are Not Alone</h2>
             <div className="carousel-wrapper">
-               <button className="carousel-arrow carousel-arrow-left" onClick={scrollLeft}>
+               <button
+                  className="carousel-arrow carousel-arrow-left"
+                  onClick={scrollLeft}>
                   &#8249;
                </button>
                <div className="game-cards-container" ref={carouselRef}>
-                  <GameCard title="Speak to Me" image={"/landing-page-img/sample_img.jpg"} description="In a world that often asks us to hide, Speak to Me dares us to be seen." />
-                  <GameCard title="Keep It Real" image={"/landing-page-img/sample_img.jpg"} description="Keep It Real harbors a magic that changes people." />
+                  <GameCard
+                     title="Speak to Me"
+                     image={"/landing-page-img/sample_img.jpg"}
+                     description="In a world that often asks us to hide, Speak to Me dares us to be seen."
+                  />
+                  <GameCard
+                     title="Keep It Real"
+                     image={"/landing-page-img/sample_img.jpg"}
+                     description="Keep It Real harbors a magic that changes people."
+                  />
                   <GameCard
                      title="Keep It Real 100"
                      image={"/landing-page-img/KIR100 Logo.png"}
@@ -116,7 +127,9 @@ function Home() {
                   />
                   <GameCard title="Trill (True & Real)" image={sampleImg} description="A therapeutic dialogue game designed to support individuals and communities impacted by addiction." /> */}
                </div>
-               <button className="carousel-arrow carousel-arrow-right" onClick={scrollRight}>
+               <button
+                  className="carousel-arrow carousel-arrow-right"
+                  onClick={scrollRight}>
                   &#8250;
                </button>
             </div>
@@ -125,21 +138,31 @@ function Home() {
          <section className="testimonials-section">
             <h2>Hear Their Stories</h2>
             <div className="testimonials-carousel-wrapper">
-               <button className="carousel-arrow carousel-arrow-left" onClick={scrollTestimonialsLeft}>
+               <button
+                  className="carousel-arrow carousel-arrow-left"
+                  onClick={scrollTestimonialsLeft}>
                   &#8249;
                </button>
                <div className="testimonials-container" ref={testimonialsRef}>
                   {testimonials.map((testimonial, index) => (
                      <div key={index} className="testimonial-card">
-                        <img className="testimonial-img" src={testimonial.image} alt={testimonial.author} />
+                        <img
+                           className="testimonial-img"
+                           src={testimonial.image}
+                           alt={testimonial.author}
+                        />
                         <div className="testimonial-quote">
                            <p>"{testimonial.quote}"</p>
-                           <span className="testimonial-author">- {testimonial.author}</span>
+                           <span className="testimonial-author">
+                              - {testimonial.author}
+                           </span>
                         </div>
                      </div>
                   ))}
                </div>
-               <button className="carousel-arrow carousel-arrow-right" onClick={scrollTestimonialsRight}>
+               <button
+                  className="carousel-arrow carousel-arrow-right"
+                  onClick={scrollTestimonialsRight}>
                   &#8250;
                </button>
             </div>
@@ -150,7 +173,10 @@ function Home() {
             <div className="cta-container">
                <div className="cta-left">
                   <h3>Join the Community</h3>
-                  <p>Join the community to get involved with the community. Information about joining and participating goes here.</p>
+                  <p>
+                     Join the community to get involved with the community. Information
+                     about joining and participating goes here.
+                  </p>
                </div>
                <div className="cta-right">
                   <input type="email" placeholder="Enter your email" />
@@ -163,9 +189,12 @@ function Home() {
          <section className="about-section">
             <h2>About Us</h2>
             <div className="about-container">
-               <p>Information about the organization and team behind Play to Heal. Mission, vision, and values can be shared here.</p>
+               <p>
+                  Information about the organization and team behind Play to Heal.
+                  Mission, vision, and values can be shared here.
+               </p>
             </div>
-            <a href="/about" className="about-button">
+            <a href="./landing/pages/about" className="about-button">
                Learn More
             </a>
          </section>
