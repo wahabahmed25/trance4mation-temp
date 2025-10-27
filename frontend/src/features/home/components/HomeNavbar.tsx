@@ -27,7 +27,7 @@ const Navbar = () => {
     // define --nav-bg like in your CSS example (top blue used on landing)
     // tweak alpha if you want it a bit stronger at the top
     // @ts-expect-error CSS var inline (fine at runtime)
-    ["--nav-bg"]: "rgba(90, 200, 227, 0.95)",
+    ["--nav-bg"]: "rgba(126, 200, 227, 0.95)",
     backgroundImage: `linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255,${opacity}))`,
     transition: "background-image 0.4s ease",
   };
@@ -66,9 +66,9 @@ const Navbar = () => {
             { label: "Games", href: "/about" },
             { label: "Home", href: "/games" },
             { label: "Landing", href: "/landing" },
-            { label: "Profile", href: "/user-profile" },
-            { label: "About", href: "/aboutt" },
-            { label: "FAQ", href: "/faq" },
+            { label: "Profile", href: "/logout" },
+            { label: "About", href: "/logout" },
+            { label: "FAQ", href: "/logout" },
 
           ].map((l) => (
             <Link
@@ -124,12 +124,10 @@ const Navbar = () => {
           >
             <div className="flex flex-col items-center gap-6 py-8 text-xl">
               {[
-                { label: "Games", href: "/about" },
-                { label: "Home", href: "/games" },
-                { label: "Landing", href: "/landing" },
-                { label: "Profile", href: "/user-profile" },
-                { label: "About", href: "/about" },
-                { label: "FAQ", href: "/faq" },
+                { label: "About", href: "/landing/pages/about" },
+                { label: "Games", href: "/games" },
+                { label: "Profile", href: "/profile" },
+                { label: "Logout", href: "/logout" },
               ].map((l) => (
                 <Link
                   key={l.href}
