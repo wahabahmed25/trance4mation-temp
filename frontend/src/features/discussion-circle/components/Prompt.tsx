@@ -12,13 +12,13 @@ export default function Prompt({prompt}: {prompt: string}) {
         if (prompt != currentPrompt) {
             setText("")
             setCurrentPrompt(prompt)
+            console.log("changing prompt")
+            return
         }
-    }, [prompt, currentPrompt])
 
-    useEffect(() => {
         const nextChar = currentPrompt.charAt(text.length)
         const previousChar = currentPrompt.charAt(text.length - 1)
-        console.log(text.length, nextChar)
+        // console.log(text.length, nextChar)
         if (nextChar === "") {
             return
         }
@@ -37,8 +37,9 @@ export default function Prompt({prompt}: {prompt: string}) {
 
         return () => {
             clearTimeout(timeout)
+            console.log("clear timeout")
         }
-    }, [text, currentPrompt])
+    }, [text, currentPrompt, prompt])
 
     return (
         <div>
