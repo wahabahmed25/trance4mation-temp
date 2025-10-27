@@ -16,8 +16,8 @@ export default function Prompt({prompt}: {prompt: string}) {
     }, [prompt, currentPrompt])
 
     useEffect(() => {
-        const nextChar = prompt.charAt(text.length)
-        const previousChar = prompt.charAt(text.length - 1)
+        const nextChar = currentPrompt.charAt(text.length)
+        const previousChar = currentPrompt.charAt(text.length - 1)
         console.log(text.length, nextChar)
         if (nextChar === "") {
             return
@@ -31,10 +31,14 @@ export default function Prompt({prompt}: {prompt: string}) {
             nextLetterDelay = commaDelay
         }
 
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
             setText(text + nextChar)
         }, nextLetterDelay)
-    }, [text, prompt])
+
+        return () => {
+            clearTimeout(timeout)
+        }
+    }, [text, currentPrompt])
 
     return (
         <div>
