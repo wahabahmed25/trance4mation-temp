@@ -1,8 +1,6 @@
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import RoomListing from "./RoomListing";
 import { ChangeEventHandler, MouseEventHandler } from "react";
-import { Input } from "@headlessui/react";
-import Image from "next/image";
 import { POPPINS_BOLD } from "@/app/discussion-circle/defaults";
 import IconButton from "./IconButton";
 

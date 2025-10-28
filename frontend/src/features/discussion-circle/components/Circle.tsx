@@ -18,7 +18,7 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
 
     useEffect(() => {
         setRadius(defaultRadius)
-        
+
         if (!roomData.isActive) {
             return  
         }
@@ -47,13 +47,12 @@ export default function Circle({roomData, onStartButtonClick}: CircleProps) {
                 const isSpeaker = participant.uid === speaker?.uid
 
                 return(
-                    <div key={participant.uid} 
-                    className="absolute transition-transform duration-600 ease-out" 
-                    style={{
-                        transform: `translate(${xTranslate}px, ${yTranslate}px)`
-                    }}>
-                        <Participant userData={participant} isSpeaker={isSpeaker}/>
-                    </div>
+                    <Participant 
+                    key={participant.uid} 
+                    userData={participant} 
+                    isSpeaker={isSpeaker} 
+                    goalX={xTranslate} goalY={yTranslate}
+                    />
                 )}
             )}
 
