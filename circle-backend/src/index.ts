@@ -64,8 +64,9 @@ app.post('/create-room', (req: Request, res: Response) => {
             participants: [],
             rounds: req.body.rounds, 
             timeLimit: req.body.timeLimit,
+        }).then((docRef) => {
+            res.json("valid")
         })
-        res.json("valid")
     }
     else {
         res.json("invalid")
@@ -83,11 +84,12 @@ app.post('/start-round', (req: Request, res: Response) => {
             if (snapshot.data()?.isActive) {
                 return
             }
-
+            const randomIndex = Math.floor(Math.random() * prompts.length)
+            console.log(randomIndex);
             // select the first prompt and speaker
             firestore.doc(`rooms/${roomId}`).update({
                 isActive: true,
-                prompt: prompts[Math.floor(Math.random() * prompts.length)],
+                prompt: prompts[randomIndex],
                 roundsLeft: snapshot.data()?.rounds,
                 speakerIndex: 0,
                 speakerStart: Timestamp.now()

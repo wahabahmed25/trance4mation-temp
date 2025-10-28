@@ -34,18 +34,20 @@ export default function DiscussionCircle() {
     }
 
     async function joinRoom(roomData: RoomData) {
-        unsubscribe.current = onSnapshot(doc(FIRESTORE, "rooms", roomData.id), (snap) => {
-            const newRoomData = {
-                ...snap.data(),
-                "id": roomData.id
-            } as RoomData
-            setCurrentRoom(newRoomData)
-            console.log(newRoomData)
-        })
-        await updateDoc(doc(collection(FIRESTORE, "rooms"), roomData.id), {
+        updateDoc(doc(collection(FIRESTORE, "rooms"), roomData.id), {
             participants: arrayUnion({
                 name: user.user?.name,
                 uid: user.user?.uid
+            })
+        })
+        .then(() => {
+            unsubscribe.current = onSnapshot(doc(FIRESTORE, "rooms", roomData.id), (snap) => {
+                const newRoomData = {
+                    ...snap.data(),
+                    "id": roomData.id
+                } as RoomData
+                setCurrentRoom(newRoomData)
+                console.log(newRoomData)
             })
         })
     }

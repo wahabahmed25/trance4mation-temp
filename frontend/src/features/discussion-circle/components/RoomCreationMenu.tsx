@@ -48,6 +48,7 @@ const DEFAULT_SETTINGS = {
 
 const initialYOffset = 30
 const initialOpacity = 0.2
+const backendUrl = "http://localhost:5000"
 
 export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonClick, onRoomCreated}: RoomCreationMenuProps) {
     const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS)
@@ -133,13 +134,14 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                     </div>
 
                     {/* Create Button */}
-                    <div className="flex justify-center grow items-end hover:scale-103 transition"
+                    <div className="flex justify-center items-end"
                     style={{transitionTimingFunction: "ease-out"}}
                     >
                         <button
                         className="p-1 w-40 cursor-pointer 
                         font-bold text-xl text-white text-center
                         shadow-[0_0_10px_rgba(255,111,97,0.4)] rounded-xl 
+                        hover:scale-103 transition
                         "
                         style={{background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)"}}
                         disabled={isLoading}
@@ -165,17 +167,21 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                             }, 500)
                             updateMessage.current = intervalId
 
-                            onConfirmButtonClick({
-                                ...settings,
-                            })
-                            .then((data) => {
-                                console.log("resolve")
-                                setLoading(false)
-                                clearInterval(intervalId)
-                                setCreateButtonMessage("Create")
-                                if (onRoomCreated) {
-                                    onRoomCreated()
-                                }
+                            // onConfirmButtonClick({
+                            //     ...settings,
+                            // })
+
+                            createRoom({...settings})
+                            .then((response: Response) => {
+                                response.json()
+                                .then((data) => {
+                                    setLoading(false)
+                                    clearInterval(intervalId)
+                                    setCreateButtonMessage("Create")
+                                    if (onRoomCreated) {
+                                        onRoomCreated()
+                                    }
+                                })
                             })
                             .catch((error) => {
                                 console.log("error")
@@ -193,4 +199,14 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
             </div>
         </div>
     )
+}
+
+async function createRoom(settings: ClientRoomData) {
+    return fetch(`${backendUrl}/create-room`, {
+        method: "POST",
+        body: JSON.stringify(settings),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
 }
