@@ -9,7 +9,7 @@ interface RoomBrowserProps {
     onQuery?: ChangeEventHandler<HTMLInputElement>,
     onCreateButtonClick?: MouseEventHandler<HTMLButtonElement>,
     onReloadButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onRoomClick?: (room: RoomData) => void | undefined
+    onRoomClick?: (room: RoomData) => unknown
 }
 
 export default function RoomBrowser({rooms, onQuery, onCreateButtonClick, onReloadButtonClick, onRoomClick}: RoomBrowserProps) {

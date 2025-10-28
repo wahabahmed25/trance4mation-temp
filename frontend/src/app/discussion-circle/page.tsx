@@ -10,6 +10,7 @@ import { useAuth } from "@/context/AuthContext"
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData"
 import { FIREBASE_APP, FIRESTORE } from "./defaults"
 import { getAuth, onAuthStateChanged, User } from "firebase/auth"
+import { createRoom, getRooms, joinRoom, leaveRoom, subscribeToRoom } from "./api"
 
 const backendUrl = "http://localhost:5000"
 
@@ -23,78 +24,8 @@ export default function DiscussionCircle() {
     const user = useAuth()
     const unsubscribe = useRef<() => void>(undefined)
 
-    function fetchData() {
-        getRooms()
-        .then((rooms) => {
-            setRoomListings(rooms)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
-
-    async function joinRoom(roomData: RoomData) {
-        updateDoc(doc(collection(FIRESTORE, "rooms"), roomData.id), {
-            participants: arrayUnion({
-                name: user.user?.name,
-                uid: user.user?.uid
-            })
-        })
-        .then(() => {
-            unsubscribe.current = onSnapshot(doc(FIRESTORE, "rooms", roomData.id), (snap) => {
-                const newRoomData = {
-                    ...snap.data(),
-                    "id": roomData.id
-                } as RoomData
-                setCurrentRoom(newRoomData)
-                console.log(newRoomData)
-            })
-        })
-    }
-
-    async function leaveCurrentRoom() {
-        if (unsubscribe.current != undefined) {
-            unsubscribe.current()
-            unsubscribe.current = undefined
-        }
-        if (!currentRoom?.id) {
-            return
-        }
-        setCurrentRoom(undefined)
-        await updateDoc(doc(collection(FIRESTORE, "rooms"), currentRoom?.id), {
-            participants: arrayRemove({
-                name: user.user?.name,
-                uid: user.user?.uid
-            })
-        })
-    }
-
-    async function startRound() {
-        if (!auth || !currentRoom) {
-            return
-        }
-        auth.getIdToken(true)
-        .then((token) => {
-            fetch(`${backendUrl}/start-round`, {
-                method: "POST",
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    roomId: currentRoom.id
-                })
-            })
-            .then((response) => {
-                response.json()
-                .then((data) => console.log(data))
-                .catch((error) => console.log(error))
-            })
-        })
-    }
-
     useEffect(() => {
-        fetchData()
+        getRooms().then(setRoomListings)
 
         const auth = getAuth(FIREBASE_APP)
         onAuthStateChanged(auth, (authData) => {
@@ -132,11 +63,8 @@ export default function DiscussionCircle() {
         <>
         {isCreationMenuOpen ?
             <RoomCreationMenu
-            onCloseButtonClick={() => {
-                setCreationMenuOpen(false)
-            }}
-            onConfirmButtonClick={createRoom}
-            onRoomCreated={fetchData}
+            onCloseButtonClick={() => { setCreationMenuOpen(false) }}
+            onRoomCreated={() => { getRooms().then(setRoomListings) }}
             />
          : null}
         <div 
@@ -159,15 +87,20 @@ export default function DiscussionCircle() {
             >
                 <RoomBrowser
                 rooms={roomListings}
-                onCreateButtonClick={() => setCreationMenuOpen(true)}
+                onCreateButtonClick={() => {
+                    setCreationMenuOpen(true)
+                }}
                 onReloadButtonClick={() => {
                     setRoomListings([]) 
-                    fetchData()
+                    getRooms().then(setRoomListings)
                 }}
-                onRoomClick={(roomData: RoomData) => {
-                    leaveCurrentRoom()
-                    joinRoom(roomData)
-                    setCurrentRoom(roomData)
+                onRoomClick={async (roomData: RoomData) => {
+                    if (currentRoom?.id) { await leaveRoom(currentRoom.id, auth) }
+
+                    await joinRoom(roomData.id, auth)
+                    
+                    if (unsubscribe.current) { unsubscribe.current() }
+                    unsubscribe.current = subscribeToRoom(roomData.id, setCurrentRoom)
                 }}
                 />
             </div>
@@ -176,8 +109,8 @@ export default function DiscussionCircle() {
                 {currentRoom ? 
                     <Room 
                     roomData={currentRoom}
-                    onExitButtonClick={leaveCurrentRoom}
-                    onStartButtonClick={startRound}
+                    onExitButtonClick={async () => { if(currentRoom?.id) { await leaveRoom(roomData.id, auth) }}}
+                    // onStartButtonClick={startRound}
                     />
                 : isSmallScreen ?
                     <></>
@@ -187,40 +120,4 @@ export default function DiscussionCircle() {
         </div>
         </>
     )
-
-}
-
-async function getRooms() {
-    const q = query(collection(FIRESTORE, "rooms"))
-    const querySnapshot = await getDocs(q);
-    const rooms = querySnapshot.docs.map((document) => {
-        return {
-            ...document.data(),
-            "id": document.id
-        } as RoomData
-    })
-    return rooms
-}
-
-// async function createRoom(settings: ClientRoomData) {
-//     await addDoc(collection(FIRESTORE, "rooms"), settings)
-// }
-
-async function createRoom(settings: ClientRoomData) {
-    return fetch(`${backendUrl}/create-room`, {
-        method: "POST",
-        body: JSON.stringify(settings),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    // .then((response) => {
-    //     response.json()
-    //     .then((data) => {
-    //         console.log(data)
-    //     })
-    // })
-    // .catch((error) => {
-    //     console.log("create room failed")
-    // })
 }
