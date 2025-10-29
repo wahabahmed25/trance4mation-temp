@@ -151,18 +151,7 @@
    padding-top: 2rem;
 }
 
-.game-section p {
-   color: var(--black-alpha-90);
-   line-height: 1.8;
-   margin-bottom: 1.5rem;
-   font-size: 1.2rem;
-   position: relative;
-   z-index: 2;
-   text-align: center;
-   max-width: 600px;
-   margin-left: auto;
-   margin-right: auto;
-}
+
 
 .carousel-wrapper {
    position: relative;
