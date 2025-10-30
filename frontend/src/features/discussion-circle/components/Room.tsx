@@ -52,9 +52,9 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
                             />
                         </button>
                     </div>
-                    <p className="text-gray-200 font-semibold text-sm" style={{display: isPromptVisible ? "block" : "none"}}>
+                    <div className="text-gray-200 font-semibold text-sm" style={{display: isPromptVisible ? "block" : "none"}}>
                         <Prompt prompt={roomData?.prompt ?? ""}/>
-                    </p>
+                    </div>
                 </div>
             </div>
 

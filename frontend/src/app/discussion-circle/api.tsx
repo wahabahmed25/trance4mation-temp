@@ -44,30 +44,29 @@ export async function createRoom(settings: ClientRoomData) {
     return json
 }
 
-export async function joinRoom(roomId: string, user: User) {
+export async function joinRoom(roomId: string, name: string, uid: string) {
     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
         participants: arrayUnion({
-            name: user.displayName,
-            uid: user.uid
+            name: name,
+            uid: uid
         })
     })
 }
 
-export async function leaveRoom(roomId: string, user: User) {
+export async function leaveRoom(roomId: string, name: string, uid: string) {
     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
         participants: arrayRemove({
-            name: user.displayName,
-            uid: user.uid
+            name: name,
+            uid: uid
         })
     })
 }
 
-export async function startRound(roomId: string, user: User) {
-    const token = await user.getIdToken(true)
+export async function startRound(roomId: string, idToken: string) {
     const response = await fetch(`${backendUrl}/start-round`, {
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${idToken}`,
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -87,3 +86,41 @@ export function subscribeToRoom(roomId: string, onChange: (data: RoomData) => vo
         onChange(newRoomData)
     })
 }
+
+// function joinRoom(roomId: string, user: User) {
+//     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
+//         participants: arrayUnion({
+//             name: user.displayName,
+//             uid: user.uid
+//         })
+//     })
+// }
+
+
+// export async function leaveRoom(roomId: string, user: User) {
+//     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
+//         participants: arrayRemove({
+//             name: user.displayName,
+//             uid: user.uid
+//         })
+//     })
+// }
+
+// export async function startRound(roomId: string, user: User) {
+//     const token = await user.getIdToken(true)
+//     const response = await fetch(`${backendUrl}/start-round`, {
+//         method: "POST",
+//         headers: {
+//             'Authorization': `Bearer ${token}`,
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({
+//             roomId: roomId
+//         })
+//     })
+//     const json = await response.json()
+//     return json
+// }
+
+
+
