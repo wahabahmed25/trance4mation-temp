@@ -1,114 +1,110 @@
 "use client";
-
 import { useRouter } from "next/navigation";
-import React from "react";
-import { useState } from "react";
-import { login } from "@/lib/api/ApiCalls";
+import React, { useState, useEffect } from "react";
+import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
-import LoginButton from "@/user-signup/login/LoginButton";
-import { useAuth } from "@/context/AuthContext";
+import { login } from "@/lib/api/ApiCalls"; // ← adjust if your login API is named differently
+import { initAnalytics } from "@/lib/firebase";
+import Link from "next/link";
 
-
-interface loginForm {
-  email: string;
-  password: string;
-}
-
-
-const page = () => {
-    const router = useRouter();
-  const [inputValue, setInputValue] = useState<loginForm>({
+export default function LoginPage() {
+  const router = useRouter();
+  const [inputValue, setInputValue] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
-  const { loginUser } = useAuth();
+  const [success, setSuccess] = useState("");
 
+  useEffect(() => {
+    initAnalytics();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setInputValue((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-      setError("");
-    };
+    const { name, value } = e.target;
+    setInputValue((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setError("");
+    setSuccess("");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const { email, password } = inputValue;
+
     if (!email || !password) {
       setError("All fields are required ❌");
       return;
     }
+
     try {
       const result = await login(email, password);
-      console.log("these are results", result);
-      if (result.success && result.user){
-        loginUser(result.user);
-        router.push('/home')
-        console.log("user: ", result.user)
-        console.log("successfully logged in")
+      if (result.success) {
+        setSuccess("Logged in successfully ✅");
+        setError("");
+        router.push("/home");
+      } else {
+        setError("Invalid email or password ❌");
       }
-      else{
-        setError("error logging in, please try again")
-      }
-
     } catch (err) {
-        setError('error loggin in, please try again')
-        console.error("error login:", err);
+      setError("Unexpected error logging in ❌");
+      console.error(err);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b3d] to-[#0d1f2d] px-4 font-sans">
-      <div className="bg-[#1e1e1e] rounded-2xl shadow-2xl p-8 w-full max-w-md border border-[#006D77]">
-        <h1 className="text-3xl font-extrabold text-center text-[#FFD166] mb-6 tracking-wide">
-          Log In
-        </h1>
+    <div className="font-sans flex justify-center items-center min-h-screen px-6 py-14 bg-gradient-to-br from-[#faf8ff] via-[#f3ecff] to-[#ffeaea]">
+      <main className="w-full max-w-md bg-white/90 backdrop-blur-xl shadow-lg rounded-2xl px-8 py-10 border border-white/40">
 
+        {/* Title */}
+        <h1 className="text-center text-3xl font-bold text-[#4B4FA3] tracking-tight mb-2">
+          Welcome Back
+        </h1>
+        <p className="text-center text-sm text-gray-600 mb-8">
+          Log in to continue your journey ✨
+        </p>
+
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <InputField
             type="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="you@email.com"
             value={inputValue.email}
             onChange={handleChange}
-            className="bg-[#2a2a2a] text-white placeholder-gray-400 border border-[#55CCF2] focus:ring-[#9B5DE5]"
+            className="w-full px-4 py-2.5 border border-slate-200 bg-white rounded-lg focus:ring-2 focus:ring-[#B3A6FF] transition"
           />
+
           <InputField
             type="password"
             name="password"
-            placeholder="Enter your password"
+            placeholder="Your password"
             value={inputValue.password}
             onChange={handleChange}
-            className="bg-[#2a2a2a] text-white placeholder-gray-400 border border-[#55CCF2] focus:ring-[#9B5DE5]"
+            className="w-full px-4 py-2.5 border border-slate-200 bg-white rounded-lg focus:ring-2 focus:ring-[#B3A6FF] transition"
           />
 
-        <LoginButton
-            label="Login"
-            className="w-full py-3 rounded-xl bg-[#ff8661] text-black font-semibold hover:bg-[#9B5DE5] hover:text-white transition"
+          <SubmitButton
+            label="Log In"
+            className="w-full py-3 rounded-lg font-semibold text-gray-900 bg-gradient-to-r from-[#c1adfe] via-[#e1befd] to-[#cec3f0] shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all"
           />
-          
         </form>
 
-        {error && (
-          <p className="text-red-400 mt-4 text-sm text-center font-medium">{error}</p>
-        )}
-        
+        {/* Messages */}
+        {error && <p className="text-orange-600 mt-3 text-sm text-center">{error}</p>}
+        {success && <p className="text-green-600 mt-3 text-sm text-center">{success}</p>}
 
-        <p className="mt-6 text-center text-gray-400 text-sm">
-          Don't have an account?{" "}
-          <a
-            href="/signup"
-            className="text-[#55CCF2] font-semibold hover:text-[#FFD166] transition"
-          >
-            Signup here
-          </a>
+        {/* Switch to Signup */}
+        <p className="mt-6 text-center text-sm text-gray-700">
+          Don’t have an account?{" "}
+          <Link href="/signup" className="text-[#7E4FFF] hover:text-[#FF6F61] font-medium underline transition">
+            Create one
+          </Link>
         </p>
-      </div>
+      </main>
     </div>
   );
-};
-
-export default page;
+}
