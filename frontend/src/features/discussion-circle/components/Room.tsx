@@ -1,10 +1,9 @@
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import { RoomData } from "../types/RoomData";
 import Image from "next/image";
 import Circle from "./Circle";
 import IconButton from "./IconButton";
 import Prompt from "./Prompt";
-import { motion } from "framer-motion";
 import { useAuth } from "@/context/AuthContext";
 
 interface RoomProps {

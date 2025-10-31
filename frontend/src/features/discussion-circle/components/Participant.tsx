@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ParticipantData } from "../types/ParticipantData";
-import { UserData } from "../types/UserData";
 import Image from "next/image";
 
 interface ParticipantProps {

@@ -43,6 +43,7 @@ export default function RoomBrowser({
             placeholder="Search"
             className="outline-none"
             style={{ minWidth: 0 }}
+            onChange={onQuery}
           />
         </div>
 

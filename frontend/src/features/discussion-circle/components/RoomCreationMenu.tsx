@@ -1,12 +1,8 @@
-import Image from "next/image";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { Input, Textarea } from "@headlessui/react";
 import SettingsCell from "./SettingsCell";
-import { useAuth } from "@/context/AuthContext";
-import { RoomSetting } from "../types/RoomSetting";
 import { ClientRoomData } from "../types/ClientRoomData";
 import IconButton from "./IconButton";
-import { motion, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 import { createRoom } from "@/app/discussion-circle/api";
 import { DEFAULT_SETTINGS, SETTINGS } from "@/app/discussion-circle/constants";
 
@@ -24,7 +20,6 @@ export default function RoomCreationMenu({
   const [createButtonMessage, setCreateButtonMessage] =
     useState<string>("Create");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const user = useAuth();
   const updateMessage = useRef<NodeJS.Timeout>(undefined);
 
   function changeSetting(
