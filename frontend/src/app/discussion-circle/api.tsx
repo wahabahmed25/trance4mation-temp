@@ -1,11 +1,9 @@
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import { initializeApp } from "firebase/app";
-import { User } from "firebase/auth";
 import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot } from "firebase/firestore";
 
 const backendUrl = "http://localhost:5000"
-
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
@@ -62,8 +60,24 @@ export async function leaveRoom(roomId: string, name: string, uid: string) {
     })
 }
 
-export async function startRound(roomId: string, idToken: string) {
-    const response = await fetch(`${backendUrl}/start-round`, {
+export async function startGame(roomId: string, idToken: string) {
+    const response = await fetch(`${backendUrl}/start-game`, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${idToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            roomId: roomId
+        })
+    })
+    const json = await response.json()
+    return json
+}
+
+
+export async function skipTurn(roomId: string, idToken: string) {
+    const response = await fetch(`${backendUrl}/skip-turn`, {
         method: "POST",
         headers: {
             'Authorization': `Bearer ${idToken}`,

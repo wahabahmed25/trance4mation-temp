@@ -148,7 +148,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                 </div>
 
                 <div className="flex justify-center">
-                    <motion.div
+                    <button
                     style={{background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)"}}
                     onClick={async () => {
                         if (isLoading) { return }
@@ -166,7 +166,7 @@ export default function RoomCreationMenu({onCloseButtonClick, onConfirmButtonCli
                     ">
                     
                         {createButtonMessage}
-                    </motion.div>
+                    </button>
                 </div>
             </motion.div>
         </div>

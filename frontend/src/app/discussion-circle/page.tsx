@@ -8,7 +8,7 @@ import Welcome from "@/features/discussion-circle/components/Welcome"
 import { useAuth } from "@/context/AuthContext"
 import { FIREBASE_APP, FIRESTORE } from "./defaults"
 import { getAuth, onAuthStateChanged, User } from "firebase/auth"
-import { createRoom, getRooms, joinRoom, leaveRoom, subscribeToRoom } from "./api"
+import { createRoom, getRooms, joinRoom, leaveRoom, skipTurn, startGame, subscribeToRoom } from "./api"
 import { redirect } from "next/navigation"
 
 export default function DiscussionCircle() {
@@ -16,13 +16,14 @@ export default function DiscussionCircle() {
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>()
     const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false)
     const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false)
+    const [useMobileLayout, setUseMobileLayout] = useState<boolean>(window.innerWidth < 768)
     const [auth, setAuth] = useState<User | undefined>(undefined)
     const user = useAuth().user
     const unsubscribe = useRef<() => void>(undefined)
 
-    if (!user) {
-        redirect("/")
-    }
+    // if (!user) {
+    //     redirect("/")
+    // }
 
     useEffect(() => {
         getRooms().then(setRoomListings)
@@ -37,6 +38,15 @@ export default function DiscussionCircle() {
                 setAuth(undefined)
             }
         });
+
+        function onResize() {
+            setUseMobileLayout(window.innerWidth < 768)
+        }
+        window.addEventListener("resize", onResize)
+
+        return () => {
+            window.removeEventListener("resize", onResize)
+        }
     }, [])
 
     return (
@@ -59,7 +69,11 @@ export default function DiscussionCircle() {
             <div className="
             h-full flex w-full md:w-1/4 p-8 
             absolute md:relative
-            ">
+            "
+            style={{
+                display: currentRoom && useMobileLayout ? "none" : "block"
+            }}
+            >
                 <RoomBrowser
                 rooms={roomListings}
                 onCreateButtonClick={() => {
@@ -72,7 +86,7 @@ export default function DiscussionCircle() {
                 onRoomClick={async (roomData: RoomData) => {
                     setIsJoiningRoom(true)
                     if (currentRoom?.id) { 
-                        if (unsubscribe.current) { unsubscribe.current() }
+                        unsubscribe.current?.()
                         await leaveRoom(currentRoom.id, user?.name, user?.uid) 
                         setCurrentRoom(undefined)
                     }
@@ -80,17 +94,17 @@ export default function DiscussionCircle() {
 
                     await joinRoom(roomData.id, user?.name, user?.uid)
                     
-                    if (unsubscribe.current) { unsubscribe.current() }
+                    unsubscribe.current?.()
                     unsubscribe.current = subscribeToRoom(roomData.id, setCurrentRoom)
                 }}
                 />
             </div>
 
             <div className="
-            grow h-full p-8 hidden md:block
+            grow h-full p-8 md:block
             "
             style={{
-                opacity: isJoiningRoom ? 0.7 : 1
+                opacity: isJoiningRoom ? 0.7 : 1,
             }}
             >
                 {
@@ -101,10 +115,19 @@ export default function DiscussionCircle() {
                                 if (!currentRoom?.id) { return }
 
                                 setCurrentRoom(undefined)
-                                if (unsubscribe.current) { unsubscribe.current() }
+                                unsubscribe.current?.()
                                 await leaveRoom(currentRoom.id, user.name, user.uid)
                             }}
-                            // onStartButtonClick={startRound}
+                            onStartButtonClick={async () => {
+                                const idToken = await auth?.getIdToken()
+                                if (!idToken) { return }
+                                startGame(currentRoom.id, idToken)
+                            }}
+                            onSkipButtonClick={async () => {
+                                const idToken = await auth?.getIdToken()
+                                if (!idToken) { return }
+                                skipTurn(currentRoom.id, idToken)
+                            }}
                             />
                         :   <Welcome/>
                 }

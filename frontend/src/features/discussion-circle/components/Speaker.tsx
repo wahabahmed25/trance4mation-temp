@@ -15,7 +15,7 @@ export default function Speaker({userData, timeLimit, timeLeft}: ParticipantProp
                     <svg className="size-24 absolute -rotate-90">
                         <circle 
                         cx="50%" cy="50%" r="40px" 
-                        fill="none" stroke="#FFD166" 
+                        fill="none" stroke="#FCA17D" 
                         strokeWidth={3} strokeDasharray={2 * 40 * Math.PI} strokeDashoffset={2 * 40 * Math.PI * (1 - timeLeft / timeLimit)}
                         />
                     </svg>
@@ -27,7 +27,7 @@ export default function Speaker({userData, timeLimit, timeLeft}: ParticipantProp
                     className="z-0"
                     />
                 </div>
-                <div className="text-white text-xl font-semibold z-1 absolute rounded-full -bottom-10">
+                <div className="text-[#FCA17D] text-xl font-semibold absolute rounded-full -bottom-10">
                     <p>{timeLeft}</p>
                 </div>
             </div>

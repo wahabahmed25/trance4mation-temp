@@ -20,10 +20,10 @@ export default function Participant({userData, isSpeaker, goalX, goalY}: Partici
     }, [goalX, goalY])
 
     return (
-        <div className="absolute transition-transform duration-600 ease-out" style={{
+        <div className="absolute transition-transform duration-600 ease-out z-1" style={{
             transform: `translate(${x}px, ${y}px)`
         }}>
-            <div className="border-3 rounded-full" style={{borderColor: isSpeaker ? "#FFD166" : "#066D77"}}>
+            <div className="border-4 rounded-full" style={{borderColor: isSpeaker ? "#FCA17D" : "#066D77"}}>
                 <div className="size-16 p-2 rounded-full bg-slate-700">
                     <div className="size-12 relative">
                         <Image

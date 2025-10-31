@@ -4,16 +4,20 @@ import Image from "next/image";
 import Circle from "./Circle";
 import IconButton from "./IconButton";
 import Prompt from "./Prompt";
+import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 interface RoomProps {
     roomData: RoomData,
     onExitButtonClick?: MouseEventHandler<HTMLButtonElement>,
-    onStartButtonClick?: MouseEventHandler<HTMLButtonElement>
+    onStartButtonClick?: () => unknown
+    onSkipButtonClick?: () => unknown
 }
 
-export default function Room({roomData, onExitButtonClick, onStartButtonClick} : RoomProps) {
+export default function Room({roomData, onExitButtonClick, onStartButtonClick, onSkipButtonClick} : RoomProps) {
     const [isPromptVisible, setPromptVisible] = useState<boolean>(true)
     const [currentPrompt, setCurrentPrompt] = useState<string>("");
+    const user = useAuth()
 
     useEffect(() => {
         if (roomData.prompt != currentPrompt) {
@@ -71,6 +75,26 @@ export default function Room({roomData, onExitButtonClick, onStartButtonClick} :
                 >
                     {roomData.isActive ?
                         <>
+                            <div 
+                            className="flex justify-center absolute w-full"
+                            style={{
+                                top: "-2em"
+                            }}
+                            >
+                                <button
+                                disabled={roomData.participants[roomData.speakerIndex].uid !== user.user?.uid}
+                                style={{ background: "linear-gradient(135deg, #FCA17D 0%, #F6765E 100%)" }}
+                                onClick={onSkipButtonClick}
+                                className="
+                                p-1 w-28 cursor-pointer 
+                                font-bold text-xl text-white text-center
+                                shadow-[0_0_10px_rgba(255,111,97,0.4)] rounded-xl 
+                                hover:scale-103 transition
+                                disabled:opacity-70 disabled:hover:scale-100 disabled:cursor-default
+                                ">
+                                    Skip ⏭️
+                                </button>
+                            </div>
                             <button>👍</button>
                             <button>❤️</button>
                             <button>👏</button>
