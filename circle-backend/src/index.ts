@@ -67,6 +67,8 @@ app.post('/create-room', (req: Request, res: Response) => {
             timeLimit: req.body.timeLimit,
         }).then((docRef) => {
             res.json("valid")
+        }).then((docRef) => {
+            res.json("valid")
         })
     }
     else {
