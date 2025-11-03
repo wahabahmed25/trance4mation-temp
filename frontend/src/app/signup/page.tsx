@@ -5,7 +5,9 @@ import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { signup } from "@/lib/api/ApiCalls";
 import { initAnalytics } from "@/lib/firebase";
-const SignupPage = () => {
+import Link from "next/link";
+
+export default function SignupPage() {
   const router = useRouter();
   const [inputValue, setInputValue] = useState({
     name: "",
@@ -17,7 +19,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     initAnalytics();
-  }, [])
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -44,75 +46,76 @@ const SignupPage = () => {
         setSuccess("Account created successfully ✅");
         setError("");
         setInputValue({ name: "", email: "", password: "" });
-
-        router.push("/login")
+        router.push("/login");
       } else {
         setError("Error signing up ❌");
       }
     } catch (err) {
       setError("Unexpected error signing up ❌");
-      console.error("error signing up", err);
+      console.error(err);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-[#1a1a1a] via-[#2d1b3d] to-[#0d1f2d] px-4 font-sans">
-      <div className="bg-[#1e1e1e] rounded-2xl shadow-2xl p-8 w-full max-w-md border border-[#006D77]">
-        <h1 className="text-3xl font-extrabold text-center text-[#FFD166] mb-6 tracking-wide">
+    <div className="font-sans flex justify-center items-center min-h-screen px-6 py-14 bg-gradient-to-br from-[#faf8ff] via-[#f3ecff] to-[#ffeaea]">
+      <main className="w-full max-w-md bg-white/90 backdrop-blur-xl shadow-lg rounded-2xl px-8 py-10 border border-white/40">
+        
+        {/* Title */}
+        <h1 className="text-center text-3xl font-bold text-[#4B4FA3] tracking-tight mb-2">
           Create Your Account
         </h1>
+        <p className="text-center text-sm text-gray-600 mb-8">
+          Start your journey with us 🌱
+        </p>
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
+
           <InputField
             type="text"
             name="name"
-            placeholder="Enter your name"
+            placeholder="Full Name"
             value={inputValue.name}
             onChange={handleChange}
-            className="bg-[#2a2a2a] text-white placeholder-gray-400 border border-[#55CCF2] focus:ring-[#9B5DE5]"
+            className="w-full px-4 py-2.5 border border-slate-200 bg-white rounded-lg focus:ring-2 focus:ring-[#B3A6FF] transition"
           />
+
           <InputField
             type="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="you@email.com"
             value={inputValue.email}
             onChange={handleChange}
-            className="bg-[#2a2a2a] text-white placeholder-gray-400 border border-[#55CCF2] focus:ring-[#9B5DE5]"
+            className="w-full px-4 py-2.5 border border-slate-200 bg-white rounded-lg focus:ring-2 focus:ring-[#B3A6FF] transition"
           />
+
           <InputField
             type="password"
             name="password"
-            placeholder="Enter your password"
+            placeholder="Create a password"
             value={inputValue.password}
             onChange={handleChange}
-            className="bg-[#2a2a2a] text-white placeholder-gray-400 border border-[#55CCF2] focus:ring-[#9B5DE5]"
+            className="w-full px-4 py-2.5 border border-slate-200 bg-white rounded-lg focus:ring-2 focus:ring-[#B3A6FF] transition"
           />
 
           <SubmitButton
             label="Create Account"
-            className="w-full py-3 rounded-xl bg-[#ff8661] text-black font-semibold hover:bg-[#9B5DE5] hover:text-white transition"
+            className="w-full py-3 rounded-lg font-semibold text-gray-900 bg-gradient-to-r from-[#c1adfe] via-[#e1befd] to-[#cec3f0] shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all"
           />
         </form>
 
-        {error && (
-          <p className="text-red-400 mt-4 text-sm text-center font-medium">{error}</p>
-        )}
-        {success && (
-          <p className="text-green-400 mt-4 text-sm text-center font-medium">{success}</p>
-        )}
+        {/* Messages */}
+        {error && <p className="text-orange-600 mt-3 text-sm text-center">{error}</p>}
+        {success && <p className="text-green-600 mt-3 text-sm text-center">{success}</p>}
 
-        <p className="mt-6 text-center text-gray-400 text-sm">
+        {/* Switch to Login */}
+        <p className="mt-6 text-center text-sm text-gray-700">
           Already have an account?{" "}
-          <a
-            href="/login"
-            className="text-[#55CCF2] font-semibold hover:text-[#FFD166] transition"
-          >
-            Login here
-          </a>
+          <Link href="/login" className="text-[#7E4FFF] hover:text-[#FF6F61] font-medium underline transition">
+            Login
+          </Link>
         </p>
-      </div>
+      </main>
     </div>
   );
-};
-
-export default SignupPage;
+}
