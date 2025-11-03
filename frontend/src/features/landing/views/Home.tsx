@@ -27,22 +27,22 @@ function Home() {
       {
          quote: "A game that resonated with my experience",
          author: "Sarah M.",
-         image: "/src/assets/ex_testimonal.png",
+         image: "/landing-page-img/ex_testimonal.png",
       },
       {
          quote: "This platform helped me understand I wasn't alone in my struggles",
          author: "Alex Rodriguez",
-         image: "/src/assets/ex_testimonal.png",
+         image: "/landing-page-img/ex_testimonal.png",
       },
       {
          quote: "The interactive experiences gave me tools I never knew I needed",
          author: "Jordan Kim",
-         image: "/src/assets/ex_testimonal.png",
+         image: "/landing-page-img/ex_testimonal.png",
       },
       {
          quote: "Finally, a safe space where I could explore my mental health journey",
          author: "Morgan Taylor",
-         image: "/src/assets/ex_testimonal.png",
+         image: "/landing-page-img/ex_testimonal.png",
       },
    ];
 
