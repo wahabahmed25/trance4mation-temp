@@ -2,8 +2,16 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { MessageCircle, Calendar, Users } from "lucide-react";
 
-const moods = ["😊", "😐", "😴", "😡", "🤧"];
+const moods = [
+  { emoji: "😊", label: "Happy", color: "#FFD166" },
+  { emoji: "😐", label: "Neutral", color: "#7EC8E3" },
+  { emoji: "😔", label: "Sad", color: "#A78BFA" },
+  { emoji: "😠", label: "Angry", color: "#F6765E" },
+  { emoji: "🕊️", label: "Calm", color: "#A3E4B3" },
+  { emoji: "😴", label: "Tired", color: "#CFCFEA" },
+];
 
 const MoodWidget = () => {
   return (
@@ -41,29 +49,51 @@ const MoodWidget = () => {
         </p>
 
         {/* Mood Emoji Row */}
-        <div className="flex gap-4 text-4xl mt-3">
+        <div className="flex gap-5 text-3xl mt-10 flex-inline">
           {moods.map((m, i) => (
-            <button
-              key={i}
-              className="hover:scale-[1.15] active:scale-[0.95] transition-transform"
-            >
-              {m}
-            </button>
+            <Link key={i} href="/mood-calendar">
+              <motion.span
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ type: "spring", stiffness: 250 }}
+                className="cursor-pointer select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.2)]"
+                style={{ color: m.color }}
+                title={m.label}
+              >
+                {m.emoji}
+              </motion.span>
+            </Link>
           ))}
         </div>
 
-        {/* Mode Buttons */}
-        <div className="flex gap-3 mt-6">
-          {["Circle", "Mood", "Social"].map((label) => (
-            <button
-              key={label}
-              className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
-              text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
-              transition-all text-sm"
-            >
-              {label}
-            </button>
-          ))}
+        {/* Mode Buttons / Linked */}
+        <div className="flex gap-3 mt-10">
+          <Link
+            href="/discussion-circle"
+            className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
+            text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
+            transition-all text-sm flex items-center gap-1"
+          >
+            <MessageCircle size={16} /> Circle
+          </Link>
+
+          <Link
+            href="/mood-calendar"
+            className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
+            text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
+            transition-all text-sm flex items-center gap-1"
+          >
+            <Calendar size={16} /> Mood
+          </Link>
+
+          <Link
+            href="/social"
+            className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
+            text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
+            transition-all text-sm flex items-center gap-1"
+          >
+            <Users size={16} /> Social
+          </Link>
         </div>
 
         <p className="text-[#444]/60 text-xs mt-4">
