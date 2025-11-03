@@ -43,6 +43,7 @@ const prompts = [
     "What’s the best class you’ve taken so far?",
     "What’s the worst class you’ve taken so far?"
 ]
+const timeouts: Record<string, NodeJS.Timeout> = {}
 
 // lists all rooms. no purpose other than to test that the service account is authenticated correction
 app.get("/", (req: Request, res: Response) => {
@@ -64,8 +65,11 @@ app.post('/create-room', (req: Request, res: Response) => {
             participants: [],
             rounds: req.body.rounds, 
             timeLimit: req.body.timeLimit,
+        }).then((docRef) => {
+            res.json("valid")
+        }).then((docRef) => {
+            res.json("valid")
         })
-        res.json("valid")
     }
     else {
         res.json("invalid")
@@ -73,31 +77,43 @@ app.post('/create-room', (req: Request, res: Response) => {
 })
 
 // starts the game
-app.post('/start-round', (req: Request, res: Response) => {
+app.post('/start-game', async (req: Request, res: Response) => {
     // const authToken = getRequestAuthToken(req)
     const roomId = req.body.roomId
     if (roomId) {
-        firestore.doc(`rooms/${roomId}`).get()
-        .then((snapshot) => {
-            // if the round is already going, there's no need to do anything
-            if (snapshot.data()?.isActive) {
-                return
-            }
-
-            // select the first prompt and speaker
-            firestore.doc(`rooms/${roomId}`).update({
-                isActive: true,
-                prompt: prompts[Math.floor(Math.random() * prompts.length)],
-                roundsLeft: snapshot.data()?.rounds,
-                speakerIndex: 0,
-                speakerStart: Timestamp.now()
-            })
-            // recursively play turns until the game is finished
-            playTurn(roomId)
+        const snapshot = await firestore.doc(`rooms/${roomId}`).get()
+        // if the round is already going, there's no need to do anything
+        if (snapshot.data()?.isActive) {
+            return
+        }
+        // select the first prompt and speaker
+        await firestore.doc(`rooms/${roomId}`).update({
+            isActive: true,
+            prompt: prompts[Math.floor(Math.random() * prompts.length)],
+            roundsLeft: snapshot.data()?.rounds,
+            speakerIndex: 0,
+            speakerStart: Timestamp.now()
         })
+
+        // recursively play turns until the game is finished
+        timeouts[roomId] = setTimeout(() => {
+            playTurn(roomId)
+        }, snapshot.data()?.timeLimit * 1000)
     }
     else {
         res.json(`${roomId} is an invalid room id`)
+    }
+})
+
+app.post('/skip-turn', (req: Request, res: Response) => {
+    const roomId = req.body.roomId
+    if (roomId) {
+        // clear the room's current timeout, then play the next turn
+        clearTimeout(timeouts[roomId])
+        playTurn(roomId)
+    }
+    else {
+        res.json(`failed to skip turn`)
     }
 })
 
@@ -124,35 +140,39 @@ function isValidCreateRoomRequest(req: Request) {
  * until the room's roundsLeft field becomes 0
  * @param {string} roomId - the document id of the room document to play a turn in
  */
-function playTurn(roomId: string) {
+async function playTurn(roomId: string) {
     // get the data from the room
-    firestore.doc(`rooms/${roomId}`).get()
-    .then((snapshot) => {
-        // get the next speaker index
-        const participants = snapshot.data()?.participants
-        const speakerIndex = snapshot.data()?.speakerIndex
-        const nextSpeakerIndex = (speakerIndex + 1) % participants.length
+    const snapshot = await firestore.doc(`rooms/${roomId}`).get()
+    if (!snapshot) {
+        return
+    }
 
-        // if the next speaker index is 0, we've cycled through all participants and should choose a new prompt and update the number of rounds
-        const cycleComplete = (nextSpeakerIndex === 0)
-        const prompt = cycleComplete ? prompts[Math.floor(Math.random() * prompts.length)] : snapshot.data()?.prompt
-        const roundsLeft = cycleComplete ? snapshot.data()?.roundsLeft - 1 : snapshot.data()?.roundsLeft
-        const timeLimit = snapshot.data()?.timeLimit
+    // get the next speaker index
+    const participants = snapshot.data()?.participants
+    const speakerIndex = snapshot.data()?.speakerIndex
+    const nextSpeakerIndex = (speakerIndex + 1) % participants.length
 
-        // update firestore
-        firestore.doc(`rooms/${roomId}`).update({
-            speakerIndex: (speakerIndex + 1) % participants.length,
-            speakerStart: Timestamp.now(),
-            prompt: prompt,
-            roundsLeft: roundsLeft
-        })
+    // if the next speaker index is 0, we've cycled through all participants and should choose a new prompt and update the number of rounds
+    const cycleComplete = (nextSpeakerIndex === 0)
+    const prompt = cycleComplete ? prompts[Math.floor(Math.random() * prompts.length)] : snapshot.data()?.prompt
+    const roundsLeft = cycleComplete ? snapshot.data()?.roundsLeft - 1 : snapshot.data()?.roundsLeft
+    const timeLimit = snapshot.data()?.timeLimit
 
-        // if roundsLeft is not 0, set a timeout for the next update
-        if (roundsLeft > 0) {
-            // set a timeout for the next update
-            setTimeout(() => {
-                playTurn(roomId)
-            }, timeLimit * 1000)
-        }
+    if (roundsLeft <= 0) {
+        console.log(roundsLeft, "game should be over")
+        return
+    }
+
+    // update firestore
+    await firestore.doc(`rooms/${roomId}`).update({
+        speakerIndex: (speakerIndex + 1) % participants.length,
+        speakerStart: Timestamp.now(),
+        prompt: prompt,
+        roundsLeft: roundsLeft
     })
+
+    // make a timeout and store it in the timeouts map using the roomId as the key
+    timeouts[roomId] = setTimeout(() => {
+        playTurn(roomId)
+    }, timeLimit * 1000)
 }
