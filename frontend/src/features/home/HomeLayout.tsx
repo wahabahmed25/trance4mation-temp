@@ -18,7 +18,7 @@ const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
       className="relative min-h-screen flex flex-col text-[#2C2C2C] overflow-hidden"
       style={{
         background:
-          "linear-gradient(180deg, #FDE7D8 0%, #F4E8F9 50%, #DDEBFF 100%)",
+    "linear-gradient(to bottom, #F7F5FB 0%, #F1F6FA 50%, #E7EEF6 100%)"
       }}
     >
       <Navbar />
