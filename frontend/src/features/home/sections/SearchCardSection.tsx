@@ -31,14 +31,15 @@ const SearchCardSection = () => {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
-        bg-gradient-to-br from-white/80 via-[#F6EDE8]/40 to-[#FDE7D8]/30"
+bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
+
       />
 
       <div className="relative z-10 space-y-6">
         {/* 💫 Header Text — Blue → Violet Gradient */}
         <h1
           className="text-4xl sm:text-3xl md:text-4xl font-extrabold leading-tight
-          bg-gradient-to-r from-[#A78BFA] via-[#7EC8E3] to-[#A78BFA]
+          bg-gradient-to-r from-[#5b528a] via-[#456571] to-[#5c548a]
           text-transparent bg-clip-text drop-shadow-sm"
         >
           Build Calm, Focus, and Resilience — Through Play
@@ -54,7 +55,7 @@ const SearchCardSection = () => {
           <button
             className="
     rounded-lg 
-    bg-gradient-to-r from-[#A78BFA] via-[#7EC8E3] to-[#C8B8FF]
+bg-gradient-to-r from-[#514753] via-[#463b41] to-[#2b2523]
     px-6 py-2.5 
     text-white font-semibold 
     shadow-[0_0_12px_rgba(167,139,250,0.35)]
