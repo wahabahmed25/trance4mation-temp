@@ -11,11 +11,13 @@
     "dev": "npx nodemon src/index.ts"
   },
   "dependencies": {
+    "@google-apps/meet": "^0.7.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "firebase": "^12.4.0",
-    "firebase-admin": "^13.5.0"
+    "firebase-admin": "^13.5.0",
+    "google-auth-library": "^10.5.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
