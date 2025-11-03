@@ -40,7 +40,8 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
+    "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/firestoreSetup.ts", "src/meetsSetup.ts", "src/prompts.ts"],
   "exclude": ["node_modules"]
 }
