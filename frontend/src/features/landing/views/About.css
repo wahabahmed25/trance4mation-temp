@@ -4,11 +4,6 @@ h2 {
    font-size: 50px;
 }
 
-p {
-   font-size: 17px;
-   text-align: center;
-}
-
 @keyframes appear {
    from {
       opacity: 0;

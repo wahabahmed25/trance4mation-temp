@@ -1,12 +1,15 @@
 /* ==========================================
                 HERO SECTION
    ========================================== */
+.home-page {
+   margin-top: 8rem;
+}
+
 .hero-section {
    margin-top: 80px;
    display: flex;
    justify-content: center;
    min-height: calc(100vh - 200px);
-
 }
 
 .hero-left {
@@ -19,7 +22,7 @@
    img {
       max-width: 100%;
       height: auto;
-      max-height: 400px;
+      max-height: 5thi00px;
    }
 }
 
@@ -30,7 +33,6 @@
    /* justify-content: center; */
    align-items: center;
    padding-right: 6rem;
-
 
    h1 {
       font-size: 4.5rem;
@@ -59,7 +61,7 @@
       display: block;
       text-align: center;
       margin-bottom: 30px;
-
+      font-size: 1.2rem;
    }
 }
 
@@ -122,7 +124,7 @@
    overflow: hidden;
 }
 .game-section h2 {
-   margin-top: 2rem;
+   margin-top: 1rem;
    font-weight: bold;
 }
 
@@ -133,16 +135,21 @@
    left: 0;
    right: 0;
    bottom: 0;
-   background: radial-gradient(circle at 20% 80%, var(--coral-alpha-10) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--coral-alpha-10) 0%, transparent 50%);
+   background: radial-gradient(
+         circle at 20% 80%,
+         var(--coral-alpha-10) 0%,
+         transparent 50%
+      ),
+      radial-gradient(circle at 80% 20%, var(--coral-alpha-10) 0%, transparent 50%);
    pointer-events: none;
 }
 
 .game-section h2 {
    color: var(--text-primary);
-   margin-bottom: 2rem;
+   margin-bottom: 1rem;
    font-size: 2.5rem;
    text-align: center;
-   font-weight: 300;
+   font-weight: bold;
    text-shadow: 0 0 20px var(--coral-alpha-30), 0 4px 8px var(--black-alpha-50);
    text-shadow: 0 2px 4px var(--black-alpha-50);
    letter-spacing: 2px;
@@ -151,8 +158,15 @@
    padding-top: 2rem;
 }
 
-
-
+.game-section h3 {
+   color: var(--dark-blue);
+   font-size: 1.8rem;
+   font-weight: 600;
+   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+   letter-spacing: 2px;
+   text-align: center;
+   margin-top: 1.5rem;
+}
 .carousel-wrapper {
    position: relative;
    display: flex;
@@ -231,6 +245,18 @@
    gap: 2rem;
 }
 
+.testimonials-section h2 {
+   color: var(--text-primary);
+   font-size: 2.5rem;
+   text-align: center;
+   font-weight: bold;
+   text-shadow: 0 0 20px var(--coral-alpha-30), 0 4px 8px var(--black-alpha-50);
+   text-shadow: 0 2px 4px var(--black-alpha-50);
+   letter-spacing: 2px;
+   position: relative;
+   z-index: 2;
+}
+
 .testimonials-carousel-wrapper {
    display: flex;
    align-items: center;
@@ -256,23 +282,29 @@
 }
 
 .testimonial-card {
-   min-width: 800px;
+   min-width: 1000px;
    min-height: 400px;
    display: flex;
    align-items: center;
    gap: 3rem;
-   border: 5px solid var(--sky-blue);
+   background: radial-gradient(
+      circle,
+      rgba(110, 211, 255, 1) 0%,
+      rgb(255, 201, 201) 100%
+   );
    border-radius: 10px;
    padding: 3rem;
    scroll-snap-align: center;
    backdrop-filter: blur(150px);
+   box-shadow: 0 5px 15px var(--coral-alpha-30);
 }
 
 .testimonial-img {
    width: 350px;
    height: 350px;
    object-fit: cover;
-   border-radius: 50%;
+   object-position: center bottom;
+   border-radius: 45%;
    flex-shrink: 0;
 }
 
@@ -283,9 +315,10 @@
 }
 
 .testimonial-quote p {
-   font-size: 1.8rem;
+   font-size: 1.3rem;
    color: var(--text-primary);
    font-style: italic;
+   font-weight: 525;
    line-height: 1.5;
    margin: 0;
 }
@@ -298,86 +331,111 @@
 }
 
 /* ==========================================
-            Call-To-Action Section
+                MORE SECTION
    ========================================== */
-.cta-section {
+
+.more-section {
    display: flex;
-   flex-direction: column;
-   min-height: 500px;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
    gap: 2rem;
+   padding: 2rem 2rem;
+   flex-wrap: wrap;
+   position: relative;
+   margin: 0 auto;
 }
 
 .cta-container {
+   flex: 0 0 300px;
+   margin: 0 auto;
+   padding-left: 15%;
+}
+
+.more-image {
+   flex: 1 1 300px;
    display: flex;
+   justify-content: center;
    align-items: center;
-   justify-content: space-evenly;
-   min-height: 400px;
 }
 
-.cta-container h3 {
-   display: block;
+.more-image img {
+   max-width: 80%;
+   height: auto;
 }
 
-.cta-left {
+.more-links {
+   flex: 1 1 200px;
+}
+
+.more-links li {
+   list-style: none;
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   align-items: flex-start;
+   gap: 0.5rem;
+   margin-bottom: 15%;
 }
 
-.cta-left p {
-   width: 400px;
+.more-links a {
+   text-decoration: none;
+   color: var(--dark-blue);
+   font-weight: bold;
+   font-size: 1.2rem;
 }
 
+.more-links a:hover {
+   text-decoration: underline;
+}
 .cta-right {
+   margin-top: 1rem;
    display: flex;
    flex-direction: column;
-   justify-content: center;
-   align-items: center;
+   gap: 0.5rem;
 }
 
 .cta-right input {
-   display: block;
-   width: 300px;
-   height: 40px;
-   background-color: rgba(255, 255, 255, 0.08);
-   padding: 0.5rem 1rem;
-   font-size: 1rem;
+   padding: 0.5rem;
+   border-radius: 0.5rem;
+   border: 1px solid #ccc;
+   width: 250px;
 }
 
 button {
    display: block;
    width: 100px;
-   min-height: 30px;
+   min-height: 40px;
    background-color: var(--healing-coral);
    color: var(--text-white);
    border: none;
-   border-radius: 5px;
+   border-radius: 8px;
    cursor: pointer;
 }
-h2 {
-   display: block;
-}
-/* ==========================================
-   About Us Section
-   ========================================== */
-.about-section {
-   display: flex;
-   flex-direction: row;
-   border: 1px solid white;
-   align-items: center;
-   justify-content: center;
-   gap: 2rem;
+
+.footer {
+   padding: 1rem;
+   color: var(--text-white);
+
+   text-align: center;
+   background-color: var(--soft-violet);
+   font-size: 0.9rem;
 }
 
-.about-section a {
-   display: block;
-   width: 100px;
-   min-height: 30px;
-   background-color: var(--healing-coral);
-   color: var(--text-white);
-   border: none;
-   border-radius: 5px;
-   text-decoration: none;
-   text-align: center;
-   padding: 0.5rem 1rem;
+@media (max-width: 900px) {
+   .more-section {
+      flex-direction: column; /* stack on smaller screens */
+      align-items: center;
+   }
+
+   .cta-container,
+   .more-image,
+   .more-links {
+      flex: 1 1 100%;
+      text-align: center;
+   }
+
+   .cta-right input {
+      width: 100%;
+      max-width: 300px;
+   }
 }

@@ -6,12 +6,67 @@ import "./FAQ.css";
 import { useState } from "react";
 
 function FAQ() {
-   const [active, setActive] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+   const [active, setActive] = useState([
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+   ]);
    const isSomeActive = active.some((element) => element);
    const handleClick = () => {
       isSomeActive
-         ? setActive([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false])
-         : setActive([true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]);
+         ? setActive([
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+           ])
+         : setActive([
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+              true,
+           ]);
    };
 
    return (
@@ -22,8 +77,10 @@ function FAQ() {
                   <h1>Contact Us!</h1>
                   <div className="div-rectangle"></div>
                   <p>
-                     We truly value your feedback, comments, and suggestions about the Play to Heal Campus Connection Hub! Your voice matters, and we want to hear what’s working well and
-                     what we can improve. Don’t hesitate to reach out to us at
+                     We truly value your feedback, comments, and suggestions about the
+                     Play to Heal Campus Connection Hub! Your voice matters, and we want
+                     to hear what’s working well and what we can improve. Don’t hesitate
+                     to reach out to us at
                      <a href="mailto:info@playtohealhub.com">
                         <span>
                            <b> info@playtohealhub.com </b>
@@ -33,12 +90,19 @@ function FAQ() {
 
                   <br></br>
                   <p>
-                     <b>Together, we can build an even more supportive and inclusive community.</b>
+                     <b>
+                        Together, we can build an even more supportive and inclusive
+                        community.
+                     </b>
                   </p>
                   <div className="socmed-icons">
                      <div>
                         <a href="">
-                           <img src="/landing-page-img/Phone.svg" width={47} height={47} />
+                           <img
+                              src="/landing-page-img/Phone.svg"
+                              width={47}
+                              height={47}
+                           />
                         </a>
                      </div>
                      <div>
@@ -58,11 +122,17 @@ function FAQ() {
                      </div>
                   </div>
                </div>
-               <div className="input-contact">
+               {/* <div className="input-contact">
                   <ContactUs />
-               </div>
+               </div> */}
             </div>
-            <Questions handleClick={handleClick} isSomeActive={isSomeActive} faqQuestions={faqQuestions} turn={active} setTurn={setActive} />
+            <Questions
+               handleClick={handleClick}
+               isSomeActive={isSomeActive}
+               faqQuestions={faqQuestions}
+               turn={active}
+               setTurn={setActive}
+            />
          </section>
       </div>
    );
