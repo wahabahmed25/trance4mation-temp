@@ -25,9 +25,10 @@ app.get("/", (req: Request, res: Response) => {
 })
 
 // creates a room with only the data necessary for browsing rooms. data relating to the game state is added later
-app.post('/create-room', (req: Request, res: Response) => {
+app.post('/create-room', async (req: Request, res: Response) => {
     if (isValidCreateRoomRequest(req)) {
         console.log(req.body)
+        const [space] = await meets.createSpace()
         firestore.collection("rooms").add({
             description: req.body.description,
             isActive: false,
@@ -36,6 +37,7 @@ app.post('/create-room', (req: Request, res: Response) => {
             participants: [],
             rounds: req.body.rounds, 
             timeLimit: req.body.timeLimit,
+            url: space.meetingUri
         }).then((docRef) => {
             res.json("valid")
         }).then((docRef) => {

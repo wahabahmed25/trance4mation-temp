@@ -40,3 +40,11 @@ export const DEFAULT_SETTINGS = {
   rounds: 3,
   timeLimit: 30,
 };
+
+export const REACTIONS = [
+  '👍',
+  '❤️',
+  '👏',
+  '😂',
+  '😮'
+]

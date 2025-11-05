@@ -1,7 +1,7 @@
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import { initializeApp } from "firebase/app";
-import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot } from "firebase/firestore";
+import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot, Timestamp } from "firebase/firestore";
 
 const backendUrl = "http://localhost:5000"
 const firebaseConfig = {
@@ -98,6 +98,15 @@ export function subscribeToRoom(roomId: string, onChange: (data: RoomData) => vo
             "id": roomId
         } as RoomData
         onChange(newRoomData)
+    })
+}
+
+export async function addReaction(roomId: string, reactionIndex: number, timestamp: Timestamp = Timestamp.now()) {
+    await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
+        reaction: {
+            reactionIndex: reactionIndex,
+            timestamp: timestamp
+        }
     })
 }
 

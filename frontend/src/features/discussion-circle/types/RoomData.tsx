@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase/firestore"
 import { ParticipantData } from "./ParticipantData"
+import { ReactionData } from "./ReactionData"
 
 export type RoomData = {
     id: string,
@@ -9,6 +10,7 @@ export type RoomData = {
     name: string,
     participants: ParticipantData[],
     prompt?: string,
+    reaction?: ReactionData
     rounds: number, 
     speakerIndex: number,
     speakerStart: Timestamp
