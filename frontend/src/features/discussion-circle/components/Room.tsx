@@ -5,6 +5,9 @@ import Circle from "./Circle";
 import IconButton from "./IconButton";
 import Prompt from "./Prompt";
 import { useAuth } from "@/context/AuthContext";
+import { REACTIONS } from "@/app/discussion-circle/constants";
+import { addReaction } from "@/app/discussion-circle/api";
+import ReactionSpawner from "./ReactionSpawner";
 
 interface RoomProps {
   roomData: RoomData;
@@ -31,7 +34,10 @@ export default function Room({
   }, [roomData.prompt, currentPrompt]);
 
   return (
-    <div className="flex flex-col grow h-full gap-2">
+    <div className="flex flex-col grow h-full gap-2 relative">
+      <div className="absolute bg-blue-200/30 flex w-full h-full">
+        <ReactionSpawner reactionData={roomData?.reaction}/>
+      </div>
       <div className="flex items-center">
         <h1 className="text-[#FCA17D] font-bold text-3xl grow">
           {roomData.name}
@@ -111,11 +117,14 @@ export default function Room({
                   Skip ⏭️
                 </button>
               </div>
-              <button>👍</button>
-              <button>❤️</button>
-              <button>👏</button>
-              <button>😂</button>
-              <button>😮</button>
+              {REACTIONS.map((emoji, index) => 
+                <button 
+                key={emoji} 
+                className="hover:scale-120 transition cursor-pointer active:scale-90"
+                onClick={() => addReaction(roomData.id, index)}>
+                  {emoji}
+                </button>
+              )}
             </>
           ) : (
             <div
