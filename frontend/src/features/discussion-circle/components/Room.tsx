@@ -35,7 +35,7 @@ export default function Room({
 
   return (
     <div className="flex flex-col grow h-full gap-2 relative">
-      <div className="absolute bg-blue-200/30 flex w-full h-full">
+      <div className="absolute flex w-full h-full">
         <ReactionSpawner reactionData={roomData?.reaction}/>
       </div>
       <div className="flex items-center">
