@@ -18,9 +18,17 @@ export default function ReactionSpawner({reactionData}: {reactionData: ReactionD
         if (!ref.current) {
             return
         }
-        setHeight(ref.current.clientHeight)
-        setWidth(ref.current.clientWidth)
-    }, [ref.current?.clientHeight, ref.current?.clientWidth])
+        const subject = ref.current
+        const observer = new ResizeObserver((entries) => {
+            setWidth(entries[0].contentRect.width)
+            setHeight(entries[0].contentRect.height)
+        })
+        observer.observe(subject)
+
+        return () => {
+            observer.unobserve(subject)
+        }
+    }, [])
 
     useEffect(() => {
         if (!reactionData || !ref.current) {
