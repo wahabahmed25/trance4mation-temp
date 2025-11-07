@@ -162,6 +162,8 @@ export function useRooms() {
         },
         create: async (settings: ClientRoomData) => {
             await createRoom(settings);
+            setRoomListings([])
+            getRooms().then(setRoomListings)
         },
         startGame: async () => {
             if (!auth.current || !currentRoom) { 
@@ -174,6 +176,7 @@ export function useRooms() {
             if (!auth.current || !currentRoom) { 
                 return 
             }
+            console.log("skipping turn")
             const idToken = await auth.current.getIdToken();
             await skipTurn(currentRoom.id, idToken);
         }
