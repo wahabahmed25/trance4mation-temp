@@ -12,6 +12,7 @@ export type RoomData = {
     prompt?: string,
     reaction?: ReactionData
     rounds: number, 
+    roundsLeft?: number,
     speakerIndex: number,
     speakerStart: Timestamp
     timeLimit: number,
