@@ -23,6 +23,10 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
       return;
     }
 
+    const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
+    setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed))
+
+
     const timerId = setInterval(() => {
       const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
       setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed));
@@ -69,6 +73,7 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
             userData={speaker}
             timeLeft={timeLeft}
             timeLimit={roomData.timeLimit}
+            startTime={roomData.speakerStart}
           />
         </div>
       ) : (
