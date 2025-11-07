@@ -3,24 +3,22 @@ import { RoomData } from "../types/RoomData";
 import Participant from "./Participant";
 import Speaker from "./Speaker";
 import { MouseEventHandler, useEffect, useState } from "react";
-
-const defaultRadius = 120;
+import { motion } from "framer-motion";
 
 interface CircleProps {
   roomData: RoomData;
   onStartButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+const radius = 120
+
 export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
   const [timeLeft, setTimeLeft] = useState<number>(0);
-  const [radius, setRadius] = useState(0);
   const speaker = roomData.isActive
     ? roomData.participants[roomData.speakerIndex]
     : undefined;
 
   useEffect(() => {
-    setRadius(defaultRadius);
-
     if (!roomData.isActive) {
       return;
     }
@@ -49,13 +47,19 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
         const isSpeaker = participant.uid === speaker?.uid;
 
         return (
-          <Participant
-            key={participant.uid}
-            userData={participant}
-            isSpeaker={isSpeaker}
-            goalX={xTranslate}
-            goalY={yTranslate}
-          />
+          <motion.div
+          key={participant.uid}
+          initial={{x: 0, y: 0}}
+          whileInView={{ x: xTranslate, y: yTranslate }}
+          transition={{ duration: 0.4 }}
+          className="absolute"
+          >
+            <Participant
+              key={participant.uid}
+              userData={participant}
+              isSpeaker={isSpeaker}
+            />
+          </motion.div>
         );
       })}
 
