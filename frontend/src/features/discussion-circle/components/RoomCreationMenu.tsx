@@ -1,9 +1,9 @@
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { MouseEventHandler, useContext, useEffect, useRef, useState } from "react";
 import SettingsCell from "./SettingsCell";
 import { ClientRoomData } from "../types/ClientRoomData";
 import IconButton from "./IconButton";
 import { motion } from "framer-motion";
-import { createRoom } from "@/app/discussion-circle/api";
+import { createRoom, RoomsContext } from "@/app/discussion-circle/api";
 import { DEFAULT_SETTINGS, SETTINGS } from "@/app/discussion-circle/constants";
 
 interface RoomCreationMenuProps {
@@ -20,6 +20,8 @@ export default function RoomCreationMenu({
   const [createButtonMessage, setCreateButtonMessage] =
     useState<string>("Create");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const rooms = useContext(RoomsContext)
+
   const updateMessage = useRef<NodeJS.Timeout>(undefined);
 
   function changeSetting(
@@ -125,7 +127,9 @@ export default function RoomCreationMenu({
           ))}
         </div>
 
-        <div className="text-center text-red-600">{errorMessage}</div>
+        <div className="text-center text-red-600">
+          {errorMessage}
+        </div>
 
         <div className="flex justify-center">
           <button
@@ -137,12 +141,10 @@ export default function RoomCreationMenu({
                 return;
               }
 
-              setLoading(true);
-              await createRoom({ ...settings });
-              setLoading(false);
-              if (onRoomCreated) {
-                onRoomCreated();
-              }
+              setLoading(true)
+              rooms.create(settings)
+              setLoading(false)
+              rooms.fetch()
             }}
             className="
               p-1 w-40 cursor-pointer 
