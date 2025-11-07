@@ -1,7 +1,6 @@
 import type { Request, Response } from "express";
 import e from "express";
 import { firestore } from "./firestoreSetup.ts";
-import { meets } from "./meetsSetup.ts";
 import { prompts } from "./prompts.ts";
 import { Timestamp } from "firebase-admin/firestore";
 import 'dotenv/config'
@@ -28,7 +27,7 @@ app.get("/", (req: Request, res: Response) => {
 app.post('/create-room', async (req: Request, res: Response) => {
     if (isValidCreateRoomRequest(req)) {
         console.log(req.body)
-        const [space] = await meets.createSpace()
+        
         firestore.collection("rooms").add({
             description: req.body.description,
             isActive: false,
@@ -37,9 +36,6 @@ app.post('/create-room', async (req: Request, res: Response) => {
             participants: [],
             rounds: req.body.rounds, 
             timeLimit: req.body.timeLimit,
-            url: space.meetingUri
-        }).then((docRef) => {
-            res.json("valid")
         }).then((docRef) => {
             res.json("valid")
         })
@@ -60,9 +56,11 @@ app.post('/start-game', async (req: Request, res: Response) => {
             return
         }
         // select the first prompt and speaker
+        const randomIndex = Math.floor(Math.random() * prompts.length)
         await firestore.doc(`rooms/${roomId}`).update({
             isActive: true,
-            prompt: prompts[Math.floor(Math.random() * prompts.length)],
+            previousPrompts: [randomIndex],
+            prompt: prompts[randomIndex],
             roundsLeft: snapshot.data()?.rounds,
             speakerIndex: 0,
             speakerStart: Timestamp.now()
@@ -127,9 +125,19 @@ async function playTurn(roomId: string) {
 
     // if the next speaker index is 0, we've cycled through all participants and should choose a new prompt and update the number of rounds
     const cycleComplete = (nextSpeakerIndex === 0)
-    const prompt = cycleComplete ? prompts[Math.floor(Math.random() * prompts.length)] : snapshot.data()?.prompt
     const roundsLeft = cycleComplete ? snapshot.data()?.roundsLeft - 1 : snapshot.data()?.roundsLeft
     const timeLimit = snapshot.data()?.timeLimit
+    const previousPrompts: Array<number> = snapshot.data()?.previousPrompts
+
+    let prompt = snapshot.data()?.prompt
+    if (cycleComplete) {
+        let randomIndex = Math.floor(Math.random() * prompts.length)
+        while (previousPrompts.includes(randomIndex)) {
+            randomIndex = Math.floor(Math.random() * prompts.length)
+        }
+        prompt = prompts[randomIndex]
+        previousPrompts.push(randomIndex)
+    }
 
     if (roundsLeft <= 0) {
         console.log(roundsLeft, "game should be over")
@@ -140,6 +148,7 @@ async function playTurn(roomId: string) {
     await firestore.doc(`rooms/${roomId}`).update({
         speakerIndex: (speakerIndex + 1) % participants.length,
         speakerStart: Timestamp.now(),
+        previousPrompts: previousPrompts,
         prompt: prompt,
         roundsLeft: roundsLeft
     })

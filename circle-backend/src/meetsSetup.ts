@@ -15,18 +15,18 @@ import 'dotenv/config'
 // export const meets = google.meet({version: "v2", auth: auth})
 // const res = await meets.spaces.create()
 
-const credentials = new JWT({
-    email: process.env.MEETS_SERVICE_ACCOUNT_CLIENT_EMAIL,
-    key: process.env.MEETS_SERVICE_ACCOUNT_PRIVATE_KEY,
-    scopes: ["https://www.googleapis.com/auth/meetings.space.created"]
-})
-export const meets = new SpacesServiceClient({
-    credentials: {
-        client_email: process.env.MEETS_SERVICE_ACCOUNT_CLIENT_EMAIL,
-        private_key: process.env.MEETS_SERVICE_ACCOUNT_PRIVATE_KEY
-    },
-    scopes: ["https://www.googleapis.com/auth/meetings.space.created"]
-})
+// const credentials = new JWT({
+//     email: process.env.MEETS_SERVICE_ACCOUNT_CLIENT_EMAIL,
+//     key: process.env.MEETS_SERVICE_ACCOUNT_PRIVATE_KEY,
+//     scopes: ["https://www.googleapis.com/auth/meetings.space.created"]
+// })
+// export const meets = new SpacesServiceClient({
+//     credentials: {
+//         client_email: process.env.MEETS_SERVICE_ACCOUNT_CLIENT_EMAIL,
+//         private_key: process.env.MEETS_SERVICE_ACCOUNT_PRIVATE_KEY
+//     },
+//     scopes: ["https://www.googleapis.com/auth/meetings.space.created"]
+// })
 
 // console.log(url)
 
