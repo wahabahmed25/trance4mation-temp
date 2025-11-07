@@ -68,7 +68,7 @@ export default function RoomBrowser({
       <div
         className="
           grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 
-          overflow-x-visible overflow-y scroll
+          overflow-x-visible overflow-y-scroll
         "
         style={{ scrollbarWidth: "none" }}
       >

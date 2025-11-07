@@ -98,7 +98,8 @@ export default function Room({
               >
                 <button
                   disabled={
-                    roomData.participants[roomData.speakerIndex].uid !== user.user?.uid
+                    (roomData.participants[roomData.speakerIndex].uid !== user.user?.uid) ||
+                    roomData.roundsLeft <= 0
                   }
                   style={{
                     background:
