@@ -6,10 +6,9 @@ import Room from "@/features/discussion-circle/components/Room";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import Welcome from "@/features/discussion-circle/components/Welcome";
 import { useAuth } from "@/context/AuthContext";
-import { FIREBASE_APP, FIRESTORE } from "./api";
+import { FIREBASE_APP } from "./api";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import {
-  createRoom,
   getRooms,
   joinRoom,
   leaveRoom,
@@ -17,16 +16,13 @@ import {
   startGame,
   subscribeToRoom,
 } from "./api";
-import { redirect } from "next/navigation";
 
 export default function DiscussionCircle() {
   const [roomListings, setRoomListings] = useState<RoomData[]>([]);
   const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>();
   const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false);
   const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);
-  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(
-    window.innerWidth < 768
-  );
+  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(false);
   const [auth, setAuth] = useState<User | undefined>(undefined);
   const user = useAuth().user;
   const unsubscribe = useRef<() => void>(undefined);
@@ -140,8 +136,12 @@ export default function DiscussionCircle() {
               skipTurn(currentRoom.id, idToken);
             }}
           />
-        ) : (
+        ) 
+        : !useMobileLayout ? (
           <Welcome />
+        )
+        : (
+          null
         )}
       </div>
     </div>
