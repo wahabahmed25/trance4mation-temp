@@ -22,8 +22,8 @@ export default function Speaker({
 
   useEffect(() => {
     // if the start time suddenly changes (which it shouldn't in a normal game), reset the timer
-    if (startTime != previousStartTime.current) {
-      console.log("reset timer")
+    if (startTime.seconds != previousStartTime.current?.seconds) {
+      console.log("reset timer", "previous:", previousStartTime.current?.toDate(), "current:", startTime.toDate())
       setTransitionTime(0)
       setProgress(0)
       previousStartTime.current = startTime
