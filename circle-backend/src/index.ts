@@ -126,10 +126,22 @@ async function playTurn(roomId: string) {
     // if the next speaker index is 0, we've cycled through all participants and should choose a new prompt and update the number of rounds
     const cycleComplete = (nextSpeakerIndex === 0)
     const roundsLeft = cycleComplete ? snapshot.data()?.roundsLeft - 1 : snapshot.data()?.roundsLeft
+
+    // if the game is over, update the roundsLeft variable and return
+    if (roundsLeft <= 0) {
+        console.log(roundsLeft, "game should be over")
+        await firestore.doc(`rooms/${roomId}`).update({
+            roundsLeft: roundsLeft
+        })
+        return
+    }
+
+    // otherwise update the variables needed to play another turn
     const timeLimit = snapshot.data()?.timeLimit
     const previousPrompts: Array<number> = snapshot.data()?.previousPrompts
-
     let prompt = snapshot.data()?.prompt
+
+    // if a cycle was just completed, pick a new prompt
     if (cycleComplete) {
         let randomIndex = Math.floor(Math.random() * prompts.length)
         while (previousPrompts.includes(randomIndex)) {
@@ -137,11 +149,6 @@ async function playTurn(roomId: string) {
         }
         prompt = prompts[randomIndex]
         previousPrompts.push(randomIndex)
-    }
-
-    if (roundsLeft <= 0) {
-        console.log(roundsLeft, "game should be over")
-        return
     }
 
     // update firestore
