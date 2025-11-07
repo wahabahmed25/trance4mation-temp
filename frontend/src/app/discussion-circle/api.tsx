@@ -1,7 +1,11 @@
+import { useAuth } from "@/context/AuthContext";
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
+import { RoomsContextData } from "@/features/discussion-circle/types/RoomsContextData";
 import { initializeApp } from "firebase/app";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot, Timestamp } from "firebase/firestore";
+import { createContext, useEffect, useRef, useState } from "react";
 
 const backendUrl = "http://localhost:5000"
 const firebaseConfig = {
@@ -110,40 +114,70 @@ export async function addReaction(roomId: string, reactionIndex: number, timesta
     })
 }
 
-// function joinRoom(roomId: string, user: User) {
-//     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
-//         participants: arrayUnion({
-//             name: user.displayName,
-//             uid: user.uid
-//         })
-//     })
-// }
+export const RoomsContext = createContext<RoomsContextData>(undefined as unknown as RoomsContextData)
 
+export function useRooms() {
+    const [roomListings, setRoomListings] = useState<RoomData[]>([]);
+    const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>();
+    const unsubscribe = useRef<() => void>(undefined);
+    const auth = useRef<User>(undefined)
+    const user = useAuth().user;
 
-// export async function leaveRoom(roomId: string, user: User) {
-//     await updateDoc(doc(collection(FIRESTORE, "rooms"), roomId), {
-//         participants: arrayRemove({
-//             name: user.displayName,
-//             uid: user.uid
-//         })
-//     })
-// }
+    useEffect(() => {
+        getRooms().then(setRoomListings);
+        const authState = getAuth(FIREBASE_APP);
+        onAuthStateChanged(authState, (authData) => {
+            if (authData) {
+                // User is signed in. https://firebase.google.com/docs/reference/js/firebase.User
+                auth.current = authData;
+            } else {
+                // User is signed out
+                auth.current = undefined
+            }
+        });
+    }, [])
 
-// export async function startRound(roomId: string, user: User) {
-//     const token = await user.getIdToken(true)
-//     const response = await fetch(`${backendUrl}/start-round`, {
-//         method: "POST",
-//         headers: {
-//             'Authorization': `Bearer ${token}`,
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({
-//             roomId: roomId
-//         })
-//     })
-//     const json = await response.json()
-//     return json
-// }
-
-
-
+    return {
+        listings: roomListings,
+        current: currentRoom,
+        fetch: async () => {
+            getRooms().then(setRoomListings)
+        },
+        reload: async () => {
+            setRoomListings([])
+            getRooms().then(setRoomListings)
+        },
+        join: async (id: string) => {
+            if (!user) {
+                return
+            }
+            await joinRoom(id, user.name, user.uid);
+            unsubscribe.current = subscribeToRoom(id, setCurrentRoom)
+        },
+        leave: async () => {
+            if (!currentRoom || !user) {
+                return
+            }
+            setCurrentRoom(undefined);
+            unsubscribe.current?.();
+            await leaveRoom(currentRoom.id, user.name, user.uid)
+        },
+        create: async (settings: ClientRoomData) => {
+            await createRoom(settings);
+        },
+        startGame: async () => {
+            if (!auth.current || !currentRoom) { 
+                return 
+            }
+            const idToken = await auth.current.getIdToken();
+            await startGame(currentRoom.id, idToken);
+        },
+        skipTurn: async () => {
+            if (!auth.current || !currentRoom) { 
+                return 
+            }
+            const idToken = await auth.current.getIdToken();
+            await skipTurn(currentRoom.id, idToken);
+        }
+    }
+}
