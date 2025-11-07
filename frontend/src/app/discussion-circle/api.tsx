@@ -114,8 +114,6 @@ export async function addReaction(roomId: string, reactionIndex: number, timesta
     })
 }
 
-export const RoomsContext = createContext<RoomsContextData>(undefined as unknown as RoomsContextData)
-
 export function useRooms() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([]);
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>();
