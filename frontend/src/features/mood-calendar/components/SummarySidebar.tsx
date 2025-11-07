@@ -2,10 +2,10 @@
 import type { MoodEntry } from "../types";
 
 const PALETTE = {
-  coralLight: "#FCE1D4",
-  coral: "#FCA17D",
-  cream: "#FFF7E8",
-  gold: "#FFD166",
+  skyLight: "#F4F9FF",
+  skySoft: "#EAF3FF",
+  white: "#FFFFFF",
+  blueAccent: "#CFE6FF",
 };
 
 export function SummarySidebar({
@@ -15,7 +15,6 @@ export function SummarySidebar({
   moodsByDay: Record<string, MoodEntry>;
   monthDate: Date;
 }) {
-  // --- Count moods for the month ---
   const counts: Record<string, number> = {};
   Object.values(moodsByDay).forEach((entry) => {
     if (!entry?.mood) return;
@@ -23,25 +22,23 @@ export function SummarySidebar({
   });
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
 
-  // --- Collect reflections (only for current month) ---
   const reflections = Object.entries(moodsByDay)
     .filter(([_, e]) => e?.note && e.note.trim() !== "")
-    .sort(([a], [b]) => (a > b ? -1 : 1)); // newest first
+    .sort(([a], [b]) => (a > b ? -1 : 1));
 
   return (
     <div
-      className="relative overflow-hidden rounded-3xl p-6 shadow-md border border-[#FCA17D]/40 backdrop-blur-md"
+      className="relative overflow-hidden rounded-3xl p-6 shadow-md border border-[#D6E4F5]/50 backdrop-blur-md"
       style={{
-        background: `linear-gradient(160deg, ${PALETTE.cream} 0%, ${PALETTE.coralLight} 65%, ${PALETTE.coral} 100%)`,
+        background: `linear-gradient(160deg, ${PALETTE.white} 0%, ${PALETTE.skySoft} 70%, ${PALETTE.skyLight} 100%)`,
       }}
     >
-      <h3 className="relative z-10 text-lg font-semibold text-[#F48C73] mb-3">
-        This Month’s Summary 🌞
+      <h3 className="relative z-10 text-lg font-semibold text-[#1E1E1E] mb-3">
+        This Month’s Summary ☁️
       </h3>
 
-      {/* --- Mood Summary --- */}
       {Object.keys(counts).length === 0 ? (
-        <p className="relative z-10 text-sm text-[#6C524C] italic">
+        <p className="relative z-10 text-sm text-[#5B7083] italic">
           No moods logged yet — start tracking your journey!
         </p>
       ) : (
@@ -49,22 +46,22 @@ export function SummarySidebar({
           {Object.entries(counts).map(([m, c]) => (
             <li
               key={m}
-              className="flex justify-between items-center rounded-xl px-4 py-2 shadow-sm text-[#3C2F2F]"
+              className="flex justify-between items-center rounded-xl px-4 py-2 shadow-sm text-[#1E1E1E]"
               style={{
                 background:
                   m === "happy"
-                    ? "#FFF9E0"
+                    ? "#F9FCFF"
                     : m === "neutral"
-                    ? "#EAF7FF"
+                    ? "#EFF7FF"
                     : m === "sad"
-                    ? "#F4EFFF"
+                    ? "#F4F7FF"
                     : m === "angry"
-                    ? "#FFE9E5"
+                    ? "#FFF0F0"
                     : m === "calm"
-                    ? "#E5FFF2"
+                    ? "#F3FFF9"
                     : m === "tired"
-                    ? "#F1F1F7"
-                    : "#FFF7EC",
+                    ? "#F7F7FA"
+                    : "#FFFFFF",
               }}
             >
               <span className="capitalize font-medium">{m}</span>
@@ -74,41 +71,37 @@ export function SummarySidebar({
         </ul>
       )}
 
-      {/* --- Reflections Section --- */}
       {reflections.length > 0 && (
         <div className="relative z-10 mt-6 pt-4 border-t border-white/30">
-          <h4 className="text-md font-semibold text-[#F48C73] mb-2">
+          <h4 className="text-md font-semibold text-[#1E1E1E] mb-2">
             Your Reflections
           </h4>
-          <div className="space-y-3 max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#FCA17D]/50">
+          <div className="space-y-3 max-h-60 overflow-y-auto pr-1 scrollbar-thin scrollbar-thumb-[#CFE6FF]/70">
             {reflections.map(([date, entry]) => {
-              // ✅ Fix timezone shift (explicitly treat as local date)
               const [year, month, day] = date.split("-");
               const displayDate = new Date(
                 Number(year),
                 Number(month) - 1,
                 Number(day)
               );
-
               const formattedDate = displayDate.toLocaleDateString(undefined, {
                 month: "short",
                 day: "numeric",
               });
-
               return (
                 <div
                   key={date}
-                  className="rounded-2xl bg-white/70 p-3 shadow-sm border border-[#FCA17D]/30 backdrop-blur-sm"
+                  className="rounded-2xl bg-white/80 p-3 shadow-sm border border-[#D6E4F5]/40 backdrop-blur-sm"
                 >
-                  <p className="text-xs text-[#8B6F6A] mb-1 font-medium">
+                  <p className="text-xs text-[#5B7083] mb-1 font-medium">
                     {formattedDate}
                     {entry.mood && (
-                      <span className="ml-2 capitalize text-[#F48C73] font-semibold">
+                      <span className="ml-2 capitalize text-[#1E1E1E] font-semibold">
                         {entry.mood}
                       </span>
                     )}
                   </p>
-                  <p className="text-sm text-[#3C2F2F] leading-snug">
+                  <p className="text-sm text-[#1E1E1E] leading-snug">
                     {entry.note}
                   </p>
                 </div>
@@ -119,9 +112,9 @@ export function SummarySidebar({
       )}
 
       {total > 0 && (
-        <p className="relative z-10 mt-5 text-sm text-[#6C524C] font-medium">
+        <p className="relative z-10 mt-5 text-sm text-[#5B7083] font-medium">
           Logged moods:{" "}
-          <span className="text-[#F48C73] font-bold">{total}</span>
+          <span className="text-[#1E1E1E] font-bold">{total}</span>
         </p>
       )}
     </div>

@@ -22,7 +22,6 @@ export default function MoodCalendarView() {
   const [moodsByDay, setMoodsByDay] = useState<Record<string, MoodEntry>>({});
   const [loading, setLoading] = useState(true);
 
-  /** 🧠 Load moods from Firestore or localStorage */
   useEffect(() => {
     const fetchMoods = async () => {
       try {
@@ -46,7 +45,6 @@ export default function MoodCalendarView() {
     fetchMoods();
   }, [user]);
 
-  /** 💾 Persist to Firestore + localStorage */
   useEffect(() => {
     if (loading) return;
     try {
@@ -61,14 +59,12 @@ export default function MoodCalendarView() {
     }
   }, [moodsByDay, user, loading]);
 
-  /** 🗓️ Handle day click */
   const handlePick = (dateKey: string) => {
     const entry = moodsByDay[dateKey];
     if (entry && entry.mood) setViewingDate(dateKey);
     else setSelectedDate(dateKey);
   };
 
-  /** ✅ Save mood + reflection note */
   const handleSelectMood = (mood: MoodType | null, note?: string) => {
     if (!selectedDate) return;
     const newEntry = { mood, note: note || "" };
@@ -77,59 +73,50 @@ export default function MoodCalendarView() {
     setSelectedDate(null);
   };
 
-  /** 📆 Generate month days */
   const days = generateMonthDays(currentMonth, moodsByDay);
 
   return (
-    <main className="relative min-h-[90vh] flex flex-col items-center justify-start px-4 py-12 md:px-8 text-[#3C2F2F] overflow-hidden">
+    <main className="relative min-h-[90vh] flex flex-col items-center justify-start px-4 py-12 md:px-8 text-[#1E1E1E] overflow-hidden">
       <BackgroundElements />
 
-      {/* === Container === */}
       <div
         className="
           relative w-full max-w-7xl rounded-[2rem] border 
-          border-[#F9A88D]/40 bg-white/60 backdrop-blur-md 
-          shadow-[0_0_30px_rgba(249,168,141,0.15)] 
-          ring-1 ring-white/40 overflow-hidden transition-all duration-300
+          border-[#E2EBF5]/60 bg-white/70 backdrop-blur-md 
+          shadow-[0_0_40px_rgba(180,200,230,0.25)] 
+          ring-1 ring-white/60 overflow-hidden transition-all duration-300
         "
       >
-        {/* Coral accent */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(circle at 80% 0%, rgba(249,168,141,0.1), transparent 70%)",
+              "radial-gradient(circle at 80% 0%, rgba(190,220,255,0.15), transparent 70%)",
           }}
         />
 
         {/* ===== Header ===== */}
         <header className="relative z-10 mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-8 pt-8">
           <div>
-            <h1 className="text-4xl font-extrabold tracking-tight text-[#F9A88D] drop-shadow-sm">
+            <h1 className="text-4xl font-extrabold tracking-tight text-[#1E1E1E] drop-shadow-sm">
               Mood Calendar
             </h1>
-            <p className="text-sm text-[#7C6A65] mt-1">
-              Track your daily emotions and reflections 🌤️
+            <p className="text-sm text-[#5B7083] mt-1">
+              Track your daily emotions and reflections ☁️
             </p>
           </div>
 
           {/* Month switcher */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 rounded-2xl bg-white/70 px-3 py-2 shadow-inner border border-[#F9A88D]/40 backdrop-blur-sm">
+            <div className="flex items-center gap-2 rounded-2xl bg-white/80 px-3 py-2 shadow-inner border border-[#E2EBF5]/60 backdrop-blur-sm">
               <button
                 onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
-                className="flex items-center justify-center rounded-xl px-4 py-2 text-white font-medium shadow-md hover:scale-[1.05]"
-                style={{
-                  background:
-                    "linear-gradient(135deg,#FDDAC5 0%,#F9A88D 100%)",
-                  boxShadow:
-                    "inset 0 1px 4px rgba(255,255,255,0.5),0 4px 12px rgba(249,168,141,0.35)",
-                }}
+                className="flex items-center justify-center rounded-xl px-4 py-2 font-medium shadow-md transition-all hover:scale-[1.05] bg-black text-white"
               >
                 ◀ Prev
               </button>
 
-              <span className="px-3 py-1 text-lg font-semibold text-[#3C2F2F]">
+              <span className="px-3 py-1 text-lg font-semibold text-[#1E1E1E]">
                 {currentMonth.toLocaleString(undefined, {
                   month: "long",
                   year: "numeric",
@@ -138,13 +125,7 @@ export default function MoodCalendarView() {
 
               <button
                 onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
-                className="flex items-center justify-center rounded-xl px-4 py-2 text-white font-medium shadow-md hover:scale-[1.05]"
-                style={{
-                  background:
-                    "linear-gradient(135deg,#FDDAC5 0%,#F9A88D 100%)",
-                  boxShadow:
-                    "inset 0 1px 4px rgba(255,255,255,0.5),0 4px 12px rgba(249,168,141,0.35)",
-                }}
+                className="flex items-center justify-center rounded-xl px-4 py-2 font-medium shadow-md transition-all hover:scale-[1.05] bg-black text-white"
               >
                 Next ▶
               </button>
@@ -154,10 +135,9 @@ export default function MoodCalendarView() {
 
         {/* ===== Main Layout ===== */}
         <div className="relative z-10 flex flex-col gap-8 lg:flex-row px-8 pb-10">
-          {/* Calendar */}
-          <section className="flex-1 rounded-3xl bg-white/75 p-6 shadow-inner border border-[#F9A88D]/30 backdrop-blur-md transition-all hover:shadow-lg">
+          <section className="flex-1 rounded-3xl bg-white/80 p-6 shadow-inner border border-[#E2EBF5]/60 backdrop-blur-md transition-all hover:shadow-lg">
             {loading ? (
-              <p className="text-center text-[#7C6A65] italic">
+              <p className="text-center text-[#5B7083] italic">
                 Loading your moods...
               </p>
             ) : (
@@ -165,7 +145,6 @@ export default function MoodCalendarView() {
             )}
           </section>
 
-          {/* Sidebar */}
           <aside className="lg:w-80 flex flex-col gap-6">
             <QuickLogCard
               onSelect={(mood) => {

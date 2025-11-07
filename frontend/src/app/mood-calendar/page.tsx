@@ -7,9 +7,17 @@ export default function MoodCalendarPage() {
     <div
       className="relative min-h-screen w-full text-[#2C2C2C] overflow-hidden"
       style={{
-        // 🌤 subtle blue only across top ~15% → fades quickly to warm base
+        // refined gradient: sky blue limited to 6%, fading into near-white lavender
         background: `
-          linear-gradient(180deg, #7EC8E3 0%, #E9F8FF 8%, #FDE7D8 15%, #FFF7E8 55%, #FFF7D8 100%)
+          linear-gradient(
+            180deg,
+            #7EC8E3 0%,      /* top sky blue */
+            #BFE9F5 4%,      /* softer sky fade */
+            #F5F4FF 10%,     /* extremely pale lavender */
+            #F9F8FF 28%,     /* almost white with faint violet hint */
+            #FBFAFF 55%,     /* near-white */
+            #FEFEFF 100%     /* pure white with minimal lilac undertone */
+          )
         `,
       }}
     >
@@ -17,36 +25,36 @@ export default function MoodCalendarPage() {
         <MoodCalendarView />
       </main>
 
-      {/* Ambient glows — balanced & soft */}
+      {/* Ambient glows — cool, elegant, tranquil */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        {/* very soft top-center sky glow */}
+        {/* top-center sky glow */}
         <div
           className="absolute top-[-80px] left-1/2 -translate-x-1/2 h-[220px] w-[480px] rounded-full blur-[130px]"
-          style={{ background: "#7EC8E3", opacity: 0.20 }}
+          style={{ background: "#7EC8E3", opacity: 0.18 }}
         />
 
-        {/* top-left violet hue */}
+        {/* top-left soft violet hue */}
         <div
           className="absolute -left-24 -top-24 h-64 w-64 rounded-full blur-[100px]"
-          style={{ background: "#A78BFA", opacity: 0.13 }}
+          style={{ background: "#C9BCFF", opacity: 0.1 }}
         />
 
-        {/* mid-page golden warmth */}
+        {/* mid-page diffuse lavender haze */}
         <div
           className="absolute top-[35%] left-1/2 -translate-x-1/2 h-80 w-80 rounded-full blur-[150px]"
-          style={{ background: "#FFD166", opacity: 0.12 }}
+          style={{ background: "#F9F8FF", opacity: 0.12 }}
         />
 
-        {/* bottom coral glow */}
+        {/* bottom-right faint violet reflection */}
         <div
           className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full blur-[120px]"
-          style={{ background: "#FCA17D", opacity: 0.18 }}
+          style={{ background: "#F4F2FF", opacity: 0.08 }}
         />
 
-        {/* faint sky reflection bottom-left */}
+        {/* bottom-left whisper of lavender light */}
         <div
           className="absolute bottom-0 left-0 h-64 w-64 rounded-full blur-[100px]"
-          style={{ background: "#7EC8E3", opacity: 0.07 }}
+          style={{ background: "#F7F6FF", opacity: 0.05 }}
         />
       </div>
     </div>
