@@ -265,6 +265,9 @@ function Home() {
                      <ul>
                         <a href="/landing/contact">Contact</a>
                      </ul>
+                     <ul>
+                        <a href="/landing/faq">FAQ</a>
+                     </ul>
                   </li>
                </div>
                <div className="policy-links">

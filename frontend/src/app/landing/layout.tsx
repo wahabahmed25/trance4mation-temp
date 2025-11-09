@@ -61,7 +61,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
 
             <Link href="/landing/about">About</Link>
+
             <Link href="/landing/contact">Contact</Link>
+            <Link href="/landing/faq">FAQ</Link>
          </nav>
          <main>{children}</main>
       </div>
