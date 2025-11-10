@@ -1,95 +1,72 @@
 [
   {
-    "name": "Mind Quest",
-    "tags": ["focus", "memory"],
+    "name": "Call It Out Loud",
+    "description": "A bold, comic-style conversation game that empowers players to confront bullying and uplift one another through truth, empathy, and action.",
+    "tags": ["empathy", "courage", "community", "real talk"],
     "plays": 12900,
     "rating": 5,
     "featured": true,
     "isTrending": true,
     "continuePlaying": true,
-    "progress": 64
+    "progress": 64,
+    "link": "/games/call-it-out-loud",
+    "img": "/CallitOut.png"
   },
   {
-    "name": "Calm Runner",
-    "tags": ["breathing", "mindful"],
+    "name": "Keep It Real",
+    "description": "A vibrant conversation game for college students seeking depth, honesty, and connection. Play to laugh, open up, and be seen.",
+    "tags": ["connection", "college life", "identity", "vulnerability"],
     "plays": 9700,
     "rating": 5,
     "featured": false,
     "isTrending": true,
     "continuePlaying": true,
-    "progress": 38
+    "progress": 38,
+    "link": "/games/keep-it-real",
+    "img": "/KeepItReal.png"
   },
   {
-    "name": "Focus Builder",
-    "tags": ["focus", "productivity"],
+    "name": "Keep It Real 100 (BIPOC Edition)",
+    "description": "A sacred space for BIPOC individuals and allies to speak truth, reclaim joy, and heal through storytelling and collective reflection.",
+    "tags": ["healing", "identity", "community", "culture"],
     "plays": 15200,
     "rating": 4,
     "featured": true,
     "continuePlaying": true,
-    "progress": 80
+    "progress": 80,
+    "link": "/games/keep-it-real-100",
+    "img": "/KeepitReal100.png"
   },
   {
-    "name": "Resilience Puzzle",
-    "tags": ["problem-solving", "confidence"],
+    "name": "Remembrance",
+    "description": "A gentle, reflective game that creates space to honor loss, hold memories, and move through grief together.",
+    "tags": ["grief", "reflection", "healing", "memory"],
     "plays": 18420,
     "rating": 5,
     "featured": true,
+    "isNew": true,
     "ForYou": true,
-    "isNew": true
+    "link": "/games/remembrance",
+    "img": "/Remembrance.png"
   },
   {
-    "name": "Focus Builder",
-    "tags": ["focus", "relaxation"],
+    "name": "Speak to Me",
+    "description": "A bold space where walls drop and truth speaks. A game of emotional openness, real talk, and being truly seen.",
+    "tags": ["expression", "confidence", "real talk", "emotional release"],
     "plays": 15200,
     "rating": 4,
-    "featured": false
+    "featured": false,
+    "link": "/games/speak-to-me",
+    "img": "/SpeaktoMe.jpeg"
   },
   {
-    "name": "Sleep Symphony",
-    "tags": ["sleep", "calm"],
+    "name": "Trill: True & Real",
+    "description": "A therapeutic dialogue game that supports recovery, honesty, and strength for individuals and communities impacted by addiction.",
+    "tags": ["recovery", "support", "truth", "resilience"],
     "plays": 8700,
     "rating": 4,
-    "featured": false
-  },
-  {
-    "name": "Gratitude Grove",
-    "tags": ["gratitude", "positivity"],
-    "plays": 10400,
-    "rating": 5,
-    "featured": true
-  },
-  {
-    "name": "Mindflow Maze",
-    "tags": ["focus", "strategy"],
-    "plays": 11800,
-    "rating": 4,
-    "ForYou": true,
-    "featured": true
-  },
-  {
-    "name": "Zen Painter",
-    "tags": ["creative", "mindful"],
-    "plays": 9200,
-    "rating": 4,
-    "ForYou": true,
-    "featured": false
-    
-  },
-  {
-    "name": "Emotion Explorer",
-    "tags": ["empathy", "reflection"],
-    "plays": 13400,
-    "rating": 5,
-    "featured": true,
-    "ForYou": true,
-    "isTrending": true
-  },
-  {
-    "name": "Breathe & Balance",
-    "tags": ["breathing", "relaxation"],
-    "plays": 7600,
-    "rating": 4,
-    "ForYou": true,
-    "featured": false
+    "featured": false,
+    "link": "/games/trill",
+    "img": "/TrillAddictionsPreventionRecovery.png"
   }
 ]
