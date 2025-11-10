@@ -103,6 +103,15 @@ export default function RoomCreationMenu({
           onChange={(event) => changeSetting("name", event.target.value)}
         />
 
+        <input
+          placeholder="Link to your Google Meet, Zoom, etc."
+          className="
+            text-black/80 text-base p-1 px-2 outline-none
+            border-b-2 border-[rgba(252,161,125,0.5)] rounded-sm
+          "
+          onChange={(event) => changeSetting("url", event.target.value)}
+        />
+
         <textarea
           className="
             p-2 grow outline-none

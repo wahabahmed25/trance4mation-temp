@@ -36,6 +36,7 @@ app.post('/create-room', async (req: Request, res: Response) => {
             participants: [],
             rounds: req.body.rounds, 
             timeLimit: req.body.timeLimit,
+            url: req.body.url
         }).then((docRef) => {
             res.json("valid")
         })
@@ -103,6 +104,7 @@ function isValidCreateRoomRequest(req: Request) {
         && "timeLimit" in body && typeof(body.timeLimit) === "number"
         && body.timeLimit  > 0
         && "rounds" in body && typeof(body.rounds) === "number"
+        && "url" in body && typeof(body.url) === "string"
     )
 }
 
