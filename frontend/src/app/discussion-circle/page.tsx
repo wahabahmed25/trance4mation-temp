@@ -42,7 +42,7 @@ export default function DiscussionCircle() {
         />
       ) : null}
       <div
-        className="h-full flex w-full md:w-1/4 p-8 absolute md:relative"
+        className="h-full flex w-full md:w-1/4 p- absolute md:relative"
         style={{
           display: rooms.current && useMobileLayout ? "none" : "block",
         }}
