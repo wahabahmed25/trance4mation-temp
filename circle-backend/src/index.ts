@@ -1,10 +1,11 @@
 import type { Request, Response } from "express";
 import e from "express";
-import { firestore } from "./firestoreSetup.ts";
+import { FIRESTORE } from "./firestoreSetup.ts";
 import { prompts } from "./prompts.ts";
 import { Timestamp } from "firebase-admin/firestore";
 import 'dotenv/config'
 import cors from "cors"
+import { onSnapshot, doc, query } from "firebase/firestore";
 
 const port = 5000
 
@@ -18,7 +19,7 @@ const deletionQueue: Record<string, NodeJS.Timeout> = {}
 
 // lists all rooms. no purpose other than to test that the service account is authenticated correction
 app.get("/", (req: Request, res: Response) => {
-    firestore.collection("rooms").listDocuments()
+    FIRESTORE.collection("rooms").listDocuments()
         .then((data) => {
             res.send(data)
         })
@@ -29,7 +30,7 @@ app.post('/create-room', async (req: Request, res: Response) => {
     if (isValidCreateRoomRequest(req)) {
         console.log(req.body)
         
-        firestore.collection("rooms").add({
+        FIRESTORE.collection("rooms").add({
             description: req.body.description,
             isActive: false,
             maxSize: req.body.maxSize,
@@ -52,14 +53,14 @@ app.post('/start-game', async (req: Request, res: Response) => {
     // const authToken = getRequestAuthToken(req)
     const roomId = req.body.roomId
     if (roomId) {
-        const snapshot = await firestore.doc(`rooms/${roomId}`).get()
+        const snapshot = await FIRESTORE.doc(`rooms/${roomId}`).get()
         // if the round is already going, there's no need to do anything
         if (snapshot.data()?.isActive) {
             return
         }
         // select the first prompt and speaker
         const randomIndex = Math.floor(Math.random() * prompts.length)
-        await firestore.doc(`rooms/${roomId}`).update({
+        await FIRESTORE.doc(`rooms/${roomId}`).update({
             isActive: true,
             previousPrompts: [randomIndex],
             prompt: prompts[randomIndex],
@@ -116,7 +117,7 @@ function isValidCreateRoomRequest(req: Request) {
  */
 async function playTurn(roomId: string) {
     // get the data from the room
-    const snapshot = await firestore.doc(`rooms/${roomId}`).get()
+    const snapshot = await FIRESTORE.doc(`rooms/${roomId}`).get()
     if (!snapshot) {
         return
     }
@@ -151,7 +152,7 @@ async function playTurn(roomId: string) {
     }
 
     // update firestore
-    await firestore.doc(`rooms/${roomId}`).update({
+    await FIRESTORE.doc(`rooms/${roomId}`).update({
         speakerIndex: (speakerIndex + 1) % participants.length,
         speakerStart: Timestamp.now(),
         previousPrompts: previousPrompts,
@@ -171,12 +172,12 @@ async function endGame(roomId: string) {
         return
     }
     // set roundsLeft equal to 0
-    await firestore.doc(`rooms/${roomId}`).update({
+    await FIRESTORE.doc(`rooms/${roomId}`).update({
         roundsLeft: 0
     })
     // queue this room for deletion in 30 seconds
     deletionQueue[roomId] = setTimeout(() => {
-        firestore.doc(`rooms/${roomId}`).delete()
+        FIRESTORE.doc(`rooms/${roomId}`).delete()
     }, 30 * 1000)
     return
 }
