@@ -14,6 +14,7 @@ app.use(cors())
 app.use(e.json())
 
 const timeouts: Record<string, NodeJS.Timeout> = {}
+const deletionQueue: Record<string, NodeJS.Timeout> = {}
 
 // lists all rooms. no purpose other than to test that the service account is authenticated correction
 app.get("/", (req: Request, res: Response) => {
@@ -129,13 +130,9 @@ async function playTurn(roomId: string) {
     const cycleComplete = (nextSpeakerIndex === 0)
     const roundsLeft = cycleComplete ? snapshot.data()?.roundsLeft - 1 : snapshot.data()?.roundsLeft
 
-    // if the game is over, update the roundsLeft variable and return
+    // if we've done all the rounds, end the game
     if (roundsLeft <= 0) {
-        console.log(roundsLeft, "game should be over")
-        await firestore.doc(`rooms/${roomId}`).update({
-            roundsLeft: roundsLeft
-        })
-        return
+        endGame(roomId)
     }
 
     // otherwise update the variables needed to play another turn
@@ -162,8 +159,24 @@ async function playTurn(roomId: string) {
         roundsLeft: roundsLeft
     })
 
-    // make a timeout and store it in the timeouts map using the roomId as the key
+    // make a timeout to play the next turn after the timeLimit runs out
     timeouts[roomId] = setTimeout(() => {
         playTurn(roomId)
     }, timeLimit * 1000)
+}
+
+async function endGame(roomId: string) {
+    // if the room has been queued for deletion, return
+    if (deletionQueue[roomId]) {
+        return
+    }
+    // set roundsLeft equal to 0
+    await firestore.doc(`rooms/${roomId}`).update({
+        roundsLeft: 0
+    })
+    // queue this room for deletion in 30 seconds
+    deletionQueue[roomId] = setTimeout(() => {
+        firestore.doc(`rooms/${roomId}`).delete()
+    }, 30 * 1000)
+    return
 }
