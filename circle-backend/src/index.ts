@@ -33,6 +33,7 @@ app.post('/create-room', async (req: Request, res: Response) => {
         FIRESTORE.collection("rooms").add({
             description: req.body.description,
             isActive: false,
+            isVisible: true,
             maxSize: req.body.maxSize,
             name: req.body.name,
             participants: [],
@@ -173,7 +174,8 @@ async function endGame(roomId: string) {
     }
     // set roundsLeft equal to 0
     await FIRESTORE.doc(`rooms/${roomId}`).update({
-        roundsLeft: 0
+        roundsLeft: 0,
+        expiresAt: Timestamp.fromMillis((Timestamp.now().toMillis() + 30 * 1000))
     })
     // queue this room for deletion in 30 seconds
     deletionQueue[roomId] = setTimeout(() => {

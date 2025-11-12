@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
-const letterDelay = 10;
-const sentenceEndDelay = 300;
-const commaDelay = 200;
+const letterDelay = 10;       // milliseconds to wait between displaying each letter
+const sentenceEndDelay = 300; // milliseconds to wait after displaying a "!", ".", or "?"
+const commaDelay = 200;       // milliseconds to wait after displaying a comma
 
 export default function Prompt({ prompt }: { prompt: string }) {
   const [currentPrompt, setCurrentPrompt] = useState<string>("");

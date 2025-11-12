@@ -5,6 +5,7 @@ import { ReactionData } from "./ReactionData"
 export type RoomData = {
     id: string,
     description: string,
+    expiresAt: Timestamp | undefined,
     isActive: boolean,
     maxSize: number,
     name: string,
@@ -14,6 +15,6 @@ export type RoomData = {
     rounds: number, 
     roundsLeft?: number,
     speakerIndex: number,
-    speakerStart: Timestamp
+    speakerStart: Timestamp,
     timeLimit: number,
 }

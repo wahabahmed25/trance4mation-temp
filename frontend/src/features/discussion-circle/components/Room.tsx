@@ -26,6 +26,7 @@ export default function Room({
   const [currentPrompt, setCurrentPrompt] = useState<string>("");
   const user = useAuth();
 
+  // if the prompt changes, force the prompt dropdown open and render the new prompt
   useEffect(() => {
     if (roomData.prompt != currentPrompt) {
       setPromptVisible(true);

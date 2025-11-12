@@ -4,21 +4,22 @@ import { ReactionData } from "../types/ReactionData";
 import { REACTIONS } from "@/app/discussion-circle/constants";
 import { motion } from "framer-motion";
 
-let id = 0;
+let id = 0; // used to provide a unique key to each emoji that floats up the screen
 
-export default function ReactionSpawner({
-  reactionData,
-}: {
-  reactionData: ReactionData | undefined;
-}) {
-  const [previousReaction, setPreviousReaction] = useState<
+interface ReactionSpawnerProps {
+  reactionData: ReactionData | undefined; // the most recent reaction on the server
+}
+
+export default function ReactionSpawner({reactionData}: ReactionSpawnerProps) {
+  const [previousReaction, setPreviousReaction] = useState<     // the most recent reaction displayed on the client
     ReactionData | undefined
   >(undefined);
-  const [children, setChildren] = useState<JSX.Element[]>([]);
-  const [height, setHeight] = useState(0);
-  const [width, setWidth] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const [children, setChildren] = useState<JSX.Element[]>([]);  // an array of floating emoji elements
+  const [height, setHeight] = useState(0);                      // height of this component
+  const [width, setWidth] = useState(0);                        // width of this component
+  const ref = useRef<HTMLDivElement>(null);                     // reference to the topmost div of this component. Used to dynamically update height and width
 
+  // after rendering, grab the width and height of this component and set the corresponding state variables
   useEffect(() => {
     if (!ref.current) {
       return;
@@ -35,11 +36,13 @@ export default function ReactionSpawner({
     };
   }, []);
 
+  // if the latest reaction on the server differs from the latest reaction on the client, add a floating emoji
   useEffect(() => {
     if (!reactionData || !ref.current) {
       return;
     }
 
+    // if the latest reaction on the server was sent more than 5 seconds ago, ignore it
     if (Timestamp.now().seconds - reactionData.timestamp.seconds > 5) {
       return;
     }

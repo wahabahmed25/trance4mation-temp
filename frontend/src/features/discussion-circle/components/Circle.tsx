@@ -13,20 +13,22 @@ interface CircleProps {
 const radius = 120
 
 export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
-  const [timeLeft, setTimeLeft] = useState<number>(0);
-  const speaker = roomData.isActive
+  const [timeLeft, setTimeLeft] = useState<number>(0);  // The time to display underneath the speaker
+  const speaker = roomData.isActive                     // The current speaker
     ? roomData.participants[roomData.speakerIndex]
     : undefined;
 
+  // When time related variables change, update timeLeft accordingly
   useEffect(() => {
     if (!roomData.isActive) {
       return;
     }
 
+    // The time elapsed is the difference in seconds between now and when the speaker current speaker was selected
     const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
     setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed))
 
-
+    // set up a timer that periodically updates timeLeft based on how much time has passed since speakerStart
     const timerId = setInterval(() => {
       const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
       setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed));

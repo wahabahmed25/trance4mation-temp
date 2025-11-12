@@ -16,12 +16,12 @@ export default function Speaker({
   timeLeft,
   startTime
 }: ParticipantProps) {
-  const previousStartTime = useRef<Timestamp | undefined>(undefined)
-  const [progress, setProgress] = useState<number>(0)
-  const [transitionTime, setTransitionTime] = useState<number>(0)
+  const previousStartTime = useRef<Timestamp | undefined>(undefined)  // the most recent start time on the client
+  const [progress, setProgress] = useState<number>(0)                 // how much of the timer is ticked down. 0 means the timer is full. 1 means it's empty
+  const [transitionTime, setTransitionTime] = useState<number>(0)     // how long it takes in seconds for the timer to reach the given progress
 
   useEffect(() => {
-    // if the start time suddenly changes (which it shouldn't in a normal game), reset the timer
+    // if the start time on the server suddenly changes (which it shouldn't in a normal game), reset the timer
     if (startTime.seconds != previousStartTime.current?.seconds) {
       console.log("reset timer", "previous:", previousStartTime.current?.toDate(), "current:", startTime.toDate())
       setTransitionTime(0)

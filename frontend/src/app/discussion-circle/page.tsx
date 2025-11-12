@@ -8,16 +8,18 @@ import Welcome from "@/features/discussion-circle/components/Welcome";
 import { useRooms } from "./api";
 
 export default function DiscussionCircle() {
-  const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false);
-  const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);
-  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(true);
-  const rooms = useRooms()
+  const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false); // is the creation menu open?
+  const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);         // is the user in the middle of joining a room?
+  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(true);      // should we use the mobile layout?
+  const rooms = useRooms()  // a custom hook that provides functions for interacting with the rooms collection in Firestore
 
+  // if the user is not logged in, send them to the home screen. Uncommented for testing
   // if (!user) {
   //     redirect("/")
   // }
 
   useEffect(() => {
+    // if the window width is less than 768 (which is also the md breakpoint in tailwind), use the mobile layout
     function onResize() {
       setUseMobileLayout(window.innerWidth < 768);
     }

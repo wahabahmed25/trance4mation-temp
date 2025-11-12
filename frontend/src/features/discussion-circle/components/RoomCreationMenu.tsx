@@ -16,12 +16,11 @@ export default function RoomCreationMenu({
   onCreateButtonClick,
   onRoomCreated,
 }: RoomCreationMenuProps) {
-  const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [createButtonMessage, setCreateButtonMessage] =
-    useState<string>("Create");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const updateMessage = useRef<NodeJS.Timeout>(undefined);
+  const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS);       // settings that will be sent to the backend when creating a room
+  const [isLoading, setLoading] = useState<boolean>(false);                         // are we waiting for a response from the server telling us our room was created
+  const [createButtonMessage, setCreateButtonMessage] = useState<string>("Create"); // The text displayed on the create button
+  const [errorMessage, setErrorMessage] = useState<string>("");                     // The error message that displays when fail to create a room
+  const updateMessage = useRef<NodeJS.Timeout>(undefined);                          // an interval used to update createButtonMessage when we are waiting on the server
 
   function changeSetting(
     setting: string,
@@ -33,6 +32,8 @@ export default function RoomCreationMenu({
     });
   }
 
+  // When isLoading is set to true, cycle createButtonMessage between ".", "..", and "..."
+  // When isLoading is set to false, clear the interval that's cycling createButtonMessage and set the message back to normal
   useEffect(() => {
     if (isLoading) {
       setCreateButtonMessage(".");

@@ -31,7 +31,8 @@ export async function getRooms() {
             "id": document.id
         } as RoomData
     })
-    return rooms
+    const visibleRooms = rooms.filter((room) => room.expiresAt === undefined || room.expiresAt.seconds > Timestamp.now().seconds)
+    return visibleRooms
 }
 
 export async function createRoom(settings: ClientRoomData) {
@@ -134,6 +135,14 @@ export function useRooms() {
             }
         });
     }, [])
+
+    useEffect(() => {
+        // if the room no longer exists but we haven't unsubscribed yet, unsubscribe
+        // trying to account for rooms deleting themselves after some time
+        if (!currentRoom && unsubscribe.current) {
+            unsubscribe.current()
+        }
+    }, [currentRoom])
 
     return {
         listings: roomListings,
