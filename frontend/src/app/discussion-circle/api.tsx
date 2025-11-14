@@ -161,6 +161,7 @@ export function useRooms() {
             /**
              * if we are in a room, but we want to switch, leave the room without
              * setting currentRoom to undefined. This way we avoid a flickering visual effect
+             * ^ This creates a different visual bug with the circle component
              */
             if (currentRoom && currentRoom.id !== id) {
                 unsubscribe.current?.();
