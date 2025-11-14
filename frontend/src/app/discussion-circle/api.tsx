@@ -121,6 +121,7 @@ export function useRooms() {
     const unsubscribe = useRef<() => void>(undefined);
     const auth = useRef<User>(undefined)
     const user = useAuth().user;
+    const pendingJoinRequest = useRef()
 
     useEffect(() => {
         getRooms().then(setRoomListings);
@@ -157,6 +158,13 @@ export function useRooms() {
         join: async (id: string) => {
             if (!user) {
                 return
+            }
+            /**
+             * if we are in a room, but we want to switch, leave the room without
+             * setting currentRoom to undefined. This way we avoid a flickering visual effect
+             */
+            if (currentRoom && currentRoom.id !== id) {
+                await leaveRoom(currentRoom.id, user.name, user.uid)
             }
             await joinRoom(id, user.name, user.uid);
             unsubscribe.current = subscribeToRoom(id, setCurrentRoom)

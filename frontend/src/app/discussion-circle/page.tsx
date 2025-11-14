@@ -55,9 +55,8 @@ export default function DiscussionCircle() {
           onReloadButtonClick={rooms.reload}
           onRoomClick={async (roomData: RoomData) => {
             setIsJoiningRoom(true);
-            await rooms.leave()
-            setIsJoiningRoom(false);
             await rooms.join(roomData.id)
+            setIsJoiningRoom(false);
           }}
         />
       </div>
