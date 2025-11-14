@@ -59,6 +59,7 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
     else {
       setParticipants(roomData.participants)
     }
+
     // if the refresh flag is raised, update participants
     if (refreshFlag) {
       setParticipants(roomData.participants)

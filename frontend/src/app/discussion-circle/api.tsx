@@ -118,6 +118,7 @@ export async function addReaction(roomId: string, reactionIndex: number, timesta
 export function useRooms() {
     const [roomListings, setRoomListings] = useState<RoomData[]>([]);
     const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>();
+    const joinRequest = useRef<string>(undefined)
     const unsubscribe = useRef<() => void>(undefined);
     const auth = useRef<User>(undefined)
     const user = useAuth().user;
@@ -155,20 +156,29 @@ export function useRooms() {
             getRooms().then(setRoomListings)
         },
         join: async (id: string) => {
+            // if the room we're trying to join is the same as the one we're in, do nothing
             if (!user || currentRoom?.id === id) {
                 return
             }
-            /**
-             * if we are in a room, but we want to switch, leave the room without
-             * setting currentRoom to undefined. This way we avoid a flickering visual effect
-             * ^ This creates a different visual bug with the circle component
-             */
+            
+            // if there is an existing join request that has not been fulfilled, 
+            // and that join request is for the same room being requested right now, do nothing
+            // this is to fix an issue where if you double click a room, you would subscribe to it twice
+            if (joinRequest.current === id) {
+                return
+            }
+            
+            // if we are in a room, but we want to switch, leave the room without
+            // setting currentRoom to undefined. This way we avoid a flickering visual effect
             if (currentRoom && currentRoom.id !== id) {
                 unsubscribe.current?.();
                 await leaveRoom(currentRoom.id, user.name, user.uid)
             }
+
+            joinRequest.current = id
             await joinRoom(id, user.name, user.uid);
             unsubscribe.current = subscribeToRoom(id, setCurrentRoom)
+            joinRequest.current = undefined
         },
         leave: async () => {
             if (!currentRoom || !user) {
