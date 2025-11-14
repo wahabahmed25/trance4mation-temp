@@ -156,7 +156,7 @@ export function useRooms() {
             getRooms().then(setRoomListings)
         },
         join: async (id: string) => {
-            if (!user) {
+            if (!user || currentRoom?.id === id) {
                 return
             }
             /**
