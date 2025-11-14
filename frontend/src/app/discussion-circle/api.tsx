@@ -121,7 +121,6 @@ export function useRooms() {
     const unsubscribe = useRef<() => void>(undefined);
     const auth = useRef<User>(undefined)
     const user = useAuth().user;
-    const pendingJoinRequest = useRef()
 
     useEffect(() => {
         getRooms().then(setRoomListings);
@@ -197,6 +196,32 @@ export function useRooms() {
             console.log("skipping turn")
             const idToken = await auth.current.getIdToken();
             await skipTurn(currentRoom.id, idToken);
+        },
+        search: (query: string) => {
+            const trimmedQuery = query.trim()
+            // search is empty
+            if (trimmedQuery === "") {
+                getRooms().then(setRoomListings)
+                return
+            }
+
+            setRoomListings([])
+            getRooms().then((rooms) => {
+                const results: RoomData[] = []
+                // search for rooms that start with the query
+                rooms.forEach((room) => {
+                    if (room.name.startsWith(trimmedQuery)) {
+                        results.push(room)
+                    }
+                })
+                // search for rooms that contain the query in their description
+                rooms.forEach((room) => {
+                    if (room.description.includes(trimmedQuery)) {
+                        results.push(room)
+                    }
+                })
+                setRoomListings(results)
+            })
         }
     }
 }

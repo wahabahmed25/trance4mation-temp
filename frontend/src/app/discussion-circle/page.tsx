@@ -1,17 +1,19 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import RoomBrowser from "@/features/discussion-circle/components/RoomBrowser";
 import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreationMenu";
 import Room from "@/features/discussion-circle/components/Room";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import Welcome from "@/features/discussion-circle/components/Welcome";
 import { useRooms } from "./api";
+import { Timestamp } from "firebase/firestore";
 
 export default function DiscussionCircle() {
   const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false); // is the creation menu open?
   const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);         // is the user in the middle of joining a room?
   const [useMobileLayout, setUseMobileLayout] = useState<boolean>(true);      // should we use the mobile layout?
   const rooms = useRooms()  // a custom hook that provides functions for interacting with the rooms collection in Firestore
+  const queryTimeout = useRef<NodeJS.Timeout>(undefined)
 
   // if the user is not logged in, send them to the home screen. Uncommented for testing
   // if (!user) {
@@ -57,6 +59,14 @@ export default function DiscussionCircle() {
             setIsJoiningRoom(true);
             await rooms.join(roomData.id)
             setIsJoiningRoom(false);
+          }}
+          onQuery={(event) => {
+            // on change, set a timeout for some time. If no changes are made within that time, then the query goes through
+            clearTimeout(queryTimeout.current)
+            queryTimeout.current = setTimeout(() => {
+              const query = event.target.value
+              rooms.search(query)
+            }, 700)
           }}
         />
       </div>
