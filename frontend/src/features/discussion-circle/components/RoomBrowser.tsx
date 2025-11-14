@@ -72,28 +72,11 @@ export default function RoomBrowser({
         style={{ scrollbarWidth: "none" }}
       >
         {rooms.map((roomData) => (
-          <>
           <RoomListing
             key={roomData.id}
             roomData={roomData}
             onClick={onRoomClick}
           />
-          <RoomListing
-            key={roomData.id}
-            roomData={roomData}
-            onClick={onRoomClick}
-          />
-          <RoomListing
-            key={roomData.id}
-            roomData={roomData}
-            onClick={onRoomClick}
-          />
-          <RoomListing
-            key={roomData.id}
-            roomData={roomData}
-            onClick={onRoomClick}
-          />
-          </>
         ))}
       </div>
     </div>
