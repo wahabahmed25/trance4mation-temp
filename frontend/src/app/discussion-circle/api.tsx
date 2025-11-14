@@ -164,6 +164,7 @@ export function useRooms() {
              * setting currentRoom to undefined. This way we avoid a flickering visual effect
              */
             if (currentRoom && currentRoom.id !== id) {
+                unsubscribe.current?.();
                 await leaveRoom(currentRoom.id, user.name, user.uid)
             }
             await joinRoom(id, user.name, user.uid);
