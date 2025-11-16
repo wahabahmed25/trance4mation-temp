@@ -30,60 +30,96 @@ section[id] {
    object-fit: cover;
 }
 
+.tag {
+   display: inline-block;
+   padding: 6px 14px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   border-radius: 16px;
+   font-size: 1rem;
+   font-weight: 600;
+}
+
+.tag-list {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 8px;
+}
+
 .multiplayer {
    background-color: var(--soft-violet);
-   padding: 1.5%;
-   margin: 3% 0% 3% 0%;
-   border-radius: 20px;
-   font-size: 1rem;
-   font-weight: 600;
    color: var(--text-primary);
 }
+
 .coming-soon {
    background-color: var(--golden-glow);
-   padding: 1.5%;
-   margin: 3% 0% 3% 0%;
-   border-radius: 20px;
-   font-size: 1rem;
-   font-weight: 600;
    color: var(--text-primary);
-   margin-right: 15px;
-   margin-bottom: 10px;
+}
+
+.grief {
+   background-color: #eaaece;
+   color: var(--text-primary);
 }
 
 .facilitator {
    background-color: var(--deep-teal);
-   padding: 1.5%;
-   margin: 3% 0% 3% 0%;
-   border-radius: 20px;
-   font-size: 1rem;
-   font-weight: 600;
+   color: var(--text-white);
+}
+
+.anti-bullying {
+   background-color: #dd1f01;
    color: var(--text-white);
 }
 .game-text {
    text-align: center;
-}
-.game-text h1 {
-   padding-bottom: 1%;
-}
-
-.game-text p {
-   font-size: 1.3rem;
-   text-align: justify;
-   padding: 3% 0%;
+   display: flex;
+   flex-direction: column;
+   justify-self: center;
+   align-items: center;
+   h1 {
+      padding-bottom: 1%;
+   }
+   p {
+      font-size: 1.3rem;
+      text-align: justify;
+      padding: 3% 0%;
+   }
 }
 
 .play-button {
-   display: inline-flex;
-
-   width: auto;
-   padding: 1% 3%;
-   font-size: 1.3rem;
-   font-weight: 600;
+   background: var(--gradient-coral);
    color: var(--text-white);
-   background-color: var(--healing-coral);
+   padding: 1rem 2rem;
    border: none;
-   border-radius: 8px;
+   border-radius: 50px;
+   font-size: 1.1rem;
    cursor: pointer;
-   transition: background-color 0.3s ease;
+   transition: all 0.3s ease;
+   font-weight: 600;
+   box-shadow: 0 8px 25px var(--coral-alpha-30);
+   position: relative;
+   z-index: 2;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   width: 200px;
+}
+
+.play-button:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 12px 35px var(--coral-alpha-40);
+   background: var(--gradient-coral-reverse);
+}
+
+/*Responsiveness*/
+
+@media (max-width: 900px) {
+   .game-content {
+      flex-direction: column;
+      padding: 1rem 2rem;
+   }
+
+   .game-content img {
+      width: 55%;
+   }
 }

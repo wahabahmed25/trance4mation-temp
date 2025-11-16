@@ -53,4 +53,15 @@
    .opencollapse-container {
       justify-content: end;
    }
+   .questions-header-button h1 {
+      width: 150%;
+      font-size: 2.5rem;
+   }
+}
+
+@media (max-width: 900px) {
+   .questions-header-button h1 {
+      width: 150%;
+      font-size: 2rem;
+   }
 }

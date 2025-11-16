@@ -53,104 +53,160 @@ function Home() {
    const scrollTestimonialsLeft = () => {
       // If the testimonials div exists, scroll it to the left
       if (testimonialsRef.current) {
-         testimonialsRef.current.scrollBy({ left: -820, behavior: "smooth" }); // testimonial card width + gap
+         const firstCard =
+            testimonialsRef.current.querySelector<HTMLDivElement>(".testimonial-card");
+         if (firstCard) {
+            const cardWidth = firstCard.offsetWidth;
+            const gap = parseInt(getComputedStyle(testimonialsRef.current).gap) || 0;
+            testimonialsRef.current.scrollBy({
+               left: -(cardWidth + gap),
+               behavior: "smooth",
+            }); // testimonial card width + gap
+         }
       }
    };
 
    const scrollTestimonialsRight = () => {
       // If the testimonials div exists, scroll it to the right
       if (testimonialsRef.current) {
-         testimonialsRef.current.scrollBy({ left: 820, behavior: "smooth" }); // testimonial card width + gap
+         const firstCard =
+            testimonialsRef.current.querySelector<HTMLDivElement>(".testimonial-card");
+         if (firstCard) {
+            const cardWidth = firstCard.offsetWidth;
+            const gap = parseInt(getComputedStyle(testimonialsRef.current).gap) || 0;
+            testimonialsRef.current.scrollBy({
+               left: cardWidth + gap,
+               behavior: "smooth",
+            }); // testimonial card width + gap
+         }
       }
    };
 
    return (
       <div className="home-page">
-         <section className="hero-section">
-            <div className="hero-left">
-               <img src="landing-page-img/logo.png" alt="Play to Heal Logo" />
-            </div>
-
-            <div className="hero-right">
-               <h1>PLAY TO HEAL</h1>
-               <div className="tag-lines">
-                  <h3>Break Isolation</h3>
-                  <h3>Build Connection</h3>
-                  <h3>Heal Together</h3>
+         <div className="fade-in-top">
+            <section className="hero-section">
+               <div className="hero-left">
+                  <img src="landing-page-img/logo.png" alt="Play to Heal Logo" />
                </div>
-               <p>
-                  This is your place to connect, laugh, share, and discover just how
-                  powerful it feels to be part of a community that’s got your back.
-                  Whether you’re looking for support, inspiration, or just a safe space to
-                  be yourself—you’ve found it. Let’s play, connect, and heal together!
-               </p>
-               <button
-                  className="cta-button"
-                  onClick={() => router.push("/landing/game")}>
-                  Start Your Journey
-               </button>
-            </div>
-         </section>
 
-         <section className="game-section">
-            <h2>You Are Not Alone</h2>
-            <div className="carousel-wrapper">
-               <button
-                  className="carousel-arrow carousel-arrow-left"
-                  onClick={scrollLeft}>
-                  &#8249;
-               </button>
-               <div className="game-cards-container" ref={carouselRef}>
-                  <GameCard
-                     title="Speak to Me"
-                     image={"/landing-page-img/SpeaktoMe.jpg"}
-                     description="In a world that often asks us to hide, Speak to Me dares us to be seen."
-                     path="/landing/game#Speak-to-me"
-                  />
-                  <GameCard
-                     title="Keep It Real"
-                     image={"/landing-page-img/KeepItReal.png"}
-                     description="Keep It Real harbors a magic that changes people."
-                     path="/landing/game#Keep-It-Real"
-                  />
-                  <GameCard
-                     title="Keep It Real 100"
-                     image={"/landing-page-img/KIR100 Logo.png"}
-                     description="Where BIPOC youth, adults, and allies gather to speak truth, share stories, and listen with heart."
-                     path="/landing/game#Keep-It-Real-100"
-                  />
-                  <GameCard
-                     title="Call it Out"
-                     image={"/landing-page-img/CallitOut.png"}
-                     description="More than just a game, Call It Out is a movement—one that sparks courage, connection, and change."
-                     path="/landing/game#Call-It-Out"
-                  />
-                  <GameCard
-                     title="Remembrance"
-                     image={"/landing-page-img/Remembrance.png"}
-                     description="A gentle, conversation-based game that offers comfort, connection, and healing for those navigating grief and loss."
-                     path="/landing/game#Remembrance"
-                  />
-                  <GameCard
-                     title="Trill (True & Real)"
-                     image={"/landing-page-img/TrillAddictionsPrevention&Recovery.png"}
-                     description="A therapeutic dialogue game designed to support individuals and communities impacted by addiction."
-                     path="/landing/game#Trill"
-                  />
-                  <GameCard
-                     title="Home is the Heart"
-                     image={"/landing-page-img/HomeIsTheHeart.png"}
-                     description="Home is the Heart invites families to slow down and share what truly matters. It’s not just a game, it is time spent coming home to each other."
-                     path="/landing/game#Home-is-the-Heart"
-                  />
+               <div className="hero-right">
+                  <h1>PLAY TO HEAL</h1>
+                  <div className="tag-lines">
+                     <h3>Break Isolation</h3>
+                     <h3>Build Connection</h3>
+                     <h3>Heal Together</h3>
+                  </div>
+                  <p>
+                     This is your place to connect, laugh, share, and discover just how
+                     powerful it feels to be part of a community that’s got your back.
+                     Whether you’re looking for support, inspiration, or just a safe space
+                     to be yourself—you’ve found it. Let’s play, connect, and heal
+                     together!
+                  </p>
+                  <button
+                     className="cta-button"
+                     onClick={() => router.push("/landing/game")}>
+                     Start Your Journey
+                  </button>
                </div>
-               <button
-                  className="carousel-arrow carousel-arrow-right"
-                  onClick={scrollRight}>
-                  &#8250;
-               </button>
-            </div>
-         </section>
+            </section>
+         </div>
+
+         <div className="fade-in">
+            <section className="welcome-section">
+               <h1>Play to Heal: What It Is & How It Works</h1>
+               <div className="welcome-div">
+                  <h3>
+                     Play to Heal is more than a platform. It is a movement of connection,
+                     compassion, and transformation through dialogue-based games. This
+                     presentation introduces you to the spirit of Play to Heal: what it
+                     is, how it works, and the simple agreements that make every
+                     experience safe, meaningful, and real. Before you play, take a moment
+                     to explore the heart behind it all.
+                  </h3>
+                  <div>
+                     <a href="/landing-page/Mission.pdf" target="_blank">
+                        <button className="welcome-button">
+                           Explore the Heart, Mission, & How it All Works
+                        </button>
+                     </a>
+                     <br></br>
+                     <a
+                        href="https://youtu.be/0IKEGc1yPEE?si=4BUw6Jg2Q_xZ1Ucl"
+                        target="_blank">
+                        <button className="welcome-button">Our Warm Welcome Video</button>
+                     </a>
+                  </div>
+               </div>
+            </section>
+         </div>
+
+         <div className="fade-in">
+            <section className="game-section">
+               <h2>Our Games: You Are Not Alone</h2>
+               <h3>
+                  Choose your game and click on it to play - let’s begin the magic! Your
+                  story, your heart, your journey are all welcome here.
+               </h3>
+               <div className="carousel-wrapper">
+                  <button
+                     className="carousel-arrow carousel-arrow-left"
+                     onClick={scrollLeft}>
+                     &#8249;
+                  </button>
+                  <div className="game-cards-container" ref={carouselRef}>
+                     <GameCard
+                        title="Remembrance"
+                        image={"/landing-page-img/Remembrance.png"}
+                        description="A gentle, conversation-based game that offers comfort, connection, and healing for those navigating grief and loss."
+                        path="/landing/game#Remembrance"
+                     />
+                     <GameCard
+                        title="Keep It Real 100"
+                        image={"/landing-page-img/KIR100 Logo.png"}
+                        description="Where BIPOC youth, adults, and allies gather to speak truth, share stories, and listen with heart."
+                        path="/landing/game#Keep-It-Real-100"
+                     />
+                     <GameCard
+                        title="Keep It Real Inclusion"
+                        image={"/landing-page-img/KeepItReal.png"}
+                        description="Keep It Real harbors a magic that changes people."
+                        path="/landing/game#Keep-It-Real"
+                     />
+                     <GameCard
+                        title="Speak to Me"
+                        image={"/landing-page-img/SpeaktoMe.jpg"}
+                        description="In a world that often asks us to hide, Speak to Me dares us to be seen."
+                        path="/landing/game#Speak-to-me"
+                     />
+                     <GameCard
+                        title="Home is the Heart"
+                        image={"/landing-page-img/HomeIsTheHeart.png"}
+                        description="Home is the Heart invites families to slow down and share what truly matters. It’s not just a game, it is time spent coming home to each other."
+                        path="/landing/game#Home-is-the-Heart"
+                     />
+                     <GameCard
+                        title="Call it Out Loud "
+                        image={"/landing-page-img/CallitOut.png"}
+                        description="More than just a game, Call It Out Loud is a movement—one that sparks courage, connection, and change."
+                        path="/landing/game#Call-It-Out"
+                     />
+                     <GameCard
+                        title="Trill (Addictions Prevention and Recovery)"
+                        image={"/landing-page-img/TrillAddictionsPrevention&Recovery.png"}
+                        description="A therapeutic dialogue game designed to support individuals and communities impacted by addiction."
+                        path="/landing/game#Trill"
+                     />
+                  </div>
+                  <button
+                     className="carousel-arrow carousel-arrow-right"
+                     onClick={scrollRight}>
+                     &#8250;
+                  </button>
+               </div>
+            </section>
+         </div>
 
          <section className="testimonials-section">
             <div className="fade-in">
@@ -164,11 +220,11 @@ function Home() {
                   <div className="testimonials-container" ref={testimonialsRef}>
                      {testimonials.map((testimonial, index) => (
                         <div key={index} className="testimonial-card">
-                           <img
+                           {/* <img
                               className="testimonial-img"
                               src={testimonial.image}
                               alt={testimonial.author}
-                           />
+                           /> */}
                            <div className="testimonial-quote">
                               <p>"{testimonial.quote}"</p>
                               <span className="testimonial-author">
@@ -190,7 +246,7 @@ function Home() {
          <div className="more-section">
             <div className="cta-container">
                <h2>Ready to Begin Your Healing Journey?</h2>
-               <p>
+               {/* <p>
                   Join the community to get involved with the community. Information about
                   joining and participating goes here.
                </p>
@@ -199,8 +255,46 @@ function Home() {
                   <input type="email" placeholder="Enter your email" />
                   <br />
                   <button>Sign Up</button>
+               </div> */}
+
+               <div className="socmed-icons">
+                  <div className="phone-icon-text">
+                     <img src="/landing-page-img/Phone.svg" width={30} height={30} />
+                     <span>917-302-5086</span>
+                  </div>
+
+                  <div className="icon-text">
+                     <a href="mailto:info@playtohealhub.com">
+                        <img src="/landing-page-img/Mail.svg" width={30} height={30} />
+                        <span>info@playtohealhub.com</span>
+                     </a>
+                  </div>
+
+                  <div className="icon-text">
+                     <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://www.linkedin.com/company/trance4mation-games/">
+                        <img
+                           src="/landing-page-img/LinkedIn.svg"
+                           width={30}
+                           height={30}
+                        />
+                        <span>Trance4mation Games</span>
+                     </a>
+                  </div>
+                  <div className="icon-text">
+                     <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://www.tiktok.com/@trance4mationgames?_r=1&_t=ZP-91DUqXF2mEx">
+                        <img src="/landing-page-img/TikTok.svg" width={30} height={30} />
+                        <span>Trance4mation Games</span>
+                     </a>
+                  </div>
                </div>
             </div>
+
             <div className="more-image">
                <img
                   src="landing-page-img/love1.png"
@@ -220,7 +314,11 @@ function Home() {
                         <a href="/landing/about">About Us</a>
                      </ul>
                      <ul>
-                        <a href="/landing/faq">Contact</a>
+                        <a href="/landing/contact">Contact</a>
+                     </ul>
+
+                     <ul>
+                        <a href="/landing/faq">FAQ</a>
                      </ul>
                   </li>
                </div>

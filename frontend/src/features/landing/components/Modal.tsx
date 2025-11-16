@@ -143,9 +143,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, intern }) => {
          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <img src={intern.image} alt={intern.name} className="modal-image" />
             <div className="modal-text">
-               <span className="close-button" onClick={onClose}>
+               {/* <span className="close-button" onClick={onClose}>
                   X
-               </span>
+               </span> */}
                <h2>{intern.name}</h2>
                <h3>{intern.role}</h3>
                <div className="extraLinkStyle">

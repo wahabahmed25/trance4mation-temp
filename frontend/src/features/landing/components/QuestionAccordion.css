@@ -53,6 +53,10 @@
    justify-content: center;
    width: 100%;
 }
+
+.questions-header h3 {
+   text-align: center;
+}
 .div-rectangle {
    margin-bottom: 2%;
 }

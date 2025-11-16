@@ -126,7 +126,7 @@ const interns: Intern[] = [
       role: "Developer",
       image: "/landing-page-img/KevinLi.jpg",
       description:
-         "Kevin is a senior studying computer science at Hunter College and is a part of their Daedalus honors program, with a perfect 4.0 GPA. He has always been interested in game development, and last summer, he picked up game development again by trying to digitize a board game. Passionate about game development and data-driven design, Kevin has built projects like Songfest, a real-time music game using React and Socket.io, and Restaurant Surfer, an NYC data visualizer integrating sanitation and licensing records. He interned at STEMKasa, contributed to AI-powered web apps, and tutored fellow students in calculus. With experience in full-stack development, Unity, and Cypress testing, Kevin blends creativity with precision in everything he builds.",
+         "Kevin is a senior studying computer science at Hunter College and is a part of their Daedalus honors program, with a perfect 4.0 GPA. He has always been interested in game development, and last summer, he picked up game development again by trying to digitize a board game. Passionate about game development and data-driven design, Kevin has built projects like Songfest, a real-time music game using React and Socket.io, and Restaurant Surfer, an NYC data visualizer integrating sanitation and licensing records. He interned at STEMKasa, contributed to AI-powered web apps, and tutored fellow students in calculus. With experience in full-stack development, Unity, and Cypress testing.",
       extra1:
          ' "I am excited to work on this project to hone my game development skills and am proud to contribute towards the effort to foster connection and healing on college campuses. "',
       extra2: "GitHub  ",
@@ -204,7 +204,7 @@ const interns: Intern[] = [
       image: "/landing-page-img/JinWang.jpg",
       description:
          "Jin is currently pursuing a computer science major and a media studies minor at CUNY Hunter College. She is passionate about web development and software engineering, hoping to create impactful projects that can help others. Jin has created a website focused on spreading awareness about Asian hate crimes during the pandemic, as well as participated in the 2025 Macaulay Honors x MTA Datathon, cleaning and sorting datasets to investigate the effects of congestion pricing on ACE violations. She loves to draw and read in her free time, and she is fluent in English and Mandarin.",
-      extra1: "  ",
+      extra1: `"I'm excited to learn, develop, and be a part of a mission that aims to make a huge impact on everyday lives"`,
       extra2: "LinkedIn",
       section: "Landing Page Design and Development Team",
    },
