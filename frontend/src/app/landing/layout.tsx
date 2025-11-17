@@ -1,140 +1,166 @@
 "use client";
+import "./landing-button.css";
 import "./App.css";
 import "./index.css";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-   /** nav bar gradient when user scrolls */
-   const nav = useRef<HTMLElement | null>(null);
-   // drop down menu
-   const [dropdownOpen, setDropdownOpen] = useState(false);
-   const dropdownToggle = useRef<HTMLDivElement | null>(null);
-   // mobile
-   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  /** nav bar gradient when user scrolls */
+  const nav = useRef<HTMLElement | null>(null);
 
-   const toggleHamburger = () => {
-      setHamburgerOpen(!hamburgerOpen);
-   };
+  // dropdown menu
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownToggle = useRef<HTMLDivElement | null>(null);
 
-   useEffect(() => {
-      if (hamburgerOpen) {
-         document.body.classList.add("no-scroll");
-      } else {
-         document.body.classList.remove("no-scroll");
+  // mobile
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
+
+  // FULL PAGE RELOAD login
+  const goToLogin = () => {
+    window.location.href = "/login"; // ← HARD REFRESH
+  };
+
+  useEffect(() => {
+    if (hamburgerOpen) {
+      document.body.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+    }
+    return () => document.body.classList.remove("no-scroll");
+  }, [hamburgerOpen]);
+
+  useEffect(() => {
+    function handleScroll() {
+      if (nav.current) {
+        const scrollPosition = window.scrollY;
+        const opacity = Math.min(scrollPosition / 350, 1);
+        nav.current.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255, 255, 255, ${opacity}))`;
       }
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-      return () => document.body.classList.remove("no-scroll");
-   }, [hamburgerOpen]);
-
-   useEffect(() => {
-      function handleScroll() {
-         if (nav.current) {
-            const scrollPosition = window.scrollY;
-            const opacity = Math.min(scrollPosition / 350, 1);
-            nav.current.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255, 255, 255, ${opacity}))`;
-         }
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownToggle.current &&
+        !dropdownToggle.current.contains(event.target as Node)
+      ) {
+        setDropdownOpen(false);
       }
-      window.addEventListener("scroll", handleScroll);
-      return () => {
-         window.removeEventListener("scroll", handleScroll);
-      };
-   }, []);
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-   useEffect(() => {
-      function handleClickOutside(event: MouseEvent) {
-         const target = event.target as Element | null;
-         if (
-            dropdownToggle.current &&
-            !dropdownToggle.current.contains(event.target as Node)
-         ) {
-            setDropdownOpen(false);
-         }
-      }
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-   }, []);
+  return (
+    <div className="App landing-navbar">
+      <div
+        className={`overlay ${hamburgerOpen ? "open" : ""}`}
+        onClick={toggleHamburger}
+      ></div>
 
-   return (
-      <div className="App">
-         <div
-            className={`overlay ${hamburgerOpen ? "open" : ""}`}
-            onClick={toggleHamburger}></div>
-         <nav ref={nav} className={`nav ${hamburgerOpen ? "open" : ""}`}>
-            <div className="nav-links">
-               <Link href="/landing">Home</Link>
-               <div
-                  className={`dropdown ${dropdownOpen ? "open" : ""}`}
-                  ref={dropdownToggle}>
-                  <button
-                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                     className="dropbtn">
-                     Games
-                  </button>
+      {/* NAVBAR */}
+      <nav ref={nav} className={`nav ${hamburgerOpen ? "open" : ""}`}>
+        <div className="nav-links">
+          <Link href="/landing">Home</Link>
 
-                  <div className="dropdown-content">
-                     <Link href="/landing/game#Remembrance">Remembrance</Link>
-                     <Link href="/landing/game#Keep-It-Real-100">Keep It Real 100</Link>
-                     <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
-                     <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
-                     <Link href="/landing/game#Home-is-the-Heart">Home is the Heart</Link>
-                     <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
-                     <Link href="/landing/game#Trill">Trill</Link>
-                  </div>
-               </div>
+          <div
+            className={`dropdown ${dropdownOpen ? "open" : ""}`}
+            ref={dropdownToggle}
+          >
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="dropbtn"
+            >
+              Games
+            </button>
 
-               <Link href="/landing/about">About</Link>
-               <Link href="/landing/contact">Contact & Feedback</Link>
-               <Link href="/landing/faq">FAQ</Link>
+            <div className="dropdown-content">
+              <Link href="/landing/game#Remembrance">Remembrance</Link>
+              <Link href="/landing/game#Keep-It-Real-100">
+                Keep It Real 100
+              </Link>
+              <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
+              <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
+              <Link href="/landing/game#Home-is-the-Heart">
+                Home is the Heart
+              </Link>
+              <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
+              <Link href="/landing/game#Trill">Trill</Link>
             </div>
+          </div>
 
-            <div
-               className={`hamburger-mobile ${hamburgerOpen ? "open" : ""}`}
-               onClick={toggleHamburger}>
-               <div className="hamburger-container">
-                  <div className="burger burger1"></div>
-                  <div className="burger burger2"></div>
-                  <div className="burger burger3"></div>
-               </div>
+          <Link href="/landing/about">About</Link>
+          <Link href="/landing/contact">Contact & Feedback</Link>
+          <Link href="/landing/faq">FAQ</Link>
+          <div className="login-wrapper">
+            <button onClick={goToLogin} className="landing-login-btn">
+              login
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`hamburger-mobile ${hamburgerOpen ? "open" : ""}`}
+          onClick={toggleHamburger}
+        >
+          <div className="hamburger-container">
+            <div className="burger burger1"></div>
+            <div className="burger burger2"></div>
+            <div className="burger burger3"></div>
+          </div>
+        </div>
+      </nav>
+
+      {/* MOBILE DRAWER */}
+      <div className={`side-drawer ${hamburgerOpen ? "open" : ""}`}>
+        <div className="side-links">
+          <Link href="/landing">Home</Link>
+
+          <div
+            className={`dropdown ${dropdownOpen ? "open" : ""}`}
+            ref={dropdownToggle}
+          >
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="dropbtn"
+            >
+              Games
+            </button>
+
+            <div className="dropdown-mobile">
+              <div className="dropdown-content">
+                <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
+                <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
+                <Link href="/landing/game#Keep-It-Real-100">
+                  Keep It Real 100
+                </Link>
+                <Link href="/landing/game#Home-is-the-Heart">
+                  Home is the Heart
+                </Link>
+                <Link href="/landing/game#Remembrance">Remembrance</Link>
+                <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
+                <Link href="/landing/game#Trill">Trill</Link>
+              </div>
             </div>
-         </nav>
+          </div>
 
-         <div className={`side-drawer ${hamburgerOpen ? "open" : ""}`}>
-            <div className="side-links">
-               <Link href="/landing">Home</Link>
-               <div
-                  className={`dropdown ${dropdownOpen ? "open" : ""}`}
-                  ref={dropdownToggle}>
-                  <button
-                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                     className="dropbtn">
-                     Games
-                  </button>
+          <Link href="/landing/about">About</Link>
+          <Link href="/landing/contact">Contact & Feedback</Link>
+          <Link href="/landing/faq">FAQ</Link>
 
-                  <div className="dropdown-mobile">
-                     <div className="dropdown-content">
-                        <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
-                        <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
-                        <Link href="/landing/game#Keep-It-Real-100">
-                           Keep It Real 100
-                        </Link>
-                        <Link href="/landing/game#Home-is-the-Heart">
-                           Home is the Heart
-                        </Link>
-                        <Link href="/landing/game#Remembrance">Remembrance</Link>
-                        <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
-                        <Link href="/landing/game#Trill">Trill</Link>
-                     </div>
-                  </div>
-               </div>
-
-               <Link href="/landing/about">About</Link>
-               <Link href="/landing/contact">Contact & Feedback</Link>
-               <Link href="/landing/faq">FAQ</Link>
-            </div>
-         </div>
-
-         <main>{children}</main>
+          {/* 🚀 HARD FULL PAGE RELOAD LOGIN BUTTON */}
+          <button onClick={goToLogin} className="landing-login-btn">
+            login
+          </button>
+        </div>
       </div>
-   );
+
+      <main>{children}</main>
+    </div>
+  );
 }
