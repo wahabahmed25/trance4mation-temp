@@ -7,6 +7,7 @@ interface RoomListing {
   onClick?: (room: RoomData) => unknown;
 }
 
+// TODO: Convert this component to use motion.div for consistency
 export default function RoomListing({ roomData, onClick }: RoomListing) {
   const size = roomData.participants.length;
   const [yOffset, setYOffset] = useState(10);

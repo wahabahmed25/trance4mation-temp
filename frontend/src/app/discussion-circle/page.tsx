@@ -5,54 +5,28 @@ import RoomCreationMenu from "@/features/discussion-circle/components/RoomCreati
 import Room from "@/features/discussion-circle/components/Room";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import Welcome from "@/features/discussion-circle/components/Welcome";
-import { useAuth } from "@/context/AuthContext";
-import { FIREBASE_APP, FIRESTORE } from "./api";
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import {
-  createRoom,
-  getRooms,
-  joinRoom,
-  leaveRoom,
-  skipTurn,
-  startGame,
-  subscribeToRoom,
-} from "./api";
-import { redirect } from "next/navigation";
+import { useRooms } from "./api";
+import { Timestamp } from "firebase/firestore";
 
 export default function DiscussionCircle() {
-  const [roomListings, setRoomListings] = useState<RoomData[]>([]);
-  const [currentRoom, setCurrentRoom] = useState<RoomData | undefined>();
-  const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false);
-  const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);
-  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(
-    window.innerWidth < 768
-  );
-  const [auth, setAuth] = useState<User | undefined>(undefined);
-  const user = useAuth().user;
-  const unsubscribe = useRef<() => void>(undefined);
+  const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false); // is the creation menu open?
+  const [isJoiningRoom, setIsJoiningRoom] = useState<boolean>(false);         // is the user in the middle of joining a room?
+  const [useMobileLayout, setUseMobileLayout] = useState<boolean>(true);      // should we use the mobile layout?
+  const rooms = useRooms()  // a custom hook that provides functions for interacting with the rooms collection in Firestore
+  const queryTimeout = useRef<NodeJS.Timeout>(undefined)
 
+  // if the user is not logged in, send them to the home screen. Uncommented for testing
   // if (!user) {
   //     redirect("/")
   // }
 
   useEffect(() => {
-    getRooms().then(setRoomListings);
-
-    const auth = getAuth(FIREBASE_APP);
-    onAuthStateChanged(auth, (authData) => {
-      if (authData) {
-        // User is signed in. https://firebase.google.com/docs/reference/js/firebase.User
-        setAuth(authData);
-      } else {
-        // User is signed out
-        setAuth(undefined);
-      }
-    });
-
+    // if the window width is less than 768 (which is also the md breakpoint in tailwind), use the mobile layout
     function onResize() {
       setUseMobileLayout(window.innerWidth < 768);
     }
     window.addEventListener("resize", onResize);
+    onResize()
 
     return () => {
       window.removeEventListener("resize", onResize);
@@ -67,42 +41,32 @@ export default function DiscussionCircle() {
     >
       {isCreationMenuOpen ? (
         <RoomCreationMenu
-          onCloseButtonClick={() => {
-            setCreationMenuOpen(false);
-          }}
-          onRoomCreated={() => {
-            getRooms().then(setRoomListings);
-          }}
+          onCloseButtonClick={() => setCreationMenuOpen(false)}
+          onCreateButtonClick={rooms.create}
         />
       ) : null}
       <div
-        className="h-full flex w-full md:w-1/4 p-8 absolute md:relative"
+        className="h-full flex w-full md:w-1/4 p- absolute md:relative"
         style={{
-          display: currentRoom && useMobileLayout ? "none" : "block",
+          display: rooms.current && useMobileLayout ? "none" : "block",
         }}
       >
         <RoomBrowser
-          rooms={roomListings}
-          onCreateButtonClick={() => {
-            setCreationMenuOpen(true);
-          }}
-          onReloadButtonClick={() => {
-            setRoomListings([]);
-            getRooms().then(setRoomListings);
-          }}
+          rooms={rooms.listings}
+          onCreateButtonClick={() => setCreationMenuOpen(true)}
+          onReloadButtonClick={rooms.reload}
           onRoomClick={async (roomData: RoomData) => {
             setIsJoiningRoom(true);
-            if (currentRoom?.id) {
-              unsubscribe.current?.();
-              await leaveRoom(currentRoom.id, user?.name, user?.uid);
-              setCurrentRoom(undefined);
-            }
+            await rooms.join(roomData.id)
             setIsJoiningRoom(false);
-
-            await joinRoom(roomData.id, user?.name, user?.uid);
-
-            unsubscribe.current?.();
-            unsubscribe.current = subscribeToRoom(roomData.id, setCurrentRoom);
+          }}
+          onQuery={(event) => {
+            // on change, set a timeout for some time. If no changes are made within that time, then the query goes through
+            clearTimeout(queryTimeout.current)
+            queryTimeout.current = setTimeout(() => {
+              const query = event.target.value
+              rooms.search(query)
+            }, 700)
           }}
         />
       </div>
@@ -113,35 +77,19 @@ export default function DiscussionCircle() {
           opacity: isJoiningRoom ? 0.7 : 1,
         }}
       >
-        {currentRoom ? (
+        {rooms.current ? (
           <Room
-            roomData={currentRoom}
-            onExitButtonClick={async () => {
-              if (!currentRoom?.id) {
-                return;
-              }
-
-              setCurrentRoom(undefined);
-              unsubscribe.current?.();
-              await leaveRoom(currentRoom.id, user.name, user.uid);
-            }}
-            onStartButtonClick={async () => {
-              const idToken = await auth?.getIdToken();
-              if (!idToken) {
-                return;
-              }
-              startGame(currentRoom.id, idToken);
-            }}
-            onSkipButtonClick={async () => {
-              const idToken = await auth?.getIdToken();
-              if (!idToken) {
-                return;
-              }
-              skipTurn(currentRoom.id, idToken);
-            }}
+            roomData={rooms.current}
+            onExitButtonClick={rooms.leave}
+            onStartButtonClick={rooms.startGame}
+            onSkipButtonClick={rooms.skipTurn}
           />
-        ) : (
+        ) 
+        : !useMobileLayout ? (
           <Welcome />
+        )
+        : (
+          null
         )}
       </div>
     </div>

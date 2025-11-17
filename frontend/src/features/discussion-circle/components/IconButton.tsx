@@ -5,8 +5,8 @@ import { MouseEventHandler } from "react";
 interface IconButtonProps {
   onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
   imageSrc: string | StaticImport;
-  imageSize: number;
-  buttonSize: number;
+  imageSize: number;  // height and width of the image in --spacing units. Equivalent to size-[imageSize] in Tailwind
+  buttonSize: number; // height and width of the button in --spacing units. Equivalent to size-[imageSize] in Tailwind
 }
 
 export default function IconButton({

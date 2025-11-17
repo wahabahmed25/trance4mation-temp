@@ -11,4 +11,4 @@ const firebase = initializeApp({
         privateKey: process.env.FIREBASE_SERVICE_ACCOUNT_PRIVATE_KEY
     }),
 });
-export const firestore = getFirestore(firebase)
+export const FIRESTORE = getFirestore(firebase)

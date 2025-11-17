@@ -20,13 +20,13 @@ export default function RoomBrowser({
   onRoomClick,
 }: RoomBrowserProps) {
   return (
-    <div className="w-full h-full flex flex-col gap-2 grow">
+    <div className="w-full h-full flex flex-col gap-2 grow py-8">
       <h1
-        className={`font-bold text-3xl text-[#FCA17D] ${POPPINS_BOLD.className}`}
+        className={`font-bold text-3xl px-8 text-[#FCA17D] ${POPPINS_BOLD.className}`}
       >
         Discussion Circle
       </h1>
-      <div className="flex gap-1 items-center">
+      <div className="flex gap-1 items-center px-8">
         {/* Search bar */}
         <div
           style={{ minWidth: 0 }}
@@ -56,7 +56,6 @@ export default function RoomBrowser({
         />
 
         {/* Reload button */}
-        {/* <Image src={"/rotate-right-regular-full.svg"} alt="a" width={20} height={20}/> */}
         <IconButton
           imageSrc={"/rotate-right-regular-full.svg"}
           onClick={onReloadButtonClick}
@@ -67,8 +66,8 @@ export default function RoomBrowser({
 
       <div
         className="
-          grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-1 
-          overflow-x-visible overflow-y scroll
+          grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1 
+          overflow-y-scroll px-8 py-2
         "
         style={{ scrollbarWidth: "none" }}
       >

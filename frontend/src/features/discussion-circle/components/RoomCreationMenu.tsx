@@ -3,24 +3,24 @@ import SettingsCell from "./SettingsCell";
 import { ClientRoomData } from "../types/ClientRoomData";
 import IconButton from "./IconButton";
 import { motion } from "framer-motion";
-import { createRoom } from "@/app/discussion-circle/api";
 import { DEFAULT_SETTINGS, SETTINGS } from "@/app/discussion-circle/constants";
 
 interface RoomCreationMenuProps {
   onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>;
+  onCreateButtonClick?: (settings: ClientRoomData) => void
   onRoomCreated?: () => void;
 }
 
 export default function RoomCreationMenu({
   onCloseButtonClick,
+  onCreateButtonClick,
   onRoomCreated,
 }: RoomCreationMenuProps) {
-  const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS);
-  const [isLoading, setLoading] = useState<boolean>(false);
-  const [createButtonMessage, setCreateButtonMessage] =
-    useState<string>("Create");
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const updateMessage = useRef<NodeJS.Timeout>(undefined);
+  const [settings, setSettings] = useState<ClientRoomData>(DEFAULT_SETTINGS);       // settings that will be sent to the backend when creating a room
+  const [isLoading, setLoading] = useState<boolean>(false);                         // are we waiting for a response from the server telling us our room was created
+  const [createButtonMessage, setCreateButtonMessage] = useState<string>("Create"); // The text displayed on the create button
+  const [errorMessage, setErrorMessage] = useState<string>("");                     // The error message that displays when fail to create a room
+  const updateMessage = useRef<NodeJS.Timeout>(undefined);                          // an interval used to update createButtonMessage when we are waiting on the server
 
   function changeSetting(
     setting: string,
@@ -32,6 +32,8 @@ export default function RoomCreationMenu({
     });
   }
 
+  // When isLoading is set to true, cycle createButtonMessage between ".", "..", and "..."
+  // When isLoading is set to false, clear the interval that's cycling createButtonMessage and set the message back to normal
   useEffect(() => {
     if (isLoading) {
       setCreateButtonMessage(".");
@@ -102,6 +104,15 @@ export default function RoomCreationMenu({
           onChange={(event) => changeSetting("name", event.target.value)}
         />
 
+        <input
+          placeholder="Link to your Google Meet, Zoom, etc."
+          className="
+            text-black/80 text-base p-1 px-2 outline-none
+            border-b-2 border-[rgba(252,161,125,0.5)] rounded-sm
+          "
+          onChange={(event) => changeSetting("url", event.target.value)}
+        />
+
         <textarea
           className="
             p-2 grow outline-none
@@ -137,12 +148,10 @@ export default function RoomCreationMenu({
                 return;
               }
 
-              setLoading(true);
-              await createRoom({ ...settings });
-              setLoading(false);
-              if (onRoomCreated) {
-                onRoomCreated();
-              }
+              setLoading(true)
+              await onCreateButtonClick?.(settings)
+              setLoading(false)
+              onRoomCreated?.()
             }}
             className="
               p-1 w-40 cursor-pointer 

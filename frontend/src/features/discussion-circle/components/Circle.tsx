@@ -2,29 +2,37 @@ import { Timestamp } from "firebase/firestore";
 import { RoomData } from "../types/RoomData";
 import Participant from "./Participant";
 import Speaker from "./Speaker";
-import { MouseEventHandler, useEffect, useState } from "react";
-
-const defaultRadius = 120;
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { ParticipantData } from "../types/ParticipantData";
 
 interface CircleProps {
   roomData: RoomData;
   onStartButtonClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+const radius = 120
+
 export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
-  const [timeLeft, setTimeLeft] = useState<number>(0);
-  const [radius, setRadius] = useState(0);
-  const speaker = roomData.isActive
+  const [participants, setParticipants] = useState<ParticipantData[]>(roomData.participants)
+  const [timeLeft, setTimeLeft] = useState<number>(0);  // The time to display underneath the speaker
+  const [refreshFlag, setRefreshFlag] = useState<boolean>(true)
+  const previousRoom = useRef<string>(undefined)        // room id of previous room. used to detect room change
+  const speaker = roomData.isActive                     // The current speaker
     ? roomData.participants[roomData.speakerIndex]
     : undefined;
 
+  // When time related variables change, update timeLeft accordingly
   useEffect(() => {
-    setRadius(defaultRadius);
-
     if (!roomData.isActive) {
       return;
     }
 
+    // The time elapsed is the difference in seconds between now and when the speaker current speaker was selected
+    const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
+    setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed))
+
+    // set up a timer that periodically updates timeLeft based on how much time has passed since speakerStart
     const timerId = setInterval(() => {
       const timeElapsed = Timestamp.now().seconds - roomData.speakerStart.seconds;
       setTimeLeft(Math.max(0, roomData?.timeLimit - timeElapsed));
@@ -37,25 +45,51 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
     return () => {
       clearInterval(timerId);
     };
-  }, [roomData.speakerStart, roomData.timeLimit, roomData.isActive]);
+  }, [roomData.isActive, roomData.speakerStart?.seconds, roomData.timeLimit]);
+
+  // update the displayed participants when roomData changes
+  useEffect(() => {
+    // when the room changes, do a "refresh" of the participants to play the entrance animations properly
+    if (previousRoom.current !== roomData.id) {
+      setParticipants([])
+      setRefreshFlag(true)
+      previousRoom.current = roomData.id
+    }
+    // if the room is the same, then just update participants without replaying the entrance animation
+    else {
+      setParticipants(roomData.participants)
+    }
+
+    // if the refresh flag is raised, update participants
+    if (refreshFlag) {
+      setParticipants(roomData.participants)
+      setRefreshFlag(false)
+    }
+  }, [participants.length, refreshFlag, roomData.id, roomData.participants])
 
   return (
     <div className="grow flex justify-center items-center">
-      {roomData.participants.map((participant, index) => {
-        const baseAngle = (2 * Math.PI) / roomData.participants.length;
+      {participants.map((participant, index) => {
+        const baseAngle = (2 * Math.PI) / participants.length;
         const angle = baseAngle * index - Math.PI / 2;
         const xTranslate = radius * Math.cos(angle);
         const yTranslate = radius * Math.sin(angle);
         const isSpeaker = participant.uid === speaker?.uid;
 
         return (
-          <Participant
-            key={participant.uid}
-            userData={participant}
-            isSpeaker={isSpeaker}
-            goalX={xTranslate}
-            goalY={yTranslate}
-          />
+          <motion.div
+          key={participant.uid}
+          initial={{x: 0, y: 0}}
+          whileInView={{ x: xTranslate, y: yTranslate }}
+          transition={{ duration: 0.4 }}
+          className="absolute"
+          >
+            <Participant
+              key={participant.uid}
+              userData={participant}
+              isSpeaker={isSpeaker}
+            />
+          </motion.div>
         );
       })}
 
@@ -65,6 +99,7 @@ export default function Circle({ roomData, onStartButtonClick }: CircleProps) {
             userData={speaker}
             timeLeft={timeLeft}
             timeLimit={roomData.timeLimit}
+            startTime={roomData.speakerStart}
           />
         </div>
       ) : (
