@@ -4,11 +4,6 @@ h2 {
    font-size: 50px;
 }
 
-p {
-   font-size: 17px;
-   text-align: center;
-}
-
 @keyframes appear {
    from {
       opacity: 0;
@@ -149,6 +144,7 @@ p {
    grid-auto-flow: row;
    gap: 10px;
    margin-bottom: 0.5%;
+   padding: 0;
 }
 
 .interns-container ul {
@@ -170,4 +166,45 @@ p {
 .interns-container h2 {
    font-size: 17.5px;
    font-weight: bold;
+}
+
+/*Responsiveness*/
+@media (max-width: 1200px) {
+}
+
+@media (max-width: 900px) {
+   .about-section {
+      flex-direction: column;
+   }
+
+   .about-section img {
+      width: 45%;
+      max-width: 100%;
+      height: auto;
+   }
+   .founder-container {
+      flex-direction: column;
+      gap: 20px;
+   }
+   .interns-container h1 {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: bold;
+   }
+}
+
+@media (max-width: 600px) {
+   .founder-container img {
+      width: 300px;
+      border-radius: 20px;
+   }
+   .founder-text {
+      border-radius: 25px;
+   }
+}
+
+@media (max-width: 400px) {
+   .fade-in {
+      animation-range: entry 0% cover 10%;
+   }
 }

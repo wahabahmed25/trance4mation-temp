@@ -1,13 +1,13 @@
 [
    {
       "id": 1,
-      "question": "What is the Play to Heal Campus Connection Hub?",
-      "answer": "The Play to Heal Campus Connection Hub is a digital wellness platform that combines interactive games, peer support, and healing-centered engagement content to help students build community, reduce stress, and practice emotional well-being in a fun, engaging way. Its purpose and mission are to create a safe, accessible, and student-driven space where you can come together to share, listen, and heal. Grounded in therapeutic dialogue games, the platform empowers students to break through isolation, reduce stigma around mental health, and build resilience through peer-to-peer support. It is designed to foster connection and belonging, and to strengthen community."
+      "question": "What is the Play to Heal Hub?",
+      "answer": "The Play to Heal Hub is a digital wellness platform that combines interactive games, peer support, and healing-centered engagement content to help students build community, reduce stress, and practice emotional well-being in a fun, engaging way. Its purpose and mission are to create a safe, accessible, and student-driven space where you can come together to share, listen, and heal. Grounded in therapeutic dialogue games, the platform empowers students to break through isolation, reduce stigma around mental health, and build resilience through peer-to-peer support. It is designed to foster connection and belonging, and to strengthen community."
    },
    {
       "id": 2,
-      "question": "Who can use the Campus Connection Hub?",
-      "answer": "The hub is open to ALL students, regardless of background, identity, or academic standing. We are pleased to welcome students from marginalized communities, BIPOC, LGBTQIA+, and those who may feel isolated or underserved by traditional support systems. This is a place where everyone is welcome."
+      "question": "Who can use the Hub?",
+      "answer": "The hub is open to ALL students and adults, regardless of background, identity, or academic standing. We are pleased to welcome students from marginalized communities, BIPOC, LGBTQIA+, and those who may feel isolated or underserved by traditional support systems. This is a place where everyone is welcome."
    },
    {
       "id": 3,
@@ -17,7 +17,7 @@
    {
       "id": 4,
       "question": "Is there a cost to participate?",
-      "answer": "No, everything offered through the Play to Heal Campus Connection Hub is completely free for students, as well as for faculty. Our games and resources are meant to be peer-based, preventative, and supportive — not clinical. We encourage students who need professional help to connect with licensed counselors or campus mental health services."
+      "answer": "No, everything offered through the Play to Heal Hub is completely free for students, as well as for faculty. Our games and resources are meant to be peer-based, preventative, and supportive — not clinical. We encourage students who need professional help to connect with licensed counselors or campus mental health services."
    },
    {
       "id": 5,

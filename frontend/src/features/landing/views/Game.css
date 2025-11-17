@@ -1,1 +1,125 @@
 /* Game Page Styles */
+section[id] {
+   scroll-margin-top: 100px;
+}
+.game-container {
+   padding-top: 8rem;
+   background: linear-gradient(135deg, #fff5f5 0%, #fff4f4 100%);
+}
+
+.game-content {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   gap: 2rem;
+   background: #fffafa;
+   border-radius: 20px;
+   padding: 4rem 6rem;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-content:nth-child(even) {
+   flex-direction: row-reverse;
+}
+
+.game-content img {
+   width: 350px;
+   height: auto;
+   border-radius: 8px;
+   object-fit: cover;
+}
+
+.tag {
+   display: inline-block;
+   padding: 6px 14px;
+   margin-right: 10px;
+   margin-bottom: 10px;
+   border-radius: 16px;
+   font-size: 1rem;
+   font-weight: 600;
+}
+
+.tag-list {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 8px;
+}
+
+.multiplayer {
+   background-color: var(--soft-violet);
+   color: var(--text-primary);
+}
+
+.coming-soon {
+   background-color: var(--golden-glow);
+   color: var(--text-primary);
+}
+
+.grief {
+   background-color: #eaaece;
+   color: var(--text-primary);
+}
+
+.facilitator {
+   background-color: var(--deep-teal);
+   color: var(--text-white);
+}
+
+.anti-bullying {
+   background-color: #dd1f01;
+   color: var(--text-white);
+}
+.game-text {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   justify-self: center;
+   align-items: center;
+   h1 {
+      padding-bottom: 1%;
+   }
+   p {
+      font-size: 1.3rem;
+      text-align: justify;
+      padding: 3% 0%;
+   }
+}
+
+.play-button {
+   background: var(--gradient-coral);
+   color: var(--text-white);
+   padding: 1rem 2rem;
+   border: none;
+   border-radius: 50px;
+   font-size: 1.1rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   font-weight: 600;
+   box-shadow: 0 8px 25px var(--coral-alpha-30);
+   position: relative;
+   z-index: 2;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   width: 200px;
+}
+
+.play-button:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 12px 35px var(--coral-alpha-40);
+   background: var(--gradient-coral-reverse);
+}
+
+/*Responsiveness*/
+
+@media (max-width: 900px) {
+   .game-content {
+      flex-direction: column;
+      padding: 1rem 2rem;
+   }
+
+   .game-content img {
+      width: 55%;
+   }
+}
