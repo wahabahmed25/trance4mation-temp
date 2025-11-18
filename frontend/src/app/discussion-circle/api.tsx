@@ -4,7 +4,7 @@ import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import { RoomsContextData } from "@/features/discussion-circle/types/RoomsContextData";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot, Timestamp } from "firebase/firestore";
+import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot, Timestamp, where } from "firebase/firestore";
 import { createContext, useEffect, useRef, useState } from "react";
 
 const backendUrl = "http://localhost:5000"
@@ -23,7 +23,7 @@ export const FIRESTORE = getFirestore(FIREBASE_APP)
 // export const AUTH = getAuth(FIREBASE_APP)
 
 export async function getRooms() {
-    const q = query(collection(FIRESTORE, "rooms"))
+    const q = query(collection(FIRESTORE, "rooms"), where("isVisible", "==", "true"))
     const querySnapshot = await getDocs(q);
     const rooms = querySnapshot.docs.map((document) => {
         return {
@@ -31,8 +31,7 @@ export async function getRooms() {
             "id": document.id
         } as RoomData
     })
-    const visibleRooms = rooms.filter((room) => room.expiresAt === undefined || room.expiresAt.seconds > Timestamp.now().seconds)
-    return visibleRooms
+    return rooms
 }
 
 export async function createRoom(settings: ClientRoomData) {
