@@ -70,7 +70,7 @@ export default function SignupPage() {
 
         <SubmitButton
           label="Create Account"
-          className="rounded-full bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white py-3"
+          className="rounded-full cursor-pointer bg-gradient-to-r from-[#ce0f0f] to-[#ba1702] text-white py-3"
         />
       </form>
 

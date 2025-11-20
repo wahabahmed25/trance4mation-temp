@@ -23,8 +23,8 @@ const InputField = ({ className = "",type, name, placeholder, value, onChange }:
         onChange={onChange}
         className={`w-full max-w-md px-4 py-3 rounded-lg border border-gray-400 
                    focus:ring-2  
-                   outline-none shadow-md transition duration-200 text-gray-700
-                   placeholder-gray-500 flex-1 ${className}`}
+                   outline-none shadow-md transition duration-200 text-gray-200
+                   placeholder-gray-350 flex-1 ${className}`}
       />
     
     </div>

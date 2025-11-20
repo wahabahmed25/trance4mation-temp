@@ -1,7 +1,7 @@
 "use client";
 import SignupNavbar from "@/user-signup/signup/SignupNavbar";
 import React from "react";
-
+import Link from "next/link";
 export default function AuthLayout({
   title,
   subtitle,
@@ -18,7 +18,7 @@ export default function AuthLayout({
   footerLinkHref: string;
 }) {
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#3e020a] via-[#3e0235] to-[#2B0B3F] text-white">
+    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#910719] via-[#8e097a] to-[#5d1689] text-white">
       
       <SignupNavbar />
 
@@ -52,9 +52,9 @@ export default function AuthLayout({
 
           <p className="text-center text-gray-300 text-sm">
             {footerText}{" "}
-            <a href={footerLinkHref} className="text-[#FF6F3C] hover:text-[#FF512F] font-semibold">
+            <Link href={footerLinkHref} className="text-[#c82e13] hover:text-[#ea320d] font-semibold">
               {footerLinkText}
-            </a>
+            </Link>
           </p>
         </div>
 
@@ -73,14 +73,16 @@ export default function AuthLayout({
 
             {/* Logo */}
             <img
-              src="/play-to-heal.png"
-              alt="Play to Heal Logo"
-              className="
-                relative ml-20 
-                w-[300px] md:w-[450px]  /* ⬅ FIXED SIZE */
-                drop-shadow-[0_0_30px_rgba(255,107,53,0.4)]
-              "
-            />
+  src="/play-to-heal.png"
+  alt="Play to Heal Logo"
+  className="
+    relative ml-20 
+    w-[300px] md:w-[450px]
+    drop-shadow-[0_0_45px_rgba(255,10,40,1)]
+
+  "
+/>
+
           </div>
         </div>
       </main>

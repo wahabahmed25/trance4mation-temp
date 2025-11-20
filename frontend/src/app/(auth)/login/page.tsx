@@ -38,8 +38,7 @@ export default function LoginPage() {
       footerLinkText="Create one"
       footerLinkHref="/signup"
     >
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
         <InputField
           type="email"
           name="email"
@@ -57,12 +56,13 @@ export default function LoginPage() {
           onChange={handleChange}
           className="bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white"
         />
-        
 
-        <SubmitButton
-          label="Log In"
-          className="rounded-full bg-gradient-to-r from-[#FF512F] to-[#F09819] text-white py-3"
-        />
+        <div className="mt-8">
+          <SubmitButton
+            label="Log In"
+            className="rounded-full bg-gradient-to-r cursor-pointer from-[#ce0f0f] to-[#ba1702] text-white py-3"
+          />
+        </div>
       </form>
 
       {error && <p className="text-red-400 text-sm text-center">{error}</p>}

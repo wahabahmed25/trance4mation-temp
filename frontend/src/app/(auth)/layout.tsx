@@ -1,26 +1,9 @@
 "use client";
-
-import { AnimatePresence, motion } from "framer-motion";
-import { usePathname } from "next/navigation";
-
-export default function AuthTransitionLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
+import AuthTransitionLayout from "@/user-signup/AuthTransitionLayout";
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -15 }}
-        transition={{
-          duration: 0.35,
-          ease: "easeOut"
-        }}
-        className="min-h-screen"
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <AuthTransitionLayout>
+      {children}
+    </AuthTransitionLayout>
   );
 }
