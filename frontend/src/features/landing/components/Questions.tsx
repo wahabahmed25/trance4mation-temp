@@ -1,5 +1,7 @@
+"use client";
 import React, { Dispatch, SetStateAction } from "react";
-import QuestionAccordian from "@/features/landing/components/QuestionAccordion";
+import Image from "next/image";
+import QuestionAccordion from "@/features/landing/components/QuestionAccordion";
 import "./Questions.css";
 
 type Props = {
@@ -7,6 +9,7 @@ type Props = {
    answer: string;
    id: number;
 };
+
 interface QuestionsProps {
    handleClick: React.MouseEventHandler<HTMLButtonElement>;
    isSomeActive: boolean;
@@ -24,19 +27,28 @@ const Questions = ({ handleClick, isSomeActive, faqQuestions, turn, setTurn }: Q
                <button className="opencollapse-button" onClick={handleClick}>
                   <span> {!isSomeActive ? "Open All" : "Close All"}</span>
                   <div className={`rotate ${isSomeActive ? "rotate-180" : "rotate-0"}`}>
-                     <img src="/landing-page-img/ArrowUp.svg" alt="" width={40} height={40} />
+                     <Image
+                        src="/landing-page-img/ArrowUp.svg"
+                        alt="Arrow"
+                        width={40}
+                        height={40}
+                     />
                   </div>
                </button>
             </div>
          </div>
 
-         {faqQuestions.map((el, i) => {
-            return (
-               <div className="questions-open" key={"question" + i}>
-                  <QuestionAccordian question={el.question} answer={el.answer} turn={turn} setTurn={setTurn} id={el.id} />
-               </div>
-            );
-         })}
+         {faqQuestions.map((el, i) => (
+            <div className="questions-open" key={"question" + i}>
+               <QuestionAccordion
+                  question={el.question}
+                  answer={el.answer}
+                  turn={turn}
+                  setTurn={setTurn}
+                  id={el.id}
+               />
+            </div>
+         ))}
       </div>
    );
 };

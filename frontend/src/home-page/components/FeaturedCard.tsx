@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import React from "react";
+import Image from "next/image"; // ✅ import Next.js Image
 
 interface FeaturedCardProps {
   name: string;
@@ -40,11 +41,12 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
     >
       {/* Image */}
       {image && (
-        <div className="h-[180px] w-full overflow-hidden rounded-t-3xl">
-          <img
+        <div className="h-[180px] w-full relative rounded-t-3xl overflow-hidden">
+          <Image
             src={image}
             alt={name}
-            className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+            fill // makes the image cover the container
+            className="object-cover hover:scale-105 transition-transform duration-500"
           />
         </div>
       )}

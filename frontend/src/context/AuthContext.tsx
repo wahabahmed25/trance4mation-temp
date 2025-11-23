@@ -6,7 +6,7 @@ interface User {
   name: string;
   email: string;
   profilePic: string;
-  [key: string]: any;
+  [key: string]: unknown; // changed from `any` to `unknown`
 }
 
 interface AuthContextType {

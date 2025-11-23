@@ -37,12 +37,14 @@ export default function Room({
   return (
     <div className="flex flex-col grow h-full gap-2 relative">
       <div className="absolute flex w-full h-full">
-        <ReactionSpawner reactionData={roomData?.reaction}/>
+        <ReactionSpawner reactionData={roomData?.reaction} />
       </div>
+
       <div className="flex items-center">
         <h1 className="text-[#FCA17D] font-bold text-3xl grow">
           {roomData.name}
         </h1>
+
         {/* Exit Button */}
         <IconButton
           onClick={onExitButtonClick}
@@ -71,6 +73,7 @@ export default function Room({
               />
             </button>
           </div>
+
           <div
             className="text-gray-200 font-semibold text-sm"
             style={{ display: isPromptVisible ? "block" : "none" }}
@@ -85,22 +88,19 @@ export default function Room({
       <div className="flex flex-col gap-2 relative">
         <div
           className="flex text-3xl justify-center absolute w-full"
-          style={{
-            top: "-1.5em",
-          }}
+          style={{ top: "-1.5em" }}
         >
           {roomData.isActive ? (
             <>
               <div
                 className="flex justify-center absolute w-full"
-                style={{
-                  top: "-2em",
-                }}
+                style={{ top: "-2em" }}
               >
                 <button
                   disabled={
-                    (roomData.participants[roomData.speakerIndex].uid !== user.user?.uid) ||
-                    roomData.roundsLeft <= 0
+                    roomData.participants[roomData.speakerIndex].uid !==
+                      user.user?.uid ||
+                    ((roomData.roundsLeft ?? 1) <= 0)  // FIXED HERE
                   }
                   style={{
                     background:
@@ -118,21 +118,23 @@ export default function Room({
                   Skip ⏭️
                 </button>
               </div>
-              {REACTIONS.map((emoji, index) => 
-                <button 
-                key={emoji} 
-                className="hover:scale-120 transition cursor-pointer active:scale-90"
-                onClick={() => addReaction(roomData.id, index)}>
+
+              {REACTIONS.map((emoji, index) => (
+                <button
+                  key={emoji}
+                  className="hover:scale-120 transition cursor-pointer active:scale-90"
+                  onClick={() => addReaction(roomData.id, index)}
+                >
                   {emoji}
                 </button>
-              )}
+              ))}
             </>
           ) : (
             <div
               className="
                 grow rounded-lg p-2
                 border border-[#000]/10 bg-white/60
-                text-black/80 placeholder-gray-500 flex text-base
+                text-black/80 placeholder-gray-500 text-base
                 flex justify-between
               "
             >
