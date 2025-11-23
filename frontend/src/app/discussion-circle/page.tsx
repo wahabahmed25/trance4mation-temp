@@ -6,7 +6,7 @@ import Room from "@/features/discussion-circle/components/Room";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import Welcome from "@/features/discussion-circle/components/Welcome";
 import { useRooms } from "./api";
-import { Timestamp } from "firebase/firestore";
+// import { Timestamp } from "firebase/firestore";
 
 export default function DiscussionCircle() {
   const [isCreationMenuOpen, setCreationMenuOpen] = useState<boolean>(false); // is the creation menu open?

@@ -1,31 +1,43 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { login } from "@/lib/api/ApiCalls";
-import { initAnalytics } from "@/lib/firebase";
+// import { initAnalytics } from "@/lib/firebase";
 import AuthLayout from "@/user-signup/AuthLayout";
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
 export default function LoginPage() {
   const router = useRouter();
-  const [values, setValues] = useState({ email: "", password: "" });
+  const [values, setValues] = useState<LoginFormValues>({ email: "", password: "" });
   const [error, setError] = useState("");
 
   // useEffect(() => initAnalytics(), []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     setError("");
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { email, password } = values;
-    if (!email || !password) return setError("All fields are required ❌");
+    if (!email || !password) {
+      setError("All fields are required ❌");
+      return;
+    }
 
     const result = await login(email, password);
-    if (!result.success) return setError("Invalid email or password ❌");
+    if (!result.success) {
+      setError("Invalid email or password ❌");
+      return;
+    }
 
     router.push("/home");
   };
@@ -39,7 +51,6 @@ export default function LoginPage() {
       footerLinkHref="/signup"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
         <InputField
           type="email"
           name="email"
@@ -57,7 +68,6 @@ export default function LoginPage() {
           onChange={handleChange}
           className="bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white"
         />
-        
 
         <SubmitButton
           label="Log In"

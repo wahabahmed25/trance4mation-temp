@@ -18,6 +18,7 @@ const ContactForm = () => {
          [name]: value,
       }));
    };
+   console.log(status);
 
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();

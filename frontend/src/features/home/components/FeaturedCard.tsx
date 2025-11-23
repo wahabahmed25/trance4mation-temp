@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import React from "react";
+import Image from "next/image";
 
 interface FeaturedCardProps {
   name: string;
@@ -37,19 +38,20 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
         transition-all duration-300
       "
     >
-            {/* Image */}
+      {/* Image */}
       {img && (
         <div className="w-full p-7">
-          <div className="w-full aspect-[4/4] overflow-hidden rounded-2xl">
-            <img
+          <div className="w-full aspect-[1/1] overflow-hidden rounded-2xl relative">
+            <Image
               src={img}
               alt={name}
-              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+              fill
+              className="object-cover transition-transform duration-500 hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 340px, 360px"
             />
           </div>
         </div>
       )}
-
 
       {/* Content */}
       <div className="p-5 flex flex-col gap-3 flex-1">

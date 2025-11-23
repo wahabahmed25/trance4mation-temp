@@ -10,7 +10,7 @@ const PALETTE = {
 
 export function SummarySidebar({
   moodsByDay,
-  monthDate,
+  // monthDate,
 }: {
   moodsByDay: Record<string, MoodEntry>;
   monthDate: Date;

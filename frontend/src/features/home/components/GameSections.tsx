@@ -6,11 +6,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import FeaturedCard from "../components/FeaturedCard";
 import featuredGames from "@/fake-game-data/games.json";
 
+type Game = typeof featuredGames[number];
+
 interface GameSectionProps {
   title: string;
   subtitle?: string;
   viewAllLink?: string;
-  filterKey?: keyof typeof featuredGames[number];
+  filterKey?: keyof Game;
   filterValue?: boolean | string;
   limit?: number;
 }
@@ -19,13 +21,15 @@ const GameSection: React.FC<GameSectionProps> = ({
   title,
   subtitle,
   viewAllLink = "/featured",
-  filterKey = "",
-  filterValue = true,
+  filterKey,
+  filterValue,
   limit = 10,
 }) => {
   const filteredGames = featuredGames
-    .filter((game: any) => {
-      if (filterKey && filterValue !== undefined) return game[filterKey] === filterValue;
+    .filter((game: Game) => {
+      if (filterKey && filterValue !== undefined) {
+        return game[filterKey] === filterValue;
+      }
       return true;
     })
     .slice(0, limit);
@@ -75,7 +79,6 @@ const GameSection: React.FC<GameSectionProps> = ({
 
       {/* Carousel Container */}
       <div className="relative">
-        {/* Left Arrow */}
         <button
           onClick={scrollLeft}
           disabled={isAtStart}
@@ -87,7 +90,6 @@ const GameSection: React.FC<GameSectionProps> = ({
           <ChevronLeft className="w-5 h-5 text-gray-700" />
         </button>
 
-        {/* Scroll Row */}
         <motion.div
           ref={scrollRef}
           initial={{ opacity: 0, y: 25 }}
@@ -103,7 +105,6 @@ const GameSection: React.FC<GameSectionProps> = ({
           ))}
         </motion.div>
 
-        {/* Right Arrow */}
         <button
           onClick={scrollRight}
           disabled={isAtEnd}

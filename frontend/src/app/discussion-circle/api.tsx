@@ -1,11 +1,11 @@
 import { useAuth } from "@/context/AuthContext";
 import { ClientRoomData } from "@/features/discussion-circle/types/ClientRoomData";
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
-import { RoomsContextData } from "@/features/discussion-circle/types/RoomsContextData";
+// import { RoomsContextData } from "@/features/discussion-circle/types/RoomsContextData";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import { query, collection, getDocs, getFirestore, arrayUnion, doc, updateDoc, arrayRemove, onSnapshot, Timestamp } from "firebase/firestore";
-import { createContext, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const backendUrl = "http://localhost:5000"
 const firebaseConfig = {

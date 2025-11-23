@@ -1,32 +1,48 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { signup } from "@/lib/api/ApiCalls";
-import { initAnalytics } from "@/lib/firebase";
+// import { initAnalytics } from "@/lib/firebase";
 import AuthLayout from "@/user-signup/AuthLayout";
+
+interface SignupFormValues {
+  name: string;
+  email: string;
+  password: string;
+}
+
 export default function SignupPage() {
   const router = useRouter();
-  const [values, setValues] = useState({ name: "", email: "", password: "" });
+  const [values, setValues] = useState<SignupFormValues>({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
 
   // useEffect(() => initAnalytics(), []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     setError("");
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { name, email, password } = values;
 
-    if (!name || !email || !password) return setError("All fields are required ❌");
+    if (!name || !email || !password) {
+      setError("All fields are required ❌");
+      return;
+    }
 
     const result = await signup(name, email, password);
-
-    if (!result.success) return setError("Signup failed ❌");
+    if (!result.success) {
+      setError("Signup failed ❌");
+      return;
+    }
 
     router.push("/login");
   };
@@ -40,7 +56,6 @@ export default function SignupPage() {
       footerLinkHref="/login"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-
         <InputField
           type="text"
           name="name"
