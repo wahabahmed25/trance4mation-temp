@@ -5,67 +5,14 @@ import "./FAQ.css";
 import { useState } from "react";
 
 function FAQ() {
-   const [active, setActive] = useState([
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-      false,
-   ]);
+   const [active, setActive] = useState(
+      Array(faqQuestions.length).fill(false)
+   );
+
    const isSomeActive = active.some((element) => element);
+
    const handleClick = () => {
-      isSomeActive
-         ? setActive([
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-              false,
-           ])
-         : setActive([
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-              true,
-           ]);
+      setActive(Array(active.length).fill(!isSomeActive));
    };
 
    return (
