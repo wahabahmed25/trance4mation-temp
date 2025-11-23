@@ -77,7 +77,7 @@ const interns: Intern[] = [
       image: "/landing-page-img/ZhenTaoPan.jpg",
       description:
          "Zhen Tao Pan is a computer science and mathematics student at Hunter College with a passion for software engineering and AI. As a Discrete Math and Computer Science Teaching Assistant, Zhen has helped over 350 students strengthen their reasoning and problem-solving skills, contributing to measurable academic improvement. His favorite coding languages are Python and C++.",
-      extra1: "   ",
+      extra1: '"To gain real-world experience while helping Leslie achieve her mission!"',
       extra2: "LinkedIn",
       section:
          "Speak to Me and Trill Addictions Prevention & Recovery Game Development Team",
@@ -102,7 +102,8 @@ const interns: Intern[] = [
       image: "/landing-page-img/RagibAsif.jpg",
       description:
          "Ragib is a computer science student at CUNY Hunter College with a strong focus on systems programming, compilers, and cloud-based software architecture. He has developed projects ranging from a self-compiling C compiler to a dynamic memory debugger and a multi-client chat server. Passionate about building efficient, secure, and scalable software, Ragib is eager to contribute to innovative engineering teams.",
-      extra1: "  ",
+      extra1:
+         '"I am passionate about working on games that promote mental health because speaking openly is often the hardest step. If a game can make that step feel natural, safe, and even enjoyable, it can help people express what they are carrying and feel less alone. "',
       extra2: "GitHub",
       section:
          "Play to Heal and Campus Connection Platform Development || Keep It Real & Keep It Real 100 Game Development Team",

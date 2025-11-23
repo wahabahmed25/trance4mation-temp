@@ -8,7 +8,7 @@
    left: 0;
    width: 100%;
    height: 100%;
-   background: rgba(0, 0, 0, 0.5);
+   background: rgba(163, 133, 133, 0.5);
    display: flex;
    justify-content: center;
    align-items: flex-start;
@@ -112,14 +112,13 @@
 }
 
 .internDescription {
-   font-size: 18px;
+   font-size: 15px;
    padding-bottom: 1%;
-   text-align: justify;
    color: var(--text-primary);
 }
 
 .extraLinkStyle {
-   font-size: 18px;
+   font-size: 14px;
 
    color: var(--text-primary);
 }
@@ -138,7 +137,6 @@
       padding: 15px;
       box-sizing: border-box;
 
-      display: flex;
       flex-direction: column;
       align-items: center;
       gap: 15px;
@@ -158,8 +156,11 @@
       width: 90%;
       margin: 0;
       max-height: 50vh;
-      overflow-y: auto;
       padding: 20px;
+   }
+
+   .internDescription {
+      text-align: unset;
    }
 }
 

@@ -1,17 +1,23 @@
 "use client";
 import "./App.css";
 import "./index.css";
+import CopyButton from "../../features/landing/components/Share";
+import Modal from "../../features/landing/components/ShareModal";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-   /** nav bar gradient when user scrolls */
    const nav = useRef<HTMLElement | null>(null);
+
    // drop down menu
    const [dropdownOpen, setDropdownOpen] = useState(false);
    const dropdownToggle = useRef<HTMLDivElement | null>(null);
+
    // mobile
    const [hamburgerOpen, setHamburgerOpen] = useState(false);
+
+   // share modal
+   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
    const toggleHamburger = () => {
       setHamburgerOpen(!hamburgerOpen);
@@ -55,6 +61,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       return () => document.removeEventListener("mousedown", handleClickOutside);
    }, []);
 
+   const handleCopyLink = () => {
+      setModalOpen(true);
+
+      navigator.clipboard
+         .writeText(window.location.href)
+         .then(() => {
+            console.log("Link copied");
+         })
+         .catch((err) => {
+            console.error("Error copying link: ", err);
+         });
+   };
+
    return (
       <div className="App">
          <div
@@ -83,9 +102,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                </div>
 
-               <Link href="/landing/about">About</Link>
+               <Link href="/landing/about">About Our Team</Link>
                <Link href="/landing/contact">Contact & Feedback</Link>
                <Link href="/landing/faq">FAQ</Link>
+               <div className="share-container">
+                  <CopyButton onClick={handleCopyLink} />
+                  <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+               </div>
             </div>
 
             <div
@@ -128,9 +151,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </div>
                </div>
 
-               <Link href="/landing/about">About</Link>
+               <Link href="/landing/about">About Our Team</Link>
                <Link href="/landing/contact">Contact & Feedback</Link>
                <Link href="/landing/faq">FAQ</Link>
+               <div className="share-container">
+                  <CopyButton onClick={handleCopyLink} />
+                  <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+               </div>
             </div>
          </div>
 

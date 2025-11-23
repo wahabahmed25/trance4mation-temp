@@ -120,10 +120,11 @@ function Home() {
                   <h3>
                      Play to Heal is more than a platform. It is a movement of connection,
                      compassion, and transformation through dialogue-based games. This
-                     presentation introduces you to the spirit of Play to Heal: what it
-                     is, how it works, and the simple agreements that make every
-                     experience safe, meaningful, and real. Before you play, take a moment
-                     to explore the heart behind it all.
+                     presentation (Explore the heart, mission and how it all works)
+                     introduces you to the spirit of Play to Heal: what it is, how it
+                     works, and the simple agreements that make every experience safe,
+                     meaningful, and real. Before you play, take a moment to explore the
+                     heart behind it all.
                   </h3>
                   <div>
                      <a href="/landing-page/Mission.pdf" target="_blank">
