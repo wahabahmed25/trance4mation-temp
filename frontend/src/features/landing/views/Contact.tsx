@@ -15,8 +15,8 @@ function Contact() {
                         We truly value your feedback, comments, and suggestions about the
                         Play to Heal Hub!
                      </b>{" "}
-                     Your voice matters, and we want to hear what’s working well and what
-                     we can improve. Don’t hesitate to reach out to us at{" "}
+                     Your voice matters, and we want to hear what&apos;s working well and what
+                     we can improve. Don&apos;t hesitate to reach out to us at{" "}
                      <a href="mailto:info@playtohealhub.com">
                         <span>
                            <b> info@playtohealhub.com </b>

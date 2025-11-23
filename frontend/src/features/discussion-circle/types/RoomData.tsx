@@ -18,4 +18,5 @@ export type RoomData = {
     speakerIndex: number,               // index of the current speaker in the participants array
     speakerStart: Timestamp,            // when the current speaker started speaking
     timeLimit: number,                  // how much time the speaker has to speak
+    url?: string;
 }
