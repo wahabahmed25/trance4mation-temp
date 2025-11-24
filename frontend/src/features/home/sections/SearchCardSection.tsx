@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import featuredGames from "@/fake-game-data/games.json";
 
 const PALETTE = {
   violet: "#A78BFA",
@@ -13,8 +15,55 @@ const PALETTE = {
 
 const tags = ["focus", "mindful", "sleep", "gratitude", "community"];
 
-const SearchCardSection = () => {
-  const [query, setQuery] = useState("");
+/** We define a Game interface matching the structure in featuredGames.json */
+interface Game {
+  name: string;
+  description: string;
+  tags: string[];
+  plays: number;
+  rating: number;
+  link: string;
+  img?: string;
+  featured?: boolean;
+  isTrending?: boolean;
+  continuePlaying?: boolean;
+  progress?: number;
+  // allow other fields but typed as unknown so we avoid `any`
+  [key: string]: unknown;
+}
+
+/**
+ * Additional fields that search attaches to each game for scoring.
+ * matchesAtLeastOneTag / matchesAllTags etc. are booleans or numbers.
+ */
+type ScoredGame = Game & {
+  matchesAtLeastOneTag: boolean;
+  matchesAllTags: boolean;
+  nameMatchesQuery: boolean;
+  descriptionMatchesQuery: boolean;
+  [key: string]: unknown;
+};
+
+/**
+ * Weights for scoring
+ */
+const searchWeights: Record<string, number> = {
+  matchesAtLeastOneTag: 1,
+  matchesAllTags: 2,
+  nameMatchesQuery: 2,
+  descriptionMatchesQuery: 1,
+  plays: 1,
+};
+
+const SearchCardSection: React.FC = () => {
+  const router = useRouter();
+
+  const [query, setQuery] = useState<string>("");
+  const [enabledTags, setEnabledTags] = useState<string[]>([]);
+  const [searchResultsVisible, setSearchResultsVisible] = useState<boolean>(false);
+
+  // cast featuredGames to Game[] (assumes your JSON shape matches Game)
+  const games = searchGames(featuredGames as Game[], query, enabledTags, searchWeights);
 
   return (
     <motion.section
@@ -25,18 +74,17 @@ const SearchCardSection = () => {
         bg-white/70 backdrop-blur-xl 
         border border-[rgba(0,0,0,0.05)]
         shadow-[0_8px_30px_rgba(0,0,0,0.08)]
-        p-8 sm:p-10 flex flex-col justify-between"
+        p-8 sm:p-10 flex flex-col justify-between
+        z-1
+        "
     >
-      {/* Soft background glow */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
 bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
-
       />
 
       <div className="relative z-10 space-y-6">
-        {/* 💫 Header Text — Blue → Violet Gradient */}
         <h1
           className="text-4xl sm:text-3xl md:text-4xl font-extrabold leading-tight
           bg-gradient-to-r from-[#5b528a] via-[#456571] to-[#5c548a]
@@ -50,7 +98,6 @@ bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
           moments, and connect with others — one mindful step at a time.
         </p>
 
-        {/* Buttons */}
         <div className="flex flex-wrap gap-3 mb-6">
           <button
             className="
@@ -77,30 +124,63 @@ bg-gradient-to-r from-[#514753] via-[#463b41] to-[#2b2523]
           </Link>
         </div>
 
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+          {tags.map((tag) => (
+            <button
+              key={tag}
+              className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1
+              text-[#555] hover:border-[#A78BFA] hover:text-[#A78BFA] transition-all"
+              onClick={() => {
+                if (enabledTags.includes(tag)) {
+                  setEnabledTags(enabledTags.filter((element) => element !== tag));
+                } else {
+                  setEnabledTags([...enabledTags, tag]);
+                }
+              }}
+              style={
+                enabledTags.includes(tag)
+                  ? { color: "#A78BFA", borderColor: "#A78BFA", backgroundColor: "rgba(0,0,0,0.05)" }
+                  : {}
+              }
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+
         {/* Search Input */}
-        <div className="max-w-2xl">
+        <div className="max-w-2xl flex flex-col">
           <div className="flex items-center gap-2 rounded-2xl border border-[#000]/10 bg-white/60 px-4 py-2.5">
             <span className="text-lg text-[#A78BFA]">🔍</span>
             <input
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+              onFocus={() => setSearchResultsVisible(true)}
+              onBlur={() => setTimeout(() => setSearchResultsVisible(false), 150)} // small delay so clicks register
               placeholder="Search games, e.g. focus, breathing, gratitude…"
               className="w-full bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
             />
           </div>
 
-          {/* Tags */}
-          <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                onClick={() => setQuery(tag)}
-                className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1
-                text-[#555] hover:border-[#A78BFA] hover:text-[#A78BFA] transition-all"
-              >
-                #{tag}
-              </button>
-            ))}
+          <div className="relative w-full" style={{ visibility: searchResultsVisible ? "visible" : "hidden" }}>
+            <div className="absolute w-full rounded-2xl border border-[#000]/10 bg-white overflow-auto max-h-48">
+              {games.map((game) => {
+                return (
+                  <div
+                    key={game.name}
+                    className="hover:bg-[#000]/5 px-4 py-2.5 cursor-pointer"
+                    // use onMouseDown so selection works even if input blurs immediately
+                    onMouseDown={() => {
+                      setQuery(game.name);
+                      router.push(game.link);
+                    }}
+                  >
+                    {game.name}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -109,3 +189,76 @@ bg-gradient-to-r from-[#514753] via-[#463b41] to-[#2b2523]
 };
 
 export default SearchCardSection;
+
+/**
+ * Sorts all games in order of descending score according to the given search parameters
+ */
+function searchGames(
+  games: Game[],
+  query: string,
+  tags: string[],
+  weights: Record<string, number>
+): ScoredGame[] {
+  const q = query.trim().toLowerCase();
+
+  const searchResults: ScoredGame[] = games.map((game) => {
+    const nameLower = (game.name || "").toString().toLowerCase();
+    const descLower = (game.description || "").toString().toLowerCase();
+    const matchesAtLeastOneTag = game.tags.some((tag) => tags.includes(tag));
+    const matchesAllTags = tags.length > 0 ? tags.every((t) => game.tags.includes(t)) : false;
+    const nameMatchesQuery = q.length > 0 && nameLower.includes(q);
+    const descriptionMatchesQuery = q.length > 0 && descLower.includes(q);
+
+    return {
+      ...game,
+      matchesAtLeastOneTag,
+      matchesAllTags,
+      nameMatchesQuery,
+      descriptionMatchesQuery,
+    };
+  });
+
+  // sort by score descending
+  return searchResults.sort((a, b) => {
+    const scoreDifference = compareGames(a, b, weights);
+    return scoreDifference > 0 ? -1 : scoreDifference < 0 ? 1 : 0;
+  });
+}
+
+/**
+ * Calculates the difference in score between 2 games a and b.
+ * Score is calculated using a given set of weights that maps the name of a field to the number of points to award based on that field.
+ */
+function compareGames(a: ScoredGame, b: ScoredGame, weights: Record<string, number>): number {
+  let scoreA = 0;
+  let scoreB = 0;
+
+  Object.entries(weights).forEach(([feature, weight]) => {
+    const featureA = a[feature] as unknown;
+    const featureB = b[feature] as unknown;
+
+    // boolean features (e.g., matchesAllTags)
+    if (typeof featureA === "boolean" && typeof featureB === "boolean") {
+      if (featureA) scoreA += weight;
+      if (featureB) scoreB += weight;
+      return;
+    }
+
+    // numeric features (e.g., plays)
+    if (typeof featureA === "number" && typeof featureB === "number") {
+      if (featureA > featureB) scoreA += weight;
+      if (featureA < featureB) scoreB += weight;
+      return;
+    }
+
+    // fallback for features like nameMatchesQuery/descriptionMatchesQuery stored as booleans
+    if (typeof featureA === "boolean") {
+      if (featureA) scoreA += weight;
+    }
+    if (typeof featureB === "boolean") {
+      if (featureB) scoreB += weight;
+    }
+  });
+
+  return scoreA - scoreB;
+}
