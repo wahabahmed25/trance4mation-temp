@@ -4,7 +4,6 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { signup } from "@/lib/api/ApiCalls";
-// import { initAnalytics } from "@/lib/firebase";
 import AuthLayout from "@/user-signup/AuthLayout";
 
 interface SignupFormValues {
@@ -22,8 +21,6 @@ export default function SignupPage() {
   });
   const [error, setError] = useState("");
 
-  // useEffect(() => initAnalytics(), []);
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     setError("");
@@ -39,6 +36,7 @@ export default function SignupPage() {
     }
 
     const result = await signup(name, email, password);
+
     if (!result.success) {
       setError("Signup failed ❌");
       return;

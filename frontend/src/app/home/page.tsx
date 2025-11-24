@@ -5,8 +5,10 @@ import ForyouGames from "@/features/home/sections/ForyouGames";
 import TrendingGamesSection from "@/features/home/sections/TrendingGamesSection";
 import FeaturedGamesSection from "@/features/home/sections/FeaturedGamesSection";
 import GameHubSection from "@/features/home/sections/GameHubSection";
+import AnalyticsDashboard from "@/features/home/analytics/AnalyticsDashboard";
 import PlayAgainSection from "@/features/home/sections/PlayAgainSection";
 export default function Home() {
+
   return (
     <HomeLayout>
       {/* 🔹 Top Section: Search (left) + Mood Widget (right) */}
@@ -29,11 +31,12 @@ export default function Home() {
 
         {/* ✅ Full-width Continue Playing */}
         <div className="w-screen -mx-[calc((100vw-100%)/2)]">
-          <PlayAgainSection />
+          {/* <PlayAgainSection /> */}
         </div>
-        <FeaturedGamesSection />
-        <ForyouGames />
-        <TrendingGamesSection />
+        {/* <FeaturedGamesSection /> */}
+        {/* <ForyouGames /> */}
+        {/* <TrendingGamesSection /> */}
+        <AnalyticsDashboard />
       </div>
     </HomeLayout>
   );
