@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import featuredGames from "@/fake-game-data/games.json";
+import { redirect } from "next/navigation";
 
 const PALETTE = {
   violet: "#A78BFA",
@@ -144,7 +145,10 @@ bg-gradient-to-r from-[#514753] via-[#463b41] to-[#2b2523]
                   <div 
                   key={game.name} 
                   className="hover:bg-[#000]/5 px-4 py-2.5"
-                  onMouseDown={() => setQuery(game.name)}
+                  onMouseDown={() => {
+                    setQuery(game.name)
+                    redirect(game.link)
+                  }}
                   >
                     {game.name}
                   </div>
