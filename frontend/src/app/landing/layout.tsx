@@ -2,47 +2,57 @@
 import "./landing-button.css";
 import "./App.css";
 import "./index.css";
+import CopyButton from "../../features/landing/components/Share";
+import Modal from "../../features/landing/components/ShareModal";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  /** nav bar gradient when user scrolls */
+  /** navbar gradient when user scrolls */
   const nav = useRef<HTMLElement | null>(null);
 
-  // dropdown menu
+  /** dropdown menu */
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownToggle = useRef<HTMLDivElement | null>(null);
 
-  // mobile
+  /** mobile menu */
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
 
-  // FULL PAGE RELOAD login
-  const goToLogin = () => {
-    window.location.href = "/login"; // ← HARD REFRESH
+  /** share modal */
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
+
+  const handleCopyLink = () => {
+    setModalOpen(true);
+    navigator.clipboard.writeText(window.location.href).catch(console.error);
   };
 
+  /** HARD reload login */
+  const goToLogin = () => {
+    window.location.href = "/login";
+  };
+
+  /** disable scroll when mobile menu open */
   useEffect(() => {
-    if (hamburgerOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
+    if (hamburgerOpen) document.body.classList.add("no-scroll");
+    else document.body.classList.remove("no-scroll");
     return () => document.body.classList.remove("no-scroll");
   }, [hamburgerOpen]);
 
+  /** navbar scroll gradient */
   useEffect(() => {
     function handleScroll() {
       if (nav.current) {
-        const scrollPosition = window.scrollY;
-        const opacity = Math.min(scrollPosition / 350, 1);
-        nav.current.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255, 255, 255, ${opacity}))`;
+        const scrollY = window.scrollY;
+        const opacity = Math.min(scrollY / 350, 1);
+        nav.current.style.backgroundImage = `linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255,${opacity}))`;
       }
     }
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /** close dropdown when clicking outside */
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -58,16 +68,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="App landing-navbar">
+      {/* Overlay for mobile menu */}
       <div
         className={`overlay ${hamburgerOpen ? "open" : ""}`}
         onClick={toggleHamburger}
       ></div>
 
-      {/* NAVBAR */}
+      {/* DESKTOP NAVBAR */}
       <nav ref={nav} className={`nav ${hamburgerOpen ? "open" : ""}`}>
         <div className="nav-links">
           <Link href="/landing">Home</Link>
 
+          {/* GAMES DROPDOWN */}
           <div
             className={`dropdown ${dropdownOpen ? "open" : ""}`}
             ref={dropdownToggle}
@@ -81,9 +93,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             <div className="dropdown-content">
               <Link href="/landing/game#Remembrance">Remembrance</Link>
-              <Link href="/landing/game#Keep-It-Real-100">
-                Keep It Real 100
-              </Link>
+              <Link href="/landing/game#Keep-It-Real-100">Keep It Real 100</Link>
               <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
               <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
               <Link href="/landing/game#Home-is-the-Heart">
@@ -94,9 +104,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <Link href="/landing/about">About</Link>
+          {/* About / Contact / FAQ */}
+          <Link href="/landing/about">About Our Team</Link>
           <Link href="/landing/contact">Contact & Feedback</Link>
           <Link href="/landing/faq">FAQ</Link>
+
+          {/* Share Button + Modal */}
+          <div className="share-container">
+            <CopyButton onClick={handleCopyLink} />
+            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+          </div>
+
+          {/* LOGIN BUTTON (kept exactly as is) */}
           <div className="login-wrapper">
             <button onClick={goToLogin} className="landing-login-btn">
               login
@@ -104,6 +123,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
+        {/* HAMBURGER ICON */}
         <div
           className={`hamburger-mobile ${hamburgerOpen ? "open" : ""}`}
           onClick={toggleHamburger}
@@ -121,6 +141,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="side-links">
           <Link href="/landing">Home</Link>
 
+          {/* MOBILE DROPDOWN */}
           <div
             className={`dropdown ${dropdownOpen ? "open" : ""}`}
             ref={dropdownToggle}
@@ -149,11 +170,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <Link href="/landing/about">About</Link>
+          <Link href="/landing/about">About Our Team</Link>
           <Link href="/landing/contact">Contact & Feedback</Link>
           <Link href="/landing/faq">FAQ</Link>
 
-          {/* 🚀 HARD FULL PAGE RELOAD LOGIN BUTTON */}
+          {/* Share Button */}
+          <div className="share-container">
+            <CopyButton onClick={handleCopyLink} />
+            <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+          </div>
+
+          {/* LOGIN BUTTON (MOBILE) */}
           <button onClick={goToLogin} className="landing-login-btn">
             login
           </button>

@@ -49,7 +49,7 @@ function Home() {
          quote:
             "There has never been a board game like this … EVER!!! KEEP IT REAL will stay with us in potentially life altering ways in rebuilding our perceptions of others and ourselves, while having us run a fun filled spectrum of emotions in the process. No one has ever enjoyed themselves or explored themselves this much with a board game before!",
          author:
-            "Gerard Brown, Teacher/Screenwriter who wrote the screenplay for &ldquo;Juice&rdquo; starring Tupac Shakur",
+            "Gerard Brown, Teacher/Screenwriter who wrote the screenplay for “Juice” starring Tupac Shakur",
          image: "/landing-page-img/user.svg",
       },
       {
@@ -60,7 +60,7 @@ function Home() {
       },
       {
          quote:
-            "When we are affected so deeply by grief, it is difficult to find the words to begin the healing journey. Not only are we suffering, but so are our loved ones around us. It is the lack of connection and understanding that can sharpen the edges of grieving, making it even more painful to maneuver. Remembrance not only brings out the joy and love we had for our loved ones, but also initiates heartfelt conversation, invoking connectivity and love.. With these doors open, healing is finally possible",
+            "When we are affected so deeply by grief, it is difficult to find the words to begin the healing journey. Not only are we suffering, but so are our loved ones around us. It is the lack of connection and understanding that can sharpen the edges of grieving, making it even more painful to maneuver. Remembrance not only brings out the joy and love we had for our loved ones, but also initiates heartfelt conversation, invoking connectivity and love. With these doors open, healing is finally possible",
          author: "Leah Hodous",
          image: "/landing-page-img/user.svg",
       },
@@ -105,6 +105,37 @@ function Home() {
                   >
                      Start Your Journey
                   </button>
+               </div>
+            </section>
+         </div>
+
+         {/* Welcome Section (from the merge) */}
+         <div className="fade-in">
+            <section className="welcome-section">
+               <h1>Play to Heal: What It Is & How It Works</h1>
+               <div className="welcome-div">
+                  <h3>
+                     Play to Heal is more than a platform. It is a movement of connection,
+                     compassion, and transformation through dialogue-based games. This
+                     presentation introduces you to the spirit of Play to Heal: what it is,
+                     how it works, and the simple agreements that make every experience safe,
+                     meaningful, and real. Before you play, take a moment to explore the heart
+                     behind it all.
+                  </h3>
+                  <div>
+                     <a href="/landing-page/Mission.pdf" target="_blank">
+                        <button className="welcome-button">
+                           Explore the Heart, Mission, & How it All Works
+                        </button>
+                     </a>
+                     <br />
+                     <a
+                        href="https://youtu.be/0IKEGc1yPEE?si=4BUw6Jg2Q_xZ1Ucl"
+                        target="_blank"
+                     >
+                        <button className="welcome-button">Our Warm Welcome Video</button>
+                     </a>
+                  </div>
                </div>
             </section>
          </div>
