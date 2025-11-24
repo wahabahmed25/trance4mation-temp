@@ -102,4 +102,19 @@
       align-content: center;
       justify-self: center;
    }
+   .left-flex p {
+      text-align: unset;
+   }
+}
+
+@media (max-width: 600px) {
+   .contact-us {
+      width: 300px;
+   }
+}
+
+@media (max-width: 400px) {
+   .contact-us {
+      width: 250px;
+   }
 }

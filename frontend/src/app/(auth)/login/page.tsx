@@ -6,7 +6,6 @@ import InputField from "@/user-signup/signup/InputField";
 import { login } from "@/lib/api/ApiCalls";
 // import { initAnalytics } from "@/lib/firebase";
 import AuthLayout from "@/user-signup/AuthLayout";
-
 interface LoginFormValues {
   email: string;
   password: string;

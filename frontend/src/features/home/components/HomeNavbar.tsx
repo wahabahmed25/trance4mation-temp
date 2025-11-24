@@ -8,10 +8,9 @@ import { useAuth } from "@/context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [opacity, setOpacity] = useState(0); // white overlay opacity (0 → 1)
+  const [opacity, setOpacity] = useState(0);
   const { user } = useAuth();
 
-  // Match your vanilla JS behavior: opacity = min(scrollY / 350, 1)
   useEffect(() => {
     const onScroll = () => {
       const o = Math.min(window.scrollY / 350, 1);
@@ -22,28 +21,35 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // This mimics: linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255, opacity))
   const style: React.CSSProperties = {
-    // define --nav-bg like in your CSS example (top blue used on landing)
-    // tweak alpha if you want it a bit stronger at the top
-    // @ts-expect-error CSS var inline (fine at runtime)
-    ["--nav-bg"]: "rgba(126, 200, 227, 0.95)",
+    ["--nav-bg" as any]: "rgba(126, 200, 227, 0.95)",
     backgroundImage: `linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255,${opacity}))`,
     transition: "background-image 0.4s ease",
   };
 
+  const desktopLinks = [
+    { label: "Games", href: "/games" },
+    { label: "Home", href: "/home" },
+    { label: "Landing", href: "/landing" },
+    { label: "Profile", href: "/profile" },
+    { label: "About", href: "/about" },
+    { label: "FAQ", href: "/faq" },
+  ];
+
+  const mobileLinks = [
+    { label: "About", href: "/about" },
+    { label: "Games", href: "/games" },
+    { label: "Profile", href: "/profile" },
+    { label: "Logout", href: "/logout" },
+  ];
+
   return (
     <nav
-      className="
-        fixed top-0 left-0 w-full z-50
-        backdrop-blur-[25px]
-        
-      "
+      className="fixed top-0 left-0 w-full z-50 backdrop-blur-[25px]"
       style={style}
     >
-      {/* Padding: 2rem like your example */}
       <div className="mx-auto max-w-7xl px-6 md:px-10 py-8 flex items-center justify-between">
-        {/* Left — Logo + Title */}
+        {/* Logo */}
         <Link href="/home" className="flex items-center gap-3">
           <Image
             src="/play-to-heal.png"
@@ -60,19 +66,11 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Links: centered feel with generous gaps */}
+        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-16">
-          {[
-            { label: "Games", href: "/about" },
-            { label: "Home", href: "/games" },
-            { label: "Landing", href: "/landing" },
-            { label: "Profile", href: "/logout" },
-            { label: "About", href: "/logout" },
-            { label: "FAQ", href: "/logout" },
-
-          ].map((l) => (
+          {desktopLinks.map((l) => (
             <Link
-              key={l.href}
+              key={l.label}
               href={l.href}
               className="
                 text-white
@@ -87,7 +85,7 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setIsOpen((s) => !s)}
           className="md:hidden text-white focus:outline-none"
@@ -97,7 +95,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile sheet */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -114,7 +112,6 @@ const Navbar = () => {
               z-40
             "
             style={{
-              // keep same gradient direction + palette for the mobile sheet
               backgroundImage: `linear-gradient(
                 to bottom,
                 var(--nav-bg),
@@ -123,14 +120,9 @@ const Navbar = () => {
             }}
           >
             <div className="flex flex-col items-center gap-6 py-8 text-xl">
-              {[
-                { label: "About", href: "/landing/pages/about" },
-                { label: "Games", href: "/games" },
-                { label: "Profile", href: "/profile" },
-                { label: "Logout", href: "/logout" },
-              ].map((l) => (
+              {mobileLinks.map((l) => (
                 <Link
-                  key={l.href}
+                  key={l.label}
                   href={l.href}
                   onClick={() => setIsOpen(false)}
                   className="

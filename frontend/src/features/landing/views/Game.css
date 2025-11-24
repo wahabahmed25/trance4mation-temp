@@ -112,6 +112,11 @@ section[id] {
 }
 
 /*Responsiveness*/
+@media (max-width: 1200px) {
+   .game-text p {
+      text-align: unset;
+   }
+}
 
 @media (max-width: 900px) {
    .game-content {
@@ -121,5 +126,9 @@ section[id] {
 
    .game-content img {
       width: 55%;
+   }
+
+   .fade-in {
+      animation-range: entry 0% cover 0%;
    }
 }

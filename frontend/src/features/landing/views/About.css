@@ -176,7 +176,9 @@ h2 {
    .about-section {
       flex-direction: column;
    }
-
+   .about-section p {
+      text-align: unset;
+   }
    .about-section img {
       width: 45%;
       max-width: 100%;
@@ -190,6 +192,9 @@ h2 {
       text-align: center;
       font-size: 1rem;
       font-weight: bold;
+   }
+   .founder-text p {
+      text-align: unset;
    }
 }
 

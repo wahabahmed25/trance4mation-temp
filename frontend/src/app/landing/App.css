@@ -28,7 +28,7 @@ body.no-scroll {
 }
 .nav .nav-links {
    display: flex;
-   gap: 2rem;
+   gap: 0.5rem;
    justify-content: center;
    width: 100%;
 }
@@ -257,6 +257,10 @@ body.no-scroll {
       font-weight: 600;
       display: flex;
       align-items: center;
+   }
+   .share-container {
+      text-align: center;
+      margin-top: 3rem;
    }
 }
 

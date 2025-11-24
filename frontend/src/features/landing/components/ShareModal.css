@@ -1,0 +1,81 @@
+.copyButton {
+   background: var(--gradient-coral);
+   color: var(--text-white);
+   padding: 1rem 2rem;
+   margin: 15px 0;
+   border: none;
+   border-radius: 50px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   font-weight: 600;
+
+   box-shadow: 0 8px 10px var(--coral-alpha-30);
+   position: relative;
+   z-index: 2;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   width: 230px;
+}
+
+.copyButton:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 12px 35px var(--coral-alpha-40);
+   background: var(--gradient-coral-reverse);
+}
+.modalBackdrop {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background: rgba(163, 133, 133, 0.5);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+   overflow: hidden;
+}
+
+.modalContent {
+   background-color: var(--warm-beige);
+   padding: 30px;
+   border-radius: 10px;
+   width: 500px;
+   text-align: center;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   z-index: 1001;
+   margin-top: 50px;
+}
+.close {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.closeButton {
+   background: var(--gradient-coral);
+   color: var(--text-white);
+   padding: 1rem 2rem;
+   margin: 10px 0;
+   border: none;
+   border-radius: 50px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   font-weight: 600;
+   width: 220px;
+   box-shadow: 0 8px 25px var(--coral-alpha-30);
+   position: relative;
+   z-index: 2;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   width: 150px;
+   text-align: center;
+}
+
+.closeButton:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 12px 35px var(--coral-alpha-40);
+   background: var(--gradient-coral-reverse);
+}
