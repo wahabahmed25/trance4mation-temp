@@ -2,13 +2,14 @@
 import SignupNavbar from "@/user-signup/signup/SignupNavbar";
 import React from "react";
 import Link from "next/link";
+
 export default function AuthLayout({
   title,
   subtitle,
   children,
   footerText,
   footerLinkText,
-  footerLinkHref
+  footerLinkHref,
 }: {
   title: string;
   subtitle: string;
@@ -18,75 +19,98 @@ export default function AuthLayout({
   footerLinkHref: string;
 }) {
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#910719] via-[#8e097a] to-[#5d1689] text-white">
-      
+    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#f4ade5] via-[#88a7cf] to-[#466eef] text-white">
       <SignupNavbar />
 
-      <main className="
+      <main
+        className="
         flex flex-col md:flex-row 
         justify-between items-center
-        max-w-6xl mx-auto 
-        px-8 md:px-16 py-10
-        min-h-[75vh]  /* ⬅ stabilizes layout height */
-      ">
-        
+        max-w-7xl mx-auto 
+        px-8 md:px-16 py-14
+        min-h-[78vh]
+      "
+      >
         {/* LEFT SIDE CONTENT */}
-        <div className="
+        <div
+          className="
           flex flex-col 
-          gap-5
+          gap-6
           w-full md:w-1/2 
-          min-h-[420px]   /* ⬅ same height every page */
-          justify-start    /* ⬅ prevents logo shifting */
-        ">
-          <h1 className="text-4xl font-extrabold tracking-wide leading-tight">
-            {title}
-          </h1>
+          min-h-[500px]
+          justify-start
+        "
+        >
+          <h1
+  className="
+    text-5xl md:text-6xl 
+    font-extrabold 
+    tracking-tight 
+    leading-tight 
+    whitespace-nowrap
+    bg-gradient-to-t from-[#d10202] via-[#de2b2b] to-[#FF4C4C] 
+    bg-clip-text text-transparent
+    drop-shadow-lg
+    font-serif
+  "
+>
+  {title}
+</h1>
 
-          <p className="text-gray-300 text-lg ml-1 tracking-wide opacity-90">
+
+          <p className="text-gray-200 text-xl md:text-2xl ml-1 opacity-90 leading-relaxed whitespace-nowrap">
             {subtitle}
           </p>
 
-          <div className="flex-grow flex flex-col gap-4">
+          {/* CONTAINER around children to keep spacing the same for Login & Signup */}
+          <div
+            className="
+            flex flex-col gap-6 
+            mt-4
+            w-full
+          "
+          >
             {children}
           </div>
 
-          <p className="text-center text-gray-300 text-sm">
+          <p className="text-center text-gray-300 text-base pt-4">
             {footerText}{" "}
-            <Link href={footerLinkHref} className="text-[#c82e13] hover:text-[#ea320d] font-semibold">
+            <Link
+              href={footerLinkHref}
+              className="text-[#ff5040] hover:text-[#ff6b5c] font-semibold"
+            >
               {footerLinkText}
             </Link>
           </p>
         </div>
 
-        {/* RIGHT LOGO */}
-        <div className="flex justify-center items-center w-full md:w-1/2 mt-10 md:mt-0">
+        {/* RIGHT LOGO SIDE */}
+        <div className="flex justify-center items-center w-full md:w-1/2 mt-12 ml-25 md:mt-0">
           <div className="relative flex justify-center items-center">
-
             {/* Glow */}
-            <div className="
+            <div
+              className="
               absolute 
-              w-[360px] h-[360px] 
-              md:w-[420px] md:h-[420px]
+              w-[420px] h-[420px] 
+              md:w-[520px] md:h-[520px]
               bg-gradient-to-tr from-[#FF512F] to-[#F09819]
               rounded-full blur-3xl opacity-30
-            " />
+            "
+            />
 
             {/* Logo */}
             <img
-  src="/play-to-heal.png"
-  alt="Play to Heal Logo"
-  className="
-    relative ml-20 
-    w-[300px] md:w-[450px]
-    drop-shadow-[0_0_45px_rgba(255,10,40,1)]
-
-  "
-/>
-
+              src="/play-to-heal.png"
+              alt="Play to Heal Logo"
+              className="
+                relative 
+                w-[320px] md:w-[500px]
+                drop-shadow-[0_0_55px_rgba(255,50,70,1)]
+              "
+            />
           </div>
         </div>
       </main>
-
     </div>
   );
 }

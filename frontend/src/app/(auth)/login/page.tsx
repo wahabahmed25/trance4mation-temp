@@ -4,8 +4,8 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { login } from "@/lib/api/ApiCalls";
-// import { initAnalytics } from "@/lib/firebase";
 import AuthLayout from "@/user-signup/AuthLayout";
+
 interface LoginFormValues {
   email: string;
   password: string;
@@ -13,10 +13,11 @@ interface LoginFormValues {
 
 export default function LoginPage() {
   const router = useRouter();
-  const [values, setValues] = useState<LoginFormValues>({ email: "", password: "" });
+  const [values, setValues] = useState<LoginFormValues>({
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
-
-  // useEffect(() => initAnalytics(), []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -27,12 +28,14 @@ export default function LoginPage() {
     e.preventDefault();
 
     const { email, password } = values;
+
     if (!email || !password) {
       setError("All fields are required ❌");
       return;
     }
 
     const result = await login(email, password);
+
     if (!result.success) {
       setError("Invalid email or password ❌");
       return;
@@ -49,18 +52,14 @@ export default function LoginPage() {
       footerLinkText="Create one"
       footerLinkHref="/signup"
     >
-<<<<<<< HEAD
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 ">
-=======
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
->>>>>>> dev
+      <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <InputField
           type="email"
           name="email"
           placeholder="you@email.com"
           value={values.email}
           onChange={handleChange}
-          className="bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white"
+          className="bg-white/10 border border-white/20 rounded-full px-5 py-4 text-white text-lg"
         />
 
         <InputField
@@ -69,18 +68,20 @@ export default function LoginPage() {
           placeholder="Your password"
           value={values.password}
           onChange={handleChange}
-          className="bg-white/10 border border-white/20 rounded-full px-5 py-3 text-white"
+          className="bg-white/10 border border-white/20 rounded-full px-5 py-4 text-white text-lg"
         />
 
         <div className="mt-8">
           <SubmitButton
             label="Log In"
-            className="rounded-full bg-gradient-to-r cursor-pointer from-[#ce0f0f] to-[#ba1702] text-white py-3"
+            className="rounded-full bg-gradient-to-r cursor-pointer from-[#bf1212] to-[#c61b05] text-white py-4 text-lg"
           />
         </div>
       </form>
 
-      {error && <p className="text-red-400 text-sm text-center">{error}</p>}
+      {error && (
+        <p className="text-red-400 text-sm text-center mt-3">{error}</p>
+      )}
     </AuthLayout>
   );
 }

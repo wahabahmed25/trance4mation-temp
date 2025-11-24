@@ -8,17 +8,17 @@ export default function AuthTransitionLayout({ children }: { children: React.Rea
 
   return (
     <AnimatePresence mode="wait">
-    <motion.div
-  key={pathname}
-  initial={{ opacity: 0, y: 10 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -10 }}
-  transition={{
-    duration: 0.1,
-    ease: "easeOut"
-  }}
->
-
+      <motion.div
+        key={pathname}
+        initial={{ filter: "blur(15px)", scale: 1 }}
+        animate={{ filter: "blur(0px)", scale: 1 }}
+        exit={{ filter: "blur(18px)", scale: 1 }}
+        transition={{
+          duration: 0.25,
+          ease: "easeOut",
+        }}
+        className=""
+      >
         {children}
       </motion.div>
     </AnimatePresence>
