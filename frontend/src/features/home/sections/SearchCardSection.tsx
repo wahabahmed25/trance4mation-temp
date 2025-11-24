@@ -33,7 +33,9 @@ const searchWeights: Record<string, number> = {
 const SearchCardSection = () => {
   const [query, setQuery] = useState("");
   const [enabledTags, setEnabledTags] = useState<string[]>([])
-  console.log(searchGames(featuredGames, query, enabledTags, searchWeights))
+  const [searchResultsVisible, setSearchResultsVisible] = useState<boolean>(false)
+  const games = searchGames(featuredGames, query, enabledTags, searchWeights)
+  console.log(games)
 
   return (
     <motion.section
@@ -44,7 +46,9 @@ const SearchCardSection = () => {
         bg-white/70 backdrop-blur-xl 
         border border-[rgba(0,0,0,0.05)]
         shadow-[0_8px_30px_rgba(0,0,0,0.08)]
-        p-8 sm:p-10 flex flex-col justify-between"
+        p-8 sm:p-10 flex flex-col justify-between
+        z-1
+        "
     >
       {/* Soft background glow */}
       <div
@@ -96,39 +100,58 @@ bg-gradient-to-r from-[#514753] via-[#463b41] to-[#2b2523]
           </Link>
         </div>
 
+        {/* Tags */}
+        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+          {tags.map((tag) => (
+            <button
+              key={tag}
+              className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1
+              text-[#555] hover:border-[#A78BFA] hover:text-[#A78BFA] transition-all"
+              // toggle this tag on / off
+              onClick={() => {
+                if (enabledTags.includes(tag)) {
+                  setEnabledTags(enabledTags.filter(element => element != tag))
+                } else {
+                  setEnabledTags([...enabledTags, tag])
+                }
+              }}
+              // if this tag is enabled, keep it highlighted in purple
+              style={ enabledTags.includes(tag) ? { color: "#A78BFA", borderColor: "#A78BFA", backgroundColor: "rgba(0,0,0,0.05)" } : {} }
+            >
+              #{tag}
+            </button>
+          ))}
+        </div>
+
         {/* Search Input */}
-        <div className="max-w-2xl">
+        <div className="max-w-2xl flex flex-col">
           <div className="flex items-center gap-2 rounded-2xl border border-[#000]/10 bg-white/60 px-4 py-2.5">
             <span className="text-lg text-[#A78BFA]">🔍</span>
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onFocus={(e) => setSearchResultsVisible(true)}
+              onBlur={(e) => setSearchResultsVisible(false)}
               placeholder="Search games, e.g. focus, breathing, gratitude…"
               className="w-full bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
             />
           </div>
 
-          {/* Tags */}
-          <div className="mt-4 flex flex-wrap gap-2 text-xs">
-            {tags.map((tag) => (
-              <button
-                key={tag}
-                className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1
-                text-[#555] hover:border-[#A78BFA] hover:text-[#A78BFA] transition-all"
-                // toggle this tag on / off
-                onClick={() => {
-                  if (enabledTags.includes(tag)) {
-                    setEnabledTags(enabledTags.filter(element => element != tag))
-                  } else {
-                    setEnabledTags([...enabledTags, tag])
-                  }
-                }}
-                // if this tag is enabled, keep it highlighted in purple
-                style={ enabledTags.includes(tag) ? { color: "#A78BFA", borderColor: "#A78BFA", backgroundColor: "rgba(0,0,0,0.05)" } : {} }
-              >
-                #{tag}
-              </button>
-            ))}
+          <div className="relative w-full" style={{ visibility: searchResultsVisible ? "visible" : "hidden" }}>
+            <div className="absolute w-full rounded-2xl border border-[#000]/10 bg-white overflow-scroll h-50">
+              {games.map((game) => {
+                return (
+                  <div 
+                  key={game.name} 
+                  className="hover:bg-[#000]/5 px-4 py-2.5"
+                  onMouseDown={() => setQuery(game.name)}
+                  >
+                    {game.name}
+                  </div>
+                )
+              })}
+
+            </div>
           </div>
         </div>
       </div>
