@@ -27,15 +27,15 @@ const SignupNavbar = () => {
 
       {/* CENTER: Nav Links */}
       <div className="flex items-center gap-12 text-base md:text-lg font-semibold tracking-wide">
-        <Link href="/" className="relative group hover:text-[#FF3B22] transition">
-          HOME
+        <Link href="/landing" className="relative group hover:text-[#FF3B22] transition">
+          LANDING
           <span className="absolute left-0 -bottom-1 w-full h-[3px] bg-[#FF3B22] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
         </Link>
 
-        <Link href="/collection" className="hover:text-[#FF3B22] transition">COLLECTION</Link>
+        <Link href="/landing/game" className="hover:text-[#FF3B22] transition">COLLECTION</Link>
         <Link href="/offers" className="hover:text-[#FF3B22] transition">OFFERS</Link>
-        <Link href="/about" className="hover:text-[#FF3B22] transition">ABOUT</Link>
-        <Link href="/faq" className="hover:text-[#FF3B22] transition">FAQ</Link>
+        <Link href="/landing/about" className="hover:text-[#FF3B22] transition">ABOUT</Link>
+        <Link href="/landing/faq" className="hover:text-[#FF3B22] transition">FAQ</Link>
       </div>
     </nav>
   );
