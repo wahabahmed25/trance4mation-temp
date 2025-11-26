@@ -73,6 +73,7 @@ const SearchCardSection: React.FC = () => {
         className="pointer-events-none absolute inset-0 rounded-3xl
         bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
       />
+      
 
       <div className="relative z-10 space-y-6">
         <h1
