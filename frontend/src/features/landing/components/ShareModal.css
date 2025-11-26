@@ -20,7 +20,7 @@
 
 .copyButton:hover {
    transform: translateY(-3px);
-   box-shadow: 0 12px 35px var(--coral-alpha-40);
+   box-shadow: 0 12px 10px var(--coral-alpha-40);
    background: var(--gradient-coral-reverse);
 }
 .modalBackdrop {

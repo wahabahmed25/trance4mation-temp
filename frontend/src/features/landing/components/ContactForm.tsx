@@ -3,116 +3,114 @@ import React, { useState, FormEvent, ChangeEvent } from "react";
 import "./ContactForm.css";
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+   const [formData, setFormData] = useState({
+      name: "",
+      email: "",
+      message: "",
+   });
 
-  const [status, setStatus] = useState("");
+   const [status, setStatus] = useState("");
 
-  const handleInput = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+   const handleInput = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({
+         ...prevData,
+         [name]: value,
+      }));
+   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setStatus("Please enter a valid email address.");
-      return;
-    }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+         setStatus("Please enter a valid email address.");
+         return;
+      }
 
-    const form = new FormData();
-    form.append("access_key", "ed099da3-b0dc-4bd9-bec4-f2412f65d543");
-    form.append("name", formData.name);
-    form.append("email", formData.email);
-    form.append("message", formData.message);
+      const form = new FormData();
+      form.append("access_key", "d7eec4b0-bb41-4537-9a12-e1169952796f");
+      form.append("name", formData.name);
+      form.append("email", formData.email);
+      form.append("message", formData.message);
 
-    const response = await fetch("https://api.web3forms.com/submit", {
-      method: "POST",
-      body: form,
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      setStatus("Message sent successfully!");
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
+      const response = await fetch("https://api.web3forms.com/submit", {
+         method: "POST",
+         body: form,
       });
-    } else {
-      setStatus("Something went wrong, please try again.");
-    }
-  };
 
-  return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div className="contact-us">
-          <div className="full-name">
-            <label htmlFor="full-name"></label>
-            <input
-              type="text"
-              id="full-name"
-              name="name"
-              value={formData.name}
-              onChange={handleInput}
-              placeholder="Your Name"
-              required
-            />
-          </div>
+      const data = await response.json();
 
-          <br />
+      if (data.success) {
+         setStatus("Message sent successfully!");
+         setFormData({
+            name: "",
+            email: "",
+            message: "",
+         });
+      } else {
+         setStatus("Something went wrong, please try again.");
+      }
+   };
 
-          <div className="email-address">
-            <label htmlFor="email-address"></label>
-            <input
-              type="email"
-              id="email-address"
-              name="email"
-              value={formData.email}
-              onChange={handleInput}
-              placeholder="Your Email"
-              required
-            />
-          </div>
+   return (
+      <div>
+         <form onSubmit={handleSubmit}>
+            <div className="contact-us">
+               <div className="full-name">
+                  <label htmlFor="full-name"></label>
+                  <input
+                     type="text"
+                     id="full-name"
+                     name="name"
+                     value={formData.name}
+                     onChange={handleInput}
+                     placeholder="Your Name"
+                     required
+                  />
+               </div>
 
-          <br />
+               <br />
 
-          {/* ✅ FIXED TEXTAREA — no children! */}
-          <textarea
-            className="message-box"
-            id="messageBox"
-            name="message"
-            value={formData.message}
-            onChange={handleInput}
-            placeholder="Your message here"
-            required
-          />
+               <div className="email-address">
+                  <label htmlFor="email-address"></label>
+                  <input
+                     type="email"
+                     id="email-address"
+                     name="email"
+                     value={formData.email}
+                     onChange={handleInput}
+                     placeholder="Your Email"
+                     required
+                  />
+               </div>
 
-          <div className="submit-button">
-            <button type="submit">Submit</button>
-          </div>
+               <br />
 
-          {status && (
-            <p style={{ marginTop: "10px", fontWeight: "bold", color: "white" }}>
-              {status}
-            </p>
-          )}
-        </div>
-      </form>
-    </div>
-  );
+               {/* ✅ FIXED TEXTAREA — no children! */}
+               <textarea
+                  className="message-box"
+                  id="messageBox"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInput}
+                  placeholder="Your message here"
+                  required
+               />
+
+               <div className="submit-button">
+                  <button type="submit">Submit</button>
+               </div>
+
+               {status && (
+                  <p style={{ marginTop: "10px", fontWeight: "bold", color: "white" }}>
+                     {status}
+                  </p>
+               )}
+            </div>
+         </form>
+      </div>
+   );
 };
 
 export default ContactForm;
