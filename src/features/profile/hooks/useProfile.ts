@@ -30,6 +30,8 @@ export const useProfile = () => {
           age: data.age,
           gender: data.gender,
           biography: data.biography,
+          healingFocus: data.healingFocus || [],
+          intentionStatement: data.intentionStatement,
           joinedDate: data.joinedDate?.toDate() || new Date(),
           stats: data.stats || {
             postsShared: 0,
@@ -46,7 +48,9 @@ export const useProfile = () => {
           uid: userId,
           displayName: auth.currentUser?.displayName || 'Anonymous Student',
           email: auth.currentUser?.email || '',
-          photoURL: auth.currentUser?.photoURL || undefined,
+          photoURL: auth.currentUser?.photoURL ?? null,
+          healingFocus: [],
+          intentionStatement: '',
           joinedDate: new Date(),
           stats: {
             postsShared: 0,
@@ -86,7 +90,9 @@ export const useProfile = () => {
         displayName: formData.displayName,
         age: formData.age,
         gender: formData.gender,
-        biography: formData.biography
+        biography: formData.biography,
+        healingFocus: formData.healingFocus || [],
+        intentionStatement: formData.intentionStatement || ''
       });
 
       // Update Firebase Auth display name if changed
@@ -103,7 +109,9 @@ export const useProfile = () => {
           displayName: formData.displayName,
           age: formData.age,
           gender: formData.gender as any,
-          biography: formData.biography
+          biography: formData.biography,
+          healingFocus: formData.healingFocus,
+          intentionStatement: formData.intentionStatement
         });
       }
     } catch (err) {

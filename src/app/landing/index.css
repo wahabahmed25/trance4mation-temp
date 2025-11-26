@@ -1,0 +1,110 @@
+:root {
+   font-family: system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+   line-height: 1.5;
+   font-weight: 400;
+   margin: 0px;
+
+   body {
+      background-color: #fff9f9;
+   }
+
+   * {
+      margin: 0px;
+      padding: 0px;
+   }
+
+   section {
+      padding: 1rem 2rem;
+   }
+
+   /* Colors */
+   --healing-coral: #ff8661;
+   --deep-teal: #006d77;
+   --golden-glow: #ffd166;
+   --sky-blue: #55ccf2;
+   --soft-violet: #ebdbff;
+   --warm-beige: #fff9f9;
+   --dark-blue: #042159;
+   --white: #fff7f7;
+   --black: #000000;
+
+   /* Background Colors */
+   --section-bg: #fff9f9;
+   --section-bg-alt: #fcfaee;
+   --nav-bg: #55ccf2;
+
+   /* Text Colors */
+   --text-primary: #042159;
+   --text-secondary: #3f1f1f;
+   --text-white: #ffffff;
+
+   /* Opacity Variants */
+   --coral-alpha-10: rgba(229, 90, 74, 0.1);
+   --coral-alpha-15: rgba(229, 90, 74, 0.15);
+   --coral-alpha-30: rgba(229, 90, 74, 0.3);
+   --coral-alpha-40: rgba(229, 90, 74, 0.4);
+   --white-alpha-90: rgba(255, 255, 255, 0.9);
+   --white-alpha-95: rgba(255, 255, 255, 0.95);
+   --black-alpha-20: rgba(0, 0, 0, 0.2);
+   --black-alpha-30: rgba(0, 0, 0, 0.3);
+   --black-alpha-50: rgba(0, 0, 0, 0.5);
+
+   /* Gradients */
+   --gradient-coral: linear-gradient(135deg, var(--healing-coral) 0%, #ff7f7f 100%);
+   --gradient-coral-reverse: linear-gradient(
+      135deg,
+      #ff7f7f 0%,
+      var(--healing-coral) 100%
+   );
+   --gradient-section: linear-gradient(
+      135deg,
+      var(--coral-alpha-15) 0%,
+      rgba(10, 79, 87, 0.1) 100%
+   );
+
+   html {
+      scroll-behavior: smooth;
+   }
+
+   h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.15rem;
+   }
+
+   h2 {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.75rem;
+   }
+
+   h3 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.2rem;
+   }
+   p {
+      font-size: 1.05rem;
+      color: var(--text-primary);
+      line-height: 1.6;
+   }
+
+   li {
+      color: var(--text-primary);
+      margin-left: 4%;
+   }
+
+   ol {
+      color: var(--text-primary);
+   }
+   color-scheme: light-dark;
+   color: var(--text-primary);
+
+   font-synthesis: none;
+   text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}

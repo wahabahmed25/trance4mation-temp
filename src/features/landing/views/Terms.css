@@ -1,0 +1,18 @@
+p {
+   font-size: 2rem;
+}
+
+.terms-section {
+   margin-top: 8rem;
+}
+
+.title-container {
+   padding: 0% 5% 1% 5%;
+}
+.terms-list {
+   padding: 1% 5%;
+}
+
+li {
+   list-style-type: disc;
+}

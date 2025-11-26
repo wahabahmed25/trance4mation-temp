@@ -1,0 +1,146 @@
+"use client";
+import React from "react";
+import Image from "next/image";
+import "./Modal.css";
+import type { Intern } from "@/features/landing/components/Interns";
+
+// Define the type for props
+interface ModalProps {
+   isOpen: boolean;
+   onClose: () => void;
+   intern: Intern | null;
+}
+
+// embedding links into description
+const embeddedLinks = (description: string, links: { [key: string]: string }) => {
+   const parts: React.ReactNode[] = [];
+   let currentIndex = 0;
+
+   Object.keys(links).forEach((key) => {
+      const regex = new RegExp(key, "g");
+      let match;
+
+      while ((match = regex.exec(description)) !== null) {
+         const start = match.index;
+         const end = start + match[0].length;
+
+         if (start > currentIndex) {
+            parts.push(description.slice(currentIndex, start));
+         }
+
+         parts.push(
+            <a href={links[key]} target="_blank" rel="noopener noreferrer" key={start}>
+               {match[0]}
+            </a>
+         );
+
+         currentIndex = end;
+      }
+   });
+
+   if (currentIndex < description.length) {
+      parts.push(description.slice(currentIndex));
+   }
+
+   return <>{parts}</>;
+};
+
+const extraLinks = (
+   extra2: string,
+   id: number,
+   links: { [key: number]: { [key: string]: string } }
+) => {
+   const parts: React.ReactNode[] = [];
+   let currentIndex = 0;
+   const internLinks = links[id];
+
+   if (!internLinks) return <>{extra2}</>;
+
+   Object.keys(internLinks).forEach((key) => {
+      const regex = new RegExp(`(${key})`, "g");
+      let match;
+
+      while ((match = regex.exec(extra2)) !== null) {
+         const start = match.index;
+         const end = start + match[0].length;
+
+         if (start > currentIndex) {
+            parts.push(extra2.slice(currentIndex, start));
+         }
+
+         parts.push(
+            <a
+               href={internLinks[key]}
+               target="_blank"
+               rel="noopener noreferrer"
+               key={`${key}-${start}`}
+            >
+               {match[0]}
+            </a>
+         );
+
+         currentIndex = end;
+      }
+   });
+
+   if (currentIndex < extra2.length) {
+      parts.push(extra2.slice(currentIndex));
+   }
+
+   return <>{parts}</>;
+};
+
+const linkContents = {
+   here: "https://linktr.ee/jancalleortiz?utm_source=linktree_profile_share&ltsid=6c6fccc9-65b4-4c20-91ba-d8c79b9e2e60",
+};
+
+const extraLinkContents = {
+   5: { LinkedIn: "https://www.linkedin.com/in/zhen-tao-pan" },
+   6: { LinkedIn: "https://www.linkedin.com/in/wahab-ahmed-12020a298?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" },
+   7: { GitHub: "https://github.com/ragibasif" },
+   8: { LinkedIn: "https://www.linkedin.com/in/efti-saroare-515b84205/" },
+   9: { GitHub: "https://github.com/Luominai" },
+   10: { LinkedIn: "https://www.linkedin.com/in/khadeja-ahmar-098909282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app", GitHub: "https://github.com/khadeja02" },
+   11: { LinkedIn: "https://www.linkedin.com/in/faraaz-k-ali/" },
+   14: {
+      Linktree: "https://linktr.ee/jancalleortiz?utm_source=linktree_profile_share&ltsid=f7489150-4c85-431b-b8b8-0d96aeb5c3af",
+      Tiktok: "https://www.tiktok.com/@jancalleortiz?is_from_webapp=1&sender_device=pc",
+      Instagram: "https://www.instagram.com/jancalleortiz/?utm_source=ig_web_button_share_sheet",
+   },
+   15: { LinkedIn: "https://www.linkedin.com/in/jin-wang-479834257/" },
+};
+
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, intern }) => {
+   if (!isOpen || !intern) return null;
+
+   return (
+      <div className="modal-overlay" onClick={onClose}>
+         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-image-wrapper">
+               <Image
+                  src={intern.image}
+                  alt={intern.name}
+                  width={400}
+                  height={400}
+                  className="modal-image"
+               />
+            </div>
+            <div className="modal-text">
+               <h2>{intern.name}</h2>
+               <h3>{intern.role}</h3>
+               <div className="extraLinkStyle">
+                  {extraLinks(intern.extra2, intern.id, extraLinkContents)}
+               </div>
+
+               <div className="div-rectangle"></div>
+               <p>{intern.extra1}</p>
+               <div className="internDescription">
+                  {embeddedLinks(intern.description, linkContents)}
+               </div>
+            </div>
+         </div>
+      </div>
+   );
+};
+
+export default Modal;

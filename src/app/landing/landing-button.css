@@ -1,0 +1,25 @@
+.landing-login-btn {
+  height: 35px;
+  color: var(--text-primary);
+  background: none;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.4rem;
+  padding: 1.5rem 2rem;
+
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding-top: 2.2rem;
+}
+
+.landing-login-btn:hover {
+  transform: scale(0.85);
+  background: var(--coral-alpha-15);
+}
+

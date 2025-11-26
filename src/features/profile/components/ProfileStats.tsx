@@ -2,7 +2,14 @@
 'use client'
 
 import React from 'react';
-import { UserStats } from '../types';
+// Define UserStats type here if '../types' does not exist
+export interface UserStats {
+  postsShared: number;
+  supportSent: number;
+  supportReceived: number;
+  connectionsMade: number;
+  daysActive: number;
+}
 
 interface ProfileStatsProps {
   stats: UserStats;

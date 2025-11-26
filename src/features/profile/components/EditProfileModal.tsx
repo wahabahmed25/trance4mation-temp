@@ -2,7 +2,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { UserProfile, ProfileFormData } from '../types';
+import { UserProfile, ProfileFormData, HEALING_FOCUS_OPTIONS } from '../types';
 
 interface EditProfileModalProps {
   profile: UserProfile;
@@ -16,7 +16,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ profile, isOpen, on
     displayName: profile.displayName,
     age: profile.age,
     gender: profile.gender,
-    biography: profile.biography
+    biography: profile.biography,
+    healingFocus: profile.healingFocus || [],
+    intentionStatement: profile.intentionStatement || ''
   });
   const [saving, setSaving] = useState(false);
 
@@ -25,7 +27,9 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ profile, isOpen, on
       displayName: profile.displayName,
       age: profile.age,
       gender: profile.gender,
-      biography: profile.biography
+      biography: profile.biography,
+      healingFocus: profile.healingFocus || [],
+      intentionStatement: profile.intentionStatement || ''
     });
   }, [profile]);
 
@@ -40,6 +44,15 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ profile, isOpen, on
       alert('Failed to save profile. Please try again.');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const toggleHealingFocus = (focus: string) => {
+    const current = formData.healingFocus || [];
+    if (current.includes(focus)) {
+      setFormData({ ...formData, healingFocus: current.filter(f => f !== focus) });
+    } else {
+      setFormData({ ...formData, healingFocus: [...current, focus] });
     }
   };
 
@@ -81,6 +94,47 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ profile, isOpen, on
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#5AB4C5] focus:outline-none transition-colors"
                 placeholder="Your display name"
               />
+            </div>
+
+            {/* Healing Focus */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Healing Focus (Select all that apply)
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {HEALING_FOCUS_OPTIONS.map((focus) => (
+                  <button
+                    key={focus}
+                    type="button"
+                    onClick={() => toggleHealingFocus(focus)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      formData.healingFocus?.includes(focus)
+                        ? 'bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] text-white'
+                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {focus}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Personal Intention Statement */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Personal Intention Statement
+              </label>
+              <textarea
+                value={formData.intentionStatement || ''}
+                onChange={(e) => setFormData({ ...formData, intentionStatement: e.target.value })}
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#5AB4C5] focus:outline-none transition-colors resize-none"
+                rows={3}
+                maxLength={200}
+                placeholder="e.g., I am here to heal through connection. My intention is to rediscover joy and build community."
+              />
+              <p className="text-sm text-gray-500 mt-1">
+                {(formData.intentionStatement || '').length}/200 characters
+              </p>
             </div>
 
             {/* Age */}
@@ -161,3 +215,4 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ profile, isOpen, on
 };
 
 export default EditProfileModal;
+

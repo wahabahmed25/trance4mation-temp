@@ -1,69 +1,43 @@
-import Link from "next/link";
+import SearchCardSection from "@/features/home/sections/SearchCardSection";
+import MoodWidget from "@/features/home/sections/MoodWidget";
+import HomeLayout from "@/features/home/HomeLayout";
+// import ForyouGames from "@/features/home/sections/ForyouGames";
+// import TrendingGamesSection from "@/features/home/sections/TrendingGamesSection";
+// import FeaturedGamesSection from "@/features/home/sections/FeaturedGamesSection";
+import GameHubSection from "@/features/home/sections/GameHubSection";
+import AnalyticsDashboard from "@/features/home/analytics/AnalyticsDashboard";
+// import PlayAgainSection from "@/features/home/sections/PlayAgainSection";
 export default function Home() {
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 text-white">
-      <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6">
-        Welcome to Trance4mation
-      </h1>
-      <p className="text-lg sm:text-xl max-w-xl text-center mb-8">
-        This is the starting point of our internship project. <br />
-        Here, we’ll be building everything from scratch using Next.js, React,
-        TypeScript, Tailwind, and pnpm inside a shared monorepo. *This is not the official Home page*
-      </p>
-      <div className="flex gap-4">
-        <a
-          href="https://nextjs.org/docs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Next.js Docs
-        </a>
-        <a
-          href="https://tailwindcss.com/docs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-3 rounded-xl bg-black text-white font-semibold hover:bg-gray-800 transition"
-        >
-          Tailwind Docs
-        </a>
+    <HomeLayout>
+      {/* 🔹 Top Section: Search (left) + Mood Widget (right) */}
+      <section className="flex flex-col lg:flex-row justify-between items-stretch mt-10 w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 gap-2 lg:gap-3">
+        {/* Left side — Search */}
+        <div className="flex-[2] w-full h-full">
+          <SearchCardSection />
+        </div>
+
+        {/* Right side — Mood Widget */}
+        <div className="flex-[1] w-full">
+          <MoodWidget />
+        </div>
+      </section>
+
+      {/* 🔹 Everything else stacked below */}
+      <div className="flex flex-col mx-auto w-full mt-8">
+        
+        <GameHubSection />
+
+        {/* ✅ Full-width Continue Playing */}
+        <div className="w-screen -mx-[calc((100vw-100%)/2)]">
+          {/* <PlayAgainSection /> */}
+        </div>
+        {/* <FeaturedGamesSection /> */}
+        {/* <ForyouGames /> */}
+        {/* <TrendingGamesSection /> */}
+        <AnalyticsDashboard />
       </div>
-      <footer className="absolute bottom-4 text-sm opacity-80">
-        Built with ❤️ by the Trance4mation Interns
-      </footer>
-      <div className="p-3">
-        <h1 className="p-3">*FEATURES ROUTES BELOW*</h1>
-        <Link
-          href="/social"
-          className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Social Feed
-        </Link>
-        <Link
-          href="/discussion-circle"
-          className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Discussion circle
-        </Link>
-        <Link
-          href="/mood-calender"
-          className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Mood Calender
-        </Link>
-        <Link
-          href="/profile"
-          className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Profile
-        </Link>
-        <Link
-          href="/landing"
-          className="mt-6 px-6 py-3 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition"
-        >
-          Landing
-        </Link>
-      </div>
-    </main>
+    </HomeLayout>
   );
 }

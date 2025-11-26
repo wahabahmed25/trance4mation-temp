@@ -1,7 +1,7 @@
 // frontend/src/features/profile/Profile.tsx
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import BackgroundElements from '../../components/ui/BackgroundElements';
 import ProfileHeader from './components/ProfileHeader';
@@ -9,11 +9,30 @@ import ProfileStats from './components/ProfileStats';
 import EditProfileModal from './components/EditProfileModal';
 import RecentActivity from './components/RecentActivity';
 import MoodOverview from './components/MoodOverview';
+import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
+
+const AFFIRMATIONS = [
+  "You are not alone.",
+  "Healing begins when we listen and share.",
+  "Every story shared is a bridge.",
+  "Your journey matters.",
+  "Growth happens in community.",
+  "You bring light to this space."
+];
 
 const Profile = () => {
   const { profile, loading, error, updateUserProfile } = useProfile();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [currentAffirmation, setCurrentAffirmation] = useState(0);
+
+  // Rotate affirmations every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentAffirmation((prev) => (prev + 1) % AFFIRMATIONS.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   if (loading) {
     return (
@@ -44,7 +63,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E8F4F8] via-[#F5E6F1] to-[#FFF0ED] relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#E8F4F8] via-[#F5E6F1] to-[#FFF0ED] relative overflow-hidden pb-24">
       <BackgroundElements />
 
       <div className="relative z-10 p-6">
@@ -59,7 +78,7 @@ const Profile = () => {
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] bg-clip-text text-transparent">
                   Profile
                 </h1>
-                <p className="text-gray-600">Manage your personal information</p>
+                <p className="text-gray-600">Your healing journey</p>
               </div>
             </div>
             <Link
@@ -73,7 +92,7 @@ const Profile = () => {
 
           {/* Content */}
           <div className="space-y-6">
-            {/* Profile Header */}
+            {/* Profile Header with Welcome */}
             <ProfileHeader 
               profile={profile} 
               onEditClick={() => setIsEditModalOpen(true)}
@@ -84,9 +103,23 @@ const Profile = () => {
 
             {/* Bottom Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <RecentActivity />
+              {/* <MyCircles /> */}
               <MoodOverview />
             </div>
+
+            {/* Recent Activity */}
+            <RecentActivity />
+          </div>
+        </div>
+      </div>
+
+      {/* Affirmation Footer */}
+      <div className="fixed bottom-0 left-0 right-0 z-20">
+        <div className="bg-gradient-to-r from-[#4A90A4]/95 to-[#5AB4C5]/95 backdrop-blur-md border-t border-white/20 shadow-2xl">
+          <div className="max-w-4xl mx-auto px-6 py-4">
+            <p className="text-white text-center text-lg font-medium transition-opacity duration-500">
+              ✨ {AFFIRMATIONS[currentAffirmation]} ✨
+            </p>
           </div>
         </div>
       </div>
