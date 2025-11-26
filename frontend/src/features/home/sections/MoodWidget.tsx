@@ -25,7 +25,6 @@ const MoodWidget = () => {
       shadow-[0_8px_30px_rgba(0,0,0,0.08)]
       p-8 sm:p-10 flex flex-col justify-between"
     >
-
       {/* Background Glow */}
       <div
         aria-hidden
@@ -34,7 +33,6 @@ const MoodWidget = () => {
       />
 
       <div className="relative z-10 space-y-6">
-        
         {/* Title */}
         <h2
           className="text-3xl font-bold leading-tight
@@ -45,10 +43,11 @@ const MoodWidget = () => {
         </h2>
 
         <p className="text-[#333]/75 text-sm sm:text-base max-w-md">
-          Reflect, track, and write why you feel the way you do — your emotions tell your story.
+          Reflect, track, and write why you feel the way you do — your emotions
+          tell your story.
         </p>
 
-        {/* Mood Emoji Row */}
+        {/* Mood Emojis */}
         <div className="flex gap-5 text-3xl mt-10 flex-inline">
           {moods.map((m, i) => (
             <Link key={i} href="/mood-calendar">
@@ -66,17 +65,10 @@ const MoodWidget = () => {
           ))}
         </div>
 
-        {/* Mode Buttons / Linked */}
-        <div className="flex gap-3 mt-10">
-          <Link
-            href="/discussion-circle"
-            className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
-            text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
-            transition-all text-sm flex items-center gap-1"
-          >
-            <MessageCircle size={16} /> Circle
-          </Link>
+        {/* Buttons */}
+        <div className="flex gap-3 mt-10 items-start">
 
+          {/* Mood Button */}
           <Link
             href="/mood-calendar"
             className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
@@ -86,6 +78,7 @@ const MoodWidget = () => {
             <Calendar size={16} /> Mood
           </Link>
 
+          {/* Social Button */}
           <Link
             href="/social"
             className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
@@ -94,12 +87,28 @@ const MoodWidget = () => {
           >
             <Users size={16} /> Social
           </Link>
+
+          {/* Circle Button + Label */}
+          <div className="relative flex flex-col items-center">
+            <Link
+              href="/coming-soon"
+              className="rounded-full border border-[#000]/10 bg-white/60 px-4 py-1.5
+                text-[#444] hover:border-[#5b528a] hover:text-[#5b528a]
+                transition-all text-sm flex items-center gap-1"
+            >
+              <MessageCircle size={16} /> Circle
+            </Link>
+
+            {/* Coming Soon Text (does NOT affect button size) */}
+            <span className="absolute top-full mt-1 text-[10px] text-gray-400">
+              Coming soon
+            </span>
+          </div>
         </div>
 
         <p className="text-[#444]/60 text-xs mt-4">
           Your emotional well-being matters 💛
         </p>
-
       </div>
     </motion.section>
   );

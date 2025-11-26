@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 import { JSX, useEffect, useRef, useState } from "react";
 import { ReactionData } from "../types/ReactionData";
-import { REACTIONS } from "@/app/discussion-circle/constants";
+import { REACTIONS } from "@/app/discussion-circle.disabled/constants";
 import { motion } from "framer-motion";
 
 let id = 0; // used to provide a unique key to each emoji that floats up the screen
