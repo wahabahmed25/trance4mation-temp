@@ -29,12 +29,11 @@ const Navbar = () => {
   };
 
   const desktopLinks = [
-    { label: "Games", href: "/games" },
     { label: "Home", href: "/home" },
-    { label: "Landing", href: "/landing" },
     { label: "Profile", href: "/profile" },
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
+    { label: "Logout", href: "/logout" },
   ];
 
   const mobileLinks = [
