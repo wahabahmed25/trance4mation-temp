@@ -64,7 +64,7 @@ const MyCircles: React.FC = () => {
           </div>
         ) : (
           <div className="text-center py-8 mb-4">
-            <p className="text-gray-400 text-sm mb-4">You haven't joined any circles yet</p>
+            <p className="text-gray-400 text-sm mb-4">You haven&apost joined any circles yet</p>
           </div>
         )}
 

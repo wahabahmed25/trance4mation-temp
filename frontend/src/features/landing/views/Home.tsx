@@ -54,23 +54,27 @@ function Home() {
 
    const testimonials = [
       {
-         quote: "There has never been a board game like this … EVER!!! KEEP IT REAL will stay with us in potentially life altering ways in rebuilding our perceptions of others and ourselves, while having us run a fun filled spectrum of emotions in the process. No one has ever enjoyed themselves or explored themselves this much with a board game before!",
+         quote:
+            "There has never been a board game like this … EVER!!! KEEP IT REAL will stay with us in potentially life altering ways in rebuilding our perceptions of others and ourselves, while having us run a fun filled spectrum of emotions in the process. No one has ever enjoyed themselves or explored themselves this much with a board game before!",
          author:
             "Gerard Brown, Teacher/Screenwriter who wrote the screenplay for “Juice” starring Tupac Shakur",
          image: "/landing-page-img/user.svg",
       },
       {
-         quote: "Playing Keep It Real was a blast. It is amazing that a game that is so much fun also gets people tuned in to themselves, helps them to learn who they are and to respect diversity in others, and to connect with the other players. This game opens the heart, mind and imagination, and gets people talking and thinking about life in so many dimensions. It is awesome!",
+         quote:
+            "Playing Keep It Real was a blast. It is amazing that a game that is so much fun also gets people tuned in to themselves, helps them to learn who they are and to respect diversity in others, and to connect with the other players. This game opens the heart, mind and imagination, and gets people talking and thinking about life in so many dimensions. It is awesome!",
          author: "Mangy-Nkoli, Filmmaker of 'Smoking Cessation'",
          image: "/landing-page-img/user2.svg",
       },
       {
-         quote: "When we are affected so deeply by grief, it is difficult to find the words to begin the healing journey. Not only are we suffering, but so are our loved ones around us. It is the lack of connection and understanding that can sharpen the edges of grieving, making it even more painful to maneuver. Remembrance not only brings out the joy and love we had for our loved ones, but also initiates heartfelt conversation, invoking connectivity and love. With these doors open, healing is finally possible",
+         quote:
+            "When we are affected so deeply by grief, it is difficult to find the words to begin the healing journey. Not only are we suffering, but so are our loved ones around us. It is the lack of connection and understanding that can sharpen the edges of grieving, making it even more painful to maneuver. Remembrance not only brings out the joy and love we had for our loved ones, but also initiates heartfelt conversation, invoking connectivity and love. With these doors open, healing is finally possible",
          author: "Leah Hodous",
          image: "/landing-page-img/user.svg",
       },
       {
-         quote: "I cannot say enough wonderful things about the Remembrance game. I played the game with my family as we recently suffered multiple losses in our family. Playing the game provided a safe environment to begin the healing process. There were laughter and tears, as well as memories and storytelling. We learned about one another in the process. Anyone who has ever suffered from grief and loss should own and play this game to help with the grieving process and begin healing.",
+         quote:
+            "I cannot say enough wonderful things about the Remembrance game. I played the game with my family as we recently suffered multiple losses in our family. Playing the game provided a safe environment to begin the healing process. There were laughter and tears, as well as memories and storytelling. We learned about one another in the process. Anyone who has ever suffered from grief and loss should own and play this game to help with the grieving process and begin healing.",
          author: "Donna Reilly-Middleton",
          image: "/landing-page-img/user2.svg",
       },
@@ -105,7 +109,8 @@ function Home() {
                   </p>
                   <button
                      className="cta-button"
-                     onClick={() => router.push("/landing/game")}>
+                     onClick={() => router.push("/landing/game")}
+                  >
                      Start Your Journey
                   </button>
                   <div className="welcome-section">
@@ -115,7 +120,7 @@ function Home() {
             </section>
          </div>
 
-         {/* Welcome Section (from the merge) */}
+         {/* Welcome Section */}
          <div className="fade-in">
             <section>
                <div className="welcome-div">
@@ -137,8 +142,11 @@ function Home() {
                      <br />
                      <a
                         href="https://youtu.be/0IKEGc1yPEE?si=4BUw6Jg2Q_xZ1Ucl"
-                        target="_blank">
-                        <button className="welcome-button">Our Warm Welcome Video</button>
+                        target="_blank"
+                     >
+                        <button className="welcome-button">
+                           Our Warm Welcome Video
+                        </button>
                      </a>
                   </div>
                </div>
@@ -156,7 +164,8 @@ function Home() {
                <div className="carousel-wrapper">
                   <button
                      className="carousel-arrow carousel-arrow-left"
-                     onClick={scrollLeft}>
+                     onClick={scrollLeft}
+                  >
                      &#8249;
                   </button>
                   <div className="game-cards-container" ref={carouselRef}>
@@ -187,7 +196,8 @@ function Home() {
                   </div>
                   <button
                      className="carousel-arrow carousel-arrow-right"
-                     onClick={scrollRight}>
+                     onClick={scrollRight}
+                  >
                      &#8250;
                   </button>
                </div>
@@ -200,18 +210,19 @@ function Home() {
             <div className="testimonials-carousel-wrapper">
                <button
                   className="carousel-arrow carousel-arrow-left"
-                  onClick={scrollTestimonialsLeft}>
+                  onClick={scrollTestimonialsLeft}
+               >
                   &#8249;
                </button>
                <div className="testimonials-container" ref={testimonialsRef}>
                   {testimonials.map((testimonial, i) => (
                      <div key={i} className="testimonial-card">
-                        {/* <Image
+                        <Image
                            src={testimonial.image}
                            alt={testimonial.author}
                            width={80}
                            height={80}
-                        /> */}
+                        />
                         <div className="testimonial-quote">
                            <p>&quot;{testimonial.quote}&quot;</p>
                            <span className="testimonial-author">
@@ -223,7 +234,8 @@ function Home() {
                </div>
                <button
                   className="carousel-arrow carousel-arrow-right"
-                  onClick={scrollTestimonialsRight}>
+                  onClick={scrollTestimonialsRight}
+               >
                   &#8250;
                </button>
             </div>
@@ -232,26 +244,26 @@ function Home() {
          <div className="more-section">
             <div className="cta-container">
                <h2>Ready to Begin Your Healing Journey?</h2>
-               {/* <p>
-                  Join the community to get involved with the community. Information about
-                  joining and participating goes here.
-               </p>
-
-               <div className="cta-right">
-                  <input type="email" placeholder="Enter your email" />
-                  <br />
-                  <button>Sign Up</button>
-               </div> */}
 
                <div className="socmed-icons">
                   <div className="phone-icon-text">
-                     <img src="/landing-page-img/Phone.svg" width={30} height={30} />
+                     <Image
+                        src="/landing-page-img/Phone.svg"
+                        alt="Phone icon"
+                        width={30}
+                        height={30}
+                     />
                      <span>917-302-5086</span>
                   </div>
 
                   <div className="icon-text">
                      <a href="mailto:info@playtohealhub.com">
-                        <img src="/landing-page-img/Mail.svg" width={30} height={30} />
+                        <Image
+                           src="/landing-page-img/Mail.svg"
+                           alt="Mail icon"
+                           width={30}
+                           height={30}
+                        />
                         <span>info@playtohealhub.com</span>
                      </a>
                   </div>
@@ -260,21 +272,30 @@ function Home() {
                      <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.linkedin.com/company/trance4mation-games/">
-                        <img
+                        href="https://www.linkedin.com/company/trance4mation-games/"
+                     >
+                        <Image
                            src="/landing-page-img/LinkedIn.svg"
+                           alt="LinkedIn icon"
                            width={30}
                            height={30}
                         />
                         <span>Trance4mation Games</span>
                      </a>
                   </div>
+
                   <div className="icon-text">
                      <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href="https://www.tiktok.com/@trance4mationgames?_r=1&_t=ZP-91DUqXF2mEx">
-                        <img src="/landing-page-img/TikTok.svg" width={30} height={30} />
+                        href="https://www.tiktok.com/@trance4mationgames?_r=1&_t=ZP-91DUqXF2mEx"
+                     >
+                        <Image
+                           src="/landing-page-img/TikTok.svg"
+                           alt="TikTok icon"
+                           width={30}
+                           height={30}
+                        />
                         <span>Trance4mation Games</span>
                      </a>
                   </div>
@@ -282,11 +303,14 @@ function Home() {
             </div>
 
             <div className="more-image">
-               <img
-                  src="landing-page-img/love1.png"
+               <Image
+                  src="/landing-page-img/love1.png"
                   alt="Join the Play to Heal Community"
+                  width={500}
+                  height={500}
                />
             </div>
+
             <div className="more-links">
                <div className="general-links">
                   <li>
@@ -302,12 +326,12 @@ function Home() {
                      <ul>
                         <a href="/landing/contact">Contact</a>
                      </ul>
-
                      <ul>
                         <a href="/landing/faq">FAQ</a>
                      </ul>
                   </li>
                </div>
+
                <div className="policy-links">
                   <li>
                      <ul>
@@ -326,6 +350,7 @@ function Home() {
                </div>
             </div>
          </div>
+
          <div className="footer">
             <p>© 2025 Trance4mation Games, LLC. All rights reserved.</p>
          </div>

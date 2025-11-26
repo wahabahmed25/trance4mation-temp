@@ -108,7 +108,7 @@ export const useProfile = () => {
           ...profile,
           displayName: formData.displayName,
           age: formData.age,
-          gender: formData.gender as any,
+          gender: formData.gender as UserProfile["gender"],
           biography: formData.biography,
           healingFocus: formData.healingFocus,
           intentionStatement: formData.intentionStatement
