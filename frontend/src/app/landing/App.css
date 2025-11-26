@@ -13,7 +13,6 @@ body.no-scroll {
 .nav {
    background-image: linear-gradient(to bottom, var(--nav-bg), rgba(255, 0, 0, 0));
    backdrop-filter: blur(150px);
-   padding: 57rem 0;
    display: flex;
    gap: 4rem;
    justify-content: center;
@@ -48,6 +47,7 @@ body.no-scroll {
    align-items: center;
    justify-content: center;
    height: 85%;
+   text-align: center;
 }
 
 .nav a:hover {
@@ -153,6 +153,37 @@ body.no-scroll {
    transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 
+.landing-login-btn {
+   background: var(--gradient-coral);
+   color: var(--text-white);
+   border: none;
+   border-radius: 50px;
+   font-size: 1rem;
+   cursor: pointer;
+   transition: all 0.3s ease;
+   font-weight: 600;
+
+   box-shadow: 0 8px 10px var(--coral-alpha-30);
+   position: relative;
+   z-index: 2;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   width: 130px;
+   height: 60px;
+   padding: 1rem 2rem;
+   margin: 15px 0px;
+}
+
+.landing-login-btn:hover {
+   transform: translateY(-3px);
+   box-shadow: 0 12px 10px var(--coral-alpha-40);
+   background: var(--gradient-coral-reverse);
+}
+
+.nav-button-container {
+   display: flex;
+   gap: 1rem;
+}
 @media (max-width: 900px) {
    .hamburger-mobile {
       display: flex;
@@ -164,7 +195,6 @@ body.no-scroll {
 
       z-index: 99;
       flex-direction: column;
-      padding-top: 60px;
    }
 
    .hamburger-mobile.open .burger1 {
@@ -260,7 +290,11 @@ body.no-scroll {
    }
    .share-container {
       text-align: center;
-      margin-top: 3rem;
+   }
+   .nav-button-container {
+      flex-direction: column;
+      gap: 0rem;
+      padding-left: 1rem;
    }
 }
 

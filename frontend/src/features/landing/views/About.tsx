@@ -31,20 +31,21 @@ function About() {
                      </p>
                      <br />
                      <p>
-                        The Play to Heal Hub™ is <b>essential</b> because today&apos;s students are facing unprecedented levels of
-                        stress, isolation, and mental health challenges, while campus
-                        counseling centers remain overwhelmed and stigma keeps many from
-                        seeking help. By creating a student-driven, peer-to-peer platform
-                        grounded in therapeutic dialogue games, Play to Heal provides an
-                        inclusive, accessible, and proactive space for healing,
-                        resilience, and belonging. Without it, campuses will continue to
-                        see rising crises, dropout rates, and disconnection, especially
-                        among first-generation and marginalized students, losing the
-                        chance to transform silence and suffering into connection,
-                        empowerment, and collective well-being. The Play to Heal Hub
-                        addresses this urgent need by creating a structured,
-                        student-driven platform where young people can come together for
-                        healing dialogue, emotional support, and community building.
+                        The Play to Heal Hub™ is <b>essential</b> because today&apos;s
+                        students are facing unprecedented levels of stress, isolation, and
+                        mental health challenges, while campus counseling centers remain
+                        overwhelmed and stigma keeps many from seeking help. By creating a
+                        student-driven, peer-to-peer platform grounded in therapeutic
+                        dialogue games, Play to Heal provides an inclusive, accessible,
+                        and proactive space for healing, resilience, and belonging.
+                        Without it, campuses will continue to see rising crises, dropout
+                        rates, and disconnection, especially among first-generation and
+                        marginalized students, losing the chance to transform silence and
+                        suffering into connection, empowerment, and collective well-being.
+                        The Play to Heal Hub addresses this urgent need by creating a
+                        structured, student-driven platform where young people can come
+                        together for healing dialogue, emotional support, and community
+                        building.
                      </p>
                      <br />
                      <p>
@@ -82,16 +83,16 @@ function About() {
                         Leslie R. Robinson is a visionary therapist, inventor, and
                         award-winning social entrepreneur, and the founder of Play to Heal
                         Hub™, a groundbreaking platform designed to help college students
-                        connect, heal, and thrive in today&apos;s increasingly stressful and
-                        disconnected world. With over two decades of hands-on experience
-                        working with underserved and marginalized populations—including
-                        incarcerated youth and adults, foster care, individuals
-                        experiencing homelessness and severe mental illness, runaway and
-                        homeless teens, at-risk youth, and having had the honor to serve
-                        as a Department of Defense Reintegration Speaker to thousands of
-                        returning service members, Leslie brings a deep, empathetic
-                        understanding of human struggle, resilience, and the critical need
-                        for healing spaces.
+                        connect, heal, and thrive in today&apos;s increasingly stressful
+                        and disconnected world. With over two decades of hands-on
+                        experience working with underserved and marginalized
+                        populations—including incarcerated youth and adults, foster care,
+                        individuals experiencing homelessness and severe mental illness,
+                        runaway and homeless teens, at-risk youth, and having had the
+                        honor to serve as a Department of Defense Reintegration Speaker to
+                        thousands of returning service members, Leslie brings a deep,
+                        empathetic understanding of human struggle, resilience, and the
+                        critical need for healing spaces.
                      </p>
                      <br />
                      <p>
@@ -112,17 +113,18 @@ function About() {
                         fosters emotional expression, connection, and resilience. Through
                         meaningful conversations rooted in empathy and authenticity,
                         students rediscover a sense of belonging and support—without
-                        stigma, pressure, or judgment. <b>This isn&apos;t just a project; it is a movement.</b> This Hub
+                        stigma, pressure, or judgment.{" "}
+                        <b>This isn&apos;t just a project; it is a movement.</b> This Hub
                         responds to an urgent need: a call for community, healing, and
                         real human connection in an age of digital overload and emotional
                         disconnection.
                      </p>
                      <br />
                      <p>
-                        Through the <b>Play to Heal Hub™</b>, Leslie continues her life&apos;s
-                        mission: to transform lives, dismantle barriers, and create safe
-                        spaces where healing and human connection flourish—especially for
-                        those who need it most.
+                        Through the <b>Play to Heal Hub™</b>, Leslie continues her
+                        life&apos;s mission: to transform lives, dismantle barriers, and
+                        create safe spaces where healing and human connection
+                        flourish—especially for those who need it most.
                      </p>
                      <br />
                      <p>
@@ -155,7 +157,7 @@ function About() {
          <section>
             <div className="contributors-partners">
                <h1>Meet Our Contributors</h1>
-               <h2> Coming Soon...</h2>
+               <h3> Coming Soon...</h3>
             </div>
          </section>
       </div>

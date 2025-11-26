@@ -28,8 +28,7 @@ function Game() {
                   <a
                      target="_blank"
                      rel="noopener noreferrer"
-                     href="https://remembrance.onrender.com/"
-                  >
+                     href="https://remembrance.onrender.com/">
                      <button className="play-button">Play Now</button>
                   </a>
                </div>
@@ -58,7 +57,12 @@ function Game() {
                      more than a game, it is a home for healing, a mirror for truth, and a
                      pathway to collective transformation.
                   </p>
-                  <button className="play-button">Play Now</button>
+                  <a
+                     target="_blank"
+                     rel="noopener noreferrer"
+                     href="https://playtohealhub.com/keepitreal100/">
+                     <button className="play-button">Play Now</button>
+                  </a>
                </div>
             </div>
          </section>
@@ -143,10 +147,9 @@ function Game() {
                   <p>
                      Home is the Heart is a heartfelt family connection game that brings
                      loved ones closer through meaningful conversations, shared stories,
-                     and moments of laughter and love. Designed to spark
-                     multigenerational dialogue, it invites family members to reflect on
-                     the past, express their emotions, and dream about the future
-                     together.
+                     and moments of laughter and love. Designed to spark multigenerational
+                     dialogue, it invites family members to reflect on the past, express
+                     their emotions, and dream about the future together.
                   </p>
                </div>
             </div>
