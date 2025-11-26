@@ -34,7 +34,7 @@
     "featured": true,
     "continuePlaying": true,
     "progress": 80,
-    "link": "/games/keep-it-real-100",
+    "link": "https://playtohealhub.com/keepitreal100/",
     "img": "/KeepitReal100.png"
   },
   {
@@ -46,7 +46,7 @@
     "featured": true,
     "isNew": true,
     "ForYou": true,
-    "link": "/games/remembrance",
+    "link": "https://remembrance.onrender.com/",
     "img": "/Remembrance.png"
   },
   {
