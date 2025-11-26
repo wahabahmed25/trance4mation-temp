@@ -21,19 +21,19 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const style: React.CSSProperties = {
-    ["--nav-bg" as any]: "rgba(126, 200, 227, 0.95)",
+  // FIX: allow CSS variable type safely without any
+  const style: React.CSSProperties & { "--nav-bg"?: string } = {
+    "--nav-bg": "rgba(126, 200, 227, 0.95)",
     backgroundImage: `linear-gradient(to bottom, var(--nav-bg), rgba(255,255,255,${opacity}))`,
     transition: "background-image 0.4s ease",
   };
 
   const desktopLinks = [
-    { label: "Games", href: "/games" },
     { label: "Home", href: "/home" },
-    { label: "Landing", href: "/landing" },
     { label: "Profile", href: "/profile" },
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
+    { label: "Logout", href: "/logout" },
   ];
 
   const mobileLinks = [
