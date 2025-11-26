@@ -3,7 +3,7 @@ import SettingsCell from "./SettingsCell";
 import { ClientRoomData } from "../types/ClientRoomData";
 import IconButton from "./IconButton";
 import { motion } from "framer-motion";
-import { DEFAULT_SETTINGS, SETTINGS } from "@/app/discussion-circle/constants";
+import { DEFAULT_SETTINGS, SETTINGS } from "@/app/discussion-circle.disabled/constants";
 
 interface RoomCreationMenuProps {
   onCloseButtonClick?: MouseEventHandler<HTMLButtonElement>;

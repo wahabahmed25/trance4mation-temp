@@ -1,7 +1,7 @@
 import { RoomData } from "@/features/discussion-circle/types/RoomData";
 import RoomListing from "./RoomListing";
 import { ChangeEventHandler, MouseEventHandler } from "react";
-import { POPPINS_BOLD } from "@/app/discussion-circle/constants";
+import { POPPINS_BOLD } from "@/app/discussion-circle.disabled/constants";
 import IconButton from "./IconButton";
 
 interface RoomBrowserProps {

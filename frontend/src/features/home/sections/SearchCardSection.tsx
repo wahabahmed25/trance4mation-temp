@@ -61,7 +61,7 @@ const SearchCardSection: React.FC = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative w-full h-full rounded-3xl 
-        bg-white/70 backdrop-blur-xl 
+        bg-white/80 backdrop-blur-xl 
         border border-[rgba(0,0,0,0.05)]
         shadow-[0_8px_30px_rgba(0,0,0,0.08)]
         p-8 sm:p-10 flex flex-col justify-between
@@ -71,7 +71,7 @@ const SearchCardSection: React.FC = () => {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
-bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
+        bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
       />
 
       <div className="relative z-10 space-y-6">
