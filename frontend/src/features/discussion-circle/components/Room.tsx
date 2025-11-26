@@ -6,7 +6,7 @@ import IconButton from "./IconButton";
 import Prompt from "./Prompt";
 import { useAuth } from "@/context/AuthContext";
 import { REACTIONS } from "@/app/discussion-circle.disabled/constants";
-import { addReaction } from "@/app/discussion-circle/api";
+import { addReaction } from "@/app/discussion-circle.disabled/api";
 import ReactionSpawner from "./ReactionSpawner";
 
 interface RoomProps {
