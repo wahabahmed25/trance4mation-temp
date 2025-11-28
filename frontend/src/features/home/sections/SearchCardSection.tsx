@@ -13,7 +13,7 @@ import featuredGames from "@/fake-game-data/games.json";
 //   cream: "#F6EDE8",
 // };
 
-const tags = ["focus", "mindful", "sleep", "gratitude", "community"];
+const tags = ["empathy", "courage", "community", "real talk", "connection", "college life", "identity", "vulnerability", "healing", "culture", "grief", "reflection", "memory", "expression", "confidence", "emotional release", "recovery", "support", "truth", "resilience"]
 
 interface Game {
   name: string;

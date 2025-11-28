@@ -51,6 +51,8 @@ export async function login(email: string, password: string): Promise<LoginRespo
       ...firestoreData,
     };
 
+    console.log(userData)
+
     return { success: true, user: userData };
   } catch (error: unknown) {
     console.error("Login error:", error);

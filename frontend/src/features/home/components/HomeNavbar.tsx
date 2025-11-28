@@ -9,7 +9,8 @@ import { useAuth } from "@/context/AuthContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
-  const { user } = useAuth();
+  const { user, logoutUser } = useAuth();
+  console.log(user)
 
   useEffect(() => {
     const onScroll = () => {
@@ -29,11 +30,11 @@ const Navbar = () => {
   };
 
   const desktopLinks = [
-    { label: "Home", href: "/home" },
+    { label: "Features", href: "/features" },
     { label: "Profile", href: "/profile" },
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
-    { label: "Logout", href: "/logout" },
+    { label: "Logout", href: "/login", onClick: logoutUser },
   ];
 
   const mobileLinks = [
@@ -79,6 +80,7 @@ const Navbar = () => {
                 transition-all duration-300
                 hover:bg-[rgba(255,111,97,0.15)]
               "
+              onClick={l.onClick}
             >
               {l.label}
             </Link>

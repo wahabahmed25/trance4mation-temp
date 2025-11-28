@@ -5,6 +5,7 @@ import SubmitButton from "@/user-signup/signup/SubmitButton";
 import InputField from "@/user-signup/signup/InputField";
 import { login } from "@/lib/api/ApiCalls";
 import AuthLayout from "@/user-signup/AuthLayout";
+import { useAuth } from "@/context/AuthContext";
 
 interface LoginFormValues {
   email: string;
@@ -18,6 +19,7 @@ export default function LoginPage() {
     password: "",
   });
   const [error, setError] = useState("");
+  const { loginUser } = useAuth()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -35,6 +37,7 @@ export default function LoginPage() {
     }
 
     const result = await login(email, password);
+    loginUser(result.user)
 
     if (!result.success) {
       setError("Invalid email or password ❌");
