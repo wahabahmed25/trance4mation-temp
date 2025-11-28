@@ -32,8 +32,8 @@ const Navbar = () => {
   const desktopLinks = [
     { label: "Features", href: "/features" },
     { label: "Profile", href: "/profile" },
-    { label: "About", href: "/about" },
-    { label: "FAQ", href: "/faq" },
+    { label: "About", href: "/landing/about" },
+    { label: "FAQ", href: "/landing/faq" },
     { label: "Logout", href: "/login", onClick: logoutUser },
   ];
 
