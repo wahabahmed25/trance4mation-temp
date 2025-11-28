@@ -132,8 +132,7 @@ const SearchCardSection: React.FC = () => {
                 enabledTags.includes(tag)
                   ? {
                       color: "#A78BFA",
-                      borderColor: "#A78BFA",
-                      backgroundColor: "rgba(0,0,0,0.05)",
+                      borderColor: "#A78BFA"
                     }
                   : {}
               }
@@ -147,16 +146,30 @@ const SearchCardSection: React.FC = () => {
         <div className="max-w-2xl flex flex-col">
           <div className="flex items-center gap-2 rounded-2xl border border-[#000]/10 bg-white/60 px-4 py-2.5">
             <span className="text-lg text-[#A78BFA]">🔍</span>
-            <input
-              value={query}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
-              onFocus={() => setSearchResultsVisible(true)}
-              onBlur={() =>
-                setTimeout(() => setSearchResultsVisible(false), 150)
-              }
-              placeholder="Search games, e.g. focus, breathing, gratitude…"
-              className="w-full bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
-            />
+            <div className="w-full flex">
+              <div className="flex pr-2 gap-1">
+                {enabledTags.map((tag) => {
+                  return (
+                    <button key={tag} className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1 text-[#555] transition-all text-xs">
+                      #{tag}
+                      <span className="pl-1 font-bold cursor-pointer" onClick={() => setEnabledTags(enabledTags.filter((element) => element !== tag))}>
+                        x
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+              <input
+                value={query}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+                onFocus={() => setSearchResultsVisible(true)}
+                onBlur={() =>
+                  setTimeout(() => setSearchResultsVisible(false), 150)
+                }
+                placeholder="Search games, e.g. focus, breathing, gratitude…"
+                className="grow bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
+              />
+            </div>
           </div>
 
           <div
