@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "Grounded in therapeutic dialogue games, the platform empowers students to break through isolation, reduce stigma around mental health, and build resilience through peer-to-peer support",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
