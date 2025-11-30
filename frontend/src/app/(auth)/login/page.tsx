@@ -19,7 +19,7 @@ export default function LoginPage() {
     password: "",
   });
   const [error, setError] = useState("");
-  const { loginUser } = useAuth()
+  const { loginUser } = useAuth();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -37,12 +37,15 @@ export default function LoginPage() {
     }
 
     const result = await login(email, password);
-    loginUser(result.user)
 
-    if (!result.success) {
+    // FIX: only allow login if success AND user exists
+    if (!result.success || !result.user) {
       setError("Invalid email or password ❌");
       return;
     }
+
+    // Now TS knows result.user is DEFINITELY a User
+    loginUser(result.user);
 
     router.push("/home");
   };
