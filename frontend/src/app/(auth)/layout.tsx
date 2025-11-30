@@ -1,29 +1,27 @@
 "use client";
+
 import AuthTransitionLayout from "@/user-signup/AuthTransitionLayout";
 import { useEffect } from "react";
+
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // get all linked stylesheets
-    const linkedStyles = document.querySelectorAll('link[rel="stylesheet"]');
+    // get all linked stylesheets (correctly typed)
+    const linkedStyles = document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]');
 
-    // disable all sheets except the first, which contains the Tailwind CSS specific to this page
-    for (let i = 0; i < linkedStyles.length; i++) {
-      if (i === 0) {
-        continue
+    // disable all sheets except the first
+    linkedStyles.forEach((sheet, index) => {
+      if (index !== 0) {
+        sheet.disabled = true;
       }
-      linkedStyles[i].disabled = true
-    }
+    });
 
-    // Cleanup: Re-enable global styles when leaving this page
+    // Cleanup: re-enable all stylesheets
     return () => {
-      for (let i = 0; i < linkedStyles.length; i++) {
-        linkedStyles[i].disabled = false
-      }
+      linkedStyles.forEach((sheet) => {
+        sheet.disabled = false;
+      });
     };
-  }, [])
-  return (
-    <AuthTransitionLayout>
-      {children}
-    </AuthTransitionLayout>
-  );
+  }, []);
+
+  return <AuthTransitionLayout>{children}</AuthTransitionLayout>;
 }
