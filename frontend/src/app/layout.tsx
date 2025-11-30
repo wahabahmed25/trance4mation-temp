@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Play-To-Heal",
+  title: "play-to-heal",
   description: "Grounded in therapeutic dialogue games, the platform empowers students to break through isolation, reduce stigma around mental health, and build resilience through peer-to-peer support",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 
