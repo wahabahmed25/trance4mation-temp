@@ -10,8 +10,8 @@ import ProfileStats from './components/ProfileStats';
 import EditProfileModal from './components/EditProfileModal';
 import RecentActivity from './components/RecentActivity';
 import MoodOverview from './components/MoodOverview';
+// import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
-import MyCircles from './components/MyCircles';
 
 const AFFIRMATIONS = [
   "You are not alone.",
