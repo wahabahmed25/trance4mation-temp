@@ -3,14 +3,15 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import BackgroundElements from '../../components/ui/BackgroundElements';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileStats from './components/ProfileStats';
 import EditProfileModal from './components/EditProfileModal';
 import RecentActivity from './components/RecentActivity';
 import MoodOverview from './components/MoodOverview';
-import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
+import MyCircles from './components/MyCircles';
 
 const AFFIRMATIONS = [
   "You are not alone.",
@@ -54,7 +55,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-4">{error || 'Failed to load profile'}</p>
             <p className="text-sm text-gray-500">
-              Please make sure you're logged in and try refreshing the page.
+              Please make sure you&aposre logged in and try refreshing the page.
             </p>
           </div>
         </div>
@@ -71,8 +72,13 @@ const Profile = () => {
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-white text-xl">👤</span>
+              <div className="w-12 h-12 relative">
+                <Image 
+                  src="/landing-page-img/logo.png" 
+                  alt="Logo" 
+                  fill
+                  className="object-contain"
+                />
               </div>
               <div>
                 <h1 className="text-4xl font-bold bg-gradient-to-r from-[#4A90A4] to-[#5AB4C5] bg-clip-text text-transparent">
