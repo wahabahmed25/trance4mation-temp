@@ -37,13 +37,6 @@ const Navbar = () => {
     { label: "Logout", href: "/login", onClick: logoutUser },
   ];
 
-  const mobileLinks = [
-    { label: "About", href: "/about" },
-    { label: "Games", href: "/games" },
-    { label: "Profile", href: "/profile" },
-    { label: "Logout", href: "/logout" },
-  ];
-
   return (
     <nav
       className="fixed top-0 left-0 w-full z-50 backdrop-blur-[25px]"
@@ -122,11 +115,14 @@ const Navbar = () => {
             }}
           >
             <div className="flex flex-col items-center gap-6 py-8 text-xl">
-              {mobileLinks.map((l) => (
+              {desktopLinks.map((l) => (
                 <Link
                   key={l.label}
                   href={l.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => { 
+                    l.onClick?.()
+                    setIsOpen(false) 
+                  }}
                   className="
                     text-white
                     font-semibold tracking-wide
