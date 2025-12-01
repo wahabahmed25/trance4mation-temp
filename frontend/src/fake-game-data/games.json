@@ -9,7 +9,7 @@
     "isTrending": true,
     "continuePlaying": true,
     "progress": 64,
-    "link": "/games/call-it-out-loud",
+    "link": "/landing/game#call-it-out-loud",
     "img": "/CallitOut.png"
   },
   {
@@ -22,7 +22,7 @@
     "isTrending": true,
     "continuePlaying": true,
     "progress": 38,
-    "link": "/games/keep-it-real",
+    "link": "/landing/game#keep-it-real",
     "img": "/KeepItReal.png"
   },
   {
@@ -56,7 +56,7 @@
     "plays": 15200,
     "rating": 4,
     "featured": false,
-    "link": "/games/speak-to-me",
+    "link": "/landing/game#speak-to-me",
     "img": "/SpeaktoMe.jpeg"
   },
   {
@@ -66,7 +66,7 @@
     "plays": 8700,
     "rating": 4,
     "featured": false,
-    "link": "/games/trill",
+    "link": "/landing/game#trill",
     "img": "/TrillAddictionsPreventionRecovery.png"
   }
 ]

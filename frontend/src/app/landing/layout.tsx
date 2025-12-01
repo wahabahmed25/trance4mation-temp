@@ -6,6 +6,16 @@ import Modal from "../../features/landing/components/ShareModal";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+const games = [
+   { href: "/landing/game#Remembrance", name: "Remembrance"},
+   { href: "/landing/game#Keep-It-Real-100", name: "Keep It Real 100"},
+   { href: "/landing/game#Keep-It-Real", name: "Keep It Real"},
+   { href: "/landing/game#Speak-to-me", name: "Speak to Me"},
+   { href: "/landing/game#Home-is-the-Heart", name: "Home is the Heart"},
+   { href: "/landing/game#Call-It-Out", name: "Call It Out Loud"},
+   { href: "/landing/game#Trill", name: "Trill"},
+]
+
 export default function Layout({ children }: { children: React.ReactNode }) {
    /** navbar gradient when user scrolls */
    const nav = useRef<HTMLElement | null>(null);
@@ -79,22 +89,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
                {/* GAMES DROPDOWN */}
                <div
-                  className={`dropdown ${dropdownOpen ? "open" : ""}`}
+                  className={`dropdown ${dropdownOpen ? "open" : ""}` + " relative"}
                   ref={dropdownToggle}>
-                  <button
+                  <a
                      onClick={() => setDropdownOpen(!dropdownOpen)}
                      className="dropbtn">
                      Games
-                  </button>
+                  </a>
 
                   <div className="dropdown-content">
-                     <Link href="/landing/game#Remembrance">Remembrance</Link>
-                     <Link href="/landing/game#Keep-It-Real-100">Keep It Real 100</Link>
-                     <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
-                     <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
-                     <Link href="/landing/game#Home-is-the-Heart">Home is the Heart</Link>
-                     <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
-                     <Link href="/landing/game#Trill">Trill</Link>
+                     {games.map((game) => {
+                        return (
+                           <Link key={game.name} href={game.href}>{game.name}</Link>
+                        )
+                     })}
                   </div>
                </div>
 
@@ -140,25 +148,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                <div
                   className={`dropdown ${dropdownOpen ? "open" : ""}`}
                   ref={dropdownToggle}>
-                  <button
+                  <a
                      onClick={() => setDropdownOpen(!dropdownOpen)}
                      className="dropbtn">
                      Games
-                  </button>
+                  </a>
 
                   <div className="dropdown-mobile">
                      <div className="dropdown-content">
-                        <Link href="/landing/game#Speak-to-me">Speak to Me</Link>
-                        <Link href="/landing/game#Keep-It-Real">Keep It Real</Link>
-                        <Link href="/landing/game#Keep-It-Real-100">
-                           Keep It Real 100
-                        </Link>
-                        <Link href="/landing/game#Home-is-the-Heart">
-                           Home is the Heart
-                        </Link>
-                        <Link href="/landing/game#Remembrance">Remembrance</Link>
-                        <Link href="/landing/game#Call-It-Out">Call It Out Loud</Link>
-                        <Link href="/landing/game#Trill">Trill</Link>
+                        {games.map((game) => {
+                           return (
+                              <Link key={game.name} href={game.href}>{game.name}</Link>
+                           )
+                        })}
                      </div>
                   </div>
                </div>
