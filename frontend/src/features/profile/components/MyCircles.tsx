@@ -189,11 +189,6 @@ const MyCircles = () => {
             <p className="text-sm text-gray-500">Start your healing journey by joining a community</p>
           </div>
         ) : (
-<<<<<<< HEAD
-          <div className="text-center py-8 mb-4">
-            <p className="text-gray-400 text-sm mb-4">You haven&apost joined any circles yet</p>
-          </div>
-=======
           circles.map((circle) => (
             <div
               key={circle.id}
@@ -235,7 +230,6 @@ const MyCircles = () => {
               </div>
             </div>
           ))
->>>>>>> origin/profile-page-new
         )}
       </div>
 

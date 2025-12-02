@@ -10,7 +10,7 @@ import ProfileStats from './components/ProfileStats';
 import EditProfileModal from './components/EditProfileModal';
 import RecentActivity from './components/RecentActivity';
 import MoodOverview from './components/MoodOverview';
-// import MyCircles from './components/MyCircles';
+import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
 
 const AFFIRMATIONS = [
@@ -55,11 +55,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-4">{error || 'Failed to load profile'}</p>
             <p className="text-sm text-gray-500">
-<<<<<<< HEAD
-              Please make sure you&aposre logged in and try refreshing the page.
-=======
               Please make sure you&apos;re logged in and try refreshing the page.
->>>>>>> origin/profile-page-new
             </p>
           </div>
         </div>

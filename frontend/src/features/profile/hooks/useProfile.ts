@@ -123,24 +123,9 @@ export const useProfile = () => {
         });
       }
 
-<<<<<<< HEAD
-      // Update local state
-      if (profile) {
-        setProfile({
-          ...profile,
-          displayName: formData.displayName,
-          age: formData.age,
-          gender: formData.gender as UserProfile["gender"],
-          biography: formData.biography,
-          healingFocus: formData.healingFocus,
-          intentionStatement: formData.intentionStatement
-        });
-      }
-=======
       // Refresh profile to get latest data
       await fetchProfile(userId);
 
->>>>>>> origin/profile-page-new
     } catch (err) {
       console.error('Error updating profile:', err);
       setError('Failed to update profile');
