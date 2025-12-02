@@ -36,6 +36,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 // Initialize Firebase services
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+//export const storage = getStorage(app);
 
 // Optional Google sign-in helper
 export const signInWithGoogle = async () => {
