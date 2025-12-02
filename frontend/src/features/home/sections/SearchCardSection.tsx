@@ -107,7 +107,7 @@ const SearchCardSection: React.FC = () => {
           </button>
 
           <Link
-            href="/mood"
+            href="/mood-calendar"
             className="rounded-lg border border-[#000]/10 px-6 py-2.5 
             text-[#444] hover:bg-[#000]/5 transition font-medium"
           >
