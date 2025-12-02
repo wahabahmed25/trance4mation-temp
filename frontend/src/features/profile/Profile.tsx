@@ -10,7 +10,7 @@ import ProfileStats from './components/ProfileStats';
 import EditProfileModal from './components/EditProfileModal';
 import RecentActivity from './components/RecentActivity';
 import MoodOverview from './components/MoodOverview';
-// import MyCircles from './components/MyCircles';
+import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
 
 const AFFIRMATIONS = [
@@ -55,7 +55,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-4">{error || 'Failed to load profile'}</p>
             <p className="text-sm text-gray-500">
-              Please make sure you&aposre logged in and try refreshing the page.
+              Please make sure you&apos;re logged in and try refreshing the page.
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@ const Profile = () => {
               <div className="w-12 h-12 relative">
                 <Image 
                   src="/landing-page-img/logo.png" 
-                  alt="Logo" 
+                  alt="Play to Heal Logo" 
                   fill
                   className="object-contain"
                 />
@@ -100,16 +100,16 @@ const Profile = () => {
           <div className="space-y-6">
             {/* Profile Header with Welcome */}
             <ProfileHeader 
-              profile={profile} 
+              profile={profile as any} 
               onEditClick={() => setIsEditModalOpen(true)}
             />
 
             {/* Stats */}
             <ProfileStats stats={profile.stats} />
 
-            {/* Bottom Grid */}
+            {/* Bottom Grid - My Circles and Mood Overview */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* <MyCircles /> */}
+              <MyCircles />
               <MoodOverview />
             </div>
 
@@ -135,7 +135,7 @@ const Profile = () => {
         profile={profile}
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        onSave={updateUserProfile}
+        onSave={(updatedProfile) => updateUserProfile(updatedProfile as any)}
       />
     </div>
   );

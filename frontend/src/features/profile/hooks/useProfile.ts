@@ -27,11 +27,13 @@ export const useProfile = () => {
           displayName: data.displayName || 'Anonymous Student',
           email: data.email || '',
           photoURL: data.photoURL,
+          profilePhoto: data.profilePhoto || data.photoURL, // Support both fields
           age: data.age,
           gender: data.gender,
           biography: data.biography,
           healingFocus: data.healingFocus || [],
           intentionStatement: data.intentionStatement,
+          personalIntention: data.personalIntention || data.intentionStatement, // Support both fields
           joinedDate: data.joinedDate?.toDate() || new Date(),
           stats: data.stats || {
             postsShared: 0,
@@ -49,8 +51,10 @@ export const useProfile = () => {
           displayName: auth.currentUser?.displayName || 'Anonymous Student',
           email: auth.currentUser?.email || '',
           photoURL: auth.currentUser?.photoURL ?? null,
+          profilePhoto: auth.currentUser?.photoURL || '',
           healingFocus: [],
           intentionStatement: '',
+          personalIntention: '',
           joinedDate: new Date(),
           stats: {
             postsShared: 0,
@@ -75,7 +79,7 @@ export const useProfile = () => {
   };
 
   // Update user profile
-  const updateUserProfile = async (formData: ProfileFormData) => {
+  const updateUserProfile = async (formData: ProfileFormData | any) => {
     if (!auth.currentUser) {
       setError('You must be logged in to update profile');
       throw new Error('User not authenticated');
@@ -85,35 +89,43 @@ export const useProfile = () => {
       const userId = auth.currentUser.uid;
       const profileRef = doc(db, 'profiles', userId);
 
+      // Filter out undefined values to avoid Firestore errors
+      const updates: any = {};
+      
+      // Handle all possible fields
+      if (formData.displayName !== undefined) updates.displayName = formData.displayName;
+      if (formData.age !== undefined) updates.age = formData.age;
+      if (formData.gender !== undefined) updates.gender = formData.gender;
+      if (formData.biography !== undefined) updates.biography = formData.biography;
+      if (formData.healingFocus !== undefined) updates.healingFocus = formData.healingFocus;
+      if (formData.intentionStatement !== undefined) updates.intentionStatement = formData.intentionStatement;
+      if (formData.personalIntention !== undefined) {
+        updates.personalIntention = formData.personalIntention;
+        updates.intentionStatement = formData.personalIntention; // Keep both in sync
+      }
+      if (formData.profilePhoto !== undefined) {
+        updates.profilePhoto = formData.profilePhoto;
+        updates.photoURL = formData.profilePhoto; // Keep both in sync
+      }
+
+      // Add timestamp
+      updates.updatedAt = new Date();
+
+      console.log('Updating profile with:', updates);
+
       // Update Firestore
-      await updateDoc(profileRef, {
-        displayName: formData.displayName,
-        age: formData.age,
-        gender: formData.gender,
-        biography: formData.biography,
-        healingFocus: formData.healingFocus || [],
-        intentionStatement: formData.intentionStatement || ''
-      });
+      await updateDoc(profileRef, updates);
 
       // Update Firebase Auth display name if changed
-      if (formData.displayName !== auth.currentUser.displayName) {
+      if (formData.displayName && formData.displayName !== auth.currentUser.displayName) {
         await updateProfile(auth.currentUser, {
           displayName: formData.displayName
         });
       }
 
-      // Update local state
-      if (profile) {
-        setProfile({
-          ...profile,
-          displayName: formData.displayName,
-          age: formData.age,
-          gender: formData.gender as any,
-          biography: formData.biography,
-          healingFocus: formData.healingFocus,
-          intentionStatement: formData.intentionStatement
-        });
-      }
+      // Refresh profile to get latest data
+      await fetchProfile(userId);
+
     } catch (err) {
       console.error('Error updating profile:', err);
       setError('Failed to update profile');
