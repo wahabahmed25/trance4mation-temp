@@ -7,14 +7,14 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const games = [
-   { href: "/landing/game#Remembrance", name: "Remembrance"},
-   { href: "/landing/game#Keep-It-Real-100", name: "Keep It Real 100"},
-   { href: "/landing/game#Keep-It-Real", name: "Keep It Real"},
-   { href: "/landing/game#Speak-to-me", name: "Speak to Me"},
-   { href: "/landing/game#Home-is-the-Heart", name: "Home is the Heart"},
-   { href: "/landing/game#Call-It-Out", name: "Call It Out Loud"},
-   { href: "/landing/game#Trill", name: "Trill"},
-]
+   { href: "/landing/game#Remembrance", name: "Remembrance" },
+   { href: "/landing/game#Keep-It-Real-100", name: "Keep It Real 100" },
+   { href: "/landing/game#Keep-It-Real", name: "Keep It Real" },
+   { href: "/landing/game#Speak-to-me", name: "Speak to Me" },
+   { href: "/landing/game#Home-is-the-Heart", name: "Home is the Heart" },
+   { href: "/landing/game#Call-It-Out", name: "Call It Out Loud" },
+   { href: "/landing/game#Trill", name: "Trill" },
+];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
    /** navbar gradient when user scrolls */
@@ -91,17 +91,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                <div
                   className={`dropdown ${dropdownOpen ? "open" : ""}` + " relative"}
                   ref={dropdownToggle}>
-                  <a
-                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                     className="dropbtn">
+                  <a onClick={() => setDropdownOpen(!dropdownOpen)} className="dropbtn">
                      Games
                   </a>
 
                   <div className="dropdown-content">
                      {games.map((game) => {
                         return (
-                           <Link key={game.name} href={game.href}>{game.name}</Link>
-                        )
+                           <Link key={game.name} href={game.href}>
+                              {game.name}
+                           </Link>
+                        );
                      })}
                   </div>
                </div>
@@ -148,9 +148,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                <div
                   className={`dropdown ${dropdownOpen ? "open" : ""}`}
                   ref={dropdownToggle}>
-                  <a
-                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                     className="dropbtn">
+                  <a onClick={() => setDropdownOpen(!dropdownOpen)} className="dropbtn">
                      Games
                   </a>
 
@@ -158,8 +156,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                      <div className="dropdown-content">
                         {games.map((game) => {
                            return (
-                              <Link key={game.name} href={game.href}>{game.name}</Link>
-                           )
+                              <Link key={game.name} href={game.href}>
+                                 {game.name}
+                              </Link>
+                           );
                         })}
                      </div>
                   </div>
@@ -172,7 +172,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   {/* Share Button */}
                   <div className="nav-button-container">
                      <CopyButton onClick={handleCopyLink} />
-                     <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
 
                      {/* LOGIN BUTTON (MOBILE) */}
                      <button onClick={goToLogin} className="landing-login-btn">
@@ -182,6 +181,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                </div>
             </div>
          </div>
+         <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
 
          <main>{children}</main>
       </div>

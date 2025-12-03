@@ -8,7 +8,7 @@ interface CopyButtonProps {
 const CopyButton: React.FC<CopyButtonProps> = ({ onClick }) => {
    return (
       <button onClick={onClick} className="copyButton">
-         Play it Forward
+         Share
       </button>
    );
 };
