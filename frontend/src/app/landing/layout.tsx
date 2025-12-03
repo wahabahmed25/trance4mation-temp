@@ -38,7 +38,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
    /** HARD reload login */
    const goToLogin = () => {
-      window.location.href = "/auth/login";
+      window.location.href = "/login";
    };
 
    /** disable scroll when mobile menu open */
