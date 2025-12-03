@@ -73,7 +73,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-4">{error || 'Failed to load profile'}</p>
             <p className="text-sm text-gray-500">
-              Please make sure you're logged in and try refreshing the page.
+              {`Please make sure you're logged in and try refreshing the page.`}
             </p>
           </div>
         </div>

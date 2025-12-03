@@ -2,7 +2,7 @@
 'use client'
 
 import React from 'react';
-import Image from "next/image"; // only needed if you replace emoji with actual images
+// import Image from "next/image"; // only needed if you replace emoji with actual images
 
 export interface UserStats {
   postsShared: number;
