@@ -185,7 +185,7 @@ const MyCircles = () => {
         {circles.length === 0 ? (
           <div className="text-center py-8">
             <div className="text-6xl mb-4">🌱</div>
-            <p className="text-gray-600 mb-2">You haven't joined any circles yet</p>
+            <p className="text-gray-600 mb-2">{`You haven't joined any circles yet`}</p>
             <p className="text-sm text-gray-500">Start your healing journey by joining a community</p>
           </div>
         ) : (

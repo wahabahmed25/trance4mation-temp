@@ -13,6 +13,24 @@ import MoodOverview from './components/MoodOverview';
 import MyCircles from './components/MyCircles';
 import { useProfile } from './hooks/useProfile';
 
+/* ---------------------- TYPES ----------------------- */
+
+interface ProfileStatsType {
+  posts?: number;
+  comments?: number;
+  daysActive?: number;
+  streak?: number;
+}
+
+export interface UserProfileType {
+  displayName: string;
+  email: string;
+  profilePhoto?: string;
+  healingFocus?: string[];
+  personalIntention?: string;
+  stats: ProfileStatsType;
+}
+
 const AFFIRMATIONS = [
   "You are not alone.",
   "Healing begins when we listen and share.",
@@ -55,7 +73,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
             <p className="text-gray-600 mb-4">{error || 'Failed to load profile'}</p>
             <p className="text-sm text-gray-500">
-              Please make sure you&apos;re logged in and try refreshing the page.
+              Please make sure you're logged in and try refreshing the page.
             </p>
           </div>
         </div>
@@ -63,12 +81,15 @@ const Profile = () => {
     );
   }
 
+  /* ---------------------- MAIN RENDER ----------------------- */
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#E8F4F8] via-[#F5E6F1] to-[#FFF0ED] relative overflow-hidden pb-24">
       <BackgroundElements />
 
       <div className="relative z-10 p-6">
         <div className="max-w-6xl mx-auto">
+
           {/* Header */}
           <div className="flex justify-between items-center mb-8">
             <div className="flex items-center space-x-4">
@@ -87,6 +108,7 @@ const Profile = () => {
                 <p className="text-gray-600">Your healing journey</p>
               </div>
             </div>
+
             <Link
               href="/home"
               className="group relative px-8 py-4 bg-white/80 backdrop-blur-md text-gray-700 font-semibold rounded-2xl hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl border border-white/50"
@@ -96,18 +118,19 @@ const Profile = () => {
             </Link>
           </div>
 
-          {/* Content */}
+          {/* Content Sections */}
           <div className="space-y-6">
-            {/* Profile Header with Welcome */}
+
+            {/* Profile Header */}
             <ProfileHeader 
-              profile={profile as any} 
+              profile={profile as UserProfileType} 
               onEditClick={() => setIsEditModalOpen(true)}
             />
 
             {/* Stats */}
             <ProfileStats stats={profile.stats} />
 
-            {/* Bottom Grid - My Circles and Mood Overview */}
+            {/* Grid Section */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <MyCircles />
               <MoodOverview />
@@ -115,6 +138,7 @@ const Profile = () => {
 
             {/* Recent Activity */}
             <RecentActivity />
+
           </div>
         </div>
       </div>
@@ -135,8 +159,9 @@ const Profile = () => {
         profile={profile}
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        onSave={(updatedProfile) => updateUserProfile(updatedProfile as any)}
+        onSave={(updatedProfile) => updateUserProfile(updatedProfile)}
       />
+
     </div>
   );
 };

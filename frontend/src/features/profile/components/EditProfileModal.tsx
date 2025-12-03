@@ -1,6 +1,6 @@
 // frontend/src/features/profile/components/EditProfileModal.tsx
 'use client'
-
+import { UserProfileType } from '../Profile';
 import React, { useState } from 'react';
 import Image from 'next/image';
 
@@ -16,7 +16,7 @@ interface EditProfileModalProps {
   profile: Profile;
   isOpen: boolean;
   onClose: () => void;
-  onSave: (updatedProfile: Partial<Profile>) => Promise<void>;
+  onSave: (updatedProfile: Partial<UserProfileType>) => Promise<void>;
 }
 
 const CALMING_IMAGES = [
@@ -218,7 +218,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({
               Healing Focus Areas
             </label>
             <p className="text-sm text-gray-600 mb-3">
-              Select the areas you're focusing on in your healing journey
+              {`Select the areas you're focusing on in your healing journey`}
             </p>
             <div className="flex flex-wrap gap-2">
               {HEALING_FOCUS_OPTIONS.map((focus) => (

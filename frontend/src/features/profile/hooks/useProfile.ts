@@ -1,11 +1,11 @@
 // frontend/src/features/profile/hooks/useProfile.ts
-'use client'
+'use client';
 
 import { useState, useEffect } from 'react';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 import { db, auth } from '../../../lib/firebase';
-import { UserProfile, ProfileFormData, UserStats, RecentActivity } from '../types';
+import { UserProfile, ProfileFormData } from '../types';
 import { onAuthStateChanged } from 'firebase/auth';
 
 export const useProfile = () => {
@@ -13,7 +13,9 @@ export const useProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch user profile from Firestore
+  /** -------------------------
+   * Fetch User Profile
+   * ------------------------- */
   const fetchProfile = async (userId: string) => {
     try {
       setLoading(true);
@@ -22,30 +24,30 @@ export const useProfile = () => {
 
       if (profileSnap.exists()) {
         const data = profileSnap.data();
+
         setProfile({
           uid: userId,
           displayName: data.displayName || 'Anonymous Student',
           email: data.email || '',
           photoURL: data.photoURL,
-          profilePhoto: data.profilePhoto || data.photoURL, // Support both fields
+          profilePhoto: data.profilePhoto || data.photoURL,
           age: data.age,
           gender: data.gender,
           biography: data.biography,
           healingFocus: data.healingFocus || [],
           intentionStatement: data.intentionStatement,
-          personalIntention: data.personalIntention || data.intentionStatement, // Support both fields
+          personalIntention: data.personalIntention || data.intentionStatement,
           joinedDate: data.joinedDate?.toDate() || new Date(),
           stats: data.stats || {
             postsShared: 0,
             supportSent: 0,
             supportReceived: 0,
             connectionsMade: 0,
-            daysActive: 0
+            daysActive: 0,
           },
-          badges: data.badges || []
+          badges: data.badges || [],
         });
       } else {
-        // Create default profile if doesn't exist
         const defaultProfile: Partial<UserProfile> = {
           uid: userId,
           displayName: auth.currentUser?.displayName || 'Anonymous Student',
@@ -61,14 +63,15 @@ export const useProfile = () => {
             supportSent: 0,
             supportReceived: 0,
             connectionsMade: 0,
-            daysActive: 1
+            daysActive: 1,
           },
-          badges: []
+          badges: [],
         };
-        
+
         await setDoc(profileRef, defaultProfile);
         setProfile(defaultProfile as UserProfile);
       }
+
       setError(null);
     } catch (err) {
       console.error('Error fetching profile:', err);
@@ -78,8 +81,10 @@ export const useProfile = () => {
     }
   };
 
-  // Update user profile
-  const updateUserProfile = async (formData: ProfileFormData | any) => {
+  /** -------------------------
+   * Update User Profile
+   * ------------------------- */
+  const updateUserProfile = async (formData: Partial<ProfileFormData>) => {
     if (!auth.currentUser) {
       setError('You must be logged in to update profile');
       throw new Error('User not authenticated');
@@ -89,43 +94,62 @@ export const useProfile = () => {
       const userId = auth.currentUser.uid;
       const profileRef = doc(db, 'profiles', userId);
 
-      // Filter out undefined values to avoid Firestore errors
-      const updates: any = {};
-      
-      // Handle all possible fields
-      if (formData.displayName !== undefined) updates.displayName = formData.displayName;
-      if (formData.age !== undefined) updates.age = formData.age;
-      if (formData.gender !== undefined) updates.gender = formData.gender;
-      if (formData.biography !== undefined) updates.biography = formData.biography;
-      if (formData.healingFocus !== undefined) updates.healingFocus = formData.healingFocus;
-      if (formData.intentionStatement !== undefined) updates.intentionStatement = formData.intentionStatement;
-      if (formData.personalIntention !== undefined) {
-        updates.personalIntention = formData.personalIntention;
-        updates.intentionStatement = formData.personalIntention; // Keep both in sync
-      }
-      if (formData.profilePhoto !== undefined) {
-        updates.profilePhoto = formData.profilePhoto;
-        updates.photoURL = formData.profilePhoto; // Keep both in sync
+      // Construct a Partial<UserProfile> update object + local updatedAt
+      const updates: Partial<UserProfile> & { updatedAt?: Date } = {};
+
+      if (formData.displayName !== undefined) {
+        updates.displayName = formData.displayName;
       }
 
-      // Add timestamp
+      if (formData.age !== undefined) {
+        updates.age = formData.age;
+      }
+
+      if (formData.gender !== undefined) {
+        // formData.gender is a string, cast it to the narrower union type
+        updates.gender = formData.gender as UserProfile['gender'];
+      }
+
+      if (formData.biography !== undefined) {
+        updates.biography = formData.biography;
+      }
+
+      if (formData.healingFocus !== undefined) {
+        updates.healingFocus = formData.healingFocus;
+      }
+
+      if (formData.intentionStatement !== undefined) {
+        updates.intentionStatement = formData.intentionStatement;
+      }
+
+      if (formData.personalIntention !== undefined) {
+        updates.personalIntention = formData.personalIntention;
+        // keep both fields in sync
+        updates.intentionStatement = formData.personalIntention;
+      }
+
+      if (formData.profilePhoto !== undefined) {
+        updates.profilePhoto = formData.profilePhoto;
+        updates.photoURL = formData.profilePhoto;
+      }
+
       updates.updatedAt = new Date();
 
       console.log('Updating profile with:', updates);
 
-      // Update Firestore
       await updateDoc(profileRef, updates);
 
-      // Update Firebase Auth display name if changed
-      if (formData.displayName && formData.displayName !== auth.currentUser.displayName) {
+      // Update Firebase Auth displayName if changed
+      if (
+        formData.displayName &&
+        formData.displayName !== auth.currentUser.displayName
+      ) {
         await updateProfile(auth.currentUser, {
-          displayName: formData.displayName
+          displayName: formData.displayName,
         });
       }
 
-      // Refresh profile to get latest data
       await fetchProfile(userId);
-
     } catch (err) {
       console.error('Error updating profile:', err);
       setError('Failed to update profile');
@@ -133,7 +157,9 @@ export const useProfile = () => {
     }
   };
 
-  // Listen to auth state
+  /** -------------------------
+   * Auth Listener
+   * ------------------------- */
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -143,6 +169,7 @@ export const useProfile = () => {
         setLoading(false);
       }
     });
+
     return () => unsubscribe();
   }, []);
 
@@ -151,6 +178,6 @@ export const useProfile = () => {
     loading,
     error,
     updateUserProfile,
-    refetchProfile: () => auth.currentUser && fetchProfile(auth.currentUser.uid)
+    refetchProfile: () => auth.currentUser && fetchProfile(auth.currentUser.uid),
   };
 };

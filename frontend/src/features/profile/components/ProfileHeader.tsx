@@ -1,8 +1,8 @@
 // frontend/src/features/profile/components/ProfileHeader.tsx
-'use client'
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
 
 interface Profile {
   displayName: string;
@@ -17,7 +17,10 @@ interface ProfileHeaderProps {
   onEditClick: () => void;
 }
 
-const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile, onEditClick }) => {
+const ProfileHeader: React.FC<ProfileHeaderProps> = ({
+  profile,
+  onEditClick,
+}) => {
   return (
     <div className="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/50">
       {/* Welcome Message */}
@@ -26,7 +29,8 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile, onEditClick }) =
           Welcome back, {profile.displayName}
         </h2>
         <p className="text-gray-600 text-lg">
-          Your presence here matters. Every conversation you start brings more light to the world. ✨
+          Your presence here matters. Every conversation you start brings more
+          light to the world. ✨
         </p>
       </div>
 
@@ -95,7 +99,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ profile, onEditClick }) =
                 Personal Intention
               </h4>
               <p className="text-gray-700 italic leading-relaxed">
-                "{profile.personalIntention}"
+                {`"${profile.personalIntention}"`}
               </p>
             </div>
           )}
