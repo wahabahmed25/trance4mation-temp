@@ -42,7 +42,7 @@ export default function SignupPage() {
       return;
     }
 
-    router.push("/login");
+    router.push("/auth/login");
   };
 
   return (
@@ -51,7 +51,7 @@ export default function SignupPage() {
       subtitle="Begin something beautiful"
       footerText="Already have an account?"
       footerLinkText="Login"
-      footerLinkHref="/login"
+      footerLinkHref="/auth/login"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <InputField

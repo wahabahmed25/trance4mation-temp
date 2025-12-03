@@ -56,7 +56,7 @@ export default function LoginPage() {
       subtitle="Log in to continue your journey ✨"
       footerText="Don’t have an account?"
       footerLinkText="Create one"
-      footerLinkHref="/signup"
+      footerLinkHref="/auth/signup"
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <InputField
