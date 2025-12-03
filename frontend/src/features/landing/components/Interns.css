@@ -140,7 +140,7 @@
 
 @media (max-width: 900px) {
    .interns-row {
-      grid-template-columns: repeat(2, 0fr);
+      grid-template-columns: repeat(3, 0fr);
    }
    .interns-list {
       padding: 0;
@@ -149,18 +149,33 @@
    .intern-card {
       padding: 0;
       width: 100%;
+      align-items: center;
    }
-
+   .intern-image {
+      width: 80%;
+      height: 220px;
+   }
    body {
       overflow-x: hidden;
    }
 }
 
+@media (max-width: 750px) {
+   .interns-row {
+      grid-template-columns: repeat(3, 0fr);
+   }
+}
+
 @media (max-width: 600px) {
    .interns-row {
-      grid-template-columns: repeat(1, 0fr);
-
-      animation-range: entry 0% cover 15%;
+      grid-template-columns: repeat(2, 0fr);
+   }
+   .intern-image {
+      width: 75%;
+      height: 210px;
+   }
+   .intern-card {
+      width: 250px;
    }
    body {
       overflow-x: hidden;
@@ -172,6 +187,13 @@
 }
 
 @media (max-width: 400px) {
+   .interns-row {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-content: center;
+      animation-range: entry 0% cover 15%;
+   }
    body {
       overflow-x: hidden;
    }

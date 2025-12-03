@@ -15,7 +15,7 @@
    z-index: 2;
    text-transform: uppercase;
    letter-spacing: 1px;
-   width: 230px;
+   width: 130px;
 }
 
 .copyButton:hover {
@@ -78,4 +78,36 @@
    transform: translateY(-3px);
    box-shadow: 0 12px 35px var(--coral-alpha-40);
    background: var(--gradient-coral-reverse);
+}
+
+@media (max-width: 900px) {
+   .modalContent {
+      width: 80%;
+      h2 {
+         font-size: 1.6rem;
+      }
+   }
+}
+
+@media (max-width: 500px) {
+   .modalContent {
+      width: 80%;
+      max-height: 80vh;
+      overflow: hidden;
+      overflow-y: auto;
+   }
+}
+
+@media (max-width: 300px) {
+   .modalContent {
+      width: 75%;
+      max-height: 75vh;
+
+      h2 {
+         font-size: 1.3rem;
+      }
+      h3 {
+         font-size: 1.1rem;
+      }
+   }
 }
