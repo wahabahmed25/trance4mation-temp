@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,6 +22,37 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
   img,
   link,
 }) => {
+  const tagsContainerRef = useRef<HTMLDivElement>(null)
+  const sampleTagRef = useRef<HTMLDivElement>(null)
+  const [indexOfOverflowingTag, setIndexOfOverflowingTag] = useState<number>(Infinity)
+  const [largestOffsetTop, setLargestOffsetTop] = useState<number>(0)
+  // const [width, setWidth] = useState(-1)
+  // const [numberOfHiddenTags, setNumberOfHiddenTags] = useState(0)
+
+  useEffect(() => {
+    const subject = tagsContainerRef.current;
+
+    const observer = new ResizeObserver((entries) => {
+      const tagContainer = entries[0].target as HTMLDivElement
+      
+      for (let i = 0; i < tagContainer.children.length; i++) {
+        const tag = tagContainer.children[i] as HTMLSpanElement
+        if (tag.offsetTop - tagContainer.offsetTop > 0) {
+          setIndexOfOverflowingTag(i)
+          break
+        }
+      }
+
+      const lastChild = tagContainer.lastChild as HTMLSpanElement
+      setLargestOffsetTop(lastChild.offsetTop - tagContainer.offsetTop)
+    });
+    observer.observe(subject);
+
+    return () => {
+      observer.unobserve(subject);
+    };
+  }, [])
+
   return (
     <Link href={link} className="block"> 
       <motion.div
@@ -51,6 +82,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
                 src={img}
                 alt={name}
                 fill
+                style={{objectFit: "contain"}}
                 className="object-cover transition-transform duration-500 hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 340px, 360px"
               />
@@ -59,10 +91,38 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
         )}
 
         {/* Content */}
-        <div className="p-5 flex flex-col gap-3 flex-1">
+        <div className="p-5 flex flex-col gap-3 flex-1" style={{marginTop: -1 * largestOffsetTop}}>
           <h3 className="text-lg font-bold text-[#0F4C5C]">{name}</h3>
 
-          <div className="flex flex-wrap gap-1.5">
+          <div className="flex flex-wrap gap-1.5" ref={tagsContainerRef}>
+            {/* {tags.map((tag, i) => {
+              if (i < indexOfOverflowingTag) {
+                return (
+                  <span
+                    key={tag}
+                    className="text-[11px] bg-[#F6EDE8]/60 border border-[#ddd]/40 text-[#333] px-2 py-0.5 rounded-full"
+                  >
+                    {tag}
+                  </span>
+                )
+              }
+
+              if (i == indexOfOverflowingTag) {
+                return (
+                  <span
+                    key={tag}
+                    className="text-[11px] bg-[#F6EDE8]/60 border border-[#ddd]/40 text-[#333] px-2 py-0.5 rounded-full cursor-text"
+                    title={tags.slice(i).join(", ")}
+                  >
+                    +{tags.length - i}
+                  </span>
+                )
+              }
+
+              if (i > indexOfOverflowingTag) { 
+                return null 
+              }
+            })} */}
             {tags.map((tag) => (
               <span
                 key={tag}
