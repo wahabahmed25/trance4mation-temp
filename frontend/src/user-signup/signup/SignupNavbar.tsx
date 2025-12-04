@@ -33,9 +33,9 @@ const SignupNavbar = () => {
         </Link>
 
         <Link href="/landing/game" className="hover:text-[#FF3B22] transition">COLLECTION</Link>
-        <Link href="/offers" className="hover:text-[#FF3B22] transition">OFFERS</Link>
         <Link href="/landing/about" className="hover:text-[#FF3B22] transition">ABOUT</Link>
         <Link href="/landing/faq" className="hover:text-[#FF3B22] transition">FAQ</Link>
+        <Link href="/landing/contact" className="hover:text-[#FF3B22] transition">CONTACT</Link>
       </div>
     </nav>
   );
