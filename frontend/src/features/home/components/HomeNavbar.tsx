@@ -124,7 +124,7 @@ const Navbar = () => {
                     setIsOpen(false) 
                   }}
                   className="
-                    text-white
+                    text-white text-shadow-black text-shadow-xs
                     font-semibold tracking-wide
                     px-4 py-2 rounded-xl
                     hover:bg-[rgba(255,111,97,0.15)]
