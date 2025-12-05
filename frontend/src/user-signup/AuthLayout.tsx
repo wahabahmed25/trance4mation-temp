@@ -21,26 +21,24 @@ export default function AuthLayout({
   footerLinkHref: string;
 }) {
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-[#f4ade5] via-[#88a7cf] to-[#466eef] text-white">
+    <div className="min-h-screen w-screen flex flex-col bg-gradient-to-b from-[#f4ade5] via-[#88a7cf] to-[#466eef] text-white">
       <SignupNavbar />
-
-      <main
-        className="
-          flex flex-col md:flex-row 
-          justify-between items-center
-          max-w-7xl mx-auto 
-          px-8 md:px-16 py-14
-          min-h-[78vh]
-        "
-      >
+      <main className="
+        flex flex-col md:flex-row
+        justify-center items-center
+        h-full gap-16 
+        mx-8 md:mt-6
+        pb-16 md:pb-0 
+        md:px-16  
+      ">
         {/* LEFT SIDE CONTENT */}
         <div
           className="
-            flex flex-col 
+            flex flex-col
             gap-6
-            w-full md:w-1/2 
             min-h-[500px]
             justify-start
+            w-full md:w-auto
           "
         >
           <h1
@@ -49,7 +47,6 @@ export default function AuthLayout({
               font-extrabold 
               tracking-tight 
               leading-tight 
-              whitespace-nowrap
               bg-gradient-to-t from-[#d10202] via-[#de2b2b] to-[#FF4C4C]
               bg-clip-text text-transparent
               drop-shadow-lg
@@ -84,33 +81,39 @@ export default function AuthLayout({
           </p>
         </div>
 
-        {/* RIGHT LOGO SIDE */}
-        <div className="flex justify-center items-center w-full md:w-1/2 mt-12 ml-25 md:mt-0">
-          <div className="relative flex justify-center items-center">
-            {/* Glow */}
-            <div
-              className="
-                absolute 
-                w-[420px] h-[420px] 
-                md:w-[520px] md:h-[520px]
-                bg-gradient-to-tr from-[#FF512F] to-[#F09819]
-                rounded-full blur-3xl opacity-30
-              "
-            />
-
+        
+        <div className="flex relative justify-center w-full md:w-auto">
+          {/* Glow  */}
+          <div
+            className="
+              absolute 
+              w-full h-full
+              bg-gradient-to-tr from-[#FF512F] to-[#F09819]
+              rounded-full blur-3xl opacity-30
+            "
+          />
+          <div className="relative drop-shadow-[0_0_55px_rgba(255,50,70,1)] size-64 md:size-auto">
             {/* Logo using <Image /> */}
-            <div className="relative w-[320px] md:w-[500px] drop-shadow-[0_0_55px_rgba(255,50,70,1)]">
-              <Image
-                src="/play-to-heal.png"
-                alt="Play to Heal Logo"
-                width={500}
-                height={500}
-                className="w-full h-auto"
-                priority
-              />
-            </div>
+            <Image
+              src="/play-to-heal.png"
+              alt="Play to Heal Logo"
+              width={500}
+              height={500}
+              priority
+            />
           </div>
         </div>
+      </main>
+
+      <main
+        className="
+          hidden
+          flex flex-col md:flex-row 
+          justify-evenly items-center
+          w-full h-full
+          min-h-[78vh]
+        "
+      >
       </main>
     </div>
   );
