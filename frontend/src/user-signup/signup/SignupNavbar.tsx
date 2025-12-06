@@ -2,12 +2,17 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { HamburgerMenu } from "@/components/ui/HamburgerMenu";
+
+const navbarItems = [
+    {href: "/landing", text: "LANDING", underline: true},
+    {href: "/landing/game", text: "COLLECTION"},
+    {href: "/landing/about", text: "ABOUT"},
+    {href: "/landing/faq", text: "FAQ"},
+    {href: "/landing/contact", text: "CONTACT"},
+]
 
 const SignupNavbar = () => {
-  /** mobile menu */
-  const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const toggleHamburger = () => setHamburgerOpen(!hamburgerOpen);
-
   return (
     <nav className="
       w-full 
@@ -32,26 +37,19 @@ const SignupNavbar = () => {
 
       {/* CENTER: Nav Links */}
       <div className="hidden md:flex items-center gap-10 text-base md:text-lg font-semibold tracking-wide">
-        <Link href="/landing" className="relative group hover:text-[#FF3B22] transition">
-          LANDING
-          <span className="absolute left-0 -bottom-1 w-full h-[3px] bg-[#FF3B22] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
-        </Link>
-
-        <Link href="/landing/game" className="hover:text-[#FF3B22] transition">COLLECTION</Link>
-        <Link href="/landing/about" className="hover:text-[#FF3B22] transition">ABOUT</Link>
-        <Link href="/landing/faq" className="hover:text-[#FF3B22] transition">FAQ</Link>
-        <Link href="/landing/contact" className="hover:text-[#FF3B22] transition">CONTACT</Link>
+        {navbarItems.map((item) => {
+          return (
+            <Link key={item.text} href={item.href} className="relative group hover:text-[#FF3B22] transition">
+              {item.text}
+              {item.underline ? <span className="absolute left-0 -bottom-1 w-full h-[3px] bg-[#FF3B22] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"/> : null}
+            </Link>
+          )
+        })}
       </div>
 
       {/* MOBILE: Hamburger dropdown */}
-      <div className="md:hidden flex items-center gap-4 shrink-0">
-        <Image
-          src="/play-to-heal.png"
-          alt="Logo"
-          width={70}
-          height={70}
-          className="hover:scale-105 transition-all cursor-pointer"
-        />
+      <div className="md:hidden">
+        <HamburgerMenu items={navbarItems}/>
       </div>
     </nav>
   );
