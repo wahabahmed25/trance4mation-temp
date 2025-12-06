@@ -69,7 +69,7 @@ const GameSection: React.FC<GameSectionProps> = ({
 
         {viewAllLink && (
           <Link
-            href={viewAllLink}
+            href="/game-hub"
             className="text-[#5b528a]/80 hover:text-[#5b528a] border border-[#5b528a]/20 rounded-xl px-4 py-1.5 text-sm transition backdrop-blur-sm bg-white/50"
           >
             View all →

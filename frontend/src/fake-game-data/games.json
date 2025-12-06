@@ -60,6 +60,16 @@
     "img": "/SpeaktoMe.jpeg"
   },
   {
+    "name": "Home Is The Heart",
+    "description": "A bold space where walls drop and truth speaks. A game of emotional openness, real talk, and being truly seen.",
+    "tags": ["expression", "confidence", "real talk", "emotional release"],
+    "plays": 15200,
+    "rating": 4,
+    "featured": false,
+    "link": "/landing/game#Speak-to-me",
+    "img": "/HomeIsTheHeart.png"
+  },
+  {
     "name": "Trill: True & Real",
     "description": "A therapeutic dialogue game that supports recovery, honesty, and strength for individuals and communities impacted by addiction.",
     "tags": ["recovery", "support", "truth", "resilience"],

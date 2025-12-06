@@ -11,7 +11,7 @@ interface FeaturedCardProps {
   plays: number;
   rating: number;
   img?: string;
-  link: string; // 🔥 NEW — required for navigation
+  link: string; // required for navigation
 }
 
 const FeaturedCard: React.FC<FeaturedCardProps> = ({
@@ -22,39 +22,45 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
   img,
   link,
 }) => {
-  const tagsContainerRef = useRef<HTMLDivElement>(null)
-  const sampleTagRef = useRef<HTMLDivElement>(null)
-  const [indexOfOverflowingTag, setIndexOfOverflowingTag] = useState<number>(Infinity)
-  const [largestOffsetTop, setLargestOffsetTop] = useState<number>(0)
-  // const [width, setWidth] = useState(-1)
-  // const [numberOfHiddenTags, setNumberOfHiddenTags] = useState(0)
+  const tagsContainerRef = useRef<HTMLDivElement | null>(null);
+  const [indexOfOverflowingTag, setIndexOfOverflowingTag] =
+    useState<number>(Infinity);
+  const [largestOffsetTop, setLargestOffsetTop] = useState<number>(0);
 
   useEffect(() => {
     const subject = tagsContainerRef.current;
 
+    // If the ref isn't attached yet, do nothing
+    if (!subject) return;
+
     const observer = new ResizeObserver((entries) => {
-      const tagContainer = entries[0].target as HTMLDivElement
-      
+      const tagContainer = entries[0].target as HTMLDivElement;
+
+      // Find first tag that wrapped to a new line
       for (let i = 0; i < tagContainer.children.length; i++) {
-        const tag = tagContainer.children[i] as HTMLSpanElement
+        const tag = tagContainer.children[i] as HTMLSpanElement;
         if (tag.offsetTop - tagContainer.offsetTop > 0) {
-          setIndexOfOverflowingTag(i)
-          break
+          setIndexOfOverflowingTag(i);
+          break;
         }
       }
 
-      const lastChild = tagContainer.lastChild as HTMLSpanElement
-      setLargestOffsetTop(lastChild.offsetTop - tagContainer.offsetTop)
+      const lastChild = tagContainer.lastChild as HTMLSpanElement | null;
+      if (lastChild) {
+        setLargestOffsetTop(lastChild.offsetTop - tagContainer.offsetTop);
+      }
     });
+
     observer.observe(subject);
 
     return () => {
       observer.unobserve(subject);
+      observer.disconnect();
     };
-  }, [])
+  }, []);
 
   return (
-    <Link href={link} className="block"> 
+    <Link href={link} className="block">
       <motion.div
         whileHover={{ scale: 1.03, y: -3 }}
         whileTap={{ scale: 0.98 }}
@@ -82,7 +88,7 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
                 src={img}
                 alt={name}
                 fill
-                style={{objectFit: "contain"}}
+                style={{ objectFit: "contain" }}
                 className="object-cover transition-transform duration-500 hover:scale-105"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 340px, 360px"
               />
@@ -91,38 +97,14 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
         )}
 
         {/* Content */}
-        <div className="p-5 flex flex-col gap-3 flex-1" style={{marginTop: -1 * largestOffsetTop}}>
+        <div
+          className="p-5 flex flex-col gap-3 flex-1"
+          style={{ marginTop: -1 * largestOffsetTop }}
+        >
           <h3 className="text-lg font-bold text-[#0F4C5C]">{name}</h3>
 
           <div className="flex flex-wrap gap-1.5" ref={tagsContainerRef}>
-            {/* {tags.map((tag, i) => {
-              if (i < indexOfOverflowingTag) {
-                return (
-                  <span
-                    key={tag}
-                    className="text-[11px] bg-[#F6EDE8]/60 border border-[#ddd]/40 text-[#333] px-2 py-0.5 rounded-full"
-                  >
-                    {tag}
-                  </span>
-                )
-              }
-
-              if (i == indexOfOverflowingTag) {
-                return (
-                  <span
-                    key={tag}
-                    className="text-[11px] bg-[#F6EDE8]/60 border border-[#ddd]/40 text-[#333] px-2 py-0.5 rounded-full cursor-text"
-                    title={tags.slice(i).join(", ")}
-                  >
-                    +{tags.length - i}
-                  </span>
-                )
-              }
-
-              if (i > indexOfOverflowingTag) { 
-                return null 
-              }
-            })} */}
+            {/* Simple tags rendering (no truncation) */}
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -131,6 +113,9 @@ const FeaturedCard: React.FC<FeaturedCardProps> = ({
                 {tag}
               </span>
             ))}
+
+            {/* If later you want the "+N" behavior back, you can bring back your previous logic
+                and use indexOfOverflowingTag state. */}
           </div>
 
           <div className="flex justify-between items-center text-xs text-gray-600 mt-auto pt-2">
