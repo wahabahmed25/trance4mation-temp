@@ -12,6 +12,7 @@ const navbarItems = [
     {href: "/landing/contact", text: "CONTACT"},
 ]
 
+
 const SignupNavbar = () => {
   return (
     <nav className="
