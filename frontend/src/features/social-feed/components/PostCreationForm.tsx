@@ -18,19 +18,19 @@ const PostCreationForm: React.FC<PostCreationFormProps> = ({ onSubmit, loading =
   const allPrompts = [
     "How are you feeling today?",
     "Share a small win from this week",
-    "What&apos;s one thing you&apos;re grateful for?",
+    "Whats one thing you're grateful for?",
     "Send some encouragement to fellow students",
-    "What&apos;s helping you get through tough times?",
+    "What's helping you get through tough times?",
     "What made you smile today?",
     "Share something positive that happened recently",
-    "What&apos;s a challenge you&apos;re facing and how are you handling it?",
-    "What&apos;s one thing you&apos;re looking forward to?",
+    "What's a challenge you're facing and how are you handling it?",
+    "What's one thing you're looking forward to?",
     "Share a piece of advice that helped you",
-    "What&apos;s something you&apos;re proud of accomplishing?",
+    "What's something you're proud of accomplishing?",
     "How are you practicing self-care today?",
-    "What&apos;s a goal you&apos;re working towards?",
+    "What's a goal you're working towards?",
     "Share a lesson you learned recently",
-    "What&apos;s bringing you peace right now?"
+    "What's bringing you peace right now?"
   ];
 
   // Get daily rotating prompts (5 prompts per day)
@@ -86,13 +86,13 @@ const PostCreationForm: React.FC<PostCreationFormProps> = ({ onSubmit, loading =
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-800">Share with the community</h2>
-            <p className="text-gray-600">Your voice matters. Let&apos;s support each other.</p>
+            <p className="text-gray-600">Your voice matters. Let's support each other.</p>
           </div>
         </div>
         
         {/* Prompt Selection */}
         <div className="mb-6">
-          <p className="text-gray-700 font-medium mb-4">Choose today&apos;s prompt or write freely:</p>
+          <p className="text-gray-700 font-medium mb-4">Choose today's prompt or write freely:</p>
           <div className="flex flex-wrap gap-3">
             {prompts.map((prompt, index) => (
               <button
