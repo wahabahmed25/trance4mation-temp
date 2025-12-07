@@ -39,12 +39,12 @@ const MoodWidget = () => {
           bg-gradient-to-r from-[#5b528a] via-[#456571] to-[#5c548a]
           text-transparent bg-clip-text drop-shadow-sm"
         >
-          Log your mood today
+          What is your mood Today?
         </h2>
 
         <p className="text-[#333]/75 text-sm sm:text-base max-w-md">
-          Reflect, track, and write why you feel the way you do — your emotions
-          tell your story.
+          Track your feelings, reflect on what is stirring beneath the surface, and celebrate every
+          emotion as part of your journey.
         </p>
 
         {/* Mood Emojis */}

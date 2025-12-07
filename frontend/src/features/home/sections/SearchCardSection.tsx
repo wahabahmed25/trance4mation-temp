@@ -5,15 +5,28 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import featuredGames from "@/fake-game-data/games.json";
 
-// const PALETTE = {
-//   violet: "#A78BFA",
-//   blue: "#7EC8E3",
-//   coral: "#FF6F61",
-//   coralSoft: "#FCA17D",
-//   cream: "#F6EDE8",
-// };
-
-const tags = ["empathy", "courage", "community", "real talk", "connection", "college life", "identity", "vulnerability", "healing", "culture", "grief", "reflection", "memory", "expression", "confidence", "emotional release", "recovery", "support", "truth", "resilience"]
+const tags = [
+  "empathy",
+  "courage",
+  "community",
+  "real talk",
+  "connection",
+  "college life",
+  "identity",
+  "vulnerability",
+  "healing",
+  "culture",
+  "grief",
+  "reflection",
+  "memory",
+  "expression",
+  "confidence",
+  "emotional release",
+  "recovery",
+  "support",
+  "truth",
+  "resilience",
+];
 
 interface Game {
   name: string;
@@ -51,29 +64,33 @@ const SearchCardSection: React.FC = () => {
 
   const [query, setQuery] = useState<string>("");
   const [enabledTags, setEnabledTags] = useState<string[]>([]);
-  const [searchResultsVisible, setSearchResultsVisible] = useState<boolean>(false);
+  const [searchResultsVisible, setSearchResultsVisible] =
+    useState<boolean>(false);
 
-  const games = searchGames(featuredGames as Game[], query, enabledTags, searchWeights);
+  const games = searchGames(
+    featuredGames as Game[],
+    query,
+    enabledTags,
+    searchWeights
+  );
 
   return (
     <motion.section
       initial={{ opacity: 0, y: 25 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="relative w-full h-full rounded-3xl 
+      className="relative w-full max-w-[750px] mx-auto rounded-3xl 
         bg-white/80 backdrop-blur-xl 
         border border-[rgba(0,0,0,0.05)]
         shadow-[0_8px_30px_rgba(0,0,0,0.08)]
         p-8 sm:p-10 flex flex-col justify-between
-        z-1
-        "
+        z-1"
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 rounded-3xl
         bg-gradient-to-br from-white/85 via-[#F5F1FB]/40 to-[#EEF3FA]/30"
       />
-      
 
       <div className="relative z-10 space-y-6">
         <h1
@@ -81,12 +98,14 @@ const SearchCardSection: React.FC = () => {
           bg-gradient-to-r from-[#5b528a] via-[#456571] to-[#5c548a]
           text-transparent bg-clip-text drop-shadow-sm"
         >
-          Build Calm, Focus, and Resilience — Through Play
+          Play your way to Calm, Clarity, and Connection
         </h1>
 
         <p className="text-[#333]/75 text-sm sm:text-base max-w-2xl">
-          Discover games designed for emotional wellness. Track your mood, share
-          moments, and connect with others — one mindful step at a time.
+          Discover new ways to build resilience through meaningful,
+          heart-opening games. Each moment of play helps you strengthen your
+          emotional well-being - one gentle, joyful step at a time. Track your
+          mood, celebrate growth, and share your journey with others!
         </p>
 
         <div className="flex flex-wrap gap-3 mb-6">
@@ -103,23 +122,24 @@ const SearchCardSection: React.FC = () => {
               transition-all duration-200
             "
           >
-            Try a Featured Game
+            Wherever you are, healing begins here.
           </button>
 
           <Link
-            href="/mood-calendar"
+            href="game-hub"
             className="rounded-lg border border-[#000]/10 px-6 py-2.5 
             text-[#444] hover:bg-[#000]/5 transition font-medium"
           >
-            Log Today&apos;s Mood
+            {`→ Let’s Play Together`}
           </Link>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2 text-xs">
+        {/* TAGS SCROLLER (with clicking fix) */}
+        <div className="mt-4 max-w-full h-10 py-1 overflow-x-auto whitespace-nowrap flex gap-2 text-xs no-scrollbar">
           {tags.map((tag) => (
             <button
               key={tag}
-              className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1
+              className="inline-flex rounded-full border border-[#000]/10 bg-white/50 px-3 py-1.5
               text-[#555] hover:border-[#A78BFA] hover:text-[#A78BFA] transition-all"
               onClick={() => {
                 if (enabledTags.includes(tag)) {
@@ -130,10 +150,7 @@ const SearchCardSection: React.FC = () => {
               }}
               style={
                 enabledTags.includes(tag)
-                  ? {
-                      color: "#A78BFA",
-                      borderColor: "#A78BFA"
-                    }
+                  ? { color: "#A78BFA", borderColor: "#A78BFA" }
                   : {}
               }
             >
@@ -147,25 +164,30 @@ const SearchCardSection: React.FC = () => {
           <div className="flex items-center gap-2 rounded-2xl border border-[#000]/10 bg-white/60 px-4 py-2.5">
             <span className="text-lg text-[#A78BFA]">🔍</span>
             <div className="w-full flex">
-              <div className="flex pr-2 gap-1">
-                {enabledTags.map((tag) => {
-                  return (
-                    <button key={tag} className="rounded-full border border-[#000]/10 bg-white/50 px-3 py-1 text-[#555] transition-all text-xs">
-                      #{tag}
-                      <span className="pl-1 font-bold cursor-pointer" onClick={() => setEnabledTags(enabledTags.filter((element) => element !== tag))}>
-                        x
-                      </span>
-                    </button>
-                  )
-                })}
+              <div className="flex pr-2 gap-1 overflow-x-auto whitespace-nowrap no-scrollbar">
+                {enabledTags.map((tag) => (
+                  <button
+                    key={tag}
+                    className="inline-flex rounded-full border border-[#000]/10 bg-white/50 px-3 py-1.5 text-[#555] text-xs"
+                  >
+                    #{tag}
+                    <span
+                      className="pl-1 font-bold cursor-pointer"
+                      onClick={() =>
+                        setEnabledTags(enabledTags.filter((t) => t !== tag))
+                      }
+                    >
+                      x
+                    </span>
+                  </button>
+                ))}
               </div>
+
               <input
                 value={query}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)}
+                onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setSearchResultsVisible(true)}
-                onBlur={() =>
-                  setTimeout(() => setSearchResultsVisible(false), 150)
-                }
+                onBlur={() => setTimeout(() => setSearchResultsVisible(false), 150)}
                 placeholder="Search games, e.g. focus, breathing, gratitude…"
                 className="grow bg-transparent text-sm text-[#333] placeholder:text-[#777] focus:outline-none"
               />
@@ -201,6 +223,7 @@ export default SearchCardSection;
 
 /* ------------------ SEARCH FUNCTIONS ------------------ */
 
+// FIXED VERSION — always returns booleans, no more TS error
 function searchGames(
   games: Game[],
   query: string,
@@ -210,28 +233,21 @@ function searchGames(
   const q = query.trim().toLowerCase();
 
   const searchResults: ScoredGame[] = games.map((game) => {
-    const nameLower = (game.name || "").toString().toLowerCase();
-    const descLower = (game.description || "").toString().toLowerCase();
-    const matchesAtLeastOneTag = game.tags.some((tag) => tags.includes(tag));
-    const matchesAllTags =
-      tags.length > 0 ? tags.every((t) => game.tags.includes(t)) : false;
-    const nameMatchesQuery = q.length > 0 && nameLower.includes(q);
-    const descriptionMatchesQuery =
-      q.length > 0 && descLower.includes(q);
+    const nameLower = (game.name || "").toLowerCase();
+    const descLower = (game.description || "").toLowerCase();
 
     return {
       ...game,
-      matchesAtLeastOneTag,
-      matchesAllTags,
-      nameMatchesQuery,
-      descriptionMatchesQuery,
+      matchesAtLeastOneTag: game.tags.some((tag) => tags.includes(tag)),
+      matchesAllTags: tags.length > 0 && tags.every((t) => game.tags.includes(t)),
+
+      // TS-safe booleans (fix)
+      nameMatchesQuery: q.length > 0 && nameLower.includes(q),
+      descriptionMatchesQuery: q.length > 0 && descLower.includes(q),
     };
   });
 
-  return searchResults.sort((a, b) => {
-    const scoreDifference = compareGames(a, b, weights);
-    return scoreDifference > 0 ? -1 : scoreDifference < 0 ? 1 : 0;
-  });
+  return searchResults.sort((a, b) => compareGames(a, b, weights));
 }
 
 function compareGames(
@@ -243,26 +259,15 @@ function compareGames(
   let scoreB = 0;
 
   Object.entries(weights).forEach(([feature, weight]) => {
-    const featureA = a[feature] as unknown;
-    const featureB = b[feature] as unknown;
+    const vA = a[feature];
+    const vB = b[feature];
 
-    if (typeof featureA === "boolean" && typeof featureB === "boolean") {
-      if (featureA) scoreA += weight;
-      if (featureB) scoreB += weight;
-      return;
-    }
+    if (typeof vA === "boolean" && vA) scoreA += weight;
+    if (typeof vB === "boolean" && vB) scoreB += weight;
 
-    if (typeof featureA === "number" && typeof featureB === "number") {
-      if (featureA > featureB) scoreA += weight;
-      if (featureA < featureB) scoreB += weight;
-      return;
-    }
-
-    if (typeof featureA === "boolean") {
-      if (featureA) scoreA += weight;
-    }
-    if (typeof featureB === "boolean") {
-      if (featureB) scoreB += weight;
+    if (typeof vA === "number" && typeof vB === "number") {
+      if (vA > vB) scoreA += weight;
+      if (vA < vB) scoreB += weight;
     }
   });
 

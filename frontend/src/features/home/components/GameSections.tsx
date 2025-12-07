@@ -57,9 +57,9 @@ const GameSection: React.FC<GameSectionProps> = ({
   const scrollRight = () => scrollRef.current?.scrollBy({ left: 400, behavior: "smooth" });
 
   return (
-    <section className="relative mx-auto max-w-7xl px-6 py-14 text-left">
+    <section className="relative mx-auto max-w-7xl px-6 py-2 text-left">
       {/* Header */}
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex items-center justify-between mb-5">
         <div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#5b528a] tracking-tight drop-shadow-sm">
             {title}
@@ -95,7 +95,7 @@ const GameSection: React.FC<GameSectionProps> = ({
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex gap-6 overflow-x-auto scroll-smooth scrollbar-hide py-4 px-2"
+          className="flex gap-3 overflow-x-auto scroll-smooth no-scrollbar py-4 px-2"
           style={{ scrollSnapType: "x mandatory" }}
         >
           {filteredGames.map((game, index) => (
