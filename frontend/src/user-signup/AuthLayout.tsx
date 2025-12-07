@@ -107,7 +107,7 @@ export default function AuthLayout({
 
       <main
         className="
-          hidden
+          
           flex flex-col md:flex-row 
           justify-evenly items-center
           w-full h-full
