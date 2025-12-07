@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+// import { useState } from "react";
 import { HamburgerMenu } from "@/components/ui/HamburgerMenu";
 
 const navbarItems = [

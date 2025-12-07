@@ -86,13 +86,13 @@ const PostCreationForm: React.FC<PostCreationFormProps> = ({ onSubmit, loading =
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-800">Share with the community</h2>
-            <p className="text-gray-600">Your voice matters. Let's support each other.</p>
+            <p className="text-gray-600">{`Your voice matters. Let's support each other.`}</p>
           </div>
         </div>
         
         {/* Prompt Selection */}
         <div className="mb-6">
-          <p className="text-gray-700 font-medium mb-4">Choose today's prompt or write freely:</p>
+          <p className="text-gray-700 font-medium mb-4">{`Choose today's prompt or write freely:`}</p>
           <div className="flex flex-wrap gap-3">
             {prompts.map((prompt, index) => (
               <button

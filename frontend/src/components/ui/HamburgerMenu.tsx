@@ -1,14 +1,14 @@
-import CopyButton from "@/features/landing/components/Share";
-import Modal from "@/features/landing/components/ShareModal";
-import { nav } from "framer-motion/client";
+// import CopyButton from "@/features/landing/components/Share";
+// import Modal from "@/features/landing/components/ShareModal";
+// import { nav } from "framer-motion/client";
 import { Url } from "next/dist/shared/lib/router/router";
 import Link from "next/link";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 export function HamburgerMenu({items}: {items: Array<{href: Url, text: string}>}) {
     /** dropdown menu */
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const dropdownToggle = useRef<HTMLDivElement | null>(null);
+    // const [dropdownOpen, setDropdownOpen] = useState(false);
+    // const dropdownToggle = useRef<HTMLDivElement | null>(null);
 
     /** mobile menu */
     const [hamburgerOpen, setHamburgerOpen] = useState(false);

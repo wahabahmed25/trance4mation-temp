@@ -12,9 +12,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
    return (
       <div className="modalBackdrop" onClick={onClose}>
          <div className="modalContent" onClick={(e) => e.stopPropagation()}>
-            <h2>Let’s Spark a Viral Healing Movement!!</h2>
+            <h2>{`Let’s Spark a Viral Healing Movement!!`}</h2>
             <h3>
-               <b>Let's Play it Forward</b>
+               <b>{`Let's Play it Forward`}</b>
             </h3>
 
             <p>
