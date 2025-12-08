@@ -22,7 +22,7 @@
     "isTrending": true,
     "continuePlaying": true,
     "progress": 38,
-    "link": "/landing/game#Keep-It-Real",
+    "link": "https://games.focusgames.co.uk/ZeST_Trance4mation/games/keep_it_real_game/index.php",
     "img": "/KeepItReal.png"
   },
   {
@@ -52,7 +52,7 @@
   {
     "name": "Speak to Me",
     "description": "A bold space where walls drop and truth speaks. A game of emotional openness, real talk, and being truly seen.",
-    "tags": ["expression", "confidence", "real talk", "emotional release"],
+    "tags": ["expression", "confidence", "emotional release"],
     "plays": 15200,
     "rating": 4,
     "featured": false,
@@ -60,14 +60,20 @@
     "img": "/SpeaktoMe.jpeg"
   },
   {
-    "name": "Home Is The Heart",
-    "description": "A bold space where walls drop and truth speaks. A game of emotional openness, real talk, and being truly seen.",
-    "tags": ["expression", "confidence", "real talk", "emotional release"],
-    "plays": 15200,
-    "rating": 4,
-    "featured": false,
-    "link": "/landing/game#Speak-to-me",
-    "img": "/HomeIsTheHeart.png"
+  "name": "Home is the Heart",
+  "description": "A heartfelt family connection game that brings loved ones closer through meaningful conversations, shared stories, and moments of laughter and love. Designed to spark multigenerational dialogue, it invites family members to reflect on the past, express their emotions, and dream about the future together. In a fast-paced, tech-driven world, this game helps families slow down, listen, and reconnect—building understanding, healing divides, and nurturing the deep bonds that make a house truly a home.",
+  "tags": [
+    "family",
+    "memory",
+    "vulnerability",
+    "support",
+    "truth"
+  ],
+  "plays": 15200,
+  "rating": 4,
+  "featured": false,
+  "link": "/landing/game#Speak-to-me",
+  "img": "/HomeIsTheHeart.png"
   },
   {
     "name": "Trill: True & Real",
