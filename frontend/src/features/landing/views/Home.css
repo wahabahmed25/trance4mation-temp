@@ -134,7 +134,7 @@
 }
 .welcome-section h3 {
    width: 65%;
-   text-align: justify;
+   text-align: center;
 }
 .welcome-div {
    display: flex;
@@ -142,12 +142,12 @@
    align-items: center;
    gap: 25px;
    padding: 0% 15%;
+   text-align: center;
 }
 
 .welcome-button {
    /* background: var(--gradient-coral); */
-   /* background: linear-gradient(135deg, var(--soft-violet) 0%, #6eb0f2 100%); */
-   background: linear-gradient(135deg, var(--golden-glow) 0%, #ff9999 100%);
+   background: linear-gradient(135deg, var(--soft-violet) 0%, #6eb0f2 100%);
    color: var(--text-primary);
    padding: 1rem 2rem;
    border: none;
@@ -168,7 +168,7 @@
 .welcome-button:hover {
    transform: translateY(-3px);
    box-shadow: 0 12px 35px var(--coral-alpha-40);
-   background: linear-gradient(135deg, #ff9999 0%, var(--golden-glow) 100%);
+   background: linear-gradient(135deg, #6eb0f2 0%, var(--soft-violet) 150%);
 }
 /* ==========================================
                 GAME SECTION
