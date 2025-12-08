@@ -135,7 +135,7 @@ export const useProfile = () => {
 
       updates.updatedAt = new Date();
 
-      console.log('Updating profile with:', updates);
+      // console.log('Updating profile with:', updates);
 
       await updateDoc(profileRef, updates);
 
