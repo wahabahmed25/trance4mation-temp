@@ -34,7 +34,6 @@ export default function Speaker({
     if (transitionTime === 0) {
       setProgress(1)
       setTransitionTime(timeLimit)
-      console.log("a")
     }
   }, [startTime, transitionTime, timeLimit])
 

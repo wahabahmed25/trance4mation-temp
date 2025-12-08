@@ -10,7 +10,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [opacity, setOpacity] = useState(0);
   const { user, logoutUser } = useAuth();
-  console.log(user)
+  // console.log(user)
 
   useEffect(() => {
     const onScroll = () => {

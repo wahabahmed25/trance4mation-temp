@@ -40,7 +40,6 @@ export default function RoomCreationMenu({
       setErrorMessage("");
       clearInterval(updateMessage.current);
       const intervalId = setInterval(() => {
-        console.log("hi");
         setCreateButtonMessage((curr) => {
           if (curr === ".") {
             return "..";
