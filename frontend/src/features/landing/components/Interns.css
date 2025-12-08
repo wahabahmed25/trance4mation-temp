@@ -186,7 +186,7 @@
    }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 550px) {
    .interns-row {
       display: flex;
       flex-direction: column;

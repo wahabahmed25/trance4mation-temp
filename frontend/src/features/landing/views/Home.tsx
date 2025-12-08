@@ -97,11 +97,13 @@ function Home() {
                      <h3>Heal Together</h3>
                   </div>
                   <p>
-                     This is your place to connect, laugh, share, and discover just how
-                     powerful it feels to be part of a community that&apos;s got your
-                     back. Whether you&apos;re looking for support, inspiration, or just a
-                     safe space to be yourself—you&apos;ve found it. Let&apos;s play,
-                     connect, and heal together!
+                     This is a sanctuary for the heart - a place to exhale, to feel,
+                     connect, laugh, and to share. Here, stories are medicine, laughter is
+                     healing, and presence is power.
+                  </p>
+                  <br />
+                  <p style={{ marginBottom: "20px" }}>
+                     <b>Come as you are.</b>
                   </p>
                   <button
                      className="cta-button"
@@ -133,13 +135,10 @@ function Home() {
                </div>
                <div className="welcome-div">
                   <h3>
-                     Play to Heal is more than a platform. It is a movement of connection,
-                     compassion, and transformation through dialogue-based games. This
-                     presentation (Explore the heart, mission and how it all works)
-                     introduces you to the spirit of Play to Heal: what it is, how it
-                     works, and the simple agreements that make every experience safe,
-                     meaningful, and real. Before you play, take a moment to explore the
-                     heart behind it all.
+                     Play to Heal is more than a platform. It is where real talk replaces
+                     small talk, and courage becomes contagious. Through our
+                     dialogue-based games, we invite you to slow down, speak your truth,
+                     and rediscover the healing power of human connection.
                   </h3>
                </div>
             </section>

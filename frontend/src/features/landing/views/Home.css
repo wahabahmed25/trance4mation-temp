@@ -59,7 +59,6 @@
    p {
       display: block;
       text-align: center;
-      margin-bottom: 30px;
       font-size: 1.3rem;
    }
 }
@@ -142,12 +141,14 @@
    justify-content: center;
    align-items: center;
    gap: 25px;
-   padding: 0% 12%;
+   padding: 0% 15%;
 }
 
 .welcome-button {
-   background: var(--gradient-coral);
-   color: var(--text-white);
+   /* background: var(--gradient-coral); */
+   /* background: linear-gradient(135deg, var(--soft-violet) 0%, #6eb0f2 100%); */
+   background: linear-gradient(135deg, var(--golden-glow) 0%, #ff9999 100%);
+   color: var(--text-primary);
    padding: 1rem 2rem;
    border: none;
    border-radius: 50px;
@@ -167,7 +168,7 @@
 .welcome-button:hover {
    transform: translateY(-3px);
    box-shadow: 0 12px 35px var(--coral-alpha-40);
-   background: var(--gradient-coral-reverse);
+   background: linear-gradient(135deg, #ff9999 0%, var(--golden-glow) 100%);
 }
 /* ==========================================
                 GAME SECTION
