@@ -18,7 +18,13 @@ interface QuestionsProps {
    faqQuestions: Props[];
 }
 
-const Questions = ({ handleClick, isSomeActive, faqQuestions, turn, setTurn }: QuestionsProps) => {
+const Questions = ({
+   handleClick,
+   isSomeActive,
+   faqQuestions,
+   turn,
+   setTurn,
+}: QuestionsProps) => {
    return (
       <div className="questions-container">
          <div className="questions-header-button">
@@ -45,7 +51,7 @@ const Questions = ({ handleClick, isSomeActive, faqQuestions, turn, setTurn }: Q
                   answer={el.answer}
                   turn={turn}
                   setTurn={setTurn}
-                  id={el.id}
+                  id={i}
                />
             </div>
          ))}

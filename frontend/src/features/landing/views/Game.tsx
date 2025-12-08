@@ -15,8 +15,8 @@ function Game() {
                <div className="game-text">
                   <h1 className="game-title">Remembrance</h1>
                   <div className="tag-list">
-                     <span className="tag multiplayer">Multiplayer</span>
                      <span className="tag grief">Grief and Loss Support</span>
+                     <span className="tag multiplayer">Multiplayer</span>
                   </div>
                   <p>
                      Remembrance is a gentle, conversation-based game that offers comfort,
@@ -143,6 +143,7 @@ function Game() {
                   <h1 className="game-title">Home is the Heart</h1>
                   <div className="tag-list">
                      <span className="tag coming-soon">Coming Soon</span>
+                     <span className="tag multiplayer">Multiplayer</span>
                   </div>
                   <p>
                      Home is the Heart is a heartfelt family connection game that brings
@@ -168,6 +169,7 @@ function Game() {
                   <div className="tag-list">
                      <span className="tag coming-soon">Coming Soon</span>
                      <span className="tag anti-bullying">Anti-Bullying</span>
+                     <span className="tag multiplayer">Multiplayer</span>
                   </div>
                   <p>
                      Call It Out Loud is a bold, comic-style board game that empowers

@@ -19,46 +19,57 @@ function About() {
                   <div className="about-rectangle"></div>
                   <div className="about-p">
                      <p>
-                        The purpose of the <b> Play to Heal Hub™</b> is to create a{" "}
-                        <b> safe, accessible, and student-driven space</b> where young
-                        people can come together to share, listen, and heal. Grounded in
-                        therapeutic dialogue games, the platform empowers students to
-                        break through isolation, reduce stigma around mental health, and
-                        build resilience through peer-to-peer support. It is designed not
-                        only to address crises but also to foster belonging, strengthen
-                        community, and equip students with lifelong tools for connection
-                        and emotional well-being.
+                        The purpose of the <b>Play to Heal Hub™</b>
+                        is to create a safe, accessible, and human-centered space where
+                        people of all ages can come together to share, listen, and heal.
+                        Grounded in therapeutic dialogue games, the platform empowers
+                        individuals to break through isolation, reduce stigma around
+                        mental health, and build resilience through authentic connection.
+                        It’s designed not only to address emotional crises but also to
+                        nurture belonging, strengthen community, and equip people with
+                        lifelong tools for communication, compassion, and well-being.
                      </p>
                      <br />
                      <p>
-                        The Play to Heal Hub™ is <b>essential</b> because today&apos;s
-                        students are facing unprecedented levels of stress, isolation, and
-                        mental health challenges, while campus counseling centers remain
-                        overwhelmed and stigma keeps many from seeking help. By creating a
-                        student-driven, peer-to-peer platform grounded in therapeutic
-                        dialogue games, Play to Heal provides an inclusive, accessible,
-                        and proactive space for healing, resilience, and belonging.
+                        The Play to Heal Hub™ is <b>essential</b> because across
+                        generations — from students to elders — people are facing
+                        unprecedented levels of stress, loneliness, and disconnection.
+                        Traditional mental health systems are overwhelmed, and stigma
+                        keeps many from seeking help. By offering an inclusive,
+                        interactive space grounded in guided dialogue, Play to Heal
+                        transforms silence into conversation, and conversation into
+                        healing. It creates the conditions for connection, empowerment,
+                        and collective well-being across every stage of life.
+                     </p>
+                     <br />
+                     <p>
+                        Today's students are facing unprecedented levels of stress,
+                        isolation, and mental health challenges, while campus counseling
+                        centers remain overwhelmed and stigma keeps many from seeking
+                        help.
+                        <b>
+                           {" "}
+                           By creating a student-driven, peer-to-peer platform grounded in
+                           therapeutic dialogue games, Play to Heal provides an inclusive,
+                           accessible, and proactive space for healing, resilience, and
+                           belonging.{" "}
+                        </b>
                         Without it, campuses will continue to see rising crises, dropout
                         rates, and disconnection, especially among first-generation and
                         marginalized students, losing the chance to transform silence and
                         suffering into connection, empowerment, and collective well-being.
                         The Play to Heal Hub addresses this urgent need by creating a
-                        structured, student-driven platform where young people can come
-                        together for healing dialogue, emotional support, and community
-                        building.
+                        structured platform where people can come together for healing
+                        dialogue, emotional support, and community building.
                      </p>
                      <br />
                      <p>
-                        Unlike traditional interventions, Play to Heal meets students
-                        where they are —
-                        <b>
-                           {" "}
-                           peer-to-peer, accessible 24/7, grounded in therapeutic games
-                           designed to open safe conversations about mental health,
-                           resilience, and connection.{" "}
-                        </b>
-                        It shifts the model from reactive crisis management to proactive
-                        prevention and empowerment.
+                        Unlike traditional interventions, Play to Heal meets people where
+                        they are - accessible 24/7, interactive, and grounded in games
+                        that make difficult conversations safe, meaningful, and real. It
+                        shifts the model from reactive crisis response to proactive
+                        prevention, empowerment, and belonging — reminding us that healing
+                        is not just for some, but for all.
                      </p>
                   </div>
                </div>

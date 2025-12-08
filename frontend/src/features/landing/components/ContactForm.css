@@ -33,6 +33,11 @@
    background-color: var(--white);
 }
 
+.message-box::placeholder {
+   color: #999;
+   opacity: 1;
+}
+
 .submit-button {
    padding: 1%;
    padding-top: 5%;
