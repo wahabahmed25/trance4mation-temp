@@ -183,6 +183,24 @@ function Home() {
                         description="In a world that often asks us to hide, Speak to Me dares us to be seen."
                         path="/landing/game#Speak-to-me"
                      />
+                     <GameCard
+                        title="Call It Out Loud"
+                        image="/CallitOut.png"
+                        description="A bold, comic-style conversation game that empowers players to confront bullying and uplift one another through truth, empathy, and action."
+                        path="/landing/game#Speak-to-me"
+                     />
+                     <GameCard
+                        title="Home is the Heart"
+                        image="/HomeIsTheHeart.png"
+                        description="Home is the Heart invites families to slow down and share what truly matters."
+                        path="/landing/game#Home-is-the-Heart"
+                     />
+                     <GameCard
+                        title="Trill: True & Real"
+                        image="/TrillAddictionsPreventionRecovery.png"
+                        description="A therapeutic dialogue game that supports recovery, honesty, and strength for individuals and communities impacted by addiction."
+                        path="/landing/game#Trill"
+                     />
                   </div>
                   <button
                      className="carousel-arrow carousel-arrow-right"
